@@ -11,9 +11,9 @@
 
 ## 📌 CURRENT STATE (2026-04-20)
 
-**Phase:** Day 0 — Setup & scaffolding **(COMPLETE)**
-**Status:** 🟢 Repo + docs ครบ พร้อมลุย Day 1 ได้เลย
-**Next action:** Day 1 — ติดตั้ง Astro + สร้าง Hero/Services/Process/Contact
+**Phase:** Day 1 — Astro scaffold + Hero/Services/Process/Contact **(IN PROGRESS)**
+**Status:** 🟡 กำลังสร้าง `site/` subdir + ออกแบบ Layout + 4 section ภาษาไทย
+**Next action:** build → `rsync dist/ /var/www/korpai/` → preview จริงที่ korpai.co
 
 **Docs ครบตามที่บอสขอ:**
 - `README.md` (187 บรรทัด) — โปรเจกต์คืออะไร + ทำเพื่ออะไร + stack + structure + setup + workflow + roadmap
@@ -61,8 +61,15 @@
 
 ## 🚧 IN PROGRESS
 
-- [ ] Commit + push docs batch (about to do)
 - [x] Cross-link repo นี้ → `korp-ai-hq` (hub repo ส่วนกลาง) — เพิ่มหัวข้อ §0 ใน README
+- [ ] **Day 1 — Astro scaffold + 4 section** (กำลังทำ):
+  - [ ] สร้าง `site/package.json` + `astro.config.mjs` + `tailwind.config.mjs`
+  - [ ] Design tokens: ขาว / ฟ้าอ่อน / เขียวอ่อน + Prompt font
+  - [ ] `src/layouts/Layout.astro` (header + footer + SEO meta + schema.org stub)
+  - [ ] `src/components/{Hero,Services,Process,Contact}.astro` — ภาษาไทยทั้งหมด
+  - [ ] `src/pages/index.astro` เรียก 4 section
+  - [ ] VPS: `cd site && npm ci && npm run build && rsync -av --delete dist/ /var/www/korpai/`
+  - [ ] Smoke test https://korpai.co
 
 ---
 

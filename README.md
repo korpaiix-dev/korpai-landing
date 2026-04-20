@@ -6,6 +6,17 @@
 
 ---
 
+## 0. ก่อนเริ่ม — repo นี้เป็นเฉพาะ landing page
+
+Repo นี้เก็บแค่โค้ด landing page (public). **Source of truth ของทั้ง agency** อยู่ที่ repo กลางชื่อ **`korp-ai-hq`** (private):
+
+- Master spec, project map, VPS inventory, credentials index, session memory, rules, playbook
+- 👉 https://github.com/korpaiix-dev/korp-ai-hq (ขออนุญาตบอสไผ่ก่อนเข้า)
+
+ถ้าเป็น session ใหม่ที่ต้องสานงานต่อ — **เริ่มอ่านที่ `korp-ai-hq` ก่อน** แล้วค่อยกลับมาทำงานใน repo นี้ จะไม่ทำงานซ้ำซ้อน
+
+---
+
 ## 1. โปรเจกต์นี้คืออะไร
 
 เว็บไซต์ **หน้าเดียวครบ** (Multi-section single-page + blog + portfolio) ที่ทำหน้าที่เป็น:

@@ -4,13 +4,15 @@ import Hero from '~/components/Hero.astro';
 import ChatDemo from '~/components/ChatDemo.astro';
 import Services from '~/components/Services.astro';
 import Portfolio from '~/components/Portfolio.astro';
+import Pricing from '~/components/Pricing.astro';
+import About from '~/components/About.astro';
+import FAQ from '~/components/FAQ.astro';
 ---
 
 <Layout>
   <Hero />
   <ChatDemo />
   <Services />
-  <Portfolio />
 
   <!-- Process -->
   <section id="process" class="relative py-24 md:py-28 border-t kp-hairline">
@@ -38,6 +40,11 @@ import Portfolio from '~/components/Portfolio.astro';
       </ol>
     </div>
   </section>
+
+  <Portfolio />
+  <Pricing />
+  <About />
+  <FAQ />
 
   <!-- Contact CTA -->
   <section id="contact" class="relative py-28 md:py-32 border-t kp-hairline overflow-hidden">

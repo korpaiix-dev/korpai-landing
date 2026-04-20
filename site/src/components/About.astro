@@ -1,0 +1,172 @@
+---
+const values = [
+  {
+    icon: '🎯',
+    title: 'Outcome-first',
+    desc: 'เราวัดผลที่ตัวเลขธุรกิจ ไม่ใช่ "features ที่ส่งมอบ" — ลูกค้าโตแค่ไหน ปิดการขายกี่คน งานลดลงกี่ชม. นั่นคือ KPI ของเรา',
+  },
+  {
+    icon: '⚡',
+    title: 'Ship เร็ว ปรับจริง',
+    desc: 'เราไม่สร้าง "ระบบสมบูรณ์แบบ" แล้วรอ 3 เดือน แต่สร้าง prototype ใช้ได้จริงภายใน 2 สัปดาห์ แล้วปรับจาก feedback จริงของทีมคุณ',
+  },
+  {
+    icon: '🤝',
+    title: 'โปร่งใส ซื่อตรง',
+    desc: 'ราคาชัด ไม่ซ่อน ไม่มีค่าแอบแฝง ถ้าทำไม่ได้เราบอกตรง ๆ ถ้าโจทย์ไม่คุ้มงบเราจะแนะนำทางอื่นให้ แม้จะเสียงานก็ตาม',
+  },
+  {
+    icon: '🧠',
+    title: 'เรียนรู้ตลอดเวลา',
+    desc: 'AI เปลี่ยนทุกเดือน เราอัปเดตตัวเองทุกสัปดาห์ — ทดลอง model ใหม่, tool ใหม่, workflow ใหม่ แล้วเลือกของที่คุ้มที่สุดให้ลูกค้า',
+  },
+];
+
+const stack = [
+  { name: 'Anthropic Claude', cat: 'LLM ที่เราใช้เป็นหลัก' },
+  { name: 'OpenAI GPT-4o',     cat: 'สำหรับงาน multi-modal' },
+  { name: 'Google Gemini',     cat: 'สำหรับงานใช้ context ยาว' },
+  { name: 'n8n',               cat: 'Workflow automation' },
+  { name: 'Make.com',          cat: 'Integration no-code' },
+  { name: 'Supabase',          cat: 'Database + Auth' },
+  { name: 'Line OA API',       cat: 'Chatbot ฝั่ง Line' },
+  { name: 'Meta Graph API',    cat: 'Chatbot ฝั่ง FB/IG' },
+  { name: 'Grafana',           cat: 'Realtime Dashboard' },
+  { name: 'Astro',             cat: 'Landing pages' },
+  { name: 'Docker + VPS',      cat: 'Self-hosted deployment' },
+  { name: 'Python + Node.js',  cat: 'Backend services' },
+];
+---
+
+<section id="about" class="relative py-24 md:py-28 border-t kp-hairline">
+  <div class="kp-container">
+    <!-- Heading -->
+    <div class="max-w-2xl mx-auto text-center kp-reveal">
+      <span class="kp-pill">เกี่ยวกับเรา</span>
+      <h2 class="prose-kp mt-5">KORP AI AUTOMATION</h2>
+      <p class="prose-kp mt-5">
+        ทีมไทย 100% ที่ออกแบบ สร้าง และดูแลระบบ AI + Automation ให้ธุรกิจ SME ไทย —
+        ไม่ใช่แค่ติด chatbot สำเร็จรูป แต่ส่งระบบที่ทีมคุณใช้ต่อเองได้ เห็นผลเป็นตัวเลข
+      </p>
+    </div>
+
+    <!-- Story -->
+    <div class="mt-14 max-w-3xl mx-auto kp-reveal">
+      <div class="kp-about-card">
+        <div class="kp-about-label">เรื่องของเรา</div>
+        <p class="mt-3 text-[15px] leading-[1.85]" style="color: #CFD8EC;">
+          เราเริ่มต้นจากความเชื่อง่าย ๆ: <strong class="text-white">AI ควรช่วย SME ให้โตได้เหมือน enterprise</strong>
+          ไม่ใช่แค่ของเล่นสำหรับบริษัทใหญ่ที่มีงบเป็นล้าน
+          <br /><br />
+          ในยุคที่ AI ราคาลงทุกเดือน และเครื่องมืออย่าง Claude, GPT, Gemini เปิดให้ทุกคนเข้าถึง
+          ธุรกิจขนาดเล็กควรได้เปรียบ ไม่ใช่เสียเปรียบ —
+          แต่ปัญหาคือ SME ไทยส่วนใหญ่ไม่รู้จะเริ่มตรงไหน เครื่องมือเยอะเกินไป วิธีใช้ซับซ้อน
+          <br /><br />
+          <strong class="text-white">KORP AI เกิดขึ้นเพื่อเป็นสะพาน</strong> — เราคุยโจทย์ เลือกเครื่องมือ สร้างระบบ
+          และสำคัญที่สุดคือ <em class="text-brand-cyan-400 not-italic">สอนทีมคุณใช้ต่อได้เอง</em>
+          เพราะเราเชื่อว่าลูกค้าที่แข็งแรงคือลูกค้าที่ไม่ต้องพึ่งเราตลอดเวลา
+        </p>
+      </div>
+    </div>
+
+    <!-- Values -->
+    <div class="mt-16 max-w-4xl mx-auto">
+      <div class="text-center kp-reveal">
+        <h3 class="text-lg font-semibold text-white">สิ่งที่เรายึดถือ</h3>
+      </div>
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        {values.map((v, i) => (
+          <article class="kp-value-card kp-reveal" style={`transition-delay:${i * 60}ms`}>
+            <div class="kp-value-icon">{v.icon}</div>
+            <div>
+              <h4 class="text-white font-semibold text-[15px]">{v.title}</h4>
+              <p class="mt-1.5 text-sm leading-relaxed" style="color: #B8C5DE;">{v.desc}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <!-- Stack -->
+    <div class="mt-16 max-w-4xl mx-auto">
+      <div class="text-center kp-reveal">
+        <h3 class="text-lg font-semibold text-white">เครื่องมือที่เราใช้</h3>
+        <p class="mt-2 text-sm" style="color: #8AA0C5;">เลือก stack ที่เหมาะกับงาน ไม่ยึดติดยี่ห้อ</p>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-2.5 justify-center kp-reveal">
+        {stack.map(s => (
+          <div class="kp-stack-chip">
+            <span class="kp-stack-name">{s.name}</span>
+            <span class="kp-stack-cat">{s.cat}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .kp-about-card {
+    padding: 32px 36px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(15, 20, 32, 0.6), rgba(5, 7, 14, 0.4));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .kp-about-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #26D7F6;
+  }
+
+  .kp-value-card {
+    display: flex;
+    gap: 16px;
+    padding: 22px 22px;
+    border-radius: 16px;
+    background: rgba(15, 20, 32, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .kp-value-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(38, 215, 246, 0.2);
+  }
+  .kp-value-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 20px;
+    background: linear-gradient(135deg, rgba(38, 215, 246, 0.12), rgba(124, 95, 255, 0.08));
+    border: 1px solid rgba(38, 215, 246, 0.18);
+  }
+
+  .kp-stack-chip {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .kp-stack-chip:hover {
+    border-color: rgba(38, 215, 246, 0.25);
+    background: rgba(38, 215, 246, 0.05);
+  }
+  .kp-stack-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #E6EBF5;
+  }
+  .kp-stack-cat {
+    font-size: 10.5px;
+    color: #8AA0C5;
+  }
+</style>

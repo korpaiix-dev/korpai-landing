@@ -1,0 +1,138 @@
+---
+const faqs = [
+  {
+    q: 'ใช้เวลานานไหมกว่าจะเห็นผล?',
+    a: 'Starter จบใน 7–14 วัน · Growth ใน 3–5 สัปดาห์ · Enterprise 6–12 สัปดาห์ ขึ้นกับขอบเขต เราออกแบบเป็นช่วงสั้น ๆ ส่งทุก 1–2 สัปดาห์ ทีมคุณเห็นผลทันที ไม่ต้องรอ 3 เดือนแล้วได้ของผิด',
+  },
+  {
+    q: 'ราคาเริ่มต้นเท่าไร ดูแลรายเดือนเท่าไร?',
+    a: 'Starter เริ่มต้น 15,000 บ. (ติดตั้งครั้งเดียว) + 3,500 บ./เดือน · Growth 49,000 บ. + 8,500 บ./เดือน · Enterprise quote ตามขอบเขต ทุกแพ็กเกจรวม prompt engineering + ทดสอบ + training ทีมเบื้องต้น ไม่มีค่าแอบแฝง',
+  },
+  {
+    q: 'ถ้าไม่พอใจ ยกเลิกได้ไหม?',
+    a: 'ได้ ภายใน 14 วันแรกหลังติดตั้ง คืนเงินเต็ม ถ้าใช้งานเกิน 14 วันแล้วอยากยกเลิกรายเดือน ยกเลิกได้เลยโดยไม่มีค่าปรับ ระบบยังอยู่กับทีมคุณ สามารถ export ข้อมูลทั้งหมดได้',
+  },
+  {
+    q: 'ทีมเราไม่มีคนเทค ใช้ได้ไหม?',
+    a: 'ใช้ได้เลย เราออกแบบให้ทีมที่ไม่ใช่เทคใช้ต่อได้เอง พร้อมวิดีโอสอน + เอกสาร + training 1–2 ครั้ง ถ้ามีปัญหาหลังส่งมอบ ทักมา Line หรือ FB ได้ตลอดในช่วงดูแลรายเดือน',
+  },
+  {
+    q: 'รองรับ Line OA, Facebook, เว็บ ด้วยกันได้ไหม?',
+    a: 'ได้ครับ ในแพ็กเกจ Growth ขึ้นไป รวม 3 ช่องทางเลย AI ตัวเดียวเรียนรู้จากบทสนทนาทุกช่องทาง ตอบได้สม่ำเสมอทั้งหมด พร้อมส่งต่อทีมขายผ่าน Line เมื่อเจอโอกาสปิดการขาย',
+  },
+  {
+    q: 'ข้อมูลลูกค้าปลอดภัยไหม? ตาม PDPA ไหม?',
+    a: 'เราออกแบบระบบตาม PDPA ตั้งแต่ต้น ข้อมูลเก็บบน server ในไทย/สิงคโปร์ (ตามระดับความอ่อนไหวของข้อมูล) ไม่แชร์ให้ third-party และมี data retention policy ชัดเจน Enterprise ได้ security review + encryption เพิ่มเติม',
+  },
+  {
+    q: 'ถ้า AI ตอบผิด ตอบมั่ว ทำยังไง?',
+    a: 'เราตั้ง guardrail 3 ชั้น: (1) AI ตอบจากฐานความรู้ที่ทีมคุณอนุมัติเท่านั้น (2) ถ้าไม่แน่ใจ AI จะบอก "ขอส่งต่อทีมให้นะคะ" แทนเดา (3) ทุกบทสนทนามี log ให้ review ได้ เจอ pattern ผิดเรา fine-tune ให้ทันที',
+  },
+  {
+    q: 'ใช้ AI ตัวไหน? GPT หรือ Claude?',
+    a: 'เลือก model ที่เหมาะกับงาน — ส่วนมากใช้ Claude 3.5 Sonnet + GPT-4o + Gemini 1.5 Pro ผสมกัน (เช่น Claude สำหรับตอบลูกค้า, GPT-4o สำหรับสรุปเอกสาร) เรารับผิดชอบเรื่อง API cost แล้วคิดรวมในราคาแพ็กเกจ ไม่ต้องกังวลเรื่องบิลค่า AI',
+  },
+  {
+    q: 'ต้องเซ็นสัญญายาวไหม ผูกมัดกี่ปี?',
+    a: 'ไม่ผูกมัดรายปี ดูแลรายเดือนคิดเป็นเดือน ยกเลิกล่วงหน้า 30 วันได้ Enterprise มีตัวเลือก annual contract (ส่วนลด 15%) แต่ไม่บังคับ เราเชื่อว่าถ้าของเราดีจริง ลูกค้าจะอยู่ต่อเอง',
+  },
+  {
+    q: 'ลูกค้าเดิมพอใจกับบริการไหม?',
+    a: 'ดู Portfolio ด้านบน — มี 6 case study จริงจาก SME ไทยที่ใช้ระบบของเรา ลูกค้าบางรายอยู่กับเรา 12+ เดือน บางรายเพิ่มแพ็กเกจเพราะเห็นผลจริง คุยกับทีมเราได้เลยเราจะส่ง reference ลูกค้าที่ยินดีให้ติดต่อให้',
+  },
+];
+---
+
+<section id="faq" class="relative py-24 md:py-28 border-t kp-hairline">
+  <div class="kp-container">
+    <div class="max-w-2xl mx-auto text-center kp-reveal">
+      <span class="kp-pill">คำถามที่พบบ่อย</span>
+      <h2 class="prose-kp mt-5">สงสัยอะไร เรามีคำตอบให้</h2>
+      <p class="prose-kp mt-5">
+        ถ้ายังไม่เจอคำตอบ ทัก Line หรือ FB มาถามได้เลย ตอบจริงภายใน 24 ชม.
+      </p>
+    </div>
+
+    <div class="mt-12 max-w-3xl mx-auto">
+      {faqs.map((f, i) => (
+        <details class="kp-faq kp-reveal" style={`transition-delay:${i * 40}ms`}>
+          <summary class="kp-faq-q">
+            <span>{f.q}</span>
+            <span class="kp-faq-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="kp-faq-a">{f.a}</div>
+        </details>
+      ))}
+    </div>
+
+    <!-- FAQPage JSON-LD for SEO -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    })} />
+  </div>
+</section>
+
+<style>
+  .kp-faq {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color 0.3s ease;
+  }
+  .kp-faq:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .kp-faq[open] {
+    border-color: rgba(38, 215, 246, 0.18);
+  }
+
+  .kp-faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #E6EBF5;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  .kp-faq-q::-webkit-details-marker { display: none; }
+  .kp-faq-q:hover { color: #fff; }
+
+  .kp-faq-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #8AA0C5;
+    transition: transform 0.3s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .kp-faq[open] .kp-faq-icon {
+    transform: rotate(180deg);
+    background: rgba(38, 215, 246, 0.12);
+    color: #26D7F6;
+  }
+
+  .kp-faq-a {
+    padding: 0 6px 22px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #B8C5DE;
+  }
+</style>

@@ -1,0 +1,256 @@
+---
+const tiers = [
+  {
+    id: 'starter',
+    name: 'Starter',
+    tagline: 'สำหรับร้าน/ธุรกิจเดี่ยว เริ่มใช้ AI ครั้งแรก',
+    setup: '15,000',
+    monthly: '3,500',
+    features: [
+      { ok: true,  text: 'AI Chatbot 1 ช่องทาง (Line OA / Messenger / เว็บ)' },
+      { ok: true,  text: 'สคริปต์ตอบลูกค้าพร้อมใช้ (FAQ + ปิดการขาย)' },
+      { ok: true,  text: 'เชื่อมกับ Google Sheet บันทึกลีด' },
+      { ok: true,  text: 'ดูแล + ปรับ prompt ให้รายเดือน' },
+      { ok: true,  text: 'รายงานสรุปทุกเดือน' },
+      { ok: false, text: 'Multi-channel (Line + FB + เว็บ)' },
+      { ok: false, text: 'Dashboard realtime' },
+      { ok: false, text: 'Integration CRM / POS' },
+    ],
+    cta: 'เริ่มเลย',
+    highlight: false,
+  },
+  {
+    id: 'growth',
+    name: 'Growth',
+    tagline: 'สำหรับธุรกิจที่มีลูกค้าหลายช่อง อยากอัตโนมัติเต็มตัว',
+    setup: '49,000',
+    monthly: '8,500',
+    popular: true,
+    features: [
+      { ok: true, text: 'ทุกอย่างใน Starter' },
+      { ok: true, text: 'AI Chatbot 3 ช่องทาง (Line + FB + เว็บ)' },
+      { ok: true, text: 'Workflow Automation (Form → CRM → Line ทีม)' },
+      { ok: true, text: 'Realtime Dashboard (ยอดขาย / ลีด / KPI)' },
+      { ok: true, text: 'Integration Google Sheet / Notion / Airtable' },
+      { ok: true, text: 'ส่งต่อลีดอัตโนมัติให้ทีมขาย' },
+      { ok: true, text: 'ดูแล + ปรับปรุงทุก 2 สัปดาห์' },
+      { ok: true, text: 'Training ทีมใช้งาน 2 ครั้ง' },
+    ],
+    cta: 'ขอคุยโจทย์',
+    highlight: true,
+  },
+  {
+    id: 'enterprise',
+    name: 'Enterprise',
+    tagline: 'สำหรับบริษัทที่ต้องการ AI ตามโจทย์เฉพาะทาง',
+    setup: 'ปรึกษา',
+    monthly: 'ปรึกษา',
+    features: [
+      { ok: true, text: 'ทุกอย่างใน Growth' },
+      { ok: true, text: 'Custom AI Feature (สรุปเอกสาร / RAG / Voice)' },
+      { ok: true, text: 'Integration ERP / CRM / POS ของบริษัทคุณ' },
+      { ok: true, text: 'AI ที่เรียนรู้จากฐานข้อมูลภายใน' },
+      { ok: true, text: 'SLA + Dedicated Support' },
+      { ok: true, text: 'On-site training + เอกสารเต็มรูปแบบ' },
+      { ok: true, text: 'Security review + PDPA compliance' },
+      { ok: true, text: 'Deploy บน cloud ของคุณเองได้' },
+    ],
+    cta: 'ขอใบเสนอราคา',
+    highlight: false,
+  },
+];
+---
+
+<section id="pricing" class="relative py-24 md:py-28 border-t kp-hairline">
+  <div class="kp-container">
+    <div class="max-w-2xl mx-auto text-center kp-reveal">
+      <span class="kp-pill">ราคา</span>
+      <h2 class="prose-kp mt-5">ราคาชัด ไม่มีเงื่อนไขซ่อน</h2>
+      <p class="prose-kp mt-5">
+        เริ่มจากแพ็กเกจที่เหมาะกับธุรกิจคุณ เพิ่ม-ลดได้ตลอด ไม่ต้องผูกมัดระยะยาว
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-5 md:grid-cols-3">
+      {tiers.map((t, i) => (
+        <article class={`kp-price-card kp-reveal ${t.highlight ? 'kp-price-card--hot' : ''}`} style={`transition-delay:${i * 80}ms`}>
+          {t.popular && (
+            <div class="kp-price-badge">🔥 ยอดนิยม</div>
+          )}
+          <div class="kp-price-head">
+            <h3 class="text-white text-xl font-semibold">{t.name}</h3>
+            <p class="mt-2 text-sm leading-relaxed" style="color: #8AA0C5;">{t.tagline}</p>
+          </div>
+
+          <div class="kp-price-amount">
+            {t.setup === 'ปรึกษา' ? (
+              <>
+                <div class="kp-price-num">Custom</div>
+                <div class="kp-price-period">ตามโจทย์และขอบเขตงาน</div>
+              </>
+            ) : (
+              <>
+                <div class="flex items-baseline gap-1.5">
+                  <span class="text-[13px]" style="color: #8AA0C5;">เริ่มต้น</span>
+                  <span class="kp-price-num">฿{t.setup}</span>
+                </div>
+                <div class="kp-price-period">ค่าติดตั้ง · ครั้งเดียว</div>
+                <div class="kp-price-divider"></div>
+                <div class="flex items-baseline gap-1.5">
+                  <span class="kp-price-num-sm">฿{t.monthly}</span>
+                  <span class="text-[13px]" style="color: #8AA0C5;">/ เดือน</span>
+                </div>
+                <div class="kp-price-period">ดูแล + ปรับปรุง</div>
+              </>
+            )}
+          </div>
+
+          <ul class="kp-price-features">
+            {t.features.map(f => (
+              <li class={`kp-price-feat ${f.ok ? 'kp-price-feat--ok' : 'kp-price-feat--no'}`}>
+                <span class="kp-price-check" aria-hidden="true">
+                  {f.ok ? '✓' : '—'}
+                </span>
+                <span>{f.text}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href="#contact"
+            class={t.highlight ? 'kp-btn-primary w-full justify-center' : 'kp-btn-secondary w-full justify-center'}
+          >
+            {t.cta}
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <!-- Notes -->
+    <div class="mt-10 mx-auto max-w-3xl text-center kp-reveal">
+      <p class="text-xs leading-relaxed" style="color: #8AA0C5;">
+        ราคาเริ่มต้นไม่รวม VAT 7% · ชำระเป็นเฟสตามเนื้องาน · ทดลองได้ก่อนตัดสินใจ ยกเลิกได้ภายใน 14 วันแรก ·
+        ทุกแพ็กเกจรวม prompt engineering + ทดสอบ + training ทีมใช้งานเบื้องต้น
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .kp-price-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 28px 26px 26px;
+    background: linear-gradient(180deg, rgba(15, 20, 32, 0.6), rgba(5, 7, 14, 0.4));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .kp-price-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(38, 215, 246, 0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(38,215,246,0.1);
+  }
+  .kp-price-card--hot {
+    border-color: rgba(38, 215, 246, 0.35);
+    background:
+      linear-gradient(180deg, rgba(38, 215, 246, 0.06), rgba(124, 95, 255, 0.03)),
+      linear-gradient(180deg, rgba(15, 20, 32, 0.75), rgba(5, 7, 14, 0.5));
+    box-shadow: 0 0 0 1px rgba(38, 215, 246, 0.2), 0 20px 50px rgba(38, 215, 246, 0.08);
+  }
+
+  .kp-price-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(92deg, #26D7F6, #7C5FFF);
+    color: #05070E;
+    box-shadow: 0 6px 20px rgba(38, 215, 246, 0.35);
+  }
+
+  .kp-price-head {
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .kp-price-amount {
+    padding: 18px 0 20px;
+  }
+  .kp-price-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .kp-price-num-sm {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .kp-price-period {
+    font-size: 11px;
+    color: #8AA0C5;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .kp-price-divider {
+    height: 1px;
+    margin: 14px 0;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
+  }
+
+  .kp-price-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    padding: 6px 0 22px;
+  }
+  .kp-price-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .kp-price-feat--ok {
+    color: #E6EBF5;
+  }
+  .kp-price-feat--no {
+    color: #6B7A99;
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgba(107, 122, 153, 0.35);
+  }
+  .kp-price-check {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 800;
+    margin-top: 1px;
+  }
+  .kp-price-feat--ok .kp-price-check {
+    background: rgba(38, 215, 246, 0.15);
+    color: #26D7F6;
+  }
+  .kp-price-feat--no .kp-price-check {
+    background: rgba(255, 255, 255, 0.04);
+    color: #6B7A99;
+  }
+</style>

@@ -37,33 +37,129 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: -3;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 100% 70% at 50% -20%,  rgba(38,215,246,0.22) 0%, transparent 55%),
-    radial-gradient(ellipse 70%  60% at 85% 20%,   rgba(60,124,255,0.14) 0%, transparent 55%),
-    radial-gradient(ellipse 65%  55% at 15% 60%,   rgba(124,95,255,0.12) 0%, transparent 55%),
-    radial-gradient(ellipse 80%  60% at 50% 110%,  rgba(38,215,246,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 110% 80% at 50% -10%, rgba(38,215,246,0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 85%  70% at 90% 25%,  rgba(60,124,255,0.20) 0%, transparent 60%),
+    radial-gradient(ellipse 80%  70% at 10% 55%,  rgba(124,95,255,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 95%  65% at 50% 115%, rgba(38,215,246,0.16) 0%, transparent 60%),
     var(--kp-bg);
 }
 
-/* Subtle animated aurora that drifts slowly across the page */
+/* Subtle dot grid overlay on top of the glow */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
   background-size: 32px 32px;
-  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 85%);
-          mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 85%);
-  opacity: 0.55;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 15%, transparent 85%);
+          mask-image: radial-gradient(ellipse at 50% 40%, #000 15%, transparent 85%);
+  opacity: 0.6;
 }
+
+/* ---------- Fixed ambient hero-style backdrop (spans all sections) ---------- */
+.kp-bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+  isolation: isolate;
+}
+.kp-bg-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.kp-bg-orb-1 {
+  width: 620px; height: 620px;
+  top: -180px; left: -140px;
+  background: radial-gradient(circle, rgba(38,215,246,0.70), transparent 70%);
+  animation: kp-bg-drift-1 26s ease-in-out infinite alternate;
+}
+.kp-bg-orb-2 {
+  width: 560px; height: 560px;
+  top: 30%; right: -160px;
+  background: radial-gradient(circle, rgba(124,95,255,0.65), transparent 70%);
+  animation: kp-bg-drift-2 32s ease-in-out infinite alternate;
+}
+.kp-bg-orb-3 {
+  width: 680px; height: 680px;
+  bottom: -220px; left: 30%;
+  background: radial-gradient(circle, rgba(60,124,255,0.55), transparent 70%);
+  animation: kp-bg-drift-3 38s ease-in-out infinite alternate;
+}
+@keyframes kp-bg-drift-1 {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(60px, 80px) scale(1.08); }
+}
+@keyframes kp-bg-drift-2 {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(-80px, 60px) scale(1.10); }
+}
+@keyframes kp-bg-drift-3 {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(40px, -90px) scale(1.05); }
+}
+
+.kp-bg-halo {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: min(1100px, 90vw);
+  height: 700px;
+  background: radial-gradient(ellipse at center,
+    rgba(38,215,246,0.22) 0%,
+    rgba(60,124,255,0.12) 30%,
+    transparent 65%);
+  filter: blur(40px);
+  animation: kp-bg-halo-pulse 8s ease-in-out infinite alternate;
+}
+@keyframes kp-bg-halo-pulse {
+  0%   { opacity: 0.55; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0.85; transform: translate(-50%, 0) scale(1.06); }
+}
+
+.kp-bg-rays {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  mix-blend-mode: screen;
+  opacity: 0.45;
+}
+.kp-bg-rays span {
+  position: absolute;
+  top: -20%;
+  height: 140%;
+  width: 2px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(38,215,246,0.55) 30%,
+    rgba(124,95,255,0.35) 70%,
+    transparent);
+  transform-origin: top center;
+  filter: blur(1.5px);
+}
+.kp-bg-rays span:nth-child(1) { left: 18%; transform: rotate(15deg); }
+.kp-bg-rays span:nth-child(2) { left: 52%; transform: rotate(-8deg); opacity: 0.75; }
+.kp-bg-rays span:nth-child(3) { left: 82%; transform: rotate(12deg); opacity: 0.6; }
 
 /* Sections should let the body glow show through by default */
 main > section {
   background: transparent !important;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .kp-bg-orb, .kp-bg-halo { animation: none !important; }
 }
 
 ::selection {
@@ -149,6 +245,40 @@ main > section {
 .kp-btn-secondary:hover {
   background: rgba(255, 255, 255, 0.09);
   border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* ---------- LINE brand button ---------- */
+.kp-btn-line {
+  @apply inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-sm font-semibold transition;
+  background: #06C755;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(6, 199, 85, 0.35), 0 1px 0 rgba(255,255,255,0.15) inset;
+}
+.kp-btn-line:hover {
+  background: #05B54D;
+  box-shadow: 0 12px 36px rgba(6, 199, 85, 0.5), 0 1px 0 rgba(255,255,255,0.2) inset;
+  transform: translateY(-1px);
+}
+.kp-btn-line svg {
+  width: 20px; height: 20px;
+  fill: currentColor;
+}
+
+/* ---------- Facebook brand button ---------- */
+.kp-btn-fb {
+  @apply inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3.5 text-sm font-semibold transition;
+  background: #1877F2;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(24, 119, 242, 0.35), 0 1px 0 rgba(255,255,255,0.15) inset;
+}
+.kp-btn-fb:hover {
+  background: #0D6EE6;
+  box-shadow: 0 12px 36px rgba(24, 119, 242, 0.5), 0 1px 0 rgba(255,255,255,0.2) inset;
+  transform: translateY(-1px);
+}
+.kp-btn-fb svg {
+  width: 20px; height: 20px;
+  fill: currentColor;
 }
 
 /* ---------- cards (dark) ---------- */

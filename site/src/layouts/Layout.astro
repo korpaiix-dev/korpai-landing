@@ -81,19 +81,49 @@ const jsonLd = {
       (() => {
         if (typeof window === 'undefined') return;
         const els = document.querySelectorAll('.kp-reveal');
+        const reveal = (el) => el.classList.add('is-in');
+
+        // No IO support: reveal everything immediately
         if (!('IntersectionObserver' in window)) {
-          els.forEach(el => el.classList.add('is-in'));
+          els.forEach(reveal);
           return;
         }
+
+        // Eager reveal: anything already in the viewport at script time.
+        // This guarantees above-the-fold content is visible even when the
+        // tab is in the background (IntersectionObserver doesn't fire for
+        // hidden tabs).
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const inView = (el) => {
+          const r = el.getBoundingClientRect();
+          return r.bottom > 0 && r.top < vh;
+        };
+
         const io = new IntersectionObserver((entries) => {
-          entries.forEach(e => {
+          entries.forEach((e) => {
             if (e.isIntersecting) {
-              e.target.classList.add('is-in');
+              reveal(e.target);
               io.unobserve(e.target);
             }
           });
         }, { threshold: 0.12 });
-        els.forEach(el => io.observe(el));
+
+        els.forEach((el) => {
+          if (inView(el)) reveal(el);
+          io.observe(el);
+        });
+
+        // Final safety net: 1.5s after page load, reveal anything still
+        // hidden (covers backgrounded tabs and slow IO callbacks).
+        const fallback = () => {
+          setTimeout(() => {
+            els.forEach((el) => {
+              if (!el.classList.contains('is-in')) reveal(el);
+            });
+          }, 1500);
+        };
+        if (document.readyState === 'complete') fallback();
+        else window.addEventListener('load', fallback);
       })();
     </script>
   </body>

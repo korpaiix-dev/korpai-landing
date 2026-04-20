@@ -35,7 +35,9 @@ body {
 
 /* ========== SITE-WIDE AMBIENT BACKGROUND ==========
    Fixed layer that stays behind all sections, giving the whole
-   page the same cyan/violet glow aesthetic as the hero.        */
+   page a subtle cyan/violet glow aesthetic similar to the hero.
+   TUNED: low opacities so text never gets drowned out, and
+   animations stripped on non-Hero background for Safari/FF perf. */
 body::before {
   content: "";
   position: fixed;
@@ -43,145 +45,79 @@ body::before {
   z-index: -3;
   pointer-events: none;
   background:
-    /* Center pulse — the main "hero" glow that ALWAYS shows */
-    radial-gradient(ellipse 80% 60% at 50% 40%,   rgba(38,215,246,0.35) 0%, transparent 70%),
-    /* Top cyan flare */
-    radial-gradient(ellipse 120% 90% at 50% -10%, rgba(38,215,246,0.55) 0%, transparent 55%),
-    /* Right violet */
-    radial-gradient(ellipse 95%  80% at 92% 22%,  rgba(60,124,255,0.45) 0%, transparent 55%),
-    /* Left purple */
-    radial-gradient(ellipse 90%  80% at 8% 55%,   rgba(124,95,255,0.42) 0%, transparent 55%),
-    /* Bottom cyan */
-    radial-gradient(ellipse 100% 75% at 50% 115%, rgba(38,215,246,0.40) 0%, transparent 55%),
+    /* Top cyan flare (soft) */
+    radial-gradient(ellipse 110% 70% at 50% -15%, rgba(38,215,246,0.18) 0%, transparent 60%),
+    /* Right violet (soft) */
+    radial-gradient(ellipse 85%  70% at 95% 25%,  rgba(60,124,255,0.14) 0%, transparent 60%),
+    /* Left purple (soft) */
+    radial-gradient(ellipse 80%  70% at 5% 60%,   rgba(124,95,255,0.13) 0%, transparent 60%),
+    /* Bottom cyan (soft) */
+    radial-gradient(ellipse 90% 65% at 50% 115%,  rgba(38,215,246,0.14) 0%, transparent 60%),
     var(--kp-bg);
 }
 
-/* Subtle dot grid overlay on top of the glow */
+/* Subtle dot grid overlay */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
   background-size: 32px 32px;
   -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 15%, transparent 85%);
           mask-image: radial-gradient(ellipse at 50% 40%, #000 15%, transparent 85%);
-  opacity: 0.6;
+  opacity: 0.45;
 }
 
-/* ---------- Fixed ambient hero-style backdrop (spans all sections) ---------- */
+/* ---------- Fixed ambient backdrop — STATIC for perf (spans all sections) ---------- */
 .kp-bg-ambient {
   position: fixed;
   inset: 0;
   z-index: -2;
   pointer-events: none;
   overflow: hidden;
-  /* NOTE: no `isolation: isolate` — it would block mix-blend-mode with body::before */
 }
 .kp-bg-orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(60px);
-  opacity: 1;
-  /* NO mix-blend-mode — use direct opacity so color shows on dark bg */
-  will-change: transform;
+  filter: blur(40px);
+  /* NO animation — blurred fixed elements with scale() keyframes
+     melt non-Chrome browsers. Static gives the same look + smooth scroll. */
 }
-/* HUGE, bright orbs — visible on every scroll position */
+/* Two orbs only (was 3) — smaller, softer, lower opacity */
 .kp-bg-orb-1 {
-  width: 1100px; height: 1100px;
-  top: -300px; left: -260px;
-  background: radial-gradient(circle, rgba(38,215,246,0.55) 0%, rgba(38,215,246,0.25) 35%, transparent 70%);
-  animation: kp-bg-drift-1 26s ease-in-out infinite alternate;
+  width: 760px; height: 760px;
+  top: -200px; left: -180px;
+  background: radial-gradient(circle, rgba(38,215,246,0.20) 0%, rgba(38,215,246,0.08) 40%, transparent 70%);
 }
 .kp-bg-orb-2 {
-  width: 1000px; height: 1000px;
-  top: 15%; right: -280px;
-  background: radial-gradient(circle, rgba(124,95,255,0.55) 0%, rgba(124,95,255,0.22) 35%, transparent 70%);
-  animation: kp-bg-drift-2 32s ease-in-out infinite alternate;
+  width: 820px; height: 820px;
+  bottom: -240px; right: -200px;
+  background: radial-gradient(circle, rgba(124,95,255,0.18) 0%, rgba(60,124,255,0.08) 40%, transparent 70%);
 }
-.kp-bg-orb-3 {
-  width: 1200px; height: 1200px;
-  bottom: -400px; left: 15%;
-  background: radial-gradient(circle, rgba(60,124,255,0.55) 0%, rgba(60,124,255,0.22) 35%, transparent 70%);
-  animation: kp-bg-drift-3 38s ease-in-out infinite alternate;
-}
-@keyframes kp-bg-drift-1 {
-  0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(80px, 100px) scale(1.10); }
-}
-@keyframes kp-bg-drift-2 {
-  0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(-100px, 80px) scale(1.12); }
-}
-@keyframes kp-bg-drift-3 {
-  0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(60px, -120px) scale(1.08); }
-}
+/* 3rd orb + rays removed — too heavy for Safari/FF, not needed for aesthetic */
+.kp-bg-orb-3 { display: none; }
+.kp-bg-rays  { display: none; }
 
-/* Central glowing halo — always pulsing in background */
+/* Central halo — static, smaller, lower intensity */
 .kp-bg-halo {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(1600px, 100vw);
-  height: 100vh;
+  width: min(1200px, 90vw);
+  height: 80vh;
   background: radial-gradient(ellipse at center,
-    rgba(38,215,246,0.30) 0%,
-    rgba(60,124,255,0.18) 25%,
-    rgba(124,95,255,0.10) 50%,
-    transparent 70%);
-  filter: blur(40px);
-  animation: kp-bg-halo-pulse 8s ease-in-out infinite alternate;
-}
-@keyframes kp-bg-halo-pulse {
-  0%   { opacity: 0.8;  transform: translate(-50%, -50%) scale(1);    }
-  100% { opacity: 1;    transform: translate(-50%, -50%) scale(1.08); }
+    rgba(38,215,246,0.12) 0%,
+    rgba(60,124,255,0.07) 30%,
+    transparent 65%);
+  filter: blur(30px);
 }
 
-/* Diagonal beams — Raycast style, spanning full viewport */
-.kp-bg-rays {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  opacity: 1;
-}
-.kp-bg-rays span {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(36px);
-  transform-origin: center;
-}
-.kp-bg-rays span:nth-child(1) {
-  top: 8%; left: 10%;
-  width: 1100px; height: 160px;
-  background: linear-gradient(90deg, transparent 0%, rgba(38,215,246,0.45) 40%, rgba(60,124,255,0.35) 75%, transparent 100%);
-  transform: rotate(22deg);
-}
-.kp-bg-rays span:nth-child(2) {
-  top: 42%; left: 18%;
-  width: 1200px; height: 180px;
-  background: linear-gradient(90deg, transparent 0%, rgba(60,124,255,0.42) 35%, rgba(38,215,246,0.38) 75%, transparent 100%);
-  transform: rotate(22deg);
-  filter: blur(44px);
-}
-.kp-bg-rays span:nth-child(3) {
-  top: 78%; left: 5%;
-  width: 1100px; height: 160px;
-  background: linear-gradient(90deg, transparent 0%, rgba(124,95,255,0.40) 40%, rgba(38,215,246,0.35) 75%, transparent 100%);
-  transform: rotate(22deg);
-  filter: blur(40px);
-}
-
-/* Sections should let the body glow show through by default */
+/* Sections let the ambient show through */
 main > section {
   background: transparent !important;
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .kp-bg-orb, .kp-bg-halo, .kp-bg-rays span { animation: none !important; }
 }
 
 ::selection {

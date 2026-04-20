@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="520" viewBox="0 0 1600 520" fill="none">
+  <rect width="1600" height="520" rx="48" fill="#F7FAFF"/>
+  <g transform="translate(54 54)">
+    <rect width="412" height="412" rx="72" fill="#F7FAFF" stroke="#D9E6F7" stroke-width="4"/>
+    <g transform="translate(76 62)">
+      <path d="M0 0H52V288H0V0Z" fill="#0B1830"/>
+      <path d="M68 0H180L84 98H0L68 0Z" fill="#26D7F6"/>
+      <path d="M176 0H292L176 122L152 42L176 0Z" fill="#3C7CFF"/>
+      <path d="M94 148L300 350H188L18 188L94 148Z" fill="#26D7F6"/>
+      <path d="M260 24H332V96H260Z" fill="#0F2A55" fill-opacity="0.92"/>
+      <circle cx="372" cy="60" r="11" fill="#3C7CFF"/>
+      <circle cx="372" cy="60" r="21" stroke="#9CEFFF" stroke-opacity="0.4" stroke-width="4"/>
+      <circle cx="406" cy="28" r="7" fill="#26D7F6"/>
+      <circle cx="420" cy="86" r="6" fill="#0F2A55"/>
+      <path d="M372 60L406 28M372 60L420 86" stroke="#7BE8FF" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g transform="translate(520 110)">
+    <text x="0" y="142" fill="#0B1830" font-size="160" font-family="Inter, Helvetica Neue, Arial, sans-serif" font-weight="700" letter-spacing="10">KORP</text>
+    <text x="4" y="224" fill="#28CDEA" font-size="44" font-family="Inter, Helvetica Neue, Arial, sans-serif" font-weight="700" letter-spacing="8">AI AUTOMATION</text>
+    <path d="M4 252H526" stroke="#D4E2F2" stroke-width="3"/>
+    <text x="4" y="300" fill="#58708F" font-size="25" font-family="Inter, Helvetica Neue, Arial, sans-serif" font-weight="500" letter-spacing="2.6">SMART SYSTEMS FOR MODERN BUSINESS WORKFLOWS</text>
+  </g>
+</svg>

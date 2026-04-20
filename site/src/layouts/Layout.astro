@@ -23,7 +23,7 @@ const jsonLd = {
   '@type': 'Organization',
   name: siteName,
   url: 'https://korpai.co',
-  logo: 'https://korpai.co/favicon.svg',
+  logo: 'https://korpai.co/assets/logo-icon.svg',
   description,
   sameAs: [],
   contactPoint: [
@@ -38,8 +38,8 @@ const jsonLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#0EA5E9" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#05070E" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logo-icon.svg" />
     <link rel="canonical" href={canonical} />
 
     <title>{title}</title>
@@ -60,22 +60,41 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
 
-    <!-- Prompt font (Thai-optimized) -->
+    <!-- Fonts: Inter (Latin) + IBM Plex Sans Thai Looped (TH) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&display=swap"
     />
 
-    <!-- Structured data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body class="min-h-screen bg-white text-brand-ink-900 font-sans">
+  <body>
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
+
+    <script is:inline>
+      (() => {
+        if (typeof window === 'undefined') return;
+        const els = document.querySelectorAll('.kp-reveal');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(el => el.classList.add('is-in'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        els.forEach(el => io.observe(el));
+      })();
+    </script>
   </body>
 </html>

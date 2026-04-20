@@ -1,0 +1,69 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Hero from '~/components/Hero.astro';
+import ChatDemo from '~/components/ChatDemo.astro';
+import Services from '~/components/Services.astro';
+import Portfolio from '~/components/Portfolio.astro';
+---
+
+<Layout>
+  <Hero />
+  <ChatDemo />
+  <Services />
+  <Portfolio />
+
+  <!-- Process -->
+  <section id="process" class="relative py-24 md:py-28 border-t kp-hairline" style="background: #05070E;">
+    <div class="kp-container">
+      <div class="max-w-2xl mx-auto text-center kp-reveal">
+        <span class="kp-pill">ขั้นตอนการทำงาน</span>
+        <h2 class="prose-kp mt-5">เริ่มเล็ก ส่งเร็ว ปรับจริง</h2>
+        <p class="prose-kp mt-5">
+          ออกแบบเป็นช่วงสั้น ๆ ส่งทุก 1–2 สัปดาห์ ทีมคุณเห็นผลเร็ว ตัดสินใจง่าย ไม่ต้องรอ 3 เดือนแล้วได้ของผิด
+        </p>
+      </div>
+
+      <ol class="mt-14 grid gap-5 md:grid-cols-3">
+        {[
+          { n: '01', t: 'คุยโจทย์ + วาง flow', d: 'ฟังปัญหาจริงของทีม วาง user flow และเลือกเครื่องมือให้คุ้มงบ' },
+          { n: '02', t: 'สร้าง prototype',     d: 'ส่งระบบทดลองภายใน 1–2 สัปดาห์ ทดสอบกับลูกค้าจริงทันที' },
+          { n: '03', t: 'ส่งมอบ + ดูแล',       d: 'ส่งระบบที่ทีมใช้ต่อได้เอง พร้อมเอกสาร + dashboard ติดตามผล' },
+        ].map((s, i) => (
+          <li class="kp-card kp-reveal" style={`transition-delay:${i * 80}ms`}>
+            <div class="text-[11px] font-mono tracking-[0.2em] text-brand-cyan-400">STEP {s.n}</div>
+            <h3 class="prose-kp mt-3">{s.t}</h3>
+            <p class="mt-2 text-sm leading-relaxed" style="color: #8AA0C5;">{s.d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section id="contact" class="relative py-28 md:py-32 border-t kp-hairline overflow-hidden" style="background: #05070E;">
+    <!-- ambient beam glow -->
+    <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full blur-3xl"
+           style="background: radial-gradient(ellipse, rgba(38,215,246,0.18), rgba(60,124,255,0.10) 40%, transparent 70%);"></div>
+    </div>
+
+    <div class="kp-container relative">
+      <div class="max-w-3xl mx-auto text-center kp-reveal">
+        <span class="kp-pill">พร้อมเริ่มเลย?</span>
+        <h2 class="prose-kp mt-5">ปรึกษาฟรี — ตอบกลับภายใน 24 ชม.</h2>
+        <p class="prose-kp mt-5 mx-auto max-w-xl">
+          ส่ง LINE หรือ Facebook มาเล่าโจทย์คร่าว ๆ — เราจะตอบกลับพร้อมไอเดียให้ดูก่อนว่าทำได้แค่ไหน
+        </p>
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <a href="https://line.me/R/ti/p/@korpai" target="_blank" rel="noopener" class="kp-btn-primary">
+            แชท LINE
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="https://facebook.com/korpai" target="_blank" rel="noopener" class="kp-btn-secondary">
+            Facebook
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

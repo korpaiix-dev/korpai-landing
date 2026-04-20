@@ -2,60 +2,103 @@
 const services = [
   {
     tag: 'Chatbot',
-    title: 'AI Sales Agent / Chatbot',
-    desc: 'ตอบแชทลูกค้าบน Line OA, Messenger หรือหน้าเว็บ 24 ชม. คัดกรองลูกค้า จองคิว แล้วส่งต่อให้ทีมขายปิดงาน',
-    bullets: ['Line OA / Messenger / Web widget', 'คัดกรองลูกค้า + บันทึกข้อมูล', 'ส่งต่อมนุษย์เมื่อจำเป็น'],
+    title: 'AI Sales Agent',
+    desc: 'ตอบแชทลูกค้า 24 ชม. บน Line OA, Messenger, เว็บ — คัดกรอง, จองคิว, ส่งต่อทีมขาย',
+    img: 'https://images.unsplash.com/photo-1762160687270-1602d25749b6?w=1200&auto=format&fit=crop&q=80',
+    alt: 'ทีมงานตอบลูกค้าบน Line OA ผ่านโน้ตบุ๊กในออฟฟิศสว่าง',
   },
   {
     tag: 'Automation',
-    title: 'Automation Flow',
-    desc: 'เชื่อมต่อเครื่องมือที่ทีมใช้อยู่ให้ทำงานเอง เช่น ฟอร์ม → Sheet → CRM → แจ้งทีม ประหยัดเวลางานซ้ำ ๆ',
-    bullets: ['n8n · Make · Zapier', 'เชื่อมต่อ Google Sheets, CRM, Line Notify', 'รายงานอัตโนมัติรายวัน/รายสัปดาห์'],
+    title: 'Workflow Automation',
+    desc: 'ต่อระบบที่ทีมใช้ — Form → Sheet → CRM → Line แจ้งทีม ประหยัดเวลางานซ้ำ ๆ ที่ไม่จำเป็น',
+    img: 'https://images.unsplash.com/photo-1758691737083-0e7fdbde0f05?w=1200&auto=format&fit=crop&q=80',
+    alt: 'พนักงานสองคนทำงานร่วมกันหน้าจอ automation',
   },
   {
     tag: 'Dashboard',
-    title: 'Dashboard / Data Visualization',
-    desc: 'แดชบอร์ดดูยอดขาย ลีด KPI เรียลไทม์ ดึงข้อมูลจากระบบเดิม ไม่ต้องเปิดหลายหน้าจออีกต่อไป',
-    bullets: ['Metabase · Grafana · Custom React', 'เชื่อมต่อฐานข้อมูล / Sheets / API', 'แชร์ให้ทีมเข้าถึงได้ปลอดภัย'],
+    title: 'Realtime Dashboard',
+    desc: 'แดชบอร์ดยอดขาย ลีด KPI real-time จากระบบเดิม ทีมดูได้ทั้ง desktop และมือถือ',
+    img: 'https://images.unsplash.com/photo-1770375679444-cae2ec99ea03?w=1200&auto=format&fit=crop&q=80',
+    alt: 'นักวิเคราะห์นั่งดูแดชบอร์ดยอดขายบนจอ',
   },
   {
     tag: 'Custom AI',
     title: 'Custom AI Feature',
-    desc: 'สเกลงาน AI เฉพาะทาง — สรุปเอกสาร, ตอบคำถามจากฐานความรู้ภายใน, สร้างภาพ, หรือระบบเสียง ออกแบบตามโจทย์',
-    bullets: ['RAG · Document Q&A', 'Image / Voice pipeline', 'ผูกกับระบบเดิมของลูกค้า'],
+    desc: 'สรุปเอกสาร, ตอบจากฐานความรู้ภายใน, สร้างภาพ หรือระบบเสียง ออกแบบตามโจทย์ทีมคุณ',
+    img: 'https://images.unsplash.com/photo-1758876202014-6b2062bed4e8?w=1200&auto=format&fit=crop&q=80',
+    alt: 'พนักงานผู้หญิงใช้ AI feature บนโน้ตบุ๊กในออฟฟิศโมเดิร์น',
   },
 ];
 ---
 
-<section id="services" class="py-20 md:py-24">
+<section id="services" class="relative py-24 md:py-28" style="background: #05070E;">
   <div class="kp-container">
-    <div class="max-w-2xl">
+    <div class="max-w-2xl mx-auto text-center kp-reveal">
       <span class="kp-pill">บริการของเรา</span>
-      <h2 class="prose-kp mt-4">ออกแบบระบบ AI ที่คุ้มกับขนาดธุรกิจคุณ</h2>
-      <p class="prose-kp mt-4">
-        ไม่ใช่แค่ติดตั้ง chatbot สำเร็จรูป — เราคุยกับทีมคุณก่อน หาจุดที่ AI ช่วยได้จริง แล้วส่งระบบที่ทีมใช้ต่อได้เอง
+      <h2 class="prose-kp mt-5">AI ที่คุ้มกับขนาดธุรกิจคุณ</h2>
+      <p class="prose-kp mt-5">
+        ไม่ใช่แค่ติดตั้ง chatbot สำเร็จรูป — เราคุยกับทีมคุณก่อน แล้วส่งระบบที่ทีมใช้ต่อได้เอง
       </p>
     </div>
 
-    <div class="mt-12 grid gap-5 md:grid-cols-2">
-      {services.map((s) => (
-        <article class="kp-card">
-          <div class="flex items-center justify-between">
-            <span class="kp-pill">{s.tag}</span>
-            <span aria-hidden="true" class="text-brand-sky-400">◆</span>
+    <div class="mt-14 grid gap-6 md:grid-cols-2">
+      {services.map((s, i) => (
+        <article class="kp-svc-card kp-reveal" style={`transition-delay:${i * 80}ms`}>
+          <div class="kp-svc-visual">
+            <img src={s.img} alt={s.alt} loading="lazy" />
           </div>
-          <h3 class="prose-kp mt-4">{s.title}</h3>
-          <p class="mt-3 text-brand-ink-600 leading-relaxed">{s.desc}</p>
-          <ul class="mt-5 space-y-2 text-sm text-brand-ink-700">
-            {s.bullets.map((b) => (
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 flex-none rounded-full bg-brand-mint-500"></span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
+          <div class="kp-svc-body">
+            <span class="kp-pill">{s.tag}</span>
+            <h3 class="prose-kp mt-3 text-xl">{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed" style="color: #8AA0C5;">
+              {s.desc}
+            </p>
+          </div>
         </article>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .kp-svc-card {
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(15, 20, 32, 0.6), rgba(5, 7, 14, 0.4));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .kp-svc-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(38, 215, 246, 0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(38,215,246,0.1);
+  }
+  .kp-svc-visual {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    background: #0A0F1C;
+  }
+  .kp-svc-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .kp-svc-card:hover .kp-svc-visual img {
+    transform: scale(1.03);
+  }
+  /* Subtle bottom vignette for consistency with dark body */
+  .kp-svc-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,7,14,0) 55%, rgba(5,7,14,0.45) 100%);
+    pointer-events: none;
+  }
+  .kp-svc-body {
+    padding: 22px 24px 26px;
+  }
+</style>

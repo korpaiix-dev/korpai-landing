@@ -1,0 +1,493 @@
+---
+---
+
+<!-- Auto-playing Messenger-style chat mockup — rotating through 3 business demos -->
+<section id="chat-demo" class="relative py-20 md:py-24 overflow-hidden" style="background: #05070E;">
+  <!-- Soft beam glow behind chat -->
+  <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full blur-3xl"
+         style="background: radial-gradient(ellipse, rgba(38,215,246,0.15), rgba(60,124,255,0.08) 40%, transparent 70%);"></div>
+  </div>
+
+  <div class="kp-container relative">
+    <div class="max-w-2xl mx-auto text-center kp-reveal">
+      <span class="kp-pill">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#22C55E]" style="box-shadow: 0 0 8px #22C55E;"></span>
+        Live demo · 3 อุตสาหกรรม
+      </span>
+      <h2 class="prose-kp mt-5">AI Sales Agent ทำงานยังไง</h2>
+      <p class="prose-kp mt-5">
+        ตัวอย่างบทสนทนาจริง — ร้านค้าออนไลน์, ร้านอาหาร, คลินิก AI ของเราตอบ, คัดกรอง, และปิดการขายให้คุณ 24 ชม.
+      </p>
+    </div>
+
+    <!-- Demo chat window -->
+    <div class="mt-12 max-w-md mx-auto kp-reveal" style="transition-delay:100ms">
+      <div class="kp-mx-frame">
+        <div class="kp-mx-window">
+          <!-- Header (dynamic — changes per business) -->
+          <div class="kp-mx-header">
+            <div class="flex items-center gap-3">
+              <div class="relative">
+                <div id="kp-mx-biz-avatar" class="h-9 w-9 rounded-full flex items-center justify-center"
+                     style="background: linear-gradient(135deg, #3C7CFF, #26D7F6);">
+                  <span id="kp-mx-biz-initial" class="text-white text-sm font-bold">B</span>
+                </div>
+                <span class="kp-mx-online"></span>
+              </div>
+              <div>
+                <div id="kp-mx-biz-name" class="text-[15px] font-semibold text-white leading-tight">Boutique Fashion</div>
+                <div id="kp-mx-biz-sub" class="text-[11px]" style="color: #B0B3B8;">Active now · ตอบภายใน 2 วินาที</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 text-[#7C5FFF]">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+            </div>
+          </div>
+
+          <!-- Messages area -->
+          <div id="kp-demo-messages" class="kp-mx-messages" aria-hidden="true"></div>
+
+          <!-- Composer (fake, non-interactive) -->
+          <div class="kp-mx-composer">
+            <div class="flex items-center gap-3">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#7C5FFF" stroke="none"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zm5 9a1 1 0 1 0-2 0 3 3 0 0 1-6 0 1 1 0 1 0-2 0 5 5 0 0 0 4 4.9V18H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-3v-2.1A5 5 0 0 0 17 11z"/></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7C5FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7C5FFF"/><polyline points="21 15 16 10 5 21"/></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#7C5FFF" stroke="none"><circle cx="12" cy="12" r="10" fill="none" stroke="#7C5FFF" stroke-width="2"/><circle cx="9" cy="10" r="1.2"/><circle cx="15" cy="10" r="1.2"/><path d="M8 14c1 1.5 2.5 2.3 4 2.3s3-.8 4-2.3" fill="none" stroke="#7C5FFF" stroke-width="2" stroke-linecap="round"/></svg>
+              <div class="kp-mx-gif-badge">GIF</div>
+            </div>
+            <div class="kp-mx-input">Aa</div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B0B3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Business rotator dots -->
+      <div id="kp-mx-dots" class="flex items-center justify-center gap-2 mt-5">
+        <span class="kp-mx-dot active"></span>
+        <span class="kp-mx-dot"></span>
+        <span class="kp-mx-dot"></span>
+      </div>
+
+      <p class="mt-3 text-center text-[11px]" style="color: rgba(138,160,197,0.55);">
+        powered by <strong class="text-white">KORP AI</strong> · ตัวอย่างบทสนทนาจริงบน Line OA / Messenger
+      </p>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* Outer frame */
+  .kp-mx-frame {
+    padding: 1px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.6),
+      0 0 0 1px rgba(38, 215, 246, 0.06),
+      0 10px 40px rgba(60, 124, 255, 0.15);
+  }
+  .kp-mx-window {
+    border-radius: 23px;
+    background: #1C1E21;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+  }
+
+  .kp-mx-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #1C1E21;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+  }
+  .kp-mx-online {
+    position: absolute;
+    bottom: -2px; right: -2px;
+    height: 11px; width: 11px;
+    border-radius: 9999px;
+    background: #31A24C;
+    box-shadow: 0 0 0 2px #1C1E21;
+  }
+
+  .kp-mx-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    scrollbar-width: none;
+    min-height: 460px;
+    max-height: 500px;
+    scroll-behavior: smooth;
+    background: #1C1E21;
+  }
+  .kp-mx-messages::-webkit-scrollbar { display: none; }
+
+  /* Timestamp divider */
+  .kp-mx-ts {
+    align-self: center;
+    font-size: 11px;
+    color: #B0B3B8;
+    padding: 10px 0 6px;
+    font-weight: 600;
+    animation: kp-mx-in 0.32s ease both;
+  }
+
+  /* Message row */
+  .kp-mx-row {
+    display: flex !important;
+    align-items: flex-end;
+    gap: 6px;
+    animation: kp-mx-in 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .kp-mx-row.kp-fadeout { animation: kp-mx-out 0.5s ease forwards; }
+  @keyframes kp-mx-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes kp-mx-out {
+    to { opacity: 0; transform: translateY(-4px); }
+  }
+
+  .kp-mx-row-bot { justify-content: flex-start; padding-left: 4px; }
+  .kp-mx-row-user { justify-content: flex-end; padding-right: 4px; }
+
+  .kp-mx-row + .kp-mx-row.same { margin-top: -1px; }
+  .kp-mx-row + .kp-mx-row.diff { margin-top: 10px; }
+
+  .kp-mx-avatar {
+    width: 28px !important; height: 28px !important;
+    border-radius: 9999px;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+  }
+  .kp-mx-avatar-spacer { width: 28px; flex-shrink: 0; }
+
+  /* Bubbles */
+  .kp-mx-bubble {
+    max-width: 74%;
+    padding: 9px 14px;
+    font-size: 14.5px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    border-radius: 20px;
+  }
+  .kp-mx-bubble-bot {
+    background: #3A3B3C !important;
+    color: #E4E6EB !important;
+  }
+  .kp-mx-bubble-bot.top    { border-bottom-left-radius: 4px; }
+  .kp-mx-bubble-bot.middle { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+  .kp-mx-bubble-bot.bottom { border-top-left-radius: 4px; }
+
+  .kp-mx-bubble-user {
+    background: #7C5FFF !important;
+    color: white !important;
+  }
+  .kp-mx-bubble-user.top    { border-bottom-right-radius: 4px; }
+  .kp-mx-bubble-user.middle { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+  .kp-mx-bubble-user.bottom { border-top-right-radius: 4px; }
+
+  /* Typing */
+  .kp-mx-typing {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    padding: 12px 14px;
+    background: #3A3B3C;
+    border-radius: 20px;
+  }
+  .kp-mx-typing span {
+    width: 6px; height: 6px;
+    border-radius: 9999px;
+    background: #B0B3B8;
+    animation: kp-mx-typing 1.2s ease-in-out infinite;
+  }
+  .kp-mx-typing span:nth-child(2) { animation-delay: 0.15s; }
+  .kp-mx-typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes kp-mx-typing {
+    0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+    40%           { opacity: 1;   transform: translateY(-2px); }
+  }
+
+  /* Composer */
+  .kp-mx-composer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px 14px;
+    background: #1C1E21;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .kp-mx-input {
+    flex: 1;
+    background: #3A3B3C;
+    color: #B0B3B8;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-size: 14px;
+  }
+  .kp-mx-gif-badge {
+    border: 1.5px solid #7C5FFF;
+    color: #7C5FFF;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 5px;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Seen */
+  .kp-mx-seen {
+    align-self: flex-end;
+    font-size: 10px;
+    color: #B0B3B8;
+    padding-right: 8px;
+    margin-top: 4px;
+    animation: kp-mx-in 0.32s ease both;
+  }
+
+  /* Rotator dots */
+  .kp-mx-dot {
+    width: 6px; height: 6px;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.3s ease;
+  }
+  .kp-mx-dot.active {
+    background: #26D7F6;
+    width: 22px;
+    box-shadow: 0 0 8px rgba(38,215,246,0.5);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const messages = document.getElementById('kp-demo-messages');
+    if (!messages) return;
+
+    const bizName   = document.getElementById('kp-mx-biz-name');
+    const bizSub    = document.getElementById('kp-mx-biz-sub');
+    const bizAvatar = document.getElementById('kp-mx-biz-avatar');
+    const bizInitial= document.getElementById('kp-mx-biz-initial');
+    const dots      = document.querySelectorAll('.kp-mx-dot');
+
+    // Three business scenarios
+    const scenarios = [
+      {
+        name: 'Boutique Fashion',
+        sub: 'Active now · ร้านเสื้อผ้า',
+        initial: 'B',
+        avatarBg: 'linear-gradient(135deg, #FF6B9D, #C94FFF)',
+        timestamp: 'วันนี้ · 14:23',
+        script: [
+          { role: 'user', text: 'สวัสดีค่ะ มีชุดเดรสสีขาวไซส์ M ไหมคะ?',                   delay: 700, typing: 0 },
+          { role: 'bot',  text: 'สวัสดีค่ะคุณลูกค้า 🤍',                                    delay: 500, typing: 900 },
+          { role: 'bot',  text: 'มีค่ะ! เดรสลูกไม้รุ่น Lily ไซส์ M เหลือสต็อก 3 ตัวค่ะ', delay: 300, typing: 700 },
+          { role: 'bot',  text: 'ราคา <strong>890฿</strong> ส่งรูปให้ดูไหมคะ?',             delay: 300, typing: 500 },
+          { role: 'user', text: 'ส่ง Kerry ได้ไหมคะ?',                                       delay: 1100, typing: 0 },
+          { role: 'bot',  text: 'ได้เลยค่ะ Kerry 50฿ / Flash 40฿',                           delay: 400, typing: 800 },
+          { role: 'bot',  text: '🎁 ซื้อครบ 1,000฿ <strong>ส่งฟรี</strong> ทั่วประเทศค่ะ',  delay: 300, typing: 600 },
+          { role: 'user', text: 'เอา Lily ขาว M + ต่างหูดอกไม้ค่ะ',                          delay: 1200, typing: 0 },
+          { role: 'bot',  text: 'รวม 890 + 290 = <strong>1,180฿ ส่งฟรี</strong> 🎉',         delay: 400, typing: 900 },
+          { role: 'bot',  text: 'ขอชื่อ-ที่อยู่-เบอร์ ส่งพรุ่งนี้เช้าเลยค่ะ',                  delay: 300, typing: 700 },
+          { role: 'user', text: 'น้องแนน 089-123-4567\n123/45 ซ.ลาดพร้าว 101 กทม.',         delay: 1400, typing: 0 },
+          { role: 'bot',  text: '🙏 ได้รับแล้วค่ะ!',                                         delay: 500, typing: 700 },
+          { role: 'bot',  text: 'แพ็คส่งพรุ่งนี้เช้า 📦 Tracking ส่งในแชทนี้เลยนะคะ ✨',  delay: 300, typing: 800 },
+        ],
+      },
+      {
+        name: 'ครัวคุณยาย',
+        sub: 'Active now · ร้านอาหารไทย',
+        initial: '🍜',
+        avatarBg: 'linear-gradient(135deg, #FF9A3C, #FF3C3C)',
+        timestamp: 'วันนี้ · 18:47',
+        script: [
+          { role: 'user', text: 'ร้านเปิดกี่โมงครับ?',                                        delay: 700, typing: 0 },
+          { role: 'bot',  text: 'สวัสดีค่ะคุณลูกค้า 🙏',                                     delay: 500, typing: 900 },
+          { role: 'bot',  text: 'เปิด <strong>11:00-22:00</strong> ทุกวันค่ะ (last order 21:30)', delay: 300, typing: 700 },
+          { role: 'user', text: 'ขอจองโต๊ะ 4 คน ทุ่มครึ่งได้ไหมครับ?',                     delay: 1200, typing: 0 },
+          { role: 'bot',  text: 'ขอเช็คให้สักครู่นะคะ 🔍',                                   delay: 400, typing: 700 },
+          { role: 'bot',  text: '19:30 วันนี้มีโต๊ะริมหน้าต่าง 4 ที่นั่งว่างค่ะ',          delay: 400, typing: 800 },
+          { role: 'bot',  text: 'จองให้เลยไหมคะ?',                                             delay: 300, typing: 500 },
+          { role: 'user', text: 'จองเลยครับ',                                                   delay: 1100, typing: 0 },
+          { role: 'bot',  text: 'ขอชื่อและเบอร์ติดต่อค่ะ 📱',                                 delay: 400, typing: 700 },
+          { role: 'user', text: 'พี่เอก 089-234-5678',                                           delay: 1300, typing: 0 },
+          { role: 'bot',  text: 'ยืนยันแล้วค่ะ! 🎉',                                           delay: 500, typing: 900 },
+          { role: 'bot',  text: '📅 โต๊ะ 4 ท่าน · วันนี้ 19:30<br>📍 ริมหน้าต่าง',            delay: 300, typing: 700 },
+          { role: 'bot',  text: 'ส่ง Google Maps ให้เลยนะคะ 🗺️ รอต้อนรับค่ะ ❤️',              delay: 300, typing: 800 },
+        ],
+      },
+      {
+        name: 'Derma Clinic BKK',
+        sub: 'Active now · คลินิกผิวหนัง',
+        initial: '+',
+        avatarBg: 'linear-gradient(135deg, #26D7F6, #3C7CFF)',
+        timestamp: 'วันนี้ · 10:15',
+        script: [
+          { role: 'user', text: 'สนใจเลเซอร์ขนรักแร้ค่ะ ราคาเท่าไหร่?',                    delay: 700, typing: 0 },
+          { role: 'bot',  text: 'สวัสดีค่ะ 👋',                                              delay: 500, typing: 700 },
+          { role: 'bot',  text: '<strong>เลเซอร์ขนรักแร้</strong> (Diode)',                 delay: 300, typing: 800 },
+          { role: 'bot',  text: '• ครั้งเดียว 990฿<br>• แพ็ค 6 ครั้ง <strong>4,990฿</strong> 🎁<br>• ใช้เวลา 15-20 นาที', delay: 300, typing: 900 },
+          { role: 'user', text: 'จองวันเสาร์ 14:00 ได้ไหมคะ?',                               delay: 1200, typing: 0 },
+          { role: 'bot',  text: 'ขอเช็คคิวหมอให้สักครู่ค่ะ 🔍',                              delay: 400, typing: 800 },
+          { role: 'bot',  text: '✅ เสาร์ 14:00 ว่างกับคุณหมอมิ้นท์ค่ะ',                    delay: 400, typing: 800 },
+          { role: 'bot',  text: 'จองเลยไหมคะ?',                                                delay: 300, typing: 500 },
+          { role: 'user', text: 'จองค่ะ',                                                       delay: 1000, typing: 0 },
+          { role: 'bot',  text: 'ขอชื่อ-เบอร์ติดต่อค่ะ',                                       delay: 400, typing: 700 },
+          { role: 'user', text: 'พิม 082-345-6789',                                              delay: 1200, typing: 0 },
+          { role: 'bot',  text: 'ยืนยันแล้วค่ะ ✨',                                            delay: 500, typing: 900 },
+          { role: 'bot',  text: '📅 เสาร์นี้ 14:00 · คุณหมอมิ้นท์<br>📍 สาขาสุขุมวิท 24',   delay: 300, typing: 800 },
+          { role: 'bot',  text: 'ส่งแผนที่ + วิธีเตรียมผิวให้ในแชทนี้นะคะ 🗺️',             delay: 300, typing: 700 },
+        ],
+      },
+    ];
+
+    const escapeHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'
+    }[c])).replace(/\n/g, '<br>');
+
+    const getPos = (script, i) => {
+      const cur = script[i];
+      const prev = script[i - 1];
+      const next = script[i + 1];
+      const samePrev = prev && prev.role === cur.role;
+      const sameNext = next && next.role === cur.role;
+      if (samePrev && sameNext) return 'middle';
+      if (samePrev && !sameNext) return 'bottom';
+      if (!samePrev && sameNext) return 'top';
+      return 'single';
+    };
+
+    const addMessage = (scenario, i) => {
+      const script = scenario.script;
+      const step = script[i];
+      const prev = script[i - 1];
+      const samePrev = prev && prev.role === step.role;
+      const pos = getPos(script, i);
+
+      const row = document.createElement('div');
+      row.className = `kp-mx-row kp-mx-row-${step.role} ${samePrev ? 'same' : 'diff'}`;
+
+      const content = step.role === 'bot' ? step.text.replace(/\n/g, '<br>') : escapeHtml(step.text);
+
+      if (step.role === 'bot') {
+        const avatarEl = (pos === 'bottom' || pos === 'single')
+          ? `<div class="kp-mx-avatar" style="background:${scenario.avatarBg};">${scenario.initial}</div>`
+          : `<div class="kp-mx-avatar-spacer"></div>`;
+        row.innerHTML = `
+          ${avatarEl}
+          <div class="kp-mx-bubble kp-mx-bubble-bot ${pos}">${content}</div>
+        `;
+      } else {
+        row.innerHTML = `
+          <div class="kp-mx-bubble kp-mx-bubble-user ${pos}">${content}</div>
+        `;
+      }
+
+      messages.appendChild(row);
+      messages.scrollTop = messages.scrollHeight;
+      return row;
+    };
+
+    const addTyping = (scenario) => {
+      const row = document.createElement('div');
+      row.className = 'kp-mx-row kp-mx-row-bot diff';
+      row.dataset.typing = '1';
+      row.innerHTML = `
+        <div class="kp-mx-avatar" style="background:${scenario.avatarBg};">${scenario.initial}</div>
+        <div class="kp-mx-typing"><span></span><span></span><span></span></div>
+      `;
+      messages.appendChild(row);
+      messages.scrollTop = messages.scrollHeight;
+      return row;
+    };
+
+    const addTimestamp = (label) => {
+      const ts = document.createElement('div');
+      ts.className = 'kp-mx-ts';
+      ts.textContent = label;
+      messages.appendChild(ts);
+    };
+
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    const setHeader = (scenario, idx) => {
+      bizName.textContent = scenario.name;
+      bizSub.textContent = scenario.sub;
+      bizInitial.textContent = scenario.initial;
+      bizAvatar.style.background = scenario.avatarBg;
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+    };
+
+    let running = false;
+    let idx = 0;
+    const runOnce = async () => {
+      if (running) return;
+      running = true;
+
+      const scenario = scenarios[idx];
+      setHeader(scenario, idx);
+      messages.innerHTML = '';
+      addTimestamp(scenario.timestamp);
+
+      for (let i = 0; i < scenario.script.length; i++) {
+        const step = scenario.script[i];
+        await sleep(step.delay);
+        if (step.role === 'bot' && step.typing) {
+          const t = addTyping(scenario);
+          await sleep(step.typing);
+          t.remove();
+        }
+        addMessage(scenario, i);
+      }
+
+      // "Seen" under last message
+      const seen = document.createElement('div');
+      seen.className = 'kp-mx-seen';
+      seen.textContent = 'Seen · just now';
+      messages.appendChild(seen);
+      messages.scrollTop = messages.scrollHeight;
+
+      // Pause, fade, next scenario
+      await sleep(3000);
+      const all = [...messages.children];
+      all.forEach((el, i) => {
+        el.classList.add('kp-fadeout');
+        el.style.animationDelay = `${i * 25}ms`;
+      });
+      await sleep(700 + all.length * 25);
+      messages.innerHTML = '';
+      idx = (idx + 1) % scenarios.length;
+      running = false;
+      runOnce();
+    };
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            io.disconnect();
+            runOnce();
+          }
+        });
+      }, { threshold: 0.2 });
+      io.observe(document.getElementById('chat-demo'));
+    } else {
+      runOnce();
+    }
+  })();
+</script>

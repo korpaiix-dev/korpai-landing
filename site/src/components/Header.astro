@@ -1,29 +1,59 @@
 ---
 const nav = [
-  { href: '#services', label: 'บริการ' },
-  { href: '#process',  label: 'ขั้นตอน' },
-  { href: '#contact',  label: 'ติดต่อ' },
+  { href: '#services',  label: 'บริการ' },
+  { href: '#process',   label: 'ขั้นตอน' },
+  { href: '#portfolio', label: 'ผลงาน' },
+  { href: '#pricing',   label: 'ราคา' },
+  { href: '#contact',   label: 'ติดต่อ' },
 ];
 ---
 
-<header class="sticky top-0 z-40 border-b border-brand-ink-100/60 bg-white/85 backdrop-blur">
-  <div class="kp-container flex h-16 items-center justify-between">
-    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-brand-ink-900">
-      <span
-        class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-sky-400 to-brand-mint-400 text-white shadow-soft"
-        aria-hidden="true"
-      >K</span>
-      <span>KORP<span class="text-brand-sky-600"> AI</span></span>
-    </a>
+<header class="sticky top-4 z-40">
+  <div class="kp-container">
+    <div class="kp-nav-pill justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full transition hover:bg-white/5" aria-label="KORP AI AUTOMATION">
+        <img
+          src="/assets/logo-icon.svg"
+          alt=""
+          width="28"
+          height="28"
+          class="h-7 w-7 rounded-md"
+          loading="eager"
+          decoding="async"
+        />
+        <span class="hidden sm:inline text-sm font-semibold tracking-tight text-white">
+          Korp<span class="text-brand-cyan-400"> AI</span>
+        </span>
+      </a>
 
-    <nav class="hidden items-center gap-8 md:flex">
-      {nav.map(item => (
-        <a href={item.href} class="text-sm text-brand-ink-600 transition hover:text-brand-ink-900">{item.label}</a>
-      ))}
-    </nav>
+      <!-- Nav links -->
+      <nav class="hidden md:flex items-center gap-0.5" aria-label="Primary">
+        {nav.map(item => (
+          <a href={item.href} class="kp-nav-link">{item.label}</a>
+        ))}
+      </nav>
 
-    <a href="#contact" class="kp-btn-primary !py-2.5 !px-4 text-sm">
-      ปรึกษาฟรี
-    </a>
+      <!-- Right side -->
+      <div class="flex items-center gap-1.5">
+        <div
+          class="hidden sm:inline-flex items-center rounded-full p-0.5 text-xs font-medium"
+          style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);"
+          role="group"
+          aria-label="Language"
+        >
+          <button type="button" class="rounded-full bg-white text-brand-navy-900 px-2.5 py-1" aria-pressed="true">TH</button>
+          <button type="button" class="rounded-full px-2.5 py-1 text-brand-ink-400 hover:text-white" aria-pressed="false">EN</button>
+        </div>
+
+        <a
+          href="#contact"
+          class="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-brand-navy-900 transition hover:bg-brand-ink-50"
+        >
+          ปรึกษาฟรี
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
   </div>
 </header>

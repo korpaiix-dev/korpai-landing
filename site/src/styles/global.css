@@ -24,7 +24,10 @@ html {
 
 body {
   @apply font-sans;
-  background: var(--kp-bg);
+  /* IMPORTANT: body bg must be transparent so the fixed pseudo-element
+     gradients and .kp-bg-ambient orbs (at negative z-index) are visible.
+     The base dark color lives on html above so the canvas is still solid. */
+  background: transparent;
   color: var(--kp-ink);
   position: relative;
   overflow-x: hidden;

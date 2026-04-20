@@ -1,0 +1,81 @@
+---
+import '~/styles/global.css';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+}
+
+const {
+  title = 'KORP AI AUTOMATION — AI Agent & Automation สำหรับ SME ไทย',
+  description = 'ทีม KORP AI ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, Dashboard ให้ธุรกิจ SME ไทยโตเร็วขึ้น ปรึกษาฟรี',
+  canonical = 'https://korpai.co',
+  image = 'https://korpai.co/og-default.png',
+} = Astro.props;
+
+const siteName = 'KORP AI AUTOMATION';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteName,
+  url: 'https://korpai.co',
+  logo: 'https://korpai.co/favicon.svg',
+  description,
+  sameAs: [],
+  contactPoint: [
+    { '@type': 'ContactPoint', contactType: 'customer service', availableLanguage: ['th', 'en'] },
+  ],
+};
+---
+
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0EA5E9" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="th_TH" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Prompt font (Thai-optimized) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap"
+    />
+
+    <!-- Structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="min-h-screen bg-white text-brand-ink-900 font-sans">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

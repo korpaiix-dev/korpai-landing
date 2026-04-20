@@ -1,0 +1,61 @@
+---
+const services = [
+  {
+    tag: 'Chatbot',
+    title: 'AI Sales Agent / Chatbot',
+    desc: 'ตอบแชทลูกค้าบน Line OA, Messenger หรือหน้าเว็บ 24 ชม. คัดกรองลูกค้า จองคิว แล้วส่งต่อให้ทีมขายปิดงาน',
+    bullets: ['Line OA / Messenger / Web widget', 'คัดกรองลูกค้า + บันทึกข้อมูล', 'ส่งต่อมนุษย์เมื่อจำเป็น'],
+  },
+  {
+    tag: 'Automation',
+    title: 'Automation Flow',
+    desc: 'เชื่อมต่อเครื่องมือที่ทีมใช้อยู่ให้ทำงานเอง เช่น ฟอร์ม → Sheet → CRM → แจ้งทีม ประหยัดเวลางานซ้ำ ๆ',
+    bullets: ['n8n · Make · Zapier', 'เชื่อมต่อ Google Sheets, CRM, Line Notify', 'รายงานอัตโนมัติรายวัน/รายสัปดาห์'],
+  },
+  {
+    tag: 'Dashboard',
+    title: 'Dashboard / Data Visualization',
+    desc: 'แดชบอร์ดดูยอดขาย ลีด KPI เรียลไทม์ ดึงข้อมูลจากระบบเดิม ไม่ต้องเปิดหลายหน้าจออีกต่อไป',
+    bullets: ['Metabase · Grafana · Custom React', 'เชื่อมต่อฐานข้อมูล / Sheets / API', 'แชร์ให้ทีมเข้าถึงได้ปลอดภัย'],
+  },
+  {
+    tag: 'Custom AI',
+    title: 'Custom AI Feature',
+    desc: 'สเกลงาน AI เฉพาะทาง — สรุปเอกสาร, ตอบคำถามจากฐานความรู้ภายใน, สร้างภาพ, หรือระบบเสียง ออกแบบตามโจทย์',
+    bullets: ['RAG · Document Q&A', 'Image / Voice pipeline', 'ผูกกับระบบเดิมของลูกค้า'],
+  },
+];
+---
+
+<section id="services" class="py-20 md:py-24">
+  <div class="kp-container">
+    <div class="max-w-2xl">
+      <span class="kp-pill">บริการของเรา</span>
+      <h2 class="prose-kp mt-4">ออกแบบระบบ AI ที่คุ้มกับขนาดธุรกิจคุณ</h2>
+      <p class="prose-kp mt-4">
+        ไม่ใช่แค่ติดตั้ง chatbot สำเร็จรูป — เราคุยกับทีมคุณก่อน หาจุดที่ AI ช่วยได้จริง แล้วส่งระบบที่ทีมใช้ต่อได้เอง
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-5 md:grid-cols-2">
+      {services.map((s) => (
+        <article class="kp-card">
+          <div class="flex items-center justify-between">
+            <span class="kp-pill">{s.tag}</span>
+            <span aria-hidden="true" class="text-brand-sky-400">◆</span>
+          </div>
+          <h3 class="prose-kp mt-4">{s.title}</h3>
+          <p class="mt-3 text-brand-ink-600 leading-relaxed">{s.desc}</p>
+          <ul class="mt-5 space-y-2 text-sm text-brand-ink-700">
+            {s.bullets.map((b) => (
+              <li class="flex items-start gap-2">
+                <span class="mt-1 inline-block h-1.5 w-1.5 flex-none rounded-full bg-brand-mint-500"></span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

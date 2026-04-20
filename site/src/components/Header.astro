@@ -1,0 +1,29 @@
+---
+const nav = [
+  { href: '#services', label: 'บริการ' },
+  { href: '#process',  label: 'ขั้นตอน' },
+  { href: '#contact',  label: 'ติดต่อ' },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-brand-ink-100/60 bg-white/85 backdrop-blur">
+  <div class="kp-container flex h-16 items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-brand-ink-900">
+      <span
+        class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-sky-400 to-brand-mint-400 text-white shadow-soft"
+        aria-hidden="true"
+      >K</span>
+      <span>KORP<span class="text-brand-sky-600"> AI</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-8 md:flex">
+      {nav.map(item => (
+        <a href={item.href} class="text-sm text-brand-ink-600 transition hover:text-brand-ink-900">{item.label}</a>
+      ))}
+    </nav>
+
+    <a href="#contact" class="kp-btn-primary !py-2.5 !px-4 text-sm">
+      ปรึกษาฟรี
+    </a>
+  </div>
+</header>

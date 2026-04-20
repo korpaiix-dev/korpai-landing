@@ -40,10 +40,10 @@ body::before {
   z-index: -3;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 110% 80% at 50% -10%, rgba(38,215,246,0.28) 0%, transparent 60%),
-    radial-gradient(ellipse 85%  70% at 90% 25%,  rgba(60,124,255,0.20) 0%, transparent 60%),
-    radial-gradient(ellipse 80%  70% at 10% 55%,  rgba(124,95,255,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 95%  65% at 50% 115%, rgba(38,215,246,0.16) 0%, transparent 60%),
+    radial-gradient(ellipse 120% 90% at 50% -10%, rgba(38,215,246,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 95%  80% at 92% 22%,  rgba(60,124,255,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse 90%  80% at 8% 55%,   rgba(124,95,255,0.42) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 75% at 50% 115%, rgba(38,215,246,0.40) 0%, transparent 55%),
     var(--kp-bg);
 }
 
@@ -68,89 +68,106 @@ body::after {
   z-index: -2;
   pointer-events: none;
   overflow: hidden;
-  isolation: isolate;
+  /* NOTE: no `isolation: isolate` — it would block mix-blend-mode with body::before */
 }
 .kp-bg-orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(80px);
-  opacity: 0.55;
+  filter: blur(70px);
+  opacity: 1;
   mix-blend-mode: screen;
   will-change: transform;
 }
+/* HUGE, bright orbs — visible on every scroll position */
 .kp-bg-orb-1 {
-  width: 620px; height: 620px;
-  top: -180px; left: -140px;
-  background: radial-gradient(circle, rgba(38,215,246,0.70), transparent 70%);
+  width: 900px; height: 900px;
+  top: -260px; left: -220px;
+  background: radial-gradient(circle, rgba(38,215,246,0.95) 0%, rgba(38,215,246,0.40) 35%, transparent 70%);
   animation: kp-bg-drift-1 26s ease-in-out infinite alternate;
 }
 .kp-bg-orb-2 {
-  width: 560px; height: 560px;
-  top: 30%; right: -160px;
-  background: radial-gradient(circle, rgba(124,95,255,0.65), transparent 70%);
+  width: 820px; height: 820px;
+  top: 20%; right: -240px;
+  background: radial-gradient(circle, rgba(124,95,255,0.90) 0%, rgba(124,95,255,0.35) 35%, transparent 70%);
   animation: kp-bg-drift-2 32s ease-in-out infinite alternate;
 }
 .kp-bg-orb-3 {
-  width: 680px; height: 680px;
-  bottom: -220px; left: 30%;
-  background: radial-gradient(circle, rgba(60,124,255,0.55), transparent 70%);
+  width: 980px; height: 980px;
+  bottom: -320px; left: 20%;
+  background: radial-gradient(circle, rgba(60,124,255,0.85) 0%, rgba(60,124,255,0.35) 35%, transparent 70%);
   animation: kp-bg-drift-3 38s ease-in-out infinite alternate;
 }
 @keyframes kp-bg-drift-1 {
   0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(60px, 80px) scale(1.08); }
+  100% { transform: translate(80px, 100px) scale(1.10); }
 }
 @keyframes kp-bg-drift-2 {
   0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(-80px, 60px) scale(1.10); }
+  100% { transform: translate(-100px, 80px) scale(1.12); }
 }
 @keyframes kp-bg-drift-3 {
   0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(40px, -90px) scale(1.05); }
+  100% { transform: translate(60px, -120px) scale(1.08); }
 }
 
+/* Central glowing halo — always pulsing in background */
 .kp-bg-halo {
   position: absolute;
-  top: 15%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, 0);
-  width: min(1100px, 90vw);
-  height: 700px;
+  width: min(1400px, 95vw);
+  height: 900px;
   background: radial-gradient(ellipse at center,
-    rgba(38,215,246,0.22) 0%,
-    rgba(60,124,255,0.12) 30%,
-    transparent 65%);
-  filter: blur(40px);
+    rgba(38,215,246,0.50) 0%,
+    rgba(60,124,255,0.28) 25%,
+    rgba(124,95,255,0.15) 50%,
+    transparent 70%);
+  filter: blur(50px);
+  mix-blend-mode: screen;
   animation: kp-bg-halo-pulse 8s ease-in-out infinite alternate;
 }
 @keyframes kp-bg-halo-pulse {
-  0%   { opacity: 0.55; transform: translate(-50%, 0) scale(1); }
-  100% { opacity: 0.85; transform: translate(-50%, 0) scale(1.06); }
+  0%   { opacity: 0.85; transform: translate(-50%, 0) scale(1);    }
+  100% { opacity: 1;    transform: translate(-50%, 0) scale(1.08); }
 }
 
+/* Diagonal beams — Raycast style, spanning full viewport */
 .kp-bg-rays {
   position: absolute;
   inset: 0;
   overflow: hidden;
   mix-blend-mode: screen;
-  opacity: 0.45;
+  opacity: 0.9;
 }
 .kp-bg-rays span {
   position: absolute;
-  top: -20%;
-  height: 140%;
-  width: 2px;
-  background: linear-gradient(to bottom,
-    transparent,
-    rgba(38,215,246,0.55) 30%,
-    rgba(124,95,255,0.35) 70%,
-    transparent);
-  transform-origin: top center;
-  filter: blur(1.5px);
+  border-radius: 9999px;
+  filter: blur(36px);
+  transform-origin: center;
 }
-.kp-bg-rays span:nth-child(1) { left: 18%; transform: rotate(15deg); }
-.kp-bg-rays span:nth-child(2) { left: 52%; transform: rotate(-8deg); opacity: 0.75; }
-.kp-bg-rays span:nth-child(3) { left: 82%; transform: rotate(12deg); opacity: 0.6; }
+.kp-bg-rays span:nth-child(1) {
+  top: 12%; left: 18%;
+  width: 860px; height: 130px;
+  background: linear-gradient(90deg, transparent 0%, rgba(38,215,246,0.55) 40%, rgba(60,124,255,0.45) 75%, transparent 100%);
+  transform: rotate(22deg);
+}
+.kp-bg-rays span:nth-child(2) {
+  top: 45%; left: 25%;
+  width: 1000px; height: 160px;
+  background: linear-gradient(90deg, transparent 0%, rgba(60,124,255,0.50) 35%, rgba(38,215,246,0.50) 75%, transparent 100%);
+  transform: rotate(22deg);
+  filter: blur(44px);
+  opacity: 0.8;
+}
+.kp-bg-rays span:nth-child(3) {
+  top: 75%; left: 12%;
+  width: 920px; height: 140px;
+  background: linear-gradient(90deg, transparent 0%, rgba(124,95,255,0.45) 40%, rgba(38,215,246,0.40) 75%, transparent 100%);
+  transform: rotate(22deg);
+  filter: blur(40px);
+  opacity: 0.75;
+}
 
 /* Sections should let the body glow show through by default */
 main > section {
@@ -159,7 +176,7 @@ main > section {
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .kp-bg-orb, .kp-bg-halo { animation: none !important; }
+  .kp-bg-orb, .kp-bg-halo, .kp-bg-rays span { animation: none !important; }
 }
 
 ::selection {

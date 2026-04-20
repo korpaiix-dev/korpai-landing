@@ -81,18 +81,30 @@ const jsonLd = {
       (() => {
         if (typeof window === 'undefined') return;
         const els = document.querySelectorAll('.kp-reveal');
+
+        // Soft reveal (uses CSS transition) — used by IO when the user
+        // scrolls and the tab is visible.
         const reveal = (el) => el.classList.add('is-in');
+
+        // Instant reveal (no transition) — required for hidden tabs and
+        // backgrounded screenshots, where CSS transitions don't run and
+        // would otherwise leave content stuck at opacity:0.
+        const revealInstant = (el) => {
+          el.style.transition = 'none';
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.classList.add('is-in');
+        };
 
         // No IO support: reveal everything immediately
         if (!('IntersectionObserver' in window)) {
-          els.forEach(reveal);
+          els.forEach(revealInstant);
           return;
         }
 
-        // Eager reveal: anything already in the viewport at script time.
-        // This guarantees above-the-fold content is visible even when the
-        // tab is in the background (IntersectionObserver doesn't fire for
-        // hidden tabs).
+        // Eager pass: anything already in the viewport at script time
+        // gets revealed instantly. This guarantees above-the-fold
+        // content is visible even in background tabs.
         const vh = window.innerHeight || document.documentElement.clientHeight;
         const inView = (el) => {
           const r = el.getBoundingClientRect();
@@ -109,16 +121,19 @@ const jsonLd = {
         }, { threshold: 0.12 });
 
         els.forEach((el) => {
-          if (inView(el)) reveal(el);
-          io.observe(el);
+          if (inView(el)) {
+            revealInstant(el);
+          } else {
+            io.observe(el);
+          }
         });
 
-        // Final safety net: 1.5s after page load, reveal anything still
-        // hidden (covers backgrounded tabs and slow IO callbacks).
+        // Final safety net: 1.5s after page load, instant-reveal anything
+        // still hidden (covers backgrounded tabs and slow IO callbacks).
         const fallback = () => {
           setTimeout(() => {
             els.forEach((el) => {
-              if (!el.classList.contains('is-in')) reveal(el);
+              if (!el.classList.contains('is-in')) revealInstant(el);
             });
           }, 1500);
         };

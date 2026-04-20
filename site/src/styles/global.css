@@ -72,25 +72,26 @@ main > section {
 }
 
 /* ---------- typography ---------- */
-.prose-kp h1 {
+/* Match both descendants (.prose-kp h1) AND elements with .prose-kp class (h1.prose-kp) */
+.prose-kp h1, h1.prose-kp {
   @apply font-bold tracking-tight;
   color: #fff;
-  font-size: clamp(3rem, 8vw, 6.5rem);
-  line-height: 1.00;
+  font-size: clamp(2.75rem, 7vw, 5.75rem);
+  line-height: 1.02;
   letter-spacing: -0.035em;
 }
-.prose-kp h2 {
+.prose-kp h2, h2.prose-kp {
   @apply font-semibold tracking-tight;
   color: #fff;
   font-size: clamp(1.875rem, 3.5vw, 3rem);
-  line-height: 1.08;
+  line-height: 1.1;
   letter-spacing: -0.025em;
 }
-.prose-kp h3 {
+.prose-kp h3, h3.prose-kp {
   @apply text-lg md:text-xl font-semibold;
   color: #fff;
 }
-.prose-kp p {
+.prose-kp p, p.prose-kp {
   @apply text-base md:text-lg leading-relaxed;
   color: var(--kp-muted);
 }

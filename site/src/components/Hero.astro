@@ -1,12 +1,17 @@
 ---
 ---
 
-<section id="hero" class="relative overflow-hidden isolate" style="background: #05070E;">
+<section id="hero" class="relative overflow-hidden isolate min-h-[92vh] flex items-center">
   <!-- Subtle starfield dots -->
   <div aria-hidden="true" class="absolute inset-0 kp-dots z-[0]"></div>
 
-  <!-- Big centered halo glow -->
-  <div aria-hidden="true" class="kp-halo"></div>
+  <!-- Floating color orbs (WOW factor) -->
+  <div aria-hidden="true" class="kp-orb kp-orb-1"></div>
+  <div aria-hidden="true" class="kp-orb kp-orb-2"></div>
+  <div aria-hidden="true" class="kp-orb kp-orb-3"></div>
+
+  <!-- Big pulsing halo glow -->
+  <div aria-hidden="true" class="kp-halo kp-halo-pulse"></div>
 
   <!-- Raycast-style diagonal beams (parallax) -->
   <div aria-hidden="true" id="kp-beams" class="kp-beams">
@@ -23,13 +28,9 @@
   <!-- Cursor spotlight -->
   <div aria-hidden="true" id="kp-spotlight" class="kp-spotlight"></div>
 
-  <!-- Bottom fade to bg -->
-  <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-40 z-[2]"
-       style="background: linear-gradient(to top, #05070E, transparent);"></div>
-
   <!-- Content -->
-  <div class="kp-container relative z-10 pt-24 pb-28 md:pt-32 md:pb-36">
-    <div class="mx-auto max-w-4xl text-center">
+  <div class="kp-container relative z-10 py-20 md:py-28 w-full">
+    <div class="mx-auto max-w-5xl text-center">
       <span class="kp-pill kp-reveal">
         <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan-400" style="box-shadow: 0 0 12px #26D7F6;"></span>
         เปิดรับโปรเจกต์ใหม่ · ตอบภายใน 24 ชม.
@@ -55,8 +56,28 @@
         </a>
       </div>
 
+      <!-- Social proof stats row -->
+      <div class="mt-8 flex justify-center kp-reveal" style="transition-delay:240ms">
+        <div class="kp-stat-row">
+          <div class="kp-stat">
+            <div class="kp-stat-num"><span class="kp-grad-inline">50+</span></div>
+            <div class="kp-stat-label">SME ไทยใช้งาน</div>
+          </div>
+          <div class="kp-stat-divider"></div>
+          <div class="kp-stat">
+            <div class="kp-stat-num"><span class="kp-grad-inline">24/7</span></div>
+            <div class="kp-stat-label">AI ไม่หลับ</div>
+          </div>
+          <div class="kp-stat-divider"></div>
+          <div class="kp-stat">
+            <div class="kp-stat-num">&lt; <span class="kp-grad-inline">2 วิ</span></div>
+            <div class="kp-stat-label">Response time</div>
+          </div>
+        </div>
+      </div>
+
       <!-- Line + Facebook chips -->
-      <div class="mt-7 flex items-center justify-center gap-2 text-xs text-brand-ink-400 kp-reveal" style="transition-delay:220ms">
+      <div class="mt-7 flex items-center justify-center gap-2 text-xs text-brand-ink-400 kp-reveal" style="transition-delay:300ms">
         <span class="text-brand-ink-500">หรือแชทได้ที่:</span>
         <a href="https://line.me/R/ti/p/@korpai" target="_blank" rel="noopener" class="kp-chip hover:!border-[#06C755]/50 hover:!text-[#06C755]">
           <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" aria-hidden="true" fill="currentColor">
@@ -73,6 +94,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Scroll indicator -->
+  <a href="#chat-demo" class="kp-scroll-hint" aria-label="เลื่อนลงดูต่อ">
+    <span>SCROLL</span>
+    <span class="kp-mouse"></span>
+  </a>
 </section>
 
 <script is:inline>

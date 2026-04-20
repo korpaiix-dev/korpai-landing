@@ -26,6 +26,44 @@ body {
   @apply font-sans;
   background: var(--kp-bg);
   color: var(--kp-ink);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ========== SITE-WIDE AMBIENT BACKGROUND ==========
+   Fixed layer that stays behind all sections, giving the whole
+   page the same cyan/violet glow aesthetic as the hero.        */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 100% 70% at 50% -20%,  rgba(38,215,246,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 70%  60% at 85% 20%,   rgba(60,124,255,0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 65%  55% at 15% 60%,   rgba(124,95,255,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 80%  60% at 50% 110%,  rgba(38,215,246,0.10) 0%, transparent 55%),
+    var(--kp-bg);
+}
+
+/* Subtle animated aurora that drifts slowly across the page */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0);
+  background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 85%);
+          mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 85%);
+  opacity: 0.55;
+}
+
+/* Sections should let the body glow show through by default */
+main > section {
+  background: transparent !important;
 }
 
 ::selection {
@@ -227,12 +265,141 @@ body {
   transition: background 60ms linear;
 }
 
-/* ---------- gradient text ---------- */
+/* ---------- gradient text (shimmer) ---------- */
 .kp-grad {
-  background: linear-gradient(92deg, #FFFFFF 0%, #C9E8FF 40%, #26D7F6 80%, #3C7CFF 100%);
+  background: linear-gradient(92deg, #FFFFFF 0%, #C9E8FF 25%, #26D7F6 50%, #7C5FFF 75%, #FFFFFF 100%);
+  background-size: 220% auto;
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
+  animation: kp-shimmer 7s linear infinite;
+}
+@keyframes kp-shimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: -220% 50%; }
+}
+
+/* ---------- HERO WOW: pulsing halo ---------- */
+.kp-halo.kp-halo-pulse {
+  animation: kp-halo-pulse 6s ease-in-out infinite;
+}
+@keyframes kp-halo-pulse {
+  0%, 100% { opacity: 0.85; transform: translate(-50%, -25%) scale(1);    }
+  50%      { opacity: 1;    transform: translate(-50%, -25%) scale(1.08); }
+}
+
+/* ---------- HERO WOW: floating orbs behind title ---------- */
+.kp-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform;
+}
+.kp-orb-1 {
+  width: 380px; height: 380px;
+  top: 10%; left: 18%;
+  background: radial-gradient(circle, rgba(38,215,246,0.55), rgba(38,215,246,0) 70%);
+  animation: kp-orb-drift-1 14s ease-in-out infinite;
+}
+.kp-orb-2 {
+  width: 460px; height: 460px;
+  top: 30%; right: 12%;
+  background: radial-gradient(circle, rgba(124,95,255,0.45), rgba(124,95,255,0) 70%);
+  animation: kp-orb-drift-2 18s ease-in-out infinite;
+}
+.kp-orb-3 {
+  width: 320px; height: 320px;
+  bottom: 5%; left: 40%;
+  background: radial-gradient(circle, rgba(60,124,255,0.40), rgba(60,124,255,0) 70%);
+  animation: kp-orb-drift-3 16s ease-in-out infinite;
+}
+@keyframes kp-orb-drift-1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%     { transform: translate(40px,-30px) scale(1.1); }
+}
+@keyframes kp-orb-drift-2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%     { transform: translate(-50px,40px) scale(1.05); }
+}
+@keyframes kp-orb-drift-3 {
+  0%,100% { transform: translate(-50%,0) scale(1); }
+  50%     { transform: translate(-40%,-30px) scale(1.12); }
+}
+
+/* ---------- HERO WOW: stat row ---------- */
+.kp-stat-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 22px;
+  border-radius: 9999px;
+  background: rgba(16,22,40,0.55);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.kp-stat {
+  display: flex; flex-direction: column; align-items: center;
+  line-height: 1;
+}
+.kp-stat-num {
+  font-size: 18px; font-weight: 800; color: #fff;
+  letter-spacing: -0.01em;
+}
+.kp-stat-num .kp-grad-inline {
+  background: linear-gradient(92deg, #26D7F6, #7C5FFF);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+.kp-stat-label {
+  font-size: 11px; color: #8AA0C5; margin-top: 4px;
+  font-weight: 500;
+}
+.kp-stat-divider {
+  width: 1px; height: 28px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15), transparent);
+}
+
+/* ---------- HERO WOW: scroll indicator ---------- */
+.kp-scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: #8AA0C5;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  z-index: 10;
+  animation: kp-scroll-hint 2.4s ease-in-out infinite;
+}
+.kp-scroll-hint .kp-mouse {
+  width: 20px; height: 30px;
+  border: 1.5px solid rgba(138,160,197,0.5);
+  border-radius: 12px;
+  position: relative;
+}
+.kp-scroll-hint .kp-mouse::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 6px;
+  width: 2px; height: 6px;
+  background: #26D7F6;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  animation: kp-mouse-wheel 1.8s ease-in-out infinite;
+}
+@keyframes kp-scroll-hint {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, 0); }
+  50%      { opacity: 1;   transform: translate(-50%, 4px); }
+}
+@keyframes kp-mouse-wheel {
+  0%   { opacity: 1; top: 6px; }
+  100% { opacity: 0; top: 16px; }
 }
 
 /* ---------- reveal animation ---------- */

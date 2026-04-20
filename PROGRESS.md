@@ -62,6 +62,7 @@
 ## 🚧 IN PROGRESS
 
 - [ ] Commit + push docs batch (about to do)
+- [x] Cross-link repo นี้ → `korp-ai-hq` (hub repo ส่วนกลาง) — เพิ่มหัวข้อ §0 ใน README
 
 ---
 
@@ -159,4 +160,13 @@
 - 00:52 First commit: scaffold + PROGRESS.md tracker + placeholder snapshot
 - 01:00 ตามที่บอสขอ: เขียน docs ชุดเต็ม — README, .env.example, ARCHITECTURE, DEPLOYMENT
 - 01:0x Commit #2: full project docs
+
+### 2026-04-20 — Session #3 (hub bootstrap)
+- สร้าง private hub repo **`korpaiix-dev/korp-ai-hq`** เป็น source of truth ของทั้ง agency
+  - ใส่ไฟล์: README, SESSION_MEMORY, RULES, MASTER_SPEC, PROJECTS, VPS_INVENTORY, CREDENTIALS (index only), PROGRESS
+  - `docs/` — ARCHITECTURE, COST_MODEL, DELIVERY_PLAYBOOK
+  - `clients/charoenpon.md` (stub + DO-NOT-TOUCH: `charoenpon-postgres`)
+  - `projects/korpai-landing.md` — project sheet + runbook อ้างกลับมาที่ repo นี้
+- Repo นี้ (landing): เพิ่มหัวข้อ §0 ใน README ชี้ไปที่ hub เพื่อให้ session ใหม่อ่านก่อน
+- ย้ำ ritual: **start = `git pull` + อ่าน SESSION_MEMORY.md ของ hub; end = update PROGRESS ทั้งสอง repo แล้ว commit + push**
 

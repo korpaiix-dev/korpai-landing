@@ -33,6 +33,22 @@
 - Facebook: https://www.facebook.com/korpaiix
 - ปรึกษาฟรี ตอบภายใน 24 ชม.
 
+## หน้าบริการ (Service detail pages)
+
+- `/services/ai-chatbot` — AI Sales Agent · Line OA + Messenger + Web chatbot
+- `/services/automation` — Workflow Automation · n8n/Make/Zapier + Lead Ads/Shopee/Lazada
+- `/services/dashboard` — Realtime Dashboard · Grafana/Metabase/Power BI
+- `/services/custom-ai` — Custom AI · RAG, voice, OCR, integration
+
+## ตัวอย่างโจทย์ (Portfolio detail pages — persona, เคารพ NDA)
+
+- `/portfolio/fashion-line-commerce` — ร้านเสื้อผ้าออนไลน์ ยอดขาย +3x
+- `/portfolio/thai-restaurant-booking` — ร้านอาหาร จอง AI 80%
+- `/portfolio/derma-clinic-admin` — คลินิกผิวหนัง ลดงาน admin 70%
+- `/portfolio/it-gadget-shop` — ร้าน IT online ตอบเร็ว 5x
+- `/portfolio/wellness-spa-booking` — สปา จองได้ 24 ชม.
+- `/portfolio/specialty-coffee-upsell` — ร้านกาแฟ upsell +25%
+
 ## บทความ (Blog)
 
 - `/blog/rag-คืออะไร` — RAG คืออะไร และทำไม SME ไทยควรรู้จัก

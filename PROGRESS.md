@@ -16,8 +16,11 @@
 - `docs/FB_MIGRATION.md` — แผนย้าย FB Page + Line OA ไปผูกกับ `korpai.co` (บอสเป็นคนกดใน console) ✅
 - Bug fix: `deploy/nginx.conf` location `/_astro/` → `/_assets/` ตาม astro.config ✅
 - Site audit: `npm run build` ผ่าน 18 pages clean, sitemap ครบ, ไม่มี dead link/TODO ✅
-**Last deploy:** 2026-04-21 — commit `f6afb53` (detail pages + remove ChatWidget) · overnight batch ยังไม่ deploy
-**Next (เช้าบอสตื่น):** Gemini image gen ค้างอยู่ (model "รวดเร็ว" ไม่ gen รูป) — switch model ก่อน / final commit + push overnight batch → cron auto-pull pick up
+**Last deploy:** 2026-04-21 — commit `d4479a3` (overnight batch: OG image + Phase 1.5 + FB plan) · verified live: og:image OK, 9 sections render, 12 images 0 broken
+**Next (เช้าบอสตื่น):**
+1. Gemini image gen — model "รวดเร็ว" ไม่ gen รูป ต้อง switch เป็น Imagen 3 / Gemini 2.5 Pro / DALL-E ก่อนต่อ
+2. FB / Line migration — บอสส่ง meta-tag + Pixel ID กลับมา (อ่าน `docs/FB_MIGRATION.md` §8)
+3. Docker switchover — ถ้าบอส go ก็ flip nginx block ไป `proxy_pass http://127.0.0.1:8080` (docs/DEPLOYMENT.md §6.5.3)
 
 ---
 

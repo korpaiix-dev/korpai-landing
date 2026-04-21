@@ -1,0 +1,51 @@
+# KORP AI AUTOMATION
+
+> AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
+
+## บริการหลัก
+
+- **AI Chatbot** — ตอบลูกค้าบน Line OA, Facebook Messenger, และเว็บ · รองรับ RAG จากฐานข้อมูลของธุรกิจ · ส่งต่อทีมขายอัตโนมัติเมื่อเจอโอกาสปิดการขาย
+- **Automation / Workflow** — เชื่อม Facebook Lead Ads → CRM → Line · ใบเสนอราคาอัตโนมัติ · reminder การจอง · ลดเวลา copy-paste 40+ ชม./เดือน/ทีม
+- **Dashboard** — Grafana / Metabase / Power BI สำหรับ SME · ยอดขาย · ลีด · KPI · report email อัตโนมัติรายสัปดาห์
+- **Custom AI Feature** — RAG · สรุปเอกสาร · Voice · integration ERP/POS/CRM ของบริษัทลูกค้า
+
+## แพ็กเกจ
+
+- **Starter** — 7–14 วัน · AI Chatbot 1 ช่องทาง + FAQ + เก็บลีด + ดูแลรายเดือน
+- **Growth** — 3–5 สัปดาห์ · 3 ช่องทาง + workflow + dashboard + integration + training
+- **Enterprise** — 6–12 สัปดาห์ · Custom AI + integration ERP/CRM · SLA · PDPA compliance · on-premise deploy
+
+แพ็กเกจทั้งหมดราคาประเมินตามโจทย์จริง ไม่ขายแบบราคาตายตัว · ทดลองได้ภายใน 14 วันแรก · ยกเลิกรายเดือนได้ไม่ผูกมัด
+
+## Tech Stack
+
+- **LLM** — Claude 3.5 Sonnet · GPT-4o · Gemini 1.5 Pro (เลือกตามโจทย์)
+- **Automation** — n8n (self-hosted) · Make · Zapier · Google Apps Script
+- **RAG** — pgvector · Pinecone · Weaviate
+- **Dashboard** — Grafana · Metabase · Power BI
+- **Integration** — Line OA Official API · Facebook Messenger API · Google Workspace · Shopify · Shopee/Lazada API
+- **Infra** — Docker · VPS (DigitalOcean, AWS) · server ในไทย/สิงคโปร์ตาม PDPA
+
+## ติดต่อ
+
+- Website: https://korpai.co
+- Line OA: https://lin.ee/Qt6Vri4
+- Facebook: https://www.facebook.com/korpaiix
+- ปรึกษาฟรี ตอบภายใน 24 ชม.
+
+## บทความ (Blog)
+
+- `/blog/rag-คืออะไร` — RAG คืออะไร และทำไม SME ไทยควรรู้จัก
+- `/blog/ai-chatbot-ร้านอาหาร-คาเฟ่` — AI Chatbot สำหรับร้านอาหาร/คาเฟ่: เริ่มยังไงให้ใช้ได้จริง
+- `/blog/automation-ลดต้นทุน-sme` — Automation ลดต้นทุน SME: 5 flow ที่ทำแล้วเห็นผลใน 2 สัปดาห์
+- `/blog/dashboard-sme-grafana-metabase-powerbi` — Dashboard สำหรับ SME: Grafana vs Metabase vs Power BI
+- `/blog/line-oa-vs-messenger-vs-เว็บ` — Line OA vs Messenger vs เว็บ: AI ตอบลูกค้าช่องไหนคุ้มสุด
+- `/blog/prompt-engineering-sme-strategy` — Prompt Engineering สำหรับ SME
+
+## จุดต่างจาก Agency อื่น
+
+- เริ่มเล็ก ส่งเร็ว ปรับจริง — ทุก 1–2 สัปดาห์ส่งของให้ใช้จริง ไม่รอ 3 เดือน
+- ทีมลูกค้าใช้ต่อเองได้ — training + เอกสาร + วิดีโอสอน รวมในแพ็กเกจ
+- รับผิดชอบ API cost — รวมค่า AI ในราคาแพ็กเกจ ไม่คิดแยก
+- Guardrail 3 ชั้น — AI ตอบจากฐานความรู้ที่อนุมัติ · ส่งต่อคนเมื่อไม่แน่ใจ · log ทุกบทสนทนา
+- ยกเลิกได้ ไม่ผูกมัดรายปี · ข้อมูล export ได้ 100%

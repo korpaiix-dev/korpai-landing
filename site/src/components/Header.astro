@@ -1,11 +1,16 @@
 ---
+// Detect if we're on a non-landing route so anchor links jump to the home first.
+const pathname = Astro.url?.pathname ?? '/';
+const isLanding = pathname === '/' || pathname === '';
+const homeHash = (hash: string) => (isLanding ? hash : `/${hash}`);
+
 const nav = [
-  { href: '#services',  label: 'บริการ' },
-  { href: '#portfolio', label: 'ผลงาน' },
-  { href: '#pricing',   label: 'แพ็กเกจ' },
-  { href: '#about',     label: 'เกี่ยวกับ' },
-  { href: '#faq',       label: 'คำถาม' },
-  { href: '#contact',   label: 'ติดต่อ' },
+  { href: homeHash('#services'),  label: 'บริการ' },
+  { href: homeHash('#portfolio'), label: 'ผลงาน' },
+  { href: homeHash('#pricing'),   label: 'แพ็กเกจ' },
+  { href: '/blog',                label: 'บทความ' },
+  { href: homeHash('#faq'),       label: 'คำถาม' },
+  { href: homeHash('#contact'),   label: 'ติดต่อ' },
 ];
 ---
 
@@ -48,7 +53,7 @@ const nav = [
         </div>
 
         <a
-          href="#contact"
+          href={homeHash('#contact')}
           class="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-brand-navy-900 transition hover:bg-brand-ink-50"
         >
           ปรึกษาฟรี

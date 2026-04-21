@@ -1,0 +1,128 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmtDate = (d: Date) =>
+  new Intl.DateTimeFormat('th-TH', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(d);
+
+const categoryColor: Record<string, string> = {
+  'AI Chatbot': '#26D7F6',
+  'Automation': '#7C5FFF',
+  'Dashboard': '#22C55E',
+  'LLM / RAG': '#F59E0B',
+  'SME Strategy': '#EC4899',
+};
+---
+
+<Layout
+  title="บทความ · KORP AI AUTOMATION"
+  description="บทความ + คู่มือเรื่อง AI Chatbot, Automation, Dashboard และ LLM สำหรับ SME ไทย เขียนโดยทีม KORP AI ที่ลงมือทำจริง"
+  canonical="https://korpai.co/blog"
+>
+  <section class="relative py-24 md:py-32 overflow-hidden">
+    <div aria-hidden="true" class="kp-section-beam kp-section-beam--cyan"></div>
+
+    <div class="kp-container relative">
+      <div class="max-w-3xl mx-auto text-center kp-reveal">
+        <span class="kp-eyebrow">Blog · บทความ</span>
+        <h1 class="prose-kp mt-6">
+          คู่มือและความรู้สำหรับ <span class="kp-grad">SME ไทย</span>
+        </h1>
+        <p class="prose-kp mt-5">
+          เขียนโดยทีม KORP AI ที่ลงมือติดตั้งระบบจริง — ไม่ใช่เนื้อหา generic ทุกบทความมาจากโจทย์ที่เจอจริงในงานลูกค้า
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((p, i) => (
+          <a
+            href={`/blog/${p.slug}`}
+            class="kp-rc-card kp-blog-card kp-reveal"
+            style={`transition-delay:${i * 60}ms`}
+          >
+            <div class="kp-blog-meta">
+              <span class="kp-blog-cat" style={`--cat:${categoryColor[p.data.category] ?? '#26D7F6'};`}>
+                {p.data.category}
+              </span>
+              <span class="kp-blog-dot">·</span>
+              <time datetime={p.data.pubDate.toISOString()}>{fmtDate(p.data.pubDate)}</time>
+              <span class="kp-blog-dot">·</span>
+              <span>{p.data.readingMinutes} นาที</span>
+            </div>
+            <h2 class="kp-blog-title">{p.data.title}</h2>
+            <p class="kp-blog-desc">{p.data.description}</p>
+            <span class="kp-rc-cta kp-blog-cta">
+              อ่านต่อ<span class="kp-rc-arrow">→</span>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <p class="mt-14 text-center" style="color: #8AA0C5;">
+          ยังไม่มีบทความเผยแพร่ — เร็ว ๆ นี้
+        </p>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .kp-blog-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 24px 22px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .kp-blog-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: #8AA0C5;
+    letter-spacing: 0.02em;
+  }
+  .kp-blog-dot { color: #3A4760; }
+  .kp-blog-cat {
+    color: var(--cat, #26D7F6);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .kp-blog-title {
+    margin-top: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #E6EBF5;
+    letter-spacing: -0.01em;
+  }
+
+  .kp-blog-desc {
+    margin-top: 10px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #8AA0C5;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .kp-blog-cta {
+    margin-top: 18px;
+  }
+</style>

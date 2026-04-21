@@ -1,0 +1,313 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const fmtDate = (d: Date) =>
+  new Intl.DateTimeFormat('th-TH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(d);
+
+const canonical = `https://korpai.co/blog/${post.slug}`;
+const ogImage = post.data.heroImage ?? 'https://korpai.co/og-default.png';
+
+// BlogPosting JSON-LD
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: post.data.author,
+    url: 'https://korpai.co',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'KORP AI AUTOMATION',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://korpai.co/assets/logo-icon.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': canonical,
+  },
+  image: ogImage,
+  keywords: post.data.tags.join(', '),
+  articleSection: post.data.category,
+};
+
+const categoryColor: Record<string, string> = {
+  'AI Chatbot': '#26D7F6',
+  'Automation': '#7C5FFF',
+  'Dashboard': '#22C55E',
+  'LLM / RAG': '#F59E0B',
+  'SME Strategy': '#EC4899',
+};
+---
+
+<Layout
+  title={`${post.data.title} · KORP AI`}
+  description={post.data.description}
+  canonical={canonical}
+  image={ogImage}
+>
+  <!-- BlogPosting JSON-LD (valid in <body> per schema.org / Google) -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <article class="relative py-20 md:py-28 overflow-hidden">
+    <div aria-hidden="true" class="kp-section-beam kp-section-beam--violet"></div>
+
+    <div class="kp-container relative">
+      <!-- Breadcrumb -->
+      <div class="max-w-3xl mx-auto mb-8 kp-reveal">
+        <nav class="kp-crumb" aria-label="breadcrumb">
+          <a href="/">หน้าแรก</a>
+          <span class="kp-crumb-sep">/</span>
+          <a href="/blog">บทความ</a>
+          <span class="kp-crumb-sep">/</span>
+          <span class="kp-crumb-current">{post.data.category}</span>
+        </nav>
+      </div>
+
+      <!-- Header -->
+      <header class="max-w-3xl mx-auto mb-12 kp-reveal">
+        <div class="kp-post-meta">
+          <span class="kp-post-cat" style={`--cat:${categoryColor[post.data.category] ?? '#26D7F6'};`}>
+            {post.data.category}
+          </span>
+          <span class="kp-post-dot">·</span>
+          <time datetime={post.data.pubDate.toISOString()}>{fmtDate(post.data.pubDate)}</time>
+          <span class="kp-post-dot">·</span>
+          <span>{post.data.readingMinutes} นาทีอ่าน</span>
+        </div>
+
+        <h1 class="kp-post-title mt-5">{post.data.title}</h1>
+        <p class="kp-post-desc mt-5">{post.data.description}</p>
+
+        {post.data.tags.length > 0 && (
+          <div class="mt-7 flex flex-wrap gap-2">
+            {post.data.tags.map((t) => (
+              <span class="kp-chip">#{t}</span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <!-- Content -->
+      <div class="kp-post-body max-w-3xl mx-auto kp-reveal">
+        <Content />
+      </div>
+
+      <!-- CTA -->
+      <div class="max-w-3xl mx-auto mt-16 kp-reveal">
+        <div class="kp-post-cta-card">
+          <h3 class="text-white text-lg font-semibold">มีโจทย์ของธุรกิจคุณเอง?</h3>
+          <p class="mt-2 text-sm" style="color: #B8C5DE;">
+            ทีม KORP AI คุยฟรี ไม่มีขอบเขต ไม่มีขาย package hard sell — เล่าโจทย์มาเราประเมินให้
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href="/#contact" class="kp-btn-primary">
+              ปรึกษาฟรี<span aria-hidden="true">→</span>
+            </a>
+            <a href="/blog" class="kp-btn-secondary">
+              อ่านบทความอื่น<span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style is:global>
+  /* Post body typography — scoped to .kp-post-body so it doesn't leak */
+  .kp-post-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: #CBD5E9;
+  }
+  .kp-post-body h2 {
+    margin-top: 2.2em;
+    margin-bottom: 0.7em;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .kp-post-body h3 {
+    margin-top: 1.6em;
+    margin-bottom: 0.5em;
+    font-size: 19px;
+    font-weight: 600;
+    color: #E6EBF5;
+    line-height: 1.35;
+  }
+  .kp-post-body p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  .kp-post-body ul,
+  .kp-post-body ol {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-left: 1.4em;
+  }
+  .kp-post-body ul { list-style: disc; }
+  .kp-post-body ol { list-style: decimal; }
+  .kp-post-body li {
+    margin-top: 0.35em;
+    margin-bottom: 0.35em;
+  }
+  .kp-post-body li::marker { color: #26D7F6; }
+
+  .kp-post-body strong {
+    color: #fff;
+    font-weight: 600;
+  }
+  .kp-post-body a {
+    color: #26D7F6;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: rgba(38, 215, 246, 0.4);
+    transition: text-decoration-color 0.2s ease;
+  }
+  .kp-post-body a:hover {
+    text-decoration-color: #26D7F6;
+  }
+  .kp-post-body code {
+    background: rgba(38, 215, 246, 0.08);
+    color: #A9F2FF;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.88em;
+  }
+  .kp-post-body pre {
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    padding: 18px 20px;
+    background: rgba(8, 12, 24, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .kp-post-body pre code {
+    background: transparent;
+    padding: 0;
+    color: #CBD5E9;
+  }
+  .kp-post-body blockquote {
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
+    padding: 2px 0 2px 18px;
+    border-left: 3px solid #26D7F6;
+    color: #8AA0C5;
+    font-style: italic;
+  }
+  .kp-post-body hr {
+    margin-top: 2.4em;
+    margin-bottom: 2.4em;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .kp-post-body table {
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .kp-post-body th,
+  .kp-post-body td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: left;
+  }
+  .kp-post-body th {
+    color: #fff;
+    font-weight: 600;
+    border-bottom-color: rgba(38, 215, 246, 0.3);
+  }
+</style>
+
+<style>
+  .kp-crumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #8AA0C5;
+  }
+  .kp-crumb a {
+    color: #8AA0C5;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .kp-crumb a:hover { color: #26D7F6; }
+  .kp-crumb-sep { color: #3A4760; }
+  .kp-crumb-current { color: #E6EBF5; }
+
+  .kp-post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: #8AA0C5;
+  }
+  .kp-post-dot { color: #3A4760; }
+  .kp-post-cat {
+    color: var(--cat, #26D7F6);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .kp-post-title {
+    font-size: clamp(32px, 5vw, 44px);
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .kp-post-desc {
+    font-size: 18px;
+    line-height: 1.65;
+    color: #B8C5DE;
+  }
+
+  .kp-post-cta-card {
+    padding: 28px 26px 26px;
+    border-radius: 18px;
+    background:
+      linear-gradient(180deg, rgba(38, 215, 246, 0.07), rgba(124, 95, 255, 0.04)),
+      linear-gradient(180deg, rgba(15, 20, 32, 0.75), rgba(5, 7, 14, 0.5));
+    border: 1px solid rgba(38, 215, 246, 0.22);
+    box-shadow: 0 0 0 1px rgba(38, 215, 246, 0.12), 0 16px 40px rgba(38, 215, 246, 0.06);
+  }
+</style>

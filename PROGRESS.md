@@ -1,127 +1,106 @@
-# KORP AI Landing Page — PROGRESS.md
+# KORP AI Landing — PROGRESS
 
-> **วัตถุประสงค์ไฟล์นี้:** บันทึกสถานะงานล่าสุดเพื่อให้ session ถัดไปเข้าใจบริบททันที ไม่ทำงานซ้ำซ้อน
-> **อัปเดตทุกครั้ง:** ก่อนเริ่มงาน (กำลังจะทำอะไร) และหลังจบงาน (ทำอะไรไปแล้ว / ยังเหลืออะไร)
-> **Owner:** บอสไผ่ (korpaiix@gmail.com)
-> **Repo:** https://github.com/korpaiix-dev/korpai-landing
-> **Local path (VPS):** /root/korpai-landing
-> **Prod domain:** https://korpai.co (serve from /var/www/korpai/ via nginx)
+> Live checklist · อัปเดตทุก commit ที่กระทบ phase/task
+> **Owner:** บอสไผ่ (korpaiix@gmail.com) · **Repo:** https://github.com/korpaiix-dev/korpai-landing · **Prod:** https://korpai.co
+> **VPS:** 139.59.123.146 · `/root/korpai-landing` · serve `/var/www/korpai/` via host nginx
+> **Workflow:** ดู `korp-ai-hq/DEV_VPS_WORKFLOW.md` — ทุก commit → push → deploy → verify
 
 ---
 
-## 📌 CURRENT STATE (2026-04-20)
+## 🎯 CURRENT PHASE
 
-**Phase:** Day 1 — Astro scaffold + Hero/Services/Process/Contact **(IN PROGRESS)**
-**Status:** 🟡 กำลังสร้าง `site/` subdir + ออกแบบ Layout + 4 section ภาษาไทย
-**Next action:** build → `rsync dist/ /var/www/korpai/` → preview จริงที่ korpai.co
-
-**Docs ครบตามที่บอสขอ:**
-- `README.md` (187 บรรทัด) — โปรเจกต์คืออะไร + ทำเพื่ออะไร + stack + structure + setup + workflow + roadmap
-- `.env.example` (131 บรรทัด) — env vars ทุกหมวด (site/contact/AI/chat/redis/ratelimit/notify/analytics/SEO/feature flags)
-- `docs/ARCHITECTURE.md` (144 บรรทัด) — high-level diagram + component responsibility + data flow + security + performance
-- `docs/DEPLOYMENT.md` (238 บรรทัด) — DNS + nginx config + frontend/backend deploy + systemd + rollback + smoke test + cost ops
-- `PROGRESS.md` (ไฟล์นี้) — session tracker
+**Day 3 — Blog + SEO articles + Chatbot mock UI** — 🟡 ยังไม่เริ่ม (Day 1–2 เสร็จแล้ว)
+**Pending deploy:** commits `f4686ca` (real logo) + `e3b371c` (Opera perf fix) ยังค้างบน VPS
+**Next immediate:** boss paste deploy command บน SSH → verify → เริ่ม Day 3
 
 ---
 
 ## ✅ DONE
 
-### Session 2026-04-19 (previous)
-- [x] Audit VPS 139.59.123.146 — พบ 26+ containers (client projects ถูกกฎหมาย)
-- [x] ลบไฟล์เก่า KORP AI v1:
-  - `korpai.backup.20260416-065640.tgz`
-  - Containers: `korpaiix-office`, `korpaiix-middleware`
-  - Images: `korpaiix-fb-manager`, `korpaiix-fb-manager-tg-bot`
-  - Folders: phase1-deploy, aidesigner-run/test, fb-share-tool, stitch-test
-  - Files: engine_v1_backup.py, engine_v3.py, dispatch-articles.sh, expand_articles.py, patch_*.py
-- [x] Disk ว่างขึ้นจาก 77% → 58% (33G ว่าง)
-- [x] ยืนยัน webhook backend (port 8001) + dashboard (port 3000) = DEAD
-- [x] แทนที่ landing เดิมที่ /var/www/korpai/ ด้วย placeholder "Coming Soon"
-- [x] ยืนยัน design brief กับบอส:
-  - Theme: ขาว + ฟ้าอ่อน + เขียวอ่อน (สบายตา, ติดต่อง่าย)
-  - Chat widget: AI Sales Agent จริง → ส่งต่อ Line/FB (ไม่จบงานหน้าเว็บ)
-  - Sections: ครบชุด
-  - Timeline: 3-5 วัน
-  - Portfolio: ห้ามเปิดชื่อลูกค้าจริง, ใช้ persona ได้
-  - Pricing: "ปรึกษาฟรี" เท่านั้น
+### Scaffold & docs
+- [x] `e8c7964` — repo init + gitignore + placeholder snapshot
+- [x] full docs — README (187L), `.env.example` (131L), `docs/ARCHITECTURE.md`, `docs/DEPLOYMENT.md`
+- [x] cross-link → `korp-ai-hq` (hub repo) §0 ใน README
 
-### Session 2026-04-20 (current)
-- [x] สร้าง GitHub repo ใหม่: `korpaiix-dev/korpai-landing` (public)
-- [x] Git init local ที่ /root/korpai-landing + ตั้ง remote + PAT auth
-- [x] `.gitignore` + PROGRESS.md + README.md (ฉบับสั้น)
-- [x] snapshot `/var/www/korpai/index.html` เก็บที่ `snapshots/placeholder-2026-04-19.html`
-- [x] First commit + push (`e8c7964`)
-- [x] ตาม request บอส: เขียน docs ชุดเต็ม
-  - [x] README.md ขยาย — 10 หัวข้อ (โปรเจกต์คืออะไร, ทำเพื่ออะไร, stack, structure, setup, env vars, deploy, workflow, roadmap, license)
-  - [x] `.env.example` — ครอบคลุม 10 กลุ่ม env vars
-  - [x] `docs/ARCHITECTURE.md` — diagram + component + data flow + security + performance
-  - [x] `docs/DEPLOYMENT.md` — full deploy runbook
+### Day 1 — Astro scaffold + core sections
+- [x] Astro 4 + Tailwind 3 + TypeScript strict + sitemap integration
+- [x] Design tokens: navy/cyan/violet + IBM Plex Sans Thai Looped + Inter
+- [x] `Layout.astro` (SEO meta + OG + Twitter card + Organization JSON-LD)
+- [x] `Hero.astro` — Raycast-style diagonal beams + mouse parallax + stats row + LINE/FB chips
+- [x] `Services.astro` — 4 services (AI Chatbot / Automation / Dashboard / Custom)
+- [x] `ChatDemo.astro` — left-right animated chat demo
+- [x] inline `Process` section (3 steps) in `index.astro`
+- [x] `Footer.astro` + `Header.astro` — sticky nav pill
+
+### Day 2 — Portfolio + Pricing + About + FAQ (`72f2a22`)
+- [x] `Portfolio.astro` — 6 case personas (ร้านกาแฟ/คลินิก/อีคอมเมิร์ซ/โรงงาน/โรงเรียน/อสังหา) + 10 Unsplash photos
+- [x] `Pricing.astro` — 3 tiers (Starter ฿15k+฿3.5k/mo, Growth ฿49k+฿8.5k/mo popular, Enterprise custom)
+- [x] `About.astro` — story + 4 values + 12 stack chips
+- [x] `FAQ.astro` — 10 คำถาม + FAQPage JSON-LD schema
+- [x] restructure `index.astro` order: Hero → ChatDemo → Services → Process → Portfolio → Pricing → About → FAQ → Contact
+
+### Perf fixes
+- [x] `ff98511` — tone down site-wide ambient backdrop (Safari/FF smoothness)
+- [x] `e3b371c` — kill `mix-blend-mode:screen` + orb/halo animations in Hero (Opera lag) **⚠ not deployed yet**
+
+### Brand
+- [x] `f4686ca` — swap placeholder logos with boss's real Icon/Horizontal/Stacked + favicon + apple-touch-icon **⚠ not deployed yet**
 
 ---
 
 ## 🚧 IN PROGRESS
 
-- [x] Cross-link repo นี้ → `korp-ai-hq` (hub repo ส่วนกลาง) — เพิ่มหัวข้อ §0 ใน README
-- [ ] **Day 1 — Astro scaffold + 4 section** (กำลังทำ):
-  - [ ] สร้าง `site/package.json` + `astro.config.mjs` + `tailwind.config.mjs`
-  - [ ] Design tokens: ขาว / ฟ้าอ่อน / เขียวอ่อน + Prompt font
-  - [ ] `src/layouts/Layout.astro` (header + footer + SEO meta + schema.org stub)
-  - [ ] `src/components/{Hero,Services,Process,Contact}.astro` — ภาษาไทยทั้งหมด
-  - [ ] `src/pages/index.astro` เรียก 4 section
-  - [ ] VPS: `cd site && npm ci && npm run build && rsync -av --delete dist/ /var/www/korpai/`
-  - [ ] Smoke test https://korpai.co
+- [ ] **Deploy pending commits** (`f4686ca` + `e3b371c`) — รอ boss paste SSH deploy command
+- [ ] Verify Opera smooth scroll ตรงกับ expectation
 
 ---
 
-## 📋 NEXT (ตามลำดับ)
+## 📋 NEXT
 
-### Day 1 — Astro scaffold + Hero/Services/Process/Contact
-- [ ] Create `site/` subdir
-- [ ] `cd site && npm create astro@latest . -- --template minimal --typescript strict --install --no-git --yes`
-- [ ] Add integrations: Tailwind, React (for chat island), sitemap
-- [ ] Config: `astro.config.mjs` + `tailwind.config.mjs` + design tokens (สีขาว/ฟ้าอ่อน/เขียวอ่อน)
-- [ ] ติดตั้ง Prompt font + Lucide + Framer Motion
-- [ ] Layout.astro (header + footer + SEO meta + schema.org stub)
-- [ ] Components: Hero, Services, Process, Contact (ภาษาไทยเต็ม)
-- [ ] Build → preview → push
+### Day 3 — Blog + SEO articles + Chatbot mock UI
+- [ ] Astro Content Collections setup (`src/content/blog/`)
+- [ ] Blog list route `/blog/` + blog post route `/blog/[slug]`
+- [ ] BlogPosting JSON-LD schema per post
+- [ ] 5 บทความ SEO/GEO focused Thai-SME:
+  - [ ] "AI Chatbot สำหรับร้านอาหาร/คาเฟ่: เริ่มยังไงให้ใช้ได้จริง"
+  - [ ] "Automation ลดต้นทุน SME: 5 flow ที่ทำแล้วเห็นผลใน 2 สัปดาห์"
+  - [ ] "Dashboard สำหรับ SME: Grafana vs Metabase vs Power BI"
+  - [ ] "Line OA vs Messenger vs เว็บ: AI ตอบลูกค้าช่องไหนคุ้มสุด"
+  - [ ] "RAG คืออะไร และทำไม SME ไทยควรรู้จัก"
+- [ ] Chatbot mock UI (floating bottom-right, animated, demo UX only — ยังไม่ต่อ backend)
 
-### Day 2 — Portfolio + Pricing + FAQ + About
-- [ ] Portfolio cards (6 ธุรกิจ persona: ร้านกาแฟ, คลินิก, อีคอมเมิร์ซ, โรงงาน, โรงเรียน, real estate) — โม้ได้แต่ไม่น่าเกลียด
-- [ ] Pricing: "ปรึกษาฟรี" CTA อย่างเดียว (ห้ามโชว์ราคา)
-- [ ] FAQ accordion
-- [ ] About page (story, value prop, contact)
-
-### Day 3 — Blog + SEO articles + Chatbot mock
-- [ ] Astro Content Collections setup
-- [ ] 5 บทความ SEO/GEO (AI Agent SME ไทย, Chatbot Line, Automation n8n, Dashboard Metabase, ROI AI)
-- [ ] Chatbot mock UI (animated demo สำหรับ marketing)
-- [ ] Web AI agentic animations (typing, thinking states, shimmer)
-
-### Day 4 — Real AI Sales Agent chat widget
-- [ ] Chat widget frontend (floating, light theme, React island)
-- [ ] `chat-backend/` — FastAPI skeleton ตาม ARCHITECTURE.md §2.3
-- [ ] Session mgmt + Redis
-- [ ] OpenRouter routing (Haiku + Sonnet)
+### Day 4 — Real AI Sales Agent chat widget + backend
+- [ ] Chat widget frontend (React island, floating, connected to API)
+- [ ] `chat-backend/` — FastAPI skeleton ตาม `docs/ARCHITECTURE.md` §2.3
+- [ ] Session mgmt + Redis DB 5
+- [ ] OpenRouter routing (Haiku fast + Sonnet smart + Gemini fallback)
 - [ ] Handoff logic → Line/FB deep links + Slack notify
-- [ ] Systemd service
+- [ ] systemd service + Docker compose entry
 
-### Day 5 — Polish + SEO/GEO + Deploy
-- [ ] Sitemap, robots.txt, llms.txt
-- [ ] OpenGraph images (auto-gen)
-- [ ] Schema.org JSON-LD (Organization, Service, FAQPage, BlogPosting)
-- [ ] Performance tuning (Lighthouse ≥ 95)
-- [ ] Deploy production + nginx config update
-- [ ] Smoke test ทั้ง checklist ใน `docs/DEPLOYMENT.md` §7
+### Day 5 — Polish + SEO/GEO + production deploy
+- [ ] `sitemap.xml` (Astro integration auto) + `robots.txt` + `llms.txt`
+- [ ] Auto-gen OpenGraph images per route
+- [ ] Schema.org JSON-LD: Organization ✅ / FAQPage ✅ / Service / BlogPosting
+- [ ] Lighthouse audit ≥ 95 ทั้ง 4 หมวด · LCP < 2s · JS < 150KB
+- [ ] Full deploy checklist ใน `docs/DEPLOYMENT.md` §7
+- [ ] Final smoke test flow: เข้า Hero → scroll ทุก section → กด LINE/FB CTA → verify URL
+
+### Phase 1.5 — Docker + auto-pull migration (หลัง landing เสร็จ)
+- [ ] `Dockerfile` (multi-stage: node build → nginx-alpine serve)
+- [ ] `docker-compose.yml` — `landing` + `ttyd` services
+- [ ] host nginx reverse_proxy → container ports
+- [ ] `scripts/auto-pull.sh` + cron entry
+- [ ] embed commit SHA → `version.txt` → Claude verify ผ่าน curl
+- [ ] migrate existing `/var/www/korpai/` static → container
 
 ---
 
-## 🔥 BLOCKERS / DECISIONS NEEDED
+## 🔥 BLOCKERS / NEED DECISION
 
-- [ ] **DNS www subdomain**: ต้อง confirm ว่า `www.korpai.co` ก็ชี้ IP เดียวกันไหม
-- [ ] **Line OA URL + FB Page URL**: ต้องได้ link ต้นทางจริงของ KORP AI — ปัจจุบัน .env.example ใช้ placeholder `@korpai` / `korpai.automation`
-- [ ] **OpenRouter API key**: บอสต้องสมัคร https://openrouter.ai/keys แล้วเติมใน `.env` (server-only)
-- [ ] **Brand assets**: โลโก้ + OG image + favicon — ยังไม่มี, ใช้ placeholder ได้ไหม?
-- [ ] **Tone of voice**: เว็บใช้สรรพนามอะไร? ("ผม" / "เรา" / "ทีม KORP AI") — ใน .env.example set เป็น "เรา"
+- [ ] **Pricing tier numbers:** ราคาที่ผมใส่ (฿15k/฿49k) เป็นเลขเดา — boss confirm หรือแก้
+- [ ] **Portfolio = real vs mock:** 6 case เป็น persona หมด — ตอน Day 3 เปลี่ยนเป็น case จริงไหม หรือปล่อยไว้แบบนี้
+- [ ] **FAQ Q10 claim:** "ลูกค้าบางรายอยู่กับเรา 12+ เดือน" — เขียนไว้แต่ถ้ายังไม่มีลูกค้าจริงต้องแก้
+- [ ] **Tone-of-voice:** ใช้ "เรา" ทั่วเว็บแล้ว — confirm OK
 
 ---
 
@@ -129,51 +108,22 @@
 
 | Purpose | Path |
 |---|---|
-| Landing repo (local) | `/root/korpai-landing/` |
-| Landing serve root | `/var/www/korpai/` |
-| Nginx config | `/etc/nginx/sites-enabled/korpai` |
-| SSL cert (Certbot) | `/etc/letsencrypt/live/korpai.co/` |
-| Old archived repo | `/root/prod/korp-ai-automation/` (don't touch — มี Lion/sanitizer จาก project อื่น) |
+| Landing repo | `/root/korpai-landing/` |
+| Serve root | `/var/www/korpai/` |
+| Nginx site | `/etc/nginx/sites-enabled/korpai` |
+| SSL cert | `/etc/letsencrypt/live/korpai.co/` |
+| Old archived | `/root/prod/korp-ai-automation/` (DO NOT TOUCH) |
 
 ## 🔗 IMPORTANT URLs
 
-- Landing live: https://korpai.co (placeholder)
-- GitHub repo: https://github.com/korpaiix-dev/korpai-landing
-- VPS console: https://cloud.digitalocean.com/droplets/558619958/terminal/ui/
-- VPS IP: 139.59.123.146
-
-## 🔐 CREDENTIALS NOTE
-
-- GitHub PAT stored in git remote URL (rotate ทุก 90 วัน — ดู ARCHITECTURE.md §4)
-- SSH: use DigitalOcean web console (ไม่มี SSH key setup)
-- ไม่มี secret ใน repo — ทุกอย่างอยู่ใน `.env` (ignored)
-
----
+- Prod: https://korpai.co
+- Repo: https://github.com/korpaiix-dev/korpai-landing
+- VPS web console: https://cloud.digitalocean.com/droplets/558619958/terminal/ui/
 
 ## 🚨 RULES (บอสกำชับ)
 
-1. **Git push ก่อน/หลังทำงานทุกครั้ง** — commit message ชัดเจน + อัปเดต PROGRESS.md ด้วย
-2. **Portfolio ห้ามเปิดชื่อลูกค้าจริง** — ใช้ persona / ธุรกิจโม้ได้แต่ไม่น่าเกลียด
-3. **Pricing = "ปรึกษาฟรี" เท่านั้น** — ไม่โชว์ราคาแพ็กเกจ
-4. **ห้ามทำงานซ้ำ** — อ่านไฟล์นี้ก่อนเริ่มเสมอ
-5. **Commit message format:** `<type>(<scope>): <subject>` — ดู README §8
-
----
-
-## 📝 SESSION LOG
-
-### 2026-04-20 — Session #2
-- 00:50 สร้าง repo ใหม่ `korpaiix-dev/korpai-landing` (คนละ repo กับ `korp-ai-automation` ที่มี code Lion/sanitizer project อื่น)
-- 00:52 First commit: scaffold + PROGRESS.md tracker + placeholder snapshot
-- 01:00 ตามที่บอสขอ: เขียน docs ชุดเต็ม — README, .env.example, ARCHITECTURE, DEPLOYMENT
-- 01:0x Commit #2: full project docs
-
-### 2026-04-20 — Session #3 (hub bootstrap)
-- สร้าง private hub repo **`korpaiix-dev/korp-ai-hq`** เป็น source of truth ของทั้ง agency
-  - ใส่ไฟล์: README, SESSION_MEMORY, RULES, MASTER_SPEC, PROJECTS, VPS_INVENTORY, CREDENTIALS (index only), PROGRESS
-  - `docs/` — ARCHITECTURE, COST_MODEL, DELIVERY_PLAYBOOK
-  - `clients/charoenpon.md` (stub + DO-NOT-TOUCH: `charoenpon-postgres`)
-  - `projects/korpai-landing.md` — project sheet + runbook อ้างกลับมาที่ repo นี้
-- Repo นี้ (landing): เพิ่มหัวข้อ §0 ใน README ชี้ไปที่ hub เพื่อให้ session ใหม่อ่านก่อน
-- ย้ำ ritual: **start = `git pull` + อ่าน SESSION_MEMORY.md ของ hub; end = update PROGRESS ทั้งสอง repo แล้ว commit + push**
-
+1. Commit + push ทุก unit of work → อัปเดตไฟล์นี้ด้วย commit hash
+2. Portfolio ห้ามเปิดชื่อลูกค้าจริง — persona OK
+3. Pricing ไม่ fake — ต้อง confirm ก่อน ship
+4. ห้ามแก้งาน repeated — อ่านไฟล์นี้ + `korp-ai-hq/SESSION_MEMORY.md` ก่อนเริ่ม
+5. Commit message: `<type>(<scope>): <subject>` + body why

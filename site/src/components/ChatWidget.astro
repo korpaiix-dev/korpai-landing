@@ -1,0 +1,644 @@
+---
+// Floating AI Sales Agent widget. Sits bottom-right on every page.
+//
+// Frontend-only: all behavior is in the client script at the bottom. The
+// widget talks to /api/chat/* on the same origin (nginx proxies → FastAPI on
+// 127.0.0.1:8100). If the backend is unreachable, we degrade gracefully and
+// show the LINE/FB buttons straight away.
+
+interface Props {
+  apiBase?: string;
+  lineUrl?: string;
+  fbUrl?: string;
+}
+
+const {
+  apiBase = '/api/chat',
+  lineUrl = 'https://lin.ee/Qt6Vri4',
+  fbUrl = 'https://www.facebook.com/korpaiix',
+} = Astro.props;
+---
+
+<div
+  id="kp-chat-root"
+  class="kp-chat-root"
+  data-api={apiBase}
+  data-line={lineUrl}
+  data-fb={fbUrl}
+  aria-live="polite"
+>
+  <!-- Floating bubble -->
+  <button
+    id="kp-chat-toggle"
+    class="kp-chat-toggle"
+    type="button"
+    aria-label="เปิดแชทกับ KORP AI"
+    aria-expanded="false"
+    aria-controls="kp-chat-panel"
+  >
+    <svg class="kp-chat-icon kp-chat-icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+    <svg class="kp-chat-icon kp-chat-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+    <span class="kp-chat-ping" aria-hidden="true"></span>
+  </button>
+
+  <!-- Panel -->
+  <div id="kp-chat-panel" class="kp-chat-panel" role="dialog" aria-modal="false" aria-label="แชทกับ KORP AI">
+    <!-- Header -->
+    <header class="kp-chat-head">
+      <div class="kp-chat-head-left">
+        <div class="kp-chat-avatar" aria-hidden="true">
+          <span>K</span>
+        </div>
+        <div>
+          <div class="kp-chat-title">KORP AI · ผู้ช่วยขาย</div>
+          <div class="kp-chat-sub">
+            <span class="kp-chat-dot" aria-hidden="true"></span>
+            ออนไลน์ · ตอบภายใน 2 วินาที
+          </div>
+        </div>
+      </div>
+      <button id="kp-chat-close" type="button" class="kp-chat-close" aria-label="ปิดแชท">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </header>
+
+    <!-- Messages -->
+    <div id="kp-chat-messages" class="kp-chat-messages" role="log" aria-live="polite"></div>
+
+    <!-- Handoff CTA (hidden by default; shown on handoff flag) -->
+    <div id="kp-chat-handoff" class="kp-chat-handoff" hidden>
+      <p>อยากให้ทีมช่วยดูต่อมั้ยครับ? เลือกช่องทางที่สะดวก</p>
+      <div class="kp-chat-handoff-btns">
+        <a id="kp-chat-line" class="kp-chat-line" href={lineUrl} target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M24 10.305C24 4.612 18.29 0 12 0 5.71 0 0 4.612 0 10.305c0 5.104 4.54 9.377 10.673 10.186.416.09.98.275 1.123.63.128.324.084.834.04 1.16l-.18 1.094c-.057.325-.26 1.27 1.113.693 1.374-.579 7.395-4.354 10.086-7.455C22.738 14.61 24 12.611 24 10.305"/></svg>
+          <span>คุยทาง LINE</span>
+        </a>
+        <a id="kp-chat-fb" class="kp-chat-fb" href={fbUrl} target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <span>Messenger</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Composer -->
+    <form id="kp-chat-form" class="kp-chat-form" autocomplete="off">
+      <label class="sr-only" for="kp-chat-input">พิมพ์ข้อความ</label>
+      <textarea
+        id="kp-chat-input"
+        rows="1"
+        placeholder="พิมพ์คำถาม เช่น &quot;ร้านกาแฟอยากได้ chatbot LINE&quot;"
+        maxlength="2000"
+        required
+      ></textarea>
+      <button id="kp-chat-send" type="submit" class="kp-chat-send" aria-label="ส่งข้อความ" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </form>
+
+    <div class="kp-chat-foot">
+      AI-generated · ไม่ใช่คำปรึกษาทางการ · <a href="/privacy">privacy</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ==========================================================
+   * KORP AI floating chat widget
+   * ==========================================================
+   * Sits on top of everything. Uses brand tokens:
+   *   navy   #05070E
+   *   cyan   #26D7F6
+   *   violet #7C5FFF
+   *   muted  #8AA0C5
+   * ==========================================================
+   */
+  .kp-chat-root {
+    position: fixed;
+    right: clamp(14px, 3vw, 28px);
+    bottom: clamp(14px, 3vw, 28px);
+    z-index: 90;
+    font-family: inherit;
+  }
+
+  /* --- Toggle bubble --- */
+  .kp-chat-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+    background:
+      radial-gradient(120% 120% at 20% 15%, rgba(124, 95, 255, 0.55), transparent 60%),
+      linear-gradient(135deg, #3C7CFF, #26D7F6);
+    box-shadow:
+      0 10px 30px rgba(38, 215, 246, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .kp-chat-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 14px 40px rgba(38, 215, 246, 0.45),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+  .kp-chat-icon-close { display: none; }
+  .kp-chat-root.is-open .kp-chat-icon-open  { display: none; }
+  .kp-chat-root.is-open .kp-chat-icon-close { display: block; }
+
+  .kp-chat-ping {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #22C55E;
+    box-shadow: 0 0 0 3px rgba(5, 7, 14, 1);
+    animation: kp-chat-pulse 2s ease-in-out infinite;
+  }
+  .kp-chat-root.is-open .kp-chat-ping { display: none; }
+
+  @keyframes kp-chat-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(5, 7, 14, 1), 0 0 0 0 rgba(34, 197, 94, 0.55); }
+    50%      { box-shadow: 0 0 0 3px rgba(5, 7, 14, 1), 0 0 0 10px rgba(34, 197, 94, 0); }
+  }
+
+  /* --- Panel --- */
+  .kp-chat-panel {
+    position: absolute;
+    right: 0;
+    bottom: 76px;
+    width: min(380px, calc(100vw - 28px));
+    height: min(580px, calc(100vh - 120px));
+    display: none;
+    flex-direction: column;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(10, 14, 26, 0.96), rgba(5, 7, 14, 0.98));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    backdrop-filter: blur(12px);
+  }
+  .kp-chat-root.is-open .kp-chat-panel {
+    display: flex;
+    animation: kp-chat-pop 0.22s ease-out;
+  }
+  @keyframes kp-chat-pop {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* --- Header --- */
+  .kp-chat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background:
+      radial-gradient(100% 120% at 0% 0%, rgba(38, 215, 246, 0.18), transparent 60%),
+      linear-gradient(180deg, rgba(124, 95, 255, 0.08), transparent);
+  }
+  .kp-chat-head-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .kp-chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    background: linear-gradient(135deg, #3C7CFF, #26D7F6);
+    box-shadow: 0 4px 14px rgba(38, 215, 246, 0.3);
+  }
+  .kp-chat-title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+  .kp-chat-sub {
+    color: #8AA0C5;
+    font-size: 11px;
+    margin-top: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .kp-chat-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #22C55E;
+    box-shadow: 0 0 8px #22C55E;
+  }
+  .kp-chat-close {
+    background: transparent;
+    border: 0;
+    color: #8AA0C5;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .kp-chat-close:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* --- Messages --- */
+  .kp-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-behavior: smooth;
+  }
+  .kp-chat-messages::-webkit-scrollbar { width: 6px; }
+  .kp-chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(138, 160, 197, 0.25);
+    border-radius: 999px;
+  }
+  .kp-chat-bubble {
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    animation: kp-chat-in 0.2s ease-out;
+  }
+  @keyframes kp-chat-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .kp-chat-bubble.assistant {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.06);
+    color: #EAEAF0;
+    border-bottom-left-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .kp-chat-bubble.user {
+    align-self: flex-end;
+    color: #fff;
+    background: linear-gradient(135deg, #3C7CFF, #26D7F6);
+    border-bottom-right-radius: 6px;
+    box-shadow: 0 4px 12px rgba(38, 215, 246, 0.25);
+  }
+  .kp-chat-bubble.error {
+    align-self: flex-start;
+    background: rgba(239, 68, 68, 0.12);
+    color: #FCA5A5;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    font-size: 12.5px;
+  }
+  .kp-chat-typing {
+    align-self: flex-start;
+    padding: 10px 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border-bottom-left-radius: 6px;
+    display: inline-flex;
+    gap: 4px;
+  }
+  .kp-chat-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #8AA0C5;
+    animation: kp-chat-bounce 1.2s ease-in-out infinite;
+  }
+  .kp-chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+  .kp-chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes kp-chat-bounce {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50%      { opacity: 1;   transform: translateY(-3px); }
+  }
+
+  /* --- Handoff panel --- */
+  .kp-chat-handoff {
+    margin: 0 16px 10px;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(38, 215, 246, 0.08);
+    border: 1px solid rgba(38, 215, 246, 0.25);
+  }
+  .kp-chat-handoff p {
+    color: #EAEAF0;
+    font-size: 13px;
+    margin: 0 0 10px;
+  }
+  .kp-chat-handoff-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .kp-chat-line, .kp-chat-fb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: filter 0.15s;
+  }
+  .kp-chat-line { background: #06C755; }
+  .kp-chat-fb   { background: #0084FF; }
+  .kp-chat-line svg, .kp-chat-fb svg { width: 16px; height: 16px; }
+  .kp-chat-line:hover, .kp-chat-fb:hover { filter: brightness(1.1); }
+
+  /* --- Form --- */
+  .kp-chat-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 12px 12px 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .kp-chat-form textarea {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: #EAEAF0;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    resize: none;
+    max-height: 100px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .kp-chat-form textarea:focus {
+    border-color: rgba(38, 215, 246, 0.5);
+  }
+  .kp-chat-form textarea::placeholder { color: #6B7A95; }
+  .kp-chat-send {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    background: linear-gradient(135deg, #3C7CFF, #26D7F6);
+    box-shadow: 0 6px 16px rgba(38, 215, 246, 0.3);
+    transition: transform 0.15s, opacity 0.15s;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+  }
+  .kp-chat-send:hover:not(:disabled) { transform: translateY(-1px); }
+  .kp-chat-send:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .kp-chat-foot {
+    font-size: 10.5px;
+    color: #6B7A95;
+    text-align: center;
+    padding: 0 12px 10px;
+  }
+  .kp-chat-foot a {
+    color: #8AA0C5;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }
+
+  /* --- Mobile: full-height sheet --- */
+  @media (max-width: 480px) {
+    .kp-chat-panel {
+      right: -6px;
+      bottom: 72px;
+      width: calc(100vw - 20px);
+      height: calc(100vh - 100px);
+      max-height: 640px;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    if (typeof window === 'undefined') return;
+
+    const root     = document.getElementById('kp-chat-root');
+    if (!root) return;
+    const toggle   = document.getElementById('kp-chat-toggle');
+    const closeBtn = document.getElementById('kp-chat-close');
+    const panel    = document.getElementById('kp-chat-panel');
+    const msgs     = document.getElementById('kp-chat-messages');
+    const form     = document.getElementById('kp-chat-form');
+    const input    = document.getElementById('kp-chat-input');
+    const sendBtn  = document.getElementById('kp-chat-send');
+    const handoff  = document.getElementById('kp-chat-handoff');
+    const lineBtn  = document.getElementById('kp-chat-line');
+    const fbBtn    = document.getElementById('kp-chat-fb');
+
+    const api  = root.dataset.api  || '/api/chat';
+    const LINE = root.dataset.line || 'https://lin.ee/Qt6Vri4';
+    const FB   = root.dataset.fb   || 'https://www.facebook.com/korpaiix';
+
+    let started = false;   // true once we've rendered greeting / loaded session
+    let sending = false;
+
+    const GREETING_FALLBACK =
+      'สวัสดีครับ ทีม KORP AI ช่วยอะไรได้บ้าง? 👋\n\nเล่าคร่าวๆ ว่าธุรกิจคุณทำอะไร' +
+      ' และอยากแก้ปัญหาเรื่องไหนครับ';
+
+    // ---- Rendering helpers ----
+    const addBubble = (role, text) => {
+      const div = document.createElement('div');
+      div.className = 'kp-chat-bubble ' + role;
+      div.textContent = text;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    };
+    const addTyping = () => {
+      const el = document.createElement('div');
+      el.className = 'kp-chat-typing';
+      el.setAttribute('aria-label', 'AI กำลังพิมพ์');
+      el.innerHTML = '<span></span><span></span><span></span>';
+      msgs.appendChild(el);
+      msgs.scrollTop = msgs.scrollHeight;
+      return el;
+    };
+    const showHandoff = () => { handoff.hidden = false; msgs.scrollTop = msgs.scrollHeight; };
+
+    // ---- API calls ----
+    const tryStartSession = async () => {
+      try {
+        const r = await fetch(api + '/session', {
+          method: 'POST',
+          credentials: 'include',
+        });
+        if (r.ok) {
+          const data = await r.json();
+          addBubble('assistant', data.greeting || GREETING_FALLBACK);
+          return true;
+        }
+      } catch (_) { /* fall through */ }
+      // Fallback: backend not available (or blocked by ad blocker).
+      // Still show greeting and push user toward LINE/FB.
+      addBubble('assistant', GREETING_FALLBACK);
+      return false;
+    };
+
+    const sendMessage = async (text) => {
+      const typingEl = addTyping();
+      try {
+        const r = await fetch(api + '/message', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text }),
+        });
+        typingEl.remove();
+        if (r.status === 429) {
+          addBubble('error', 'ส่งถี่ไปหน่อยครับ รอสักครู่แล้วลองใหม่');
+          return;
+        }
+        if (!r.ok) throw new Error('bad status ' + r.status);
+        const data = await r.json();
+        addBubble('assistant', data.reply || '...');
+        if (data.handoff) showHandoff();
+      } catch (err) {
+        typingEl.remove();
+        addBubble(
+          'error',
+          'เชื่อมต่อ AI ไม่ได้ชั่วคราว — คุยกับทีมเราตรงทาง LINE / Messenger ด้านล่างได้เลยครับ'
+        );
+        showHandoff();
+      }
+    };
+
+    // ---- UI events ----
+    const open = async () => {
+      root.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      input.focus();
+      if (!started) {
+        started = true;
+        await tryStartSession();
+      }
+    };
+    const close = () => {
+      root.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle.addEventListener('click', () => {
+      if (root.classList.contains('is-open')) close();
+      else open();
+    });
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && root.classList.contains('is-open')) close();
+    });
+
+    // Auto-grow textarea
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+      sendBtn.disabled = input.value.trim().length === 0 || sending;
+    });
+
+    // Enter to send, Shift+Enter for newline
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        form.requestSubmit();
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text || sending) return;
+      sending = true;
+      sendBtn.disabled = true;
+      addBubble('user', text);
+      input.value = '';
+      input.style.height = 'auto';
+      await sendMessage(text);
+      sending = false;
+      sendBtn.disabled = input.value.trim().length === 0;
+      input.focus();
+    });
+
+    // Handoff click → log + open LINE/FB
+    const logHandoff = (channel, fallbackUrl) => {
+      fetch(api + '/handoff', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ channel }),
+        keepalive: true,
+      }).catch(() => { /* best effort */ });
+      // Always navigate — independent of fetch result
+      return true;
+    };
+    lineBtn.addEventListener('click', () => logHandoff('line', LINE));
+    fbBtn.addEventListener('click',   () => logHandoff('fb',   FB));
+
+    // Optional: auto-peek the bubble after 15s of idle browsing (first visit)
+    // Tiny nudge so the user knows the widget exists. We only do it once per
+    // tab and bail if the user has already scrolled past the fold.
+    let peeked = false;
+    const peek = () => {
+      if (peeked) return;
+      peeked = true;
+      toggle.animate(
+        [
+          { transform: 'translateY(0)' },
+          { transform: 'translateY(-8px)' },
+          { transform: 'translateY(0)' },
+          { transform: 'translateY(-4px)' },
+          { transform: 'translateY(0)' },
+        ],
+        { duration: 700, easing: 'ease-in-out' }
+      );
+    };
+    window.addEventListener('load', () => { setTimeout(peek, 15000); }, { once: true });
+  })();
+</script>

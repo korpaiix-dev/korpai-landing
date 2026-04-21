@@ -25,8 +25,8 @@ export const services: Service[] = [
     title: 'AI Sales Agent',
     shortDesc: 'ตอบแชทลูกค้า 24 ชม. บน Line OA, Messenger, เว็บ — คัดกรอง, จองคิว, ส่งต่อทีมขาย',
     tagline: 'AI ตอบลูกค้าเหมือนแอดมินตัวจริง เรียนรู้จากข้อมูลของธุรกิจคุณ ไม่ใช่ bot สคริปต์ตายตัว',
-    img: 'https://images.unsplash.com/photo-1766066014237-00645c74e9c6?w=1600&auto=format&fit=crop&q=85',
-    alt: 'พนักงานหญิงเอเชียใส่หูฟังยิ้มแย้มตอบแชทลูกค้าหน้าคอมพิวเตอร์',
+    img: '/assets/img/ai-chatbot.jpg',
+    alt: 'บาริสต้าไทยในคาเฟ่ ใช้มือถือตอบลูกค้าผ่าน AI Chatbot มีแชทบับเบิลลอยอยู่หน้าจอ',
     highlights: [
       'รองรับ Line OA, Facebook Messenger, Web Chat ในตัวเดียว',
       'ตอบจากฐานความรู้ของธุรกิจ (RAG) — ไม่เดา ไม่มั่ว',

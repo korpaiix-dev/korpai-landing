@@ -215,6 +215,52 @@ sudo certbot certificates
 sudo certbot renew --dry-run
 ```
 
+## 6.5 Phase 1.5 — Container switchover (roadmap, not live yet)
+
+ปัจจุบัน landing deploy แบบ static files ใน `/var/www/korpai/` ผ่าน host nginx
+Phase 1.5 จะย้ายไปรันใน container ตาม `Dockerfile` + `docker-compose.yml` ที่ repo root
+จุดประสงค์: reproducible build + เวอร์ชัน pin + rollback ด้วย `docker compose`
+
+### 6.5.1 ไฟล์ที่เพิ่มใน repo
+
+- `Dockerfile` — multi-stage (node-alpine build → nginx-alpine serve)
+- `deploy/nginx.conf` — in-container nginx (port 80)
+- `docker-compose.yml` — `landing` service (127.0.0.1:8080 → container 80) + optional `ttyd`
+- `.dockerignore`
+- `site/public/version.txt` ถูก inject จาก build arg `GIT_SHA` ใน Dockerfile
+
+### 6.5.2 Build & run (ยังไม่ execute บน prod)
+
+```bash
+# On VPS, inside /root/korpai-landing
+GIT_SHA=$(git rev-parse --short HEAD) docker compose up -d --build
+docker compose ps            # expect korpai-landing healthy
+curl http://127.0.0.1:8080/version.txt  # expect current SHA
+```
+
+### 6.5.3 Switchover plan
+
+1. Keep current host nginx (Let's Encrypt + HTTP/2) — เป็น reverse proxy อย่างเดียว
+2. Replace `root /var/www/korpai;` block ใน `/etc/nginx/sites-enabled/korpai` ด้วย
+   ```nginx
+   location / {
+       proxy_pass http://127.0.0.1:8080;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto $scheme;
+   }
+   ```
+3. `sudo nginx -t && sudo systemctl reload nginx`
+4. Verify `curl -I https://korpai.co` returns 200 — rollback = re-enable root block
+
+### 6.5.4 Rollback
+
+```bash
+docker compose down
+# restore /etc/nginx/sites-enabled/korpai to root-serving version, reload
+```
+
 ## 7. Smoke test checklist (หลัง deploy ทุกครั้ง)
 
 - [ ] `curl -I https://korpai.co` → 200 + HSTS header

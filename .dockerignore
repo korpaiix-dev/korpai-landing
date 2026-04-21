@@ -1,0 +1,15 @@
+**/node_modules
+**/dist
+**/.astro
+**/.cache
+**/.DS_Store
+**/.env
+**/.env.*
+**/*.log
+.git
+.github
+scripts
+docs/*.drawio
+site/node_modules
+site/dist
+site/.astro

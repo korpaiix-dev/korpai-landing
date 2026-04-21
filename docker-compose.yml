@@ -1,0 +1,48 @@
+# docker-compose.yml — korpai.co landing stack
+#
+# Services:
+#   landing  — static Astro build served by nginx-alpine (port 8080 on host)
+#   ttyd     — optional web terminal (disabled by default, enable by setting
+#              ENABLE_TTYD=1 in .env)
+#
+# Run:
+#   GIT_SHA=$(git rev-parse --short HEAD) docker compose up -d --build
+#
+# The host nginx (with Let's Encrypt TLS) reverse proxies from
+# https://korpai.co → http://127.0.0.1:8080.
+# See docs/DEPLOYMENT.md §7 for full switchover steps.
+
+services:
+  landing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GIT_SHA: ${GIT_SHA:-local}
+    image: korpai/landing:${GIT_SHA:-local}
+    container_name: korpai-landing
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - korpai
+    labels:
+      - "app=korpai-landing"
+      - "git.sha=${GIT_SHA:-local}"
+
+  # Optional — bring up with: docker compose --profile ops up -d ttyd
+  ttyd:
+    image: tsl0922/ttyd:latest
+    container_name: korpai-ttyd
+    restart: unless-stopped
+    command: ["ttyd", "-W", "bash"]
+    ports:
+      - "127.0.0.1:7681:7681"
+    networks:
+      - korpai
+    profiles:
+      - ops
+
+networks:
+  korpai:
+    name: korpai

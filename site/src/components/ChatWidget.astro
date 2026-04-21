@@ -71,8 +71,8 @@
         <button type="button" class="kp-qr" data-reply="อยากได้ dashboard ดูยอดขาย">
           📊 Dashboard ดูข้อมูล
         </button>
-        <button type="button" class="kp-qr" data-reply="อยากรู้ราคา เริ่มต้นเท่าไหร่">
-          💰 ราคาเริ่มต้น
+        <button type="button" class="kp-qr" data-reply="ขอปรึกษาโจทย์ เริ่มยังไง">
+          💬 ปรึกษาโจทย์ฟรี
         </button>
       </div>
     </div>
@@ -415,16 +415,16 @@
     const replyFor = (text) => {
       const t = text.toLowerCase();
       if (/chatbot|แชทบอท|line|ตอบลูกค้า|messenger/.test(t)) {
-        return 'ได้เลยครับ — เราตั้งค่า chatbot บน LINE OA / Facebook / เว็บ ให้ตอบลูกค้า 24 ชม. คัดกรองแล้วส่งต่อทีมขายปิดงาน<br><br>เริ่มต้น <strong class="text-[#7BE8FF]">15,000 บาท</strong> ใช้เวลา 1–2 สัปดาห์ เริ่มลองดูไหมครับ? 💬';
+        return 'ได้เลยครับ — เราตั้งค่า chatbot บน LINE OA / Facebook / เว็บ ให้ตอบลูกค้า 24 ชม. คัดกรองแล้วส่งต่อทีมขายปิดงาน<br><br>ใช้เวลา 1–2 สัปดาห์ เริ่มต้นจากการคุยโจทย์ <strong class="text-[#7BE8FF]">ปรึกษาฟรี</strong> ไม่บังคับใช้บริการครับ 💬';
       }
       if (/automation|workflow|n8n|zapier|make|เชื่อม|อัตโนมัติ/.test(t)) {
-        return 'เราเชื่อมระบบต่าง ๆ ให้ทำงานเอง — ฟอร์ม → Sheet → CRM → แจ้งทีม ประหยัดเวลางานซ้ำ ๆ ได้ ~60%<br><br>เริ่มต้น <strong class="text-[#7BE8FF]">20,000 บาท</strong> ขึ้นกับความซับซ้อน ⚡';
+        return 'เราเชื่อมระบบต่าง ๆ ให้ทำงานเอง — ฟอร์ม → Sheet → CRM → แจ้งทีม ประหยัดเวลางานซ้ำ ๆ ได้ ~60%<br><br>ขอบเขตขึ้นกับระบบที่ทีมใช้ เล่าโจทย์มาผมประเมินให้ <strong class="text-[#7BE8FF]">ฟรี</strong> ครับ ⚡';
       }
       if (/dashboard|แดชบอร์ด|กราฟ|ข้อมูล|รายงาน|ยอดขาย/.test(t)) {
-        return 'Dashboard ดูยอดขาย / ลีด / KPI เรียลไทม์ ทำด้วย Metabase, Grafana หรือ React ได้ครับ<br><br>เริ่มต้น <strong class="text-[#7BE8FF]">25,000 บาท</strong> รวมเชื่อมฐานข้อมูลเดิม 📊';
+        return 'Dashboard ดูยอดขาย / ลีด / KPI เรียลไทม์ ทำด้วย Metabase, Grafana หรือ React ได้ครับ<br><br>รวมเชื่อมฐานข้อมูลเดิมให้เรียบร้อย ทักมาคุยโจทย์ได้เลย <strong class="text-[#7BE8FF]">ปรึกษาฟรี</strong> 📊';
       }
       if (/ราคา|price|เท่าไหร่|งบ|เริ่มต้น/.test(t)) {
-        return 'ขึ้นกับสโคปครับ:<br>• Chatbot เริ่ม <strong class="text-[#7BE8FF]">15,000฿</strong><br>• Automation เริ่ม <strong class="text-[#7BE8FF]">20,000฿</strong><br>• Dashboard เริ่ม <strong class="text-[#7BE8FF]">25,000฿</strong><br><br>ปรึกษาฟรี ไม่บังคับใช้บริการ — เล่าโจทย์มาได้เลยครับ 🙏';
+        return 'ขึ้นกับสโคปของโจทย์ครับ ทีมเราจะประเมินให้เห็นภาพชัดหลังคุยกัน 10–15 นาที<br><br>ทักมาเล่าโจทย์ได้เลย <strong class="text-[#7BE8FF]">ปรึกษาฟรี</strong> ไม่บังคับใช้บริการ 🙏';
       }
       if (/สวัสดี|hello|hi|ทัก/.test(t)) {
         return 'สวัสดีครับ! ผมช่วยอะไรได้บ้างครับ? ลองเลือกจากตัวเลือกด้านบน หรือเล่าปัญหาในทีมมาเลยได้เลย 😊';

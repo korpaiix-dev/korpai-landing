@@ -4,8 +4,6 @@ const tiers = [
     id: 'starter',
     name: 'Starter',
     tagline: 'สำหรับร้าน/ธุรกิจเดี่ยว เริ่มใช้ AI ครั้งแรก',
-    setup: '15,000',
-    monthly: '3,500',
     features: [
       { ok: true,  text: 'AI Chatbot 1 ช่องทาง (Line OA / Messenger / เว็บ)' },
       { ok: true,  text: 'สคริปต์ตอบลูกค้าพร้อมใช้ (FAQ + ปิดการขาย)' },
@@ -16,15 +14,12 @@ const tiers = [
       { ok: false, text: 'Dashboard realtime' },
       { ok: false, text: 'Integration CRM / POS' },
     ],
-    cta: 'เริ่มเลย',
     highlight: false,
   },
   {
     id: 'growth',
     name: 'Growth',
     tagline: 'สำหรับธุรกิจที่มีลูกค้าหลายช่อง อยากอัตโนมัติเต็มตัว',
-    setup: '49,000',
-    monthly: '8,500',
     popular: true,
     features: [
       { ok: true, text: 'ทุกอย่างใน Starter' },
@@ -36,15 +31,12 @@ const tiers = [
       { ok: true, text: 'ดูแล + ปรับปรุงทุก 2 สัปดาห์' },
       { ok: true, text: 'Training ทีมใช้งาน 2 ครั้ง' },
     ],
-    cta: 'ขอคุยโจทย์',
     highlight: true,
   },
   {
     id: 'enterprise',
     name: 'Enterprise',
     tagline: 'สำหรับบริษัทที่ต้องการ AI ตามโจทย์เฉพาะทาง',
-    setup: 'ปรึกษา',
-    monthly: 'ปรึกษา',
     features: [
       { ok: true, text: 'ทุกอย่างใน Growth' },
       { ok: true, text: 'Custom AI Feature (สรุปเอกสาร / RAG / Voice)' },
@@ -55,7 +47,6 @@ const tiers = [
       { ok: true, text: 'Security review + PDPA compliance' },
       { ok: true, text: 'Deploy บน cloud ของคุณเองได้' },
     ],
-    cta: 'ขอใบเสนอราคา',
     highlight: false,
   },
 ];
@@ -64,10 +55,10 @@ const tiers = [
 <section id="pricing" class="relative py-24 md:py-28 border-t kp-hairline">
   <div class="kp-container">
     <div class="max-w-2xl mx-auto text-center kp-reveal">
-      <span class="kp-pill">ราคา</span>
-      <h2 class="prose-kp mt-5">ราคาชัด ไม่มีเงื่อนไขซ่อน</h2>
+      <span class="kp-pill">แพ็กเกจ</span>
+      <h2 class="prose-kp mt-5">แพ็กเกจที่เหมาะกับธุรกิจคุณ</h2>
       <p class="prose-kp mt-5">
-        เริ่มจากแพ็กเกจที่เหมาะกับธุรกิจคุณ เพิ่ม-ลดได้ตลอด ไม่ต้องผูกมัดระยะยาว
+        เลือกขอบเขตที่ใกล้กับโจทย์คุณ — ทีมจะคุยเพื่อประเมินและเสนอราคาให้เห็นภาพชัด ก่อนเริ่มทำ
       </p>
     </div>
 
@@ -82,30 +73,7 @@ const tiers = [
             <p class="mt-2 text-sm leading-relaxed" style="color: #8AA0C5;">{t.tagline}</p>
           </div>
 
-          <div class="kp-price-amount">
-            {t.setup === 'ปรึกษา' ? (
-              <>
-                <div class="kp-price-num">Custom</div>
-                <div class="kp-price-period">ตามโจทย์และขอบเขตงาน</div>
-              </>
-            ) : (
-              <>
-                <div class="flex items-baseline gap-1.5">
-                  <span class="text-[13px]" style="color: #8AA0C5;">เริ่มต้น</span>
-                  <span class="kp-price-num">฿{t.setup}</span>
-                </div>
-                <div class="kp-price-period">ค่าติดตั้ง · ครั้งเดียว</div>
-                <div class="kp-price-divider"></div>
-                <div class="flex items-baseline gap-1.5">
-                  <span class="kp-price-num-sm">฿{t.monthly}</span>
-                  <span class="text-[13px]" style="color: #8AA0C5;">/ เดือน</span>
-                </div>
-                <div class="kp-price-period">ดูแล + ปรับปรุง</div>
-              </>
-            )}
-          </div>
-
-          <ul class="kp-price-features">
+          <ul class="kp-price-features kp-price-features--top">
             {t.features.map(f => (
               <li class={`kp-price-feat ${f.ok ? 'kp-price-feat--ok' : 'kp-price-feat--no'}`}>
                 <span class="kp-price-check" aria-hidden="true">
@@ -120,7 +88,7 @@ const tiers = [
             href="#contact"
             class={t.highlight ? 'kp-btn-primary w-full justify-center' : 'kp-btn-secondary w-full justify-center'}
           >
-            {t.cta}
+            ปรึกษาฟรี
             <span aria-hidden="true">→</span>
           </a>
         </article>
@@ -130,7 +98,7 @@ const tiers = [
     <!-- Notes -->
     <div class="mt-10 mx-auto max-w-3xl text-center kp-reveal">
       <p class="text-xs leading-relaxed" style="color: #8AA0C5;">
-        ราคาเริ่มต้นไม่รวม VAT 7% · ชำระเป็นเฟสตามเนื้องาน · ทดลองได้ก่อนตัดสินใจ ยกเลิกได้ภายใน 14 วันแรก ·
+        แจ้งโจทย์เพื่อให้ทีมประเมินแพ็กเกจที่ใช่ · ทดลองได้ก่อนตัดสินใจ ยกเลิกได้ภายใน 14 วันแรก ·
         ทุกแพ็กเกจรวม prompt engineering + ทดสอบ + training ทีมใช้งานเบื้องต้น
       </p>
     </div>
@@ -216,6 +184,10 @@ const tiers = [
     gap: 10px;
     flex: 1;
     padding: 6px 0 22px;
+  }
+  /* Variant: features directly follow head (no price amount block in between) */
+  .kp-price-features--top {
+    padding: 22px 0 24px;
   }
   .kp-price-feat {
     display: flex;

@@ -1,0 +1,383 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { services, getServiceBySlug } from '~/data/services';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = getServiceBySlug(slug!);
+if (!service) {
+  throw new Error(`Service not found: ${slug}`);
+}
+
+const pageTitle = `${service.title} — KORP AI AUTOMATION`;
+const canonical = `https://korpai.co/services/${service.slug}`;
+
+const otherServices = services.filter((s) => s.slug !== service.slug);
+---
+
+<Layout title={pageTitle} description={service.seoDesc} canonical={canonical} image={service.img}>
+  <article class="kp-detail">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="kp-container pt-28 md:pt-32">
+      <ol class="kp-breadcrumb">
+        <li><a href="/">หน้าแรก</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/#services">บริการ</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">{service.title}</li>
+      </ol>
+    </nav>
+
+    <!-- Hero -->
+    <section class="kp-container pt-6 pb-12 md:pt-10 md:pb-16">
+      <div class="grid gap-10 md:grid-cols-2 md:gap-12 items-center">
+        <div class="kp-reveal">
+          <span class="kp-eyebrow">Service · {service.tag}</span>
+          <h1 class="prose-kp mt-5 text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
+            {service.title}
+          </h1>
+          <p class="prose-kp mt-6 text-lg leading-relaxed" style="color: #B8C5DE;">
+            {service.tagline}
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="/#contact" class="kp-btn-primary">
+              คุยโจทย์ฟรี
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener" class="kp-btn-secondary">
+              ทักผ่าน Line
+            </a>
+          </div>
+          <div class="mt-8 flex items-center gap-4 text-xs" style="color: #8AA0C5;">
+            <span><strong style="color: #26D7F6;">Timeline:</strong> {service.timeline}</span>
+          </div>
+        </div>
+        <div class="kp-reveal kp-detail-hero-img">
+          <img src={service.img} alt={service.alt} loading="eager" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Highlights -->
+    <section class="kp-container py-14 md:py-16 border-t kp-hairline">
+      <div class="max-w-3xl kp-reveal">
+        <span class="kp-eyebrow">What you get</span>
+        <h2 class="prose-kp mt-5 text-3xl md:text-4xl font-bold text-white">
+          คุณได้อะไรบ้างจาก {service.title}
+        </h2>
+      </div>
+      <ul class="mt-10 grid gap-4 md:grid-cols-2">
+        {service.highlights.map((h, i) => (
+          <li
+            class="kp-detail-bullet kp-reveal"
+            style={`transition-delay:${i * 60}ms`}
+          >
+            <span class="kp-detail-bullet-icon" aria-hidden="true">✓</span>
+            <span>{h}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Who this is for -->
+    <section class="kp-container py-14 md:py-16 border-t kp-hairline">
+      <div class="grid gap-10 md:grid-cols-[1fr_1.5fr] md:gap-14 items-start">
+        <div class="kp-reveal">
+          <span class="kp-eyebrow">Fit check</span>
+          <h2 class="prose-kp mt-5 text-3xl md:text-4xl font-bold text-white">
+            เหมาะกับใคร
+          </h2>
+          <p class="prose-kp mt-4 text-base" style="color: #8AA0C5;">
+            ไม่ใช่ทุกธุรกิจควรทำ — เรา honest กับคุณจริง ๆ ว่าบริการนี้เหมาะที่สุดกับใคร
+          </p>
+        </div>
+        <ul class="space-y-3">
+          {service.whoFor.map((w) => (
+            <li class="kp-detail-fit kp-reveal">
+              <span class="kp-detail-fit-dot" aria-hidden="true"></span>
+              <span>{w}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Use cases -->
+    <section class="kp-container py-14 md:py-16 border-t kp-hairline">
+      <div class="max-w-3xl kp-reveal">
+        <span class="kp-eyebrow">Real scenarios</span>
+        <h2 class="prose-kp mt-5 text-3xl md:text-4xl font-bold text-white">
+          ตัวอย่างการใช้งานจริง
+        </h2>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        {service.useCases.map((u, i) => (
+          <article class="kp-rc-card kp-detail-usecase kp-reveal" style={`transition-delay:${i * 70}ms`}>
+            <div class="kp-rc-num mb-4">Use case {String(i + 1).padStart(2, '0')}</div>
+            <h3 class="text-lg font-semibold text-white">{u.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed" style="color: #B8C5DE;">{u.desc}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Workflow / Delivery process -->
+    <section class="kp-container py-14 md:py-16 border-t kp-hairline">
+      <div class="max-w-3xl kp-reveal">
+        <span class="kp-eyebrow">Our process</span>
+        <h2 class="prose-kp mt-5 text-3xl md:text-4xl font-bold text-white">
+          เราทำยังไงให้ถึงมือคุณ
+        </h2>
+      </div>
+      <ol class="mt-10 grid gap-4">
+        {service.workflow.map((w, i) => (
+          <li class="kp-detail-step kp-reveal" style={`transition-delay:${i * 80}ms`}>
+            <span class="kp-detail-step-num">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="text-white text-lg font-semibold">{w.step}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed" style="color: #8AA0C5;">{w.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- Tech stack -->
+    <section class="kp-container py-14 md:py-16 border-t kp-hairline">
+      <div class="max-w-3xl kp-reveal">
+        <span class="kp-eyebrow">Tech stack</span>
+        <h2 class="prose-kp mt-5 text-3xl md:text-4xl font-bold text-white">
+          เทคโนโลยีที่เราใช้
+        </h2>
+        <p class="prose-kp mt-4 text-base" style="color: #8AA0C5;">
+          เราเลือก tool ตามโจทย์จริง ไม่ใช่ตาม hype · ทุกอย่างเป็น open protocol · ย้ายออกได้ทุกเมื่อ
+        </p>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-2.5">
+        {service.tech.map((t) => (
+          <span class="kp-tech-chip">{t}</span>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="kp-container py-16 md:py-20 border-t kp-hairline">
+      <div class="kp-rc-card kp-detail-cta text-center kp-reveal">
+        <span class="kp-eyebrow kp-eyebrow--cyan">Next step</span>
+        <h2 class="prose-kp mt-4 text-3xl md:text-4xl font-bold text-white">
+          อยากรู้ว่าเหมาะกับธุรกิจคุณไหม?
+        </h2>
+        <p class="prose-kp mt-4 max-w-2xl mx-auto" style="color: #B8C5DE;">
+          คุยกับเราฟรี 20–30 นาที · เราจะฟังโจทย์ของคุณก่อน แล้วบอกตรง ๆ ว่าควรทำหรือยัง · ถ้าทำ ก็ประเมินเวลา/ขอบเขตให้เลย
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3 justify-center">
+          <a href="/#contact" class="kp-btn-primary">
+            ปรึกษาฟรี
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener" class="kp-btn-secondary">
+            Line OA
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Other services -->
+    <section class="kp-container py-14 md:py-16 border-t kp-hairline">
+      <div class="max-w-3xl kp-reveal">
+        <span class="kp-eyebrow">Other services</span>
+        <h2 class="prose-kp mt-5 text-2xl md:text-3xl font-bold text-white">บริการอื่น ๆ</h2>
+      </div>
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
+        {otherServices.map((s) => (
+          <a href={`/services/${s.slug}`} class="kp-rc-card kp-other-card kp-reveal">
+            <div class="kp-other-img">
+              <img src={s.img} alt={s.alt} loading="lazy" />
+            </div>
+            <div class="kp-other-body">
+              <span class="kp-rc-num">{s.tag}</span>
+              <h3 class="mt-2 text-base font-semibold text-white">{s.title}</h3>
+              <p class="mt-2 text-xs leading-relaxed" style="color: #8AA0C5;">{s.shortDesc}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </article>
+</Layout>
+
+<style>
+  .kp-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: #8AA0C5;
+  }
+  .kp-breadcrumb a {
+    color: #8AA0C5;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .kp-breadcrumb a:hover { color: #26D7F6; }
+  .kp-breadcrumb [aria-current="page"] {
+    color: #E8EEF9;
+  }
+
+  .kp-detail-hero-img {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    aspect-ratio: 5 / 4;
+    background: #0A0F1C;
+    box-shadow:
+      0 40px 80px -20px rgba(0,0,0,0.6),
+      0 0 0 1px rgba(38,215,246,0.06);
+  }
+  .kp-detail-hero-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .kp-detail-hero-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(5,7,14,0) 60%, rgba(5,7,14,0.45) 100%);
+    pointer-events: none;
+  }
+
+  .kp-detail-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: rgba(15, 20, 32, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #D6DFF2;
+    font-size: 14.5px;
+    line-height: 1.65;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .kp-detail-bullet:hover {
+    border-color: rgba(38, 215, 246, 0.25);
+    background: rgba(20, 28, 44, 0.6);
+  }
+  .kp-detail-bullet-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    background: rgba(38,215,246,0.14);
+    color: #26D7F6;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .kp-detail-fit {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #D6DFF2;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .kp-detail-fit:last-child { border-bottom: 0; }
+  .kp-detail-fit-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #26D7F6;
+    flex-shrink: 0;
+    margin-top: 9px;
+    box-shadow: 0 0 0 3px rgba(38,215,246,0.12);
+  }
+
+  .kp-detail-usecase { padding: 22px 24px; }
+
+  .kp-detail-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 18px 20px;
+    background: rgba(15, 20, 32, 0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+  .kp-detail-step:hover {
+    border-color: rgba(124,95,255,0.28);
+    transform: translateX(3px);
+  }
+  .kp-detail-step-num {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: #26D7F6;
+    min-width: 42px;
+    padding-top: 2px;
+  }
+
+  .kp-tech-chip {
+    padding: 8px 14px;
+    border-radius: 9999px;
+    background: rgba(15,20,32,0.6);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #D6DFF2;
+    font-size: 13px;
+    font-weight: 500;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .kp-tech-chip:hover {
+    border-color: rgba(38,215,246,0.3);
+    background: rgba(20,28,44,0.7);
+  }
+
+  .kp-detail-cta {
+    padding: 48px 32px;
+    background:
+      radial-gradient(ellipse at top, rgba(38,215,246,0.08), transparent 55%),
+      rgba(15, 20, 32, 0.55);
+    border: 1px solid rgba(38,215,246,0.12);
+  }
+
+  .kp-other-card {
+    padding: 0;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+  .kp-other-card:hover {
+    border-color: rgba(38,215,246,0.25);
+    transform: translateY(-3px);
+  }
+  .kp-other-img {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #0A0F1C;
+  }
+  .kp-other-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .kp-other-card:hover .kp-other-img img { transform: scale(1.04); }
+  .kp-other-body { padding: 16px 18px 20px; }
+</style>

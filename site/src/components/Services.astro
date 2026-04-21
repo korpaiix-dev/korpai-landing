@@ -1,34 +1,5 @@
 ---
-const services = [
-  {
-    tag: 'Chatbot',
-    title: 'AI Sales Agent',
-    desc: 'ตอบแชทลูกค้า 24 ชม. บน Line OA, Messenger, เว็บ — คัดกรอง, จองคิว, ส่งต่อทีมขาย',
-    img: 'https://images.unsplash.com/photo-1766066014237-00645c74e9c6?w=1200&auto=format&fit=crop&q=80',
-    alt: 'พนักงานหญิงเอเชียใส่หูฟังยิ้มแย้มตอบแชทลูกค้าหน้าคอมพิวเตอร์',
-  },
-  {
-    tag: 'Automation',
-    title: 'Workflow Automation',
-    desc: 'ต่อระบบที่ทีมใช้ — Form → Sheet → CRM → Line แจ้งทีม ประหยัดเวลางานซ้ำ ๆ ที่ไม่จำเป็น',
-    img: 'https://images.unsplash.com/photo-1758691737083-0e7fdbde0f05?w=1200&auto=format&fit=crop&q=80',
-    alt: 'พนักงานสองคนทำงานร่วมกันหน้าจอ automation',
-  },
-  {
-    tag: 'Dashboard',
-    title: 'Realtime Dashboard',
-    desc: 'แดชบอร์ดยอดขาย ลีด KPI real-time จากระบบเดิม ทีมดูได้ทั้ง desktop และมือถือ',
-    img: 'https://images.unsplash.com/photo-1763718528755-4bca23f82ac3?w=1200&auto=format&fit=crop&q=80',
-    alt: 'แดชบอร์ดข้อมูลแสดงเทรนด์และตัวชี้วัดสำคัญบนหน้าจอคอมพิวเตอร์',
-  },
-  {
-    tag: 'Custom AI',
-    title: 'Custom AI Feature',
-    desc: 'สรุปเอกสาร, ตอบจากฐานความรู้ภายใน, สร้างภาพ หรือระบบเสียง ออกแบบตามโจทย์ทีมคุณ',
-    img: 'https://images.unsplash.com/photo-1758876202014-6b2062bed4e8?w=1200&auto=format&fit=crop&q=80',
-    alt: 'พนักงานผู้หญิงใช้ AI feature บนโน้ตบุ๊กในออฟฟิศโมเดิร์น',
-  },
-];
+import { services } from '~/data/services';
 ---
 
 <section id="services" class="relative py-24 md:py-32 overflow-hidden">
@@ -48,7 +19,11 @@ const services = [
 
     <div class="mt-16 grid gap-6 md:grid-cols-2">
       {services.map((s, i) => (
-        <article class="kp-rc-card kp-svc-card-v2 kp-reveal" style={`transition-delay:${i * 80}ms`}>
+        <a
+          href={`/services/${s.slug}`}
+          class="kp-rc-card kp-svc-card-v2 kp-reveal kp-svc-link"
+          style={`transition-delay:${i * 80}ms`}
+        >
           <div class="kp-svc-visual-v2">
             <img src={s.img} alt={s.alt} loading="lazy" />
             <div class="kp-svc-visual-shade" aria-hidden="true"></div>
@@ -57,21 +32,30 @@ const services = [
           <div class="kp-svc-body-v2">
             <h3 class="text-xl font-semibold text-white tracking-tight">{s.title}</h3>
             <p class="mt-2.5 text-sm leading-relaxed" style="color: #8AA0C5;">
-              {s.desc}
+              {s.shortDesc}
             </p>
-            <a href="#contact" class="kp-rc-cta mt-5">
-              เริ่มคุยโจทย์
+            <span class="kp-rc-cta mt-5">
+              ดูรายละเอียด
               <span class="kp-rc-arrow" aria-hidden="true">→</span>
-            </a>
+            </span>
           </div>
-        </article>
+        </a>
       ))}
+    </div>
+
+    <div class="mt-12 text-center kp-reveal">
+      <a href="#contact" class="kp-btn-secondary">
+        คุยโจทย์ฟรี · ประเมินให้ทันที
+        <span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </section>
 
 <style>
   .kp-svc-card-v2 { padding: 0; }
+  .kp-svc-link { display: block; text-decoration: none; color: inherit; }
+  .kp-svc-link:hover .kp-rc-arrow { transform: translateX(3px); }
 
   .kp-svc-visual-v2 {
     position: relative;
@@ -117,5 +101,10 @@ const services = [
 
   .kp-svc-body-v2 {
     padding: 22px 24px 24px;
+  }
+
+  .kp-rc-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
   }
 </style>

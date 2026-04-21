@@ -63,8 +63,8 @@ export const services: Service[] = [
     title: 'Workflow Automation',
     shortDesc: 'ต่อระบบที่ทีมใช้ — Form → Sheet → CRM → Line แจ้งทีม ประหยัดเวลางานซ้ำ ๆ ที่ไม่จำเป็น',
     tagline: 'ตัดงาน copy-paste 40+ ชม./เดือน ทีมไปโฟกัสงานที่สำคัญกว่าแทนการกรอกข้อมูลซ้ำ',
-    img: 'https://images.unsplash.com/photo-1758691737083-0e7fdbde0f05?w=1600&auto=format&fit=crop&q=85',
-    alt: 'พนักงานสองคนทำงานร่วมกันหน้าจอ automation',
+    img: '/assets/img/automation.jpg',
+    alt: 'คู่ทำงานชาย-หญิงไทยที่ standing desk ในออฟฟิศ loft มี workflow nodes ลอยเหนือโต๊ะ',
     highlights: [
       'เชื่อม Facebook Lead Ads → CRM → Line กลุ่มทีมขายใน 2 นาที',
       'สร้างใบเสนอราคา + ส่งเมลอัตโนมัติจาก Line chat',
@@ -101,7 +101,7 @@ export const services: Service[] = [
     title: 'Realtime Dashboard',
     shortDesc: 'แดชบอร์ดยอดขาย ลีด KPI real-time จากระบบเดิม ทีมดูได้ทั้ง desktop และมือถือ',
     tagline: 'เห็นตัวเลขสำคัญของธุรกิจใน 10 วินาที ไม่ต้อง login 3 platforms แล้วคำนวณในหัว',
-    img: 'https://images.unsplash.com/photo-1763718528755-4bca23f82ac3?w=1600&auto=format&fit=crop&q=85',
+    img: '/assets/img/dashboard.jpg',
     alt: 'แดชบอร์ดข้อมูลแสดงเทรนด์และตัวชี้วัดสำคัญบนหน้าจอคอมพิวเตอร์',
     highlights: [
       'ดึงข้อมูลจาก Shopee, Lazada, Line Ads, Google Sheet, Postgres รวมที่เดียว',

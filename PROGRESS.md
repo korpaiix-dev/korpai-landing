@@ -9,9 +9,10 @@
 
 ## 🎯 CURRENT PHASE
 
-**Day 3 — Blog + SEO articles + Chatbot mock UI** — 🟡 ยังไม่เริ่ม (Day 1–2 เสร็จแล้ว)
-**Pending deploy:** commits `f4686ca` (real logo) + `e3b371c` (Opera perf fix) ยังค้างบน VPS
-**Next immediate:** boss paste deploy command บน SSH → verify → เริ่ม Day 3
+**Raycast-feel design pass** — 🟢 กำลังทำ (บอสขอให้แต่ละ section มี feel เหมือน raycast.com)
+Day 3 blog ชะลอก่อน ไฟล์ที่เริ่มไว้ (`site/src/content/`) เก็บเป็น draft untracked
+**Last deploy:** 2026-04-21 — commits `f4686ca` (real logo) + `e3b371c` (Opera perf fix) + `250d49b` (PROGRESS rewrite) ✅
+**Next immediate:** Services section Raycast-ified → commit → boss review → ไล่ทำ section อื่น
 
 ---
 
@@ -40,18 +41,23 @@
 - [x] restructure `index.astro` order: Hero → ChatDemo → Services → Process → Portfolio → Pricing → About → FAQ → Contact
 
 ### Perf fixes
-- [x] `ff98511` — tone down site-wide ambient backdrop (Safari/FF smoothness)
-- [x] `e3b371c` — kill `mix-blend-mode:screen` + orb/halo animations in Hero (Opera lag) **⚠ not deployed yet**
+- [x] `ff98511` — tone down site-wide ambient backdrop (Safari/FF smoothness) · deployed
+- [x] `e3b371c` — kill `mix-blend-mode:screen` + orb/halo animations in Hero (Opera lag) · deployed 2026-04-21
 
 ### Brand
-- [x] `f4686ca` — swap placeholder logos with boss's real Icon/Horizontal/Stacked + favicon + apple-touch-icon **⚠ not deployed yet**
+- [x] `f4686ca` — swap placeholder logos with boss's real Icon/Horizontal/Stacked + favicon + apple-touch-icon · deployed 2026-04-21
 
 ---
 
 ## 🚧 IN PROGRESS
 
-- [ ] **Deploy pending commits** (`f4686ca` + `e3b371c`) — รอ boss paste SSH deploy command
-- [ ] Verify Opera smooth scroll ตรงกับ expectation
+### Day 3 — Blog system scaffold
+- [ ] Astro Content Collections config (`src/content/config.ts`)
+- [ ] First article as template → `src/content/blog/rag-คืออะไร.md`
+- [ ] Blog list route `/blog/`
+- [ ] Blog post route `/blog/[...slug]`
+- [ ] BlogPosting JSON-LD + meta tags per post
+- [ ] Add "บทความ" link to Header nav
 
 ---
 

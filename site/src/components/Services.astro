@@ -31,28 +31,38 @@ const services = [
 ];
 ---
 
-<section id="services" class="relative py-24 md:py-28">
-  <div class="kp-container">
-    <div class="max-w-2xl mx-auto text-center kp-reveal">
-      <span class="kp-pill">บริการของเรา</span>
-      <h2 class="prose-kp mt-5">AI ที่คุ้มกับขนาดธุรกิจคุณ</h2>
+<section id="services" class="relative py-24 md:py-32 overflow-hidden">
+  <!-- Raycast-feel ambient beams behind section -->
+  <div aria-hidden="true" class="kp-section-beam kp-section-beam--cyan"></div>
+
+  <div class="kp-container relative">
+    <div class="max-w-3xl mx-auto text-center kp-reveal">
+      <span class="kp-eyebrow">Services · บริการของเรา</span>
+      <h2 class="prose-kp mt-6">
+        AI ที่คุ้มกับ <span class="kp-grad">ขนาดธุรกิจ</span> คุณ
+      </h2>
       <p class="prose-kp mt-5">
         ไม่ใช่แค่ติดตั้ง chatbot สำเร็จรูป — เราคุยกับทีมคุณก่อน แล้วส่งระบบที่ทีมใช้ต่อได้เอง
       </p>
     </div>
 
-    <div class="mt-14 grid gap-6 md:grid-cols-2">
+    <div class="mt-16 grid gap-6 md:grid-cols-2">
       {services.map((s, i) => (
-        <article class="kp-svc-card kp-reveal" style={`transition-delay:${i * 80}ms`}>
-          <div class="kp-svc-visual">
+        <article class="kp-rc-card kp-svc-card-v2 kp-reveal" style={`transition-delay:${i * 80}ms`}>
+          <div class="kp-svc-visual-v2">
             <img src={s.img} alt={s.alt} loading="lazy" />
+            <div class="kp-svc-visual-shade" aria-hidden="true"></div>
+            <span class="kp-rc-num kp-svc-num">{String(i + 1).padStart(2, '0')} · {s.tag}</span>
           </div>
-          <div class="kp-svc-body">
-            <span class="kp-pill">{s.tag}</span>
-            <h3 class="prose-kp mt-3 text-xl">{s.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed" style="color: #8AA0C5;">
+          <div class="kp-svc-body-v2">
+            <h3 class="text-xl font-semibold text-white tracking-tight">{s.title}</h3>
+            <p class="mt-2.5 text-sm leading-relaxed" style="color: #8AA0C5;">
               {s.desc}
             </p>
+            <a href="#contact" class="kp-rc-cta mt-5">
+              เริ่มคุยโจทย์
+              <span class="kp-rc-arrow" aria-hidden="true">→</span>
+            </a>
           </div>
         </article>
       ))}
@@ -61,44 +71,51 @@ const services = [
 </section>
 
 <style>
-  .kp-svc-card {
-    border-radius: 20px;
-    background: linear-gradient(180deg, rgba(15, 20, 32, 0.6), rgba(5, 7, 14, 0.4));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    overflow: hidden;
-    transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  .kp-svc-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(38, 215, 246, 0.2);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(38,215,246,0.1);
-  }
-  .kp-svc-visual {
+  .kp-svc-card-v2 { padding: 0; }
+
+  .kp-svc-visual-v2 {
     position: relative;
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     background: #0A0F1C;
   }
-  .kp-svc-visual img {
+  .kp-svc-visual-v2 img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s ease;
+    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  .kp-svc-card:hover .kp-svc-visual img {
-    transform: scale(1.03);
+  .kp-svc-card-v2:hover .kp-svc-visual-v2 img {
+    transform: scale(1.04);
   }
-  /* Subtle bottom vignette for consistency with dark body */
-  .kp-svc-visual::after {
-    content: "";
+
+  /* Darker vignette + cyan wash on top edge (Raycast-esque) */
+  .kp-svc-visual-shade {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(5,7,14,0) 55%, rgba(5,7,14,0.45) 100%);
+    background:
+      linear-gradient(180deg, rgba(8,12,24,0.35) 0%, rgba(8,12,24,0) 35%),
+      linear-gradient(180deg, rgba(5,7,14,0) 45%, rgba(5,7,14,0.7) 100%);
     pointer-events: none;
   }
-  .kp-svc-body {
-    padding: 22px 24px 26px;
+
+  /* Number pill floats over bottom-left of image */
+  .kp-svc-num {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    padding: 5px 10px;
+    border-radius: 9999px;
+    background: rgba(5,7,14,0.65);
+    border: 1px solid rgba(38,215,246,0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2;
+  }
+
+  .kp-svc-body-v2 {
+    padding: 22px 24px 24px;
   }
 </style>

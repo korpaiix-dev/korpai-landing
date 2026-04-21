@@ -504,3 +504,158 @@ main > section {
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
+
+/* ==========================================================
+   RAYCAST-FEEL UTILITIES (reusable across all sections)
+   ========================================================== */
+
+/* Small mono-uppercase section label (e.g. "SERVICES" above a headline) */
+.kp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #26D7F6;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  background: linear-gradient(92deg, rgba(38,215,246,0.10), rgba(124,95,255,0.08));
+  border: 1px solid rgba(38,215,246,0.22);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+}
+.kp-eyebrow::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #26D7F6;
+  box-shadow: 0 0 10px #26D7F6, 0 0 22px rgba(38,215,246,0.5);
+}
+
+/* Reusable section ambient beam — soft diagonal light behind any section.
+   Place <div class="kp-section-beam"></div> as first child inside section. */
+.kp-section-beam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.kp-section-beam::before,
+.kp-section-beam::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(24px);
+  pointer-events: none;
+}
+.kp-section-beam::before {
+  top: -10%;
+  left: 15%;
+  width: 720px;
+  height: 140px;
+  background: linear-gradient(90deg, rgba(38,215,246,0) 0%, rgba(38,215,246,0.22) 45%, rgba(60,124,255,0.18) 80%, rgba(60,124,255,0) 100%);
+  transform: rotate(22deg);
+  opacity: 0.6;
+}
+.kp-section-beam::after {
+  bottom: -20%;
+  right: 10%;
+  width: 640px;
+  height: 160px;
+  background: linear-gradient(90deg, rgba(124,95,255,0) 0%, rgba(124,95,255,0.18) 50%, rgba(38,215,246,0.16) 80%, rgba(38,215,246,0) 100%);
+  transform: rotate(-18deg);
+  opacity: 0.55;
+}
+
+/* Variant: cyan-heavy for hero-adjacent sections */
+.kp-section-beam--cyan::before {
+  background: linear-gradient(90deg, rgba(38,215,246,0) 0%, rgba(38,215,246,0.32) 45%, rgba(60,124,255,0.22) 80%, rgba(60,124,255,0) 100%);
+  opacity: 0.7;
+}
+/* Variant: violet-heavy for mid-page sections */
+.kp-section-beam--violet::before {
+  background: linear-gradient(90deg, rgba(124,95,255,0) 0%, rgba(124,95,255,0.28) 45%, rgba(38,215,246,0.18) 80%, rgba(38,215,246,0) 100%);
+}
+
+/* Raycast-style feature card — glass + top accent stripe + number prefix */
+.kp-rc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(22,28,46,0.55), rgba(8,12,24,0.35));
+  border: 1px solid rgba(255,255,255,0.07);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1),
+              border-color 0.3s ease,
+              box-shadow 0.35s ease;
+}
+.kp-rc-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(38,215,246,0.6), rgba(124,95,255,0.6), transparent);
+  opacity: 0.3;
+  transition: opacity 0.35s ease;
+  z-index: 2;
+}
+.kp-rc-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(38,215,246,0.3), transparent 40%, transparent 70%, rgba(124,95,255,0.25));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.kp-rc-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,0.1);
+  box-shadow:
+    0 24px 60px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(38,215,246,0.12),
+    0 12px 40px rgba(38,215,246,0.1);
+}
+.kp-rc-card:hover::before { opacity: 1; }
+.kp-rc-card:hover::after  { opacity: 1; }
+
+/* Tiny mono-number corner prefix for feature cards */
+.kp-rc-num {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #26D7F6;
+  opacity: 0.8;
+}
+
+/* "Learn more" arrow affordance that slides on card hover */
+.kp-rc-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #B8C5DE;
+  transition: color 0.25s ease, gap 0.25s ease;
+}
+.kp-rc-cta .kp-rc-arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+.kp-rc-card:hover .kp-rc-cta { color: #26D7F6; gap: 10px; }
+.kp-rc-card:hover .kp-rc-cta .kp-rc-arrow { transform: translateX(2px); }

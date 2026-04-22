@@ -9,7 +9,24 @@
 
 ## 🎯 CURRENT PHASE
 
-**1-2-3 sprint (2026-04-22)** — 🟡 บอสสั่ง "ทำ 1 2 3 เรียงไปเลย" — 3 of 3 done
+**Full sprint (2026-04-22)** — 🟢 บอสสั่ง "ทำมาเลยให้มันสมบูรณ์ฺ100%" — 4 of 4 done
+1. **#75 ChatWidget re-enable + 3 SEO blogs + 3 Gemini hero images** — commit `5b7e575` → live
+   - `Layout.astro` re-import + render `<ChatWidget />`
+   - `ChatWidget.astro`: graceful fallback (`GREETING_BACKEND_DOWN` + auto-handoff to Line/FB + composer disabled) เมื่อ `tryStartSession()` fail — ป้องกันหน้า broken ตอน backend ยังไม่ได้ run install.sh
+   - 3 SEO blog ใหม่ (target keyword ไทย low-competition + ≥5 internal link/บทความ):
+     - `diy-chatbot-sme-ไม่ต้องเขียนโค้ด.md` — เทียบ ManyChat/Chatfuel/Dialogflow/Tidio + 60-min setup
+     - `automation-ราคา-sme-เท่าไหร่.md` — pricing 3 ระดับ (DIY/freelance/agency) + ROI formula + payback case
+     - `google-sheet-automation-sme-n8n.md` — 5 use case + docker run + 5 ข้อควรระวัง
+   - 3 hero image ใหม่จาก Gemini 3.1 Pro (1024×572 16:9, no-text guarantee):
+     - `diy-chatbot.jpg` (92KB) · `automation-roi.jpg` (126KB) · `sheet-n8n-flow.jpg` (108KB)
+   - Build: 23 pages (เพิ่มจาก 20 → 23) · blog index 9 posts (เพิ่มจาก 6 → 9)
+   - Verified live: 9 blog slugs ใน `/blog/`, ทั้ง 3 image HTTP 200, ChatWidget toggle render ปกติ
+2. **#74 Proposal docx — ครัวคุณยาย (fictional Thai restaurant)** — เสร็จ
+   - `Downloads/proposal-kruakhunyai.docx` (17KB, 6 pages, A4 + Sarabun font)
+   - 6 sections: Cover · Executive Summary · Solution (Chatbot+Automation+Dashboard) · Scope · Timeline 6-week · Pricing 120K + monthly + ROI 1.8 month payback · Terms (40/40/20 + IP + PDPA)
+   - Validated PASS via `validate.py`
+
+**1-2-3 sprint (2026-04-22)** — 🟢 ปิดแล้ว — 3 of 3 done
 1. **#68 Wire chat backend → VPS** — เตรียมพร้อมรอบอสรัน 1 คำสั่ง
    - `chat-backend/deploy/install.sh` (idempotent: rsync + venv + pip + systemd + nginx auto-patch + health check)
    - `chat-backend/deploy/SETUP.md` (5-step boss guide)

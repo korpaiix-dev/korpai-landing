@@ -659,3 +659,79 @@ main > section {
 }
 .kp-rc-card:hover .kp-rc-cta { color: #26D7F6; gap: 10px; }
 .kp-rc-card:hover .kp-rc-cta .kp-rc-arrow { transform: translateX(2px); }
+
+/* ==========================================================
+   MOBILE PERF GUARD (≤ 768px)
+   PageSpeed mobile = 83 → target 90+. Mobile GPUs choke on
+   backdrop-filter blur + giant blurred orbs + infinite shimmer.
+   Strip them on small screens — visual impact minimal, perf huge.
+   ========================================================== */
+@media (max-width: 768px) {
+  /* 1) Kill the infinite shimmer on hero title (was running every frame) */
+  .kp-grad {
+    animation: none;
+    background-position: 0% 50%;
+  }
+
+  /* 2) Shrink + de-blur the giant ambient orbs (760-820px → 380-400px) */
+  .kp-bg-orb-1 {
+    width: 380px; height: 380px;
+    top: -120px; left: -100px;
+    filter: blur(24px);
+  }
+  .kp-bg-orb-2 {
+    width: 400px; height: 400px;
+    bottom: -140px; right: -120px;
+    filter: blur(24px);
+  }
+  .kp-bg-halo {
+    width: 90vw;
+    height: 50vh;
+    filter: blur(18px);
+  }
+
+  /* 3) Shrink hero orbs + remove blur entirely (gradients are soft enough) */
+  .kp-orb { filter: blur(16px); opacity: 0.55; }
+  .kp-orb-1 { width: 220px; height: 220px; }
+  .kp-orb-2 { width: 260px; height: 260px; }
+  .kp-orb-3 { width: 200px; height: 200px; }
+
+  /* 4) Reduce hero beams blur — was 20-28px, now 10-14px */
+  .kp-beam-1, .kp-beam-4, .kp-beam-5 { filter: blur(10px); }
+  .kp-beam-2, .kp-beam-3 { filter: blur(14px); }
+
+  /* 5) Hide the cursor spotlight on mobile — touch has no hover */
+  .kp-spotlight { display: none; }
+
+  /* 6) Drop backdrop-filter (forces offscreen layer compositing) */
+  .kp-pill,
+  .kp-nav-pill,
+  .kp-btn-secondary,
+  .kp-card,
+  .kp-stat-row,
+  .kp-rc-card,
+  .kp-chip {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  /* Compensate for lost frosted glass — bump bg opacity slightly */
+  .kp-nav-pill { background: rgba(16, 22, 40, 0.85); }
+  .kp-stat-row { background: rgba(16, 22, 40, 0.75); }
+
+  /* 7) Hide the scroll hint mouse animation on mobile */
+  .kp-scroll-hint { animation: none; opacity: 0.6; }
+}
+
+/* ==========================================================
+   REDUCED-MOTION GUARD (accessibility + battery saver)
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .kp-grad { animation: none; background-position: 0% 50%; }
+  .kp-scroll-hint { animation: none; }
+  .kp-mouse::after { animation: none; }
+}

@@ -5,6 +5,11 @@
 // widget talks to /api/chat/* on the same origin (nginx proxies → FastAPI on
 // 127.0.0.1:8100). If the backend is unreachable, we degrade gracefully and
 // show the LINE/FB buttons straight away.
+//
+// Visual design: Messenger-style — light/clean header with action icons,
+// scrollable conversation with date separators, role bubbles (assistant left
+// dark grey with avatar shown only on first of a role-group, user right in
+// brand violet without avatar), and a friendly composer with attach + send.
 
 interface Props {
   apiBase?: string;
@@ -48,23 +53,29 @@ const {
 
   <!-- Panel -->
   <div id="kp-chat-panel" class="kp-chat-panel" role="dialog" aria-modal="false" aria-label="แชทกับ KORP AI">
-    <!-- Header -->
+    <!-- Header (Messenger-style) -->
     <header class="kp-chat-head">
       <div class="kp-chat-head-left">
         <div class="kp-chat-avatar" aria-hidden="true">
           <span>K</span>
+          <span class="kp-chat-avatar-dot" aria-hidden="true"></span>
         </div>
-        <div>
-          <div class="kp-chat-title">KORP AI · ผู้ช่วยขาย</div>
-          <div class="kp-chat-sub">
-            <span class="kp-chat-dot" aria-hidden="true"></span>
-            ออนไลน์ · ตอบภายใน 2 วินาที
-          </div>
+        <div class="kp-chat-head-info">
+          <div class="kp-chat-title">KORP AI</div>
+          <div class="kp-chat-sub">Active now</div>
         </div>
       </div>
-      <button id="kp-chat-close" type="button" class="kp-chat-close" aria-label="ปิดแชท">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <div class="kp-chat-head-actions" aria-hidden="true">
+        <button type="button" class="kp-chat-icon-btn" aria-label="เปิดเสียง" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+        </button>
+        <button type="button" class="kp-chat-icon-btn" aria-label="วิดีโอคอล" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </button>
+        <button id="kp-chat-close" type="button" class="kp-chat-icon-btn" aria-label="ปิดแชท">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
     </header>
 
     <!-- Messages -->
@@ -88,13 +99,23 @@ const {
     <!-- Composer -->
     <form id="kp-chat-form" class="kp-chat-form" autocomplete="off">
       <label class="sr-only" for="kp-chat-input">พิมพ์ข้อความ</label>
-      <textarea
-        id="kp-chat-input"
-        rows="1"
-        placeholder=""
-        maxlength="2000"
-        required
-      ></textarea>
+      <div class="kp-chat-input-wrap">
+        <textarea
+          id="kp-chat-input"
+          rows="1"
+          placeholder="Aa"
+          maxlength="2000"
+          required
+        ></textarea>
+        <button id="kp-chat-emoji" type="button" class="kp-chat-emoji" aria-label="อิโมจิ" tabindex="-1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </button>
+      </div>
       <button id="kp-chat-send" type="submit" class="kp-chat-send" aria-label="ส่งข้อความ" disabled>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="22" y1="2" x2="11" y2="13"/>
@@ -111,9 +132,9 @@ const {
 
 <style>
   /* ==========================================================
-   * KORP AI floating chat widget
+   * KORP AI floating chat widget — Messenger-style
    * ==========================================================
-   * Sits on top of everything. Uses brand tokens:
+   * Brand tokens:
    *   navy   #05070E
    *   cyan   #26D7F6
    *   violet #7C5FFF
@@ -142,16 +163,16 @@ const {
     cursor: pointer;
     background:
       radial-gradient(120% 120% at 20% 15%, rgba(124, 95, 255, 0.55), transparent 60%),
-      linear-gradient(135deg, #3C7CFF, #26D7F6);
+      linear-gradient(135deg, #7C5FFF, #26D7F6);
     box-shadow:
-      0 10px 30px rgba(38, 215, 246, 0.35),
+      0 10px 30px rgba(124, 95, 255, 0.35),
       0 0 0 1px rgba(255, 255, 255, 0.06) inset;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .kp-chat-toggle:hover {
     transform: translateY(-2px);
     box-shadow:
-      0 14px 40px rgba(38, 215, 246, 0.45),
+      0 14px 40px rgba(124, 95, 255, 0.45),
       0 0 0 1px rgba(255, 255, 255, 0.1) inset;
   }
   .kp-chat-icon-close { display: none; }
@@ -166,14 +187,14 @@ const {
     height: 14px;
     border-radius: 999px;
     background: #22C55E;
-    box-shadow: 0 0 0 3px rgba(5, 7, 14, 1);
+    box-shadow: 0 0 0 3px #fff;
     animation: kp-chat-pulse 2s ease-in-out infinite;
   }
   .kp-chat-root.is-open .kp-chat-ping { display: none; }
 
   @keyframes kp-chat-pulse {
-    0%, 100% { box-shadow: 0 0 0 3px rgba(5, 7, 14, 1), 0 0 0 0 rgba(34, 197, 94, 0.55); }
-    50%      { box-shadow: 0 0 0 3px rgba(5, 7, 14, 1), 0 0 0 10px rgba(34, 197, 94, 0); }
+    0%, 100% { box-shadow: 0 0 0 3px #fff, 0 0 0 0 rgba(34, 197, 94, 0.55); }
+    50%      { box-shadow: 0 0 0 3px #fff, 0 0 0 10px rgba(34, 197, 94, 0); }
   }
 
   /* --- Panel --- */
@@ -182,17 +203,16 @@ const {
     right: 0;
     bottom: 76px;
     width: min(380px, calc(100vw - 28px));
-    height: min(580px, calc(100vh - 120px));
+    height: min(600px, calc(100vh - 120px));
     display: none;
     flex-direction: column;
-    border-radius: 20px;
+    border-radius: 18px;
     overflow: hidden;
-    background: linear-gradient(180deg, rgba(10, 14, 26, 0.96), rgba(5, 7, 14, 0.98));
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #FFFFFF;
+    border: 1px solid rgba(15, 23, 42, 0.08);
     box-shadow:
-      0 24px 80px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-    backdrop-filter: blur(12px);
+      0 24px 80px rgba(15, 23, 42, 0.18),
+      0 2px 6px rgba(15, 23, 42, 0.06);
   }
   .kp-chat-root.is-open .kp-chat-panel {
     display: flex;
@@ -208,180 +228,231 @@ const {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    background:
-      radial-gradient(100% 120% at 0% 0%, rgba(38, 215, 246, 0.18), transparent 60%),
-      linear-gradient(180deg, rgba(124, 95, 255, 0.08), transparent);
+    padding: 12px 14px;
+    border-bottom: 1px solid #EEF0F4;
+    background: #FFFFFF;
   }
   .kp-chat-head-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    min-width: 0;
   }
   .kp-chat-avatar {
-    width: 40px;
-    height: 40px;
+    position: relative;
+    width: 38px;
+    height: 38px;
     border-radius: 999px;
     display: grid;
     place-items: center;
     color: #fff;
     font-weight: 800;
-    font-size: 15px;
-    background: linear-gradient(135deg, #3C7CFF, #26D7F6);
-    box-shadow: 0 4px 14px rgba(38, 215, 246, 0.3);
+    font-size: 14px;
+    background: linear-gradient(135deg, #7C5FFF, #26D7F6);
+    flex-shrink: 0;
   }
+  .kp-chat-avatar-dot {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    background: #22C55E;
+    border: 2px solid #FFFFFF;
+  }
+  .kp-chat-head-info { min-width: 0; }
   .kp-chat-title {
-    color: #fff;
+    color: #0F172A;
     font-weight: 600;
     font-size: 14px;
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .kp-chat-sub {
-    color: #8AA0C5;
-    font-size: 11px;
-    margin-top: 3px;
+    color: #6B7A95;
+    font-size: 11.5px;
+    margin-top: 2px;
+  }
+  .kp-chat-head-actions {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 2px;
   }
-  .kp-chat-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: #22C55E;
-    box-shadow: 0 0 8px #22C55E;
-  }
-  .kp-chat-close {
+  .kp-chat-icon-btn {
     background: transparent;
     border: 0;
-    color: #8AA0C5;
+    color: #7C5FFF;
     cursor: pointer;
-    padding: 6px;
-    border-radius: 8px;
-    transition: color 0.15s, background 0.15s;
+    padding: 8px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    transition: background 0.15s, color 0.15s;
   }
-  .kp-chat-close:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.06);
+  .kp-chat-icon-btn:hover { background: #F2F4F8; }
+  .kp-chat-icon-btn:disabled {
+    opacity: 0.45;
+    cursor: default;
   }
+  .kp-chat-icon-btn:disabled:hover { background: transparent; }
 
   /* --- Messages --- */
   .kp-chat-messages {
     flex: 1;
     overflow-y: auto;
-    padding: 18px 14px 12px;
+    padding: 14px 12px 8px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 2px;
     scroll-behavior: smooth;
+    background: #FFFFFF;
   }
   .kp-chat-messages::-webkit-scrollbar { width: 6px; }
   .kp-chat-messages::-webkit-scrollbar-thumb {
-    background: rgba(138, 160, 197, 0.25);
+    background: rgba(15, 23, 42, 0.18);
     border-radius: 999px;
   }
 
-  /* row wrapper — controls L/R alignment + holds the mini avatar */
+  /* date separator */
+  .kp-chat-day {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0 4px;
+  }
+  .kp-chat-day span {
+    color: #94A3B8;
+    font-size: 11px;
+    font-weight: 600;
+    background: transparent;
+  }
+
+  /* row wrapper — controls L/R alignment + holds the avatar slot */
   .kp-chat-row {
     display: flex;
     align-items: flex-end;
-    gap: 8px;
+    gap: 6px;
     max-width: 100%;
+    margin-top: 2px;
   }
+  .kp-chat-row.is-group-start { margin-top: 10px; }
   .kp-chat-row-assistant { justify-content: flex-start; }
   .kp-chat-row-user      { justify-content: flex-end; flex-direction: row-reverse; }
   .kp-chat-row-error     { justify-content: flex-start; }
 
-  /* mini circular avatar / name tag */
-  .kp-chat-mini {
+  /* avatar slot — 28px wide column. Hidden visually but kept as spacer
+     for non-leading bubbles in a role group so bubbles align nicely. */
+  .kp-chat-avatar-slot {
     flex-shrink: 0;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     border-radius: 999px;
+    overflow: hidden;
+    background: transparent;
+  }
+  .kp-chat-avatar-slot.is-visible {
+    background: linear-gradient(135deg, #7C5FFF, #26D7F6);
     display: grid;
     place-items: center;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1;
     color: #fff;
-    user-select: none;
+    font-size: 11px;
+    font-weight: 800;
   }
-  .kp-chat-mini-assistant {
-    background: linear-gradient(135deg, #3C7CFF, #26D7F6);
-    box-shadow: 0 2px 8px rgba(38, 215, 246, 0.35);
+  .kp-chat-avatar-slot.is-error {
+    background: #EF4444;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
   }
-  .kp-chat-mini-user {
-    background: rgba(255, 255, 255, 0.08);
-    color: #8AA0C5;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 9px;
-  }
+  /* User side never shows an avatar — the slot is invisible. */
+  .kp-chat-row-user .kp-chat-avatar-slot { display: none; }
 
   .kp-chat-bubble {
-    max-width: calc(100% - 36px); /* leave room for the avatar + gap */
-    padding: 10px 14px;
-    border-radius: 16px;
-    font-size: 13.5px;
-    line-height: 1.55;
+    max-width: calc(100% - 40px);
+    padding: 9px 13px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
     white-space: pre-wrap;
     word-wrap: break-word;
-    animation: kp-chat-in 0.2s ease-out;
+    animation: kp-chat-in 0.18s ease-out;
   }
   @keyframes kp-chat-in {
-    from { opacity: 0; transform: translateY(4px); }
+    from { opacity: 0; transform: translateY(3px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
+  /* assistant: light grey bubbles, left side, group-aware corners */
   .kp-chat-bubble.assistant {
-    background: rgba(255, 255, 255, 0.06);
-    color: #EAEAF0;
-    border-bottom-left-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: #F1F2F6;
+    color: #0F172A;
+    border-radius: 18px 18px 18px 4px;
   }
+  .kp-chat-bubble.assistant.is-group-mid,
+  .kp-chat-bubble.assistant.is-group-end {
+    border-top-left-radius: 4px;
+  }
+  .kp-chat-bubble.assistant.is-group-start.is-group-end { border-radius: 18px 18px 18px 4px; }
+  .kp-chat-bubble.assistant.is-group-mid                { border-radius: 4px 18px 18px 4px; }
+  .kp-chat-bubble.assistant.is-group-end                { border-radius: 4px 18px 18px 4px; }
+  .kp-chat-bubble.assistant.is-group-start              { border-radius: 18px 18px 18px 4px; }
+
+  /* user: brand violet, right side, group-aware corners */
   .kp-chat-bubble.user {
     color: #fff;
-    background: linear-gradient(135deg, #3C7CFF, #26D7F6);
-    border-bottom-right-radius: 6px;
-    box-shadow: 0 4px 12px rgba(38, 215, 246, 0.25);
+    background: linear-gradient(135deg, #7C5FFF, #6049E0);
+    border-radius: 18px 18px 4px 18px;
   }
+  .kp-chat-bubble.user.is-group-start.is-group-end { border-radius: 18px 18px 4px 18px; }
+  .kp-chat-bubble.user.is-group-mid                { border-radius: 18px 4px 4px 18px; }
+  .kp-chat-bubble.user.is-group-end                { border-radius: 18px 4px 4px 18px; }
+  .kp-chat-bubble.user.is-group-start              { border-radius: 18px 18px 4px 18px; }
+
   .kp-chat-bubble.error {
-    background: rgba(239, 68, 68, 0.12);
-    color: #FCA5A5;
-    border: 1px solid rgba(239, 68, 68, 0.25);
-    font-size: 12.5px;
+    background: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FCA5A5;
+    border-radius: 18px 18px 18px 4px;
+    font-size: 13px;
   }
+
+  /* typing indicator inside an assistant bubble shape */
   .kp-chat-typing {
-    padding: 10px 14px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.06);
-    border-bottom-left-radius: 6px;
+    padding: 12px 14px;
+    border-radius: 18px 18px 18px 4px;
+    background: #F1F2F6;
     display: inline-flex;
     gap: 4px;
+    align-items: center;
   }
   .kp-chat-typing span {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 999px;
-    background: #8AA0C5;
+    background: #94A3B8;
     animation: kp-chat-bounce 1.2s ease-in-out infinite;
   }
   .kp-chat-typing span:nth-child(2) { animation-delay: 0.15s; }
   .kp-chat-typing span:nth-child(3) { animation-delay: 0.3s; }
   @keyframes kp-chat-bounce {
-    0%, 100% { opacity: 0.3; transform: translateY(0); }
-    50%      { opacity: 1;   transform: translateY(-3px); }
+    0%, 100% { opacity: 0.35; transform: translateY(0); }
+    50%      { opacity: 1;    transform: translateY(-3px); }
   }
 
   /* --- Handoff panel --- */
   .kp-chat-handoff {
-    margin: 0 16px 10px;
+    margin: 0 14px 8px;
     padding: 12px;
     border-radius: 14px;
-    background: rgba(38, 215, 246, 0.08);
-    border: 1px solid rgba(38, 215, 246, 0.25);
+    background: #F0F4FF;
+    border: 1px solid #DCE2F5;
   }
   .kp-chat-handoff p {
-    color: #EAEAF0;
+    color: #0F172A;
     font-size: 13px;
     margin: 0 0 10px;
   }
@@ -406,66 +477,87 @@ const {
   .kp-chat-line { background: #06C755; }
   .kp-chat-fb   { background: #0084FF; }
   .kp-chat-line svg, .kp-chat-fb svg { width: 16px; height: 16px; }
-  .kp-chat-line:hover, .kp-chat-fb:hover { filter: brightness(1.1); }
+  .kp-chat-line:hover, .kp-chat-fb:hover { filter: brightness(1.05); }
 
   /* --- Form --- */
   .kp-chat-form {
     display: flex;
     align-items: flex-end;
     gap: 8px;
-    padding: 12px 12px 6px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 10px 12px 6px;
+    border-top: 1px solid #EEF0F4;
+    background: #FFFFFF;
+  }
+  .kp-chat-input-wrap {
+    position: relative;
+    flex: 1;
+    background: #F1F2F6;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    padding-right: 6px;
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+  .kp-chat-input-wrap:focus-within {
+    background: #E9ECF3;
+    box-shadow: 0 0 0 2px rgba(124, 95, 255, 0.18);
   }
   .kp-chat-form textarea {
     flex: 1;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    color: #EAEAF0;
-    padding: 10px 12px;
-    font-size: 13.5px;
+    background: transparent;
+    border: 0;
+    color: #0F172A;
+    padding: 10px 8px 10px 16px;
+    font-size: 14px;
     line-height: 1.4;
     resize: none;
     max-height: 100px;
     outline: none;
     font-family: inherit;
-    transition: border-color 0.15s;
   }
-  .kp-chat-form textarea:focus {
-    border-color: rgba(38, 215, 246, 0.5);
-  }
-  .kp-chat-form textarea::placeholder { color: #6B7A95; }
-  .kp-chat-send {
-    width: 42px;
-    height: 42px;
+  .kp-chat-form textarea::placeholder { color: #94A3B8; }
+  .kp-chat-emoji {
+    background: transparent;
     border: 0;
-    border-radius: 12px;
-    color: #fff;
+    color: #7C5FFF;
+    cursor: default;
+    padding: 6px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    opacity: 0.7;
+  }
+  .kp-chat-send {
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 999px;
+    color: #7C5FFF;
+    background: transparent;
     cursor: pointer;
-    background: linear-gradient(135deg, #3C7CFF, #26D7F6);
-    box-shadow: 0 6px 16px rgba(38, 215, 246, 0.3);
-    transition: transform 0.15s, opacity 0.15s;
+    transition: background 0.15s, color 0.15s, transform 0.15s;
     flex-shrink: 0;
     display: grid;
     place-items: center;
   }
-  .kp-chat-send:hover:not(:disabled) { transform: translateY(-1px); }
+  .kp-chat-send:not(:disabled):hover { background: #F0EBFF; transform: translateY(-1px); }
   .kp-chat-send:disabled {
-    opacity: 0.45;
+    color: #C4CADC;
     cursor: not-allowed;
   }
 
   .kp-chat-foot {
     font-size: 10.5px;
-    color: #6B7A95;
+    color: #94A3B8;
     text-align: center;
     padding: 0 12px 10px;
+    background: #FFFFFF;
   }
   .kp-chat-foot a {
-    color: #8AA0C5;
-    text-decoration: underline;
-    text-underline-offset: 2px;
+    color: #7C5FFF;
+    text-decoration: none;
   }
+  .kp-chat-foot a:hover { text-decoration: underline; }
 
   .sr-only {
     position: absolute;
@@ -487,6 +579,12 @@ const {
       height: calc(100vh - 100px);
       max-height: 640px;
     }
+  }
+
+  /* --- Dark-mode site override: keep panel light + readable --- */
+  :global(.dark) .kp-chat-panel {
+    background: #FFFFFF;
+    border-color: rgba(15, 23, 42, 0.08);
   }
 </style>
 
@@ -513,6 +611,8 @@ const {
 
     let started = false;   // true once we've rendered greeting / loaded session
     let sending = false;
+    let lastRole = null;   // last bubble's role — used to group avatars
+    let lastRowEl = null;  // previous bubble row (so we can tag it as group-mid)
 
     const GREETING_FALLBACK =
       'สวัสดีครับ ทีม KORP AI ช่วยอะไรได้บ้าง? 👋\n\nเล่าคร่าวๆ ว่าธุรกิจคุณทำอะไร' +
@@ -521,53 +621,115 @@ const {
       'สวัสดีครับ 👋\n\nระบบ AI กำลังตั้งค่า ช่วงนี้ทักทีมเราตรงทาง LINE OA หรือ Messenger สะดวกสุด' +
       ' — ตอบเร็วภายใน 1 ชม. ในเวลาทำการ (9-21 น.) ครับ';
 
-    // ---- Rendering helpers ----
-    // Each turn renders as:  <row> <miniAvatar/> <bubble/> </row>
-    // where the row's flex direction puts the avatar on the correct side.
-    const addBubble = (role, text) => {
+    // ---- Group-aware bubble rendering (Messenger-style) ----
+    // Bubbles from the same role in a row form a "group":
+    //   - only the FIRST bubble in the group shows the avatar (assistant only)
+    //   - corner radii tighten between bubbles in the group for a stacked feel
+    //
+    // groupStart  → first (or only) bubble of a role-streak
+    // groupEnd    → last  (or only) bubble of a role-streak
+    // groupMid    → between start and end (3+ stack)
+    const tagBubble = (bubble, role, isStart, isEnd) => {
+      bubble.classList.toggle('is-group-start', isStart);
+      bubble.classList.toggle('is-group-end',   isEnd);
+      bubble.classList.toggle('is-group-mid',   !isStart && !isEnd);
+    };
+
+    // When a NEW bubble of the same role comes in, the previous bubble is
+    // no longer the "end" of the group — re-tag it as mid (or start-only).
+    const demotePreviousEnd = () => {
+      if (!lastRowEl) return;
+      const prevBubble = lastRowEl.querySelector('.kp-chat-bubble');
+      if (!prevBubble) return;
+      // prev was {start: ?, end: true}; flip to end:false
+      const wasStart = prevBubble.classList.contains('is-group-start');
+      tagBubble(prevBubble, lastRole, wasStart, false);
+    };
+
+    const addRow = (role) => {
+      const isGroupStart = role !== lastRole;
+      if (!isGroupStart) demotePreviousEnd();
+
       const row = document.createElement('div');
       row.className = 'kp-chat-row kp-chat-row-' + role;
+      if (isGroupStart) row.classList.add('is-group-start');
 
-      const mini = document.createElement('div');
-      mini.className = 'kp-chat-mini kp-chat-mini-' + role;
-      mini.setAttribute('aria-hidden', 'true');
-      // assistant = "K" (KORP), user = "คุณ", error = "!"
-      mini.textContent = role === 'user' ? 'คุณ' : role === 'error' ? '!' : 'K';
+      // Avatar slot is always rendered (keeps bubble alignment consistent)
+      // but only "filled" for the first assistant/error bubble of a group.
+      const avatar = document.createElement('div');
+      avatar.className = 'kp-chat-avatar-slot';
+      avatar.setAttribute('aria-hidden', 'true');
+      if (isGroupStart && role === 'assistant') {
+        avatar.classList.add('is-visible');
+        avatar.textContent = 'K';
+      } else if (isGroupStart && role === 'error') {
+        avatar.classList.add('is-error');
+        avatar.textContent = '!';
+      }
+      row.appendChild(avatar);
+
+      lastRole = role;
+      lastRowEl = row;
+      return { row, isGroupStart };
+    };
+
+    const addBubble = (role, text) => {
+      const { row, isGroupStart } = addRow(role);
 
       const bubble = document.createElement('div');
       bubble.className = 'kp-chat-bubble ' + role;
       bubble.textContent = text;
+      // New bubble is always the current END of its group.
+      tagBubble(bubble, role, isGroupStart, true);
 
-      row.appendChild(mini);
       row.appendChild(bubble);
       msgs.appendChild(row);
       msgs.scrollTop = msgs.scrollHeight;
       return bubble;
     };
-    const addTyping = () => {
-      const row = document.createElement('div');
-      row.className = 'kp-chat-row kp-chat-row-assistant';
 
-      const mini = document.createElement('div');
-      mini.className = 'kp-chat-mini kp-chat-mini-assistant';
-      mini.setAttribute('aria-hidden', 'true');
-      mini.textContent = 'K';
+    const addTyping = () => {
+      const { row } = addRow('assistant');
 
       const el = document.createElement('div');
       el.className = 'kp-chat-typing';
       el.setAttribute('aria-label', 'AI กำลังพิมพ์');
       el.innerHTML = '<span></span><span></span><span></span>';
 
-      row.appendChild(mini);
       row.appendChild(el);
       msgs.appendChild(row);
       msgs.scrollTop = msgs.scrollHeight;
       return row;
     };
+
+    // Date separator (e.g. "TUE 12:34 PM"). Called once when conversation starts.
+    const addDateSeparator = (label) => {
+      const sep = document.createElement('div');
+      sep.className = 'kp-chat-day';
+      const span = document.createElement('span');
+      span.textContent = label;
+      sep.appendChild(span);
+      msgs.appendChild(sep);
+      // Reset grouping so the next bubble is its own group-start.
+      lastRole = null;
+      lastRowEl = null;
+    };
+
+    const formatNow = () => {
+      const d = new Date();
+      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      let hh = d.getHours();
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      const ampm = hh >= 12 ? 'PM' : 'AM';
+      hh = hh % 12; if (hh === 0) hh = 12;
+      return days[d.getDay()] + ' ' + hh + ':' + mm + ' ' + ampm;
+    };
+
     const showHandoff = () => { handoff.hidden = false; msgs.scrollTop = msgs.scrollHeight; };
 
     // ---- API calls ----
     const tryStartSession = async () => {
+      addDateSeparator(formatNow());
       try {
         const r = await fetch(api + '/session', {
           method: 'POST',
@@ -580,10 +742,8 @@ const {
         }
       } catch (_) { /* fall through */ }
       // Fallback: backend not available (or blocked by ad blocker).
-      // Show backend-down greeting + immediately surface LINE/FB handoff.
       addBubble('assistant', GREETING_BACKEND_DOWN);
       showHandoff();
-      // Disable composer when backend is down so users don't type into the void.
       input.disabled = true;
       input.placeholder = 'AI ออฟไลน์ — กดปุ่ม LINE / Messenger ด้านบน';
       sendBtn.disabled = true;
@@ -599,6 +759,13 @@ const {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text }),
         });
+        // Removing the typing row also wipes the lastRowEl pointer if it's
+        // the same element — reset grouping state so the next assistant
+        // bubble starts fresh and shows an avatar.
+        if (lastRowEl === typingEl) {
+          lastRowEl = null;
+          lastRole = null;
+        }
         typingEl.remove();
         if (r.status === 429) {
           addBubble('error', 'ส่งถี่ไปหน่อยครับ รอสักครู่แล้วลองใหม่');
@@ -609,6 +776,10 @@ const {
         addBubble('assistant', data.reply || '...');
         if (data.handoff) showHandoff();
       } catch (err) {
+        if (lastRowEl === typingEl) {
+          lastRowEl = null;
+          lastRole = null;
+        }
         typingEl.remove();
         addBubble(
           'error',
@@ -681,15 +852,12 @@ const {
         body: JSON.stringify({ channel }),
         keepalive: true,
       }).catch(() => { /* best effort */ });
-      // Always navigate — independent of fetch result
       return true;
     };
     lineBtn.addEventListener('click', () => logHandoff('line', LINE));
     fbBtn.addEventListener('click',   () => logHandoff('fb',   FB));
 
-    // Optional: auto-peek the bubble after 15s of idle browsing (first visit)
-    // Tiny nudge so the user knows the widget exists. We only do it once per
-    // tab and bail if the user has already scrolled past the fold.
+    // Optional: tiny nudge after 15s of idle browsing (first visit only)
     let peeked = false;
     const peek = () => {
       if (peeked) return;

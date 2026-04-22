@@ -21,7 +21,7 @@ import { portfolio } from '~/data/portfolio';
         >
           <div class="kp-port-cover" style={`background: ${c.gradient};`}>
             {c.img ? (
-              <img src={c.img} alt={c.alt ?? c.client} loading="lazy" />
+              <img src={c.img} alt={c.alt ?? c.client} width="1024" height="572" loading="lazy" decoding="async" />
             ) : (
               <div class="kp-port-placeholder">
                 <span class="kp-port-emoji">{c.emoji}</span>

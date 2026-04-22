@@ -104,7 +104,7 @@ const breadcrumbJsonLd = {
           </p>
         </div>
         <div class="kp-reveal kp-detail-hero-img" style={`background: ${caseStudy.gradient};`}>
-          <img src={caseStudy.img} alt={caseStudy.alt} loading="eager" />
+          <img src={caseStudy.img} alt={caseStudy.alt} width="1024" height="572" loading="eager" decoding="async" fetchpriority="high" />
           <div class="kp-detail-hero-tag">
             <span class="kp-detail-hero-tag-num">{caseStudy.metric}</span>
             <span class="kp-detail-hero-tag-label">{caseStudy.metricLabel}</span>
@@ -235,7 +235,7 @@ const breadcrumbJsonLd = {
         {otherCases.map((c) => (
           <a href={`/portfolio/${c.slug}`} class="kp-rc-card kp-other-card kp-reveal">
             <div class="kp-other-img" style={`background: ${c.gradient};`}>
-              <img src={c.img} alt={c.alt} loading="lazy" />
+              <img src={c.img} alt={c.alt} width="1024" height="572" loading="lazy" decoding="async" />
             </div>
             <div class="kp-other-body">
               <div class="flex items-center justify-between">

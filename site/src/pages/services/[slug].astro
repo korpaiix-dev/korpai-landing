@@ -100,7 +100,7 @@ const breadcrumbJsonLd = {
           </div>
         </div>
         <div class="kp-reveal kp-detail-hero-img">
-          <img src={service.img} alt={service.alt} loading="eager" />
+          <img src={service.img} alt={service.alt} width="1024" height="572" loading="eager" decoding="async" fetchpriority="high" />
         </div>
       </div>
     </section>
@@ -239,7 +239,7 @@ const breadcrumbJsonLd = {
         {otherServices.map((s) => (
           <a href={`/services/${s.slug}`} class="kp-rc-card kp-other-card kp-reveal">
             <div class="kp-other-img">
-              <img src={s.img} alt={s.alt} loading="lazy" />
+              <img src={s.img} alt={s.alt} width="1024" height="572" loading="lazy" decoding="async" />
             </div>
             <div class="kp-other-body">
               <span class="kp-rc-num">{s.tag}</span>

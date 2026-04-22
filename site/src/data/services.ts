@@ -139,8 +139,8 @@ export const services: Service[] = [
     title: 'Custom AI Feature',
     shortDesc: 'สรุปเอกสาร, ตอบจากฐานความรู้ภายใน, สร้างภาพ หรือระบบเสียง ออกแบบตามโจทย์ทีมคุณ',
     tagline: 'โจทย์พิเศษที่ไม่มี SaaS ไหน solve ให้ได้ — เราออกแบบระบบ AI ตามโจทย์จริงของธุรกิจคุณ',
-    img: 'https://images.unsplash.com/photo-1758876202014-6b2062bed4e8?w=1600&auto=format&fit=crop&q=85',
-    alt: 'พนักงานผู้หญิงใช้ AI feature บนโน้ตบุ๊กในออฟฟิศโมเดิร์น',
+    img: '/assets/img/custom-ai.jpg',
+    alt: 'พนักงานหญิงไทยทำงานกับ AI บนโน้ตบุ๊ก พร้อม UI โฮโลแกรมสีฟ้า-ม่วงลอยข้างจอ บรรยากาศออฟฟิศโทนน้ำเงินเข้ม',
     highlights: [
       'RAG เชื่อมเอกสารภายในบริษัท (สัญญา, manual, SOP)',
       'สรุปมีตติ้ง/เสียงเป็นข้อความ + action items',

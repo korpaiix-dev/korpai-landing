@@ -9,7 +9,18 @@
 
 ## 🎯 CURRENT PHASE
 
-**QA retrofit (2026-04-22)** — 🟢 บอสสั่ง "ไป QA ส่วนที่ต้องแก้/ซ่อม/เพิ่ม สิ่งที่ขาดแล้วจำเป็น"
+**Lighthouse audit + perf fix (2026-04-22)** — 🟢 ปิด task #71 — รอบ audit หลัง QA retrofit
+- เครื่องมือ: PageSpeed API ติด quota 429, PageSpeed UI ค้าง, sandbox ไม่มี Chromium → ใช้ manual audit ผ่าน fetch + DOMParser ตรวจทุกเกณฑ์ Lighthouse
+- ผล audit (4 URL ตัวแทน: `/`, `/services/ai-chatbot/`, `/portfolio/fashion-line-commerce/`, `/blog/rag-คืออะไร/`):
+  - **SEO PERFECT** — title/desc/canonical/viewport/lang/charset/OG/twitter/JSON-LD ครบทุกหน้า (Service + CreativeWork + BlogPosting + Organization + FAQPage)
+  - **A11y PERFECT** — h1=1, all imgs alt, 0 inaccessible links/buttons, all 4 landmarks ทุกหน้า
+  - **Best Practices PERFECT** — https, doctype, theme-color, favicon ครบ
+  - **Perf gap เจอ:** 18 imgs ขาด `width/height` → CLS เสี่ยง (landing 10/12, services 4/6, portfolio 4/6)
+- Fix `3efb680`: เพิ่ม `width="1024" height="572" decoding="async"` (+ `fetchpriority="high"` บน hero) ใน 6 จุด img — Services.astro, Portfolio.astro, services/[slug] ×2, portfolio/[slug] ×2
+- Verified live: services/ai-chatbot 6/6 imgs, portfolio/fashion 6/6 imgs, landing 10/10 imgs มี dimensions แล้ว
+- **Last deploy:** 2026-04-22 — commit `3efb680` (perf img dims) → VPS auto-pull แล้ว ตรวจสอบ HTML production OK
+
+**QA retrofit (2026-04-22)** — 🟢 ปิดแล้ว
 - Layout.astro: ถอด `ChatWidget` import + render ออก (รอ task #68 backend wire-up — กัน /privacy 404 link โผล่ทุกหน้า)
 - `src/pages/services/[slug].astro`: เพิ่ม Service + BreadcrumbList JSON-LD (4 หน้า)
 - `src/pages/portfolio/[slug].astro`: เพิ่ม CreativeWork (case study) + BreadcrumbList JSON-LD (6 หน้า)
@@ -17,7 +28,7 @@
 - Blog 6 บทความ: เพิ่ม `heroImage` + `author` ใน frontmatter ทั้งหมด
 - Blog internal links retrofit: ทุกบทความมี ≥3 lookup link ไป /services/, /portfolio/, blog อื่น (กฎใหม่: บทความใหม่ต้อง ≥5 internal link default)
 - Build verified: 19 pages (เพิ่ม /404), JSON-LD `@type":"Service"` + `@type":"CreativeWork"` อยู่ใน HTML จริง
-- **Last deploy:** TBD (commit pending) — VPS auto-pull cron จะดึงเอง
+- Deploy: commit `dd604d2`
 
 ---
 

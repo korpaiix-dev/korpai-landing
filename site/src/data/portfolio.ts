@@ -34,8 +34,8 @@ export const portfolio: PortfolioCase[] = [
     note: 'ปิดการขายผ่าน AI บน Line OA · 2 เดือน',
     gradient: 'linear-gradient(135deg, #FF6B9D, #C94FFF)',
     emoji: '🛍️',
-    img: 'https://images.unsplash.com/photo-1768127502130-bca3e208eba6?w=1600&auto=format&fit=crop&q=85',
-    alt: 'ชั้นวางเสื้อผ้าร้านแฟชั่นสวยงามมีแสงอบอุ่น',
+    img: '/assets/img/fashion-line.jpg',
+    alt: 'พนักงานหญิงไทยในร้านบูติก ผ้าไหมไทยลายเชิง พร้อมแสงโฮโลแกรมสีฟ้า-ม่วงลอยรอบตัว บรรยากาศโทนน้ำเงินเข้ม',
     challenge:
       'ร้านเสื้อผ้าที่เปิดมา 3 ปี ลูกค้า inbox วันละ 300+ message ถามสต็อก ไซส์ สี ราคา แอดมิน 2 คนตอบไม่ทัน ลูกค้ารอเกิน 30 นาทีก็หายไปซื้อร้านอื่น · เจ้าของต้องตอบ inbox ตอนตี 2 บ่อย ๆ',
     approach: [
@@ -65,8 +65,8 @@ export const portfolio: PortfolioCase[] = [
     note: 'จองโต๊ะอัตโนมัติ + จัดการคิวหน้าร้าน',
     gradient: 'linear-gradient(135deg, #FF9A3C, #FF3C3C)',
     emoji: '🍜',
-    img: 'https://images.unsplash.com/photo-1758346970538-40d665b0afa0?w=1600&auto=format&fit=crop&q=85',
-    alt: 'เมนูอาหารไทยร้อน ๆ พร้อมเสิร์ฟบนโต๊ะไม้',
+    img: '/assets/img/thai-restaurant.jpg',
+    alt: 'เชฟชายและพนักงานหญิงไทยในครัวร้านอาหารไทยโมเดิร์น พร้อม UI โฮโลแกรมสีฟ้า-ม่วงแสดงเมนูเป็นไอคอน บรรยากาศโทนน้ำเงินเข้ม',
     challenge:
       'ร้านอาหารไทย 80 ที่นั่ง เสาร์-อาทิตย์เต็มตลอด ลูกค้าโทรจองแต่พนักงานหน้าร้านรับไม่ทัน บางช่วงพลาดโทรถึง 40% · ลูกค้า walk-in รอ 40 นาทีแล้วไปร้านอื่น · ระบบคิวเป็นกระดาษหลุดบ่อย',
     approach: [
@@ -96,8 +96,8 @@ export const portfolio: PortfolioCase[] = [
     note: 'จองคิวหมอ + ส่งแผนที่ + เตือนก่อนวันนัด',
     gradient: 'linear-gradient(135deg, #26D7F6, #3C7CFF)',
     emoji: '🏥',
-    img: 'https://images.unsplash.com/photo-1758691462123-8a17ae95d203?w=1600&auto=format&fit=crop&q=85',
-    alt: 'เคาน์เตอร์คลินิกความงามสมัยใหม่สะอาดตา',
+    img: '/assets/img/derma-clinic.jpg',
+    alt: 'แพทย์หญิงไทยในชุดเสื้อกาวน์ขาวกำลังแตะ UI โฮโลแกรมวิเคราะห์ผิวหน้า ไอคอนสีฟ้า-ม่วง บรรยากาศคลินิกพรีเมียมโทนน้ำเงินเข้ม',
     challenge:
       'คลินิกมี 3 แพทย์ · ตารางหมอแต่ละคนไม่เหมือนกัน · แอดมิน 2 คนใช้เวลา 4+ ชม./วันแค่โทร reminder นัดหมาย + ตอบคำถามเรื่องราคาทรีตเมนต์ซ้ำ ๆ · ลูกค้า walk-in รอนานเพราะแอดมินไม่ว่าง',
     approach: [
@@ -127,8 +127,8 @@ export const portfolio: PortfolioCase[] = [
     note: 'AI ตอบสเปค + แนะนำสินค้า + เช็คสต็อก',
     gradient: 'linear-gradient(135deg, #7C5FFF, #3C7CFF)',
     emoji: '💻',
-    img: 'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=1600&auto=format&fit=crop&q=85',
-    alt: 'อุปกรณ์ IT gadgets วางเรียงบนโต๊ะทำงาน',
+    img: '/assets/img/it-gadget.jpg',
+    alt: 'พนักงานขายชายไทยในร้าน IT gadget แตะ UI โฮโลแกรมแสดงไอคอนโน้ตบุ๊ก-RAM-ชิป สีฟ้า-ม่วง บรรยากาศโชว์รูมโทนน้ำเงินเข้ม',
     challenge:
       'ร้านขาย gadget 1,200+ SKU — notebook, mechanical keyboard, camera gear · ลูกค้าถามสเปคละเอียด ("compatibility เคสกับ mobo นี้ได้ไหม?" "RAM 3200MHz กับ CPU นี้คุ้มกว่า 3600?") · ทีมขาย 3 คนต้องเปิด spec sheet ทุกครั้ง · เสียลูกค้าเพราะตอบช้า',
     approach: [
@@ -158,8 +158,8 @@ export const portfolio: PortfolioCase[] = [
     note: 'ลูกค้าจองได้ตอนร้านปิด · เพิ่มยอด 40%',
     gradient: 'linear-gradient(135deg, #22C55E, #26D7F6)',
     emoji: '🌿',
-    img: 'https://images.unsplash.com/photo-1709755491926-f7aa83748967?w=1600&auto=format&fit=crop&q=85',
-    alt: 'ห้องสปาสวยสงบมีไฟอบอุ่นและดอกไม้',
+    img: '/assets/img/wellness-spa.jpg',
+    alt: 'นักบำบัดหญิงไทยในชุดลินินครีมในห้องสปา แตะ UI โฮโลแกรมไอคอนดอกบัว-ใบไม้-ปฏิทิน สีฟ้า-ม่วง บรรยากาศโทนน้ำเงินเข้มมีต้นไม้และเทียน',
     challenge:
       'สปา wellness ที่ลูกค้าเป้าหมายเป็นผู้บริหาร · เลิกงาน 2-3 ทุ่มถึงนึกอยากจอง · ร้านปิด 2 ทุ่ม admin ไม่อยู่ตอบ · อีกวันลูกค้าลืมหรือจองร้านอื่นไปแล้ว · พลาดโอกาส 30%+',
     approach: [
@@ -189,8 +189,8 @@ export const portfolio: PortfolioCase[] = [
     note: 'AI แนะนำเมนูเด็ด + โปรมาคู่กับเค้ก',
     gradient: 'linear-gradient(135deg, #D4A574, #8B4513)',
     emoji: '☕',
-    img: 'https://images.unsplash.com/photo-1774014045872-3cc2b5e7e816?w=1600&auto=format&fit=crop&q=85',
-    alt: 'กาแฟ specialty ที่ชงเสร็จใหม่ในแก้วสวย',
+    img: '/assets/img/specialty-coffee.jpg',
+    alt: 'บาริสต้าชายไทยในร้านกาแฟ specialty กำลังแตะ UI โฮโลแกรมสีฟ้า-ม่วง แสดงเมนูกาแฟเป็นไอคอน บรรยากาศโทนน้ำเงินเข้ม',
     challenge:
       'ร้านกาแฟ specialty 3 สาขา · เจ้าของอยากให้ลูกค้ารู้จักเมนู pairing (เช่น Ethiopian + orange cake) แต่ counter ไม่มีเวลาอธิบาย · website/menu board อ่านผ่าน · อยากเพิ่ม avg ticket โดยไม่เพิ่มคน',
     approach: [

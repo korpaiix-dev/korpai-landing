@@ -31,6 +31,7 @@ from agent import (
     GREETING,
     SYSTEM_PROMPT,
     classify_intent,
+    ensure_handoff,
     extract_handoff,
     sanitize_user_input,
     should_use_deep_model,
@@ -247,6 +248,9 @@ async def post_message(
             detail="ขออภัยครับ ระบบขัดข้องชั่วคราว ลองใหม่อีกครั้งนะครับ",
         ) from exc
 
+    # Belt + braces: deterministically append a handoff CTA if the model forgot
+    # one (Gemini Flash Lite is cheap but inconsistent at instruction following).
+    reply_raw = ensure_handoff(reply_raw, intent)
     reply_text, handoff = extract_handoff(reply_raw)
     if handoff:
         await sessions.mark_handoff(sess)

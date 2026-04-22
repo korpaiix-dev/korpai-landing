@@ -171,6 +171,31 @@ def should_use_deep_model(intent: Intent, turn_count: int) -> bool:
 _HANDOFF_RE = re.compile(r"\s*\[\[\s*HANDOFF\s*\]\]\s*$", re.IGNORECASE | re.MULTILINE)
 
 
+def ensure_handoff(reply: str, intent: Intent) -> str:
+    """Belt-and-braces: guarantee a handoff CTA + marker on qualifier replies.
+
+    Gemini Flash Lite is cheap but inconsistent at following multi-rule prompts,
+    so it sometimes forgets the [[HANDOFF]] marker even when the SYSTEM_PROMPT
+    explicitly demands it. We don't want to lose a lead because the model went
+    soft, so we deterministically append a short LINE/FB CTA + marker whenever:
+
+      * The user said something other than a pure greeting, AND
+      * The model's reply doesn't already contain HANDOFF.
+
+    Pure greetings (intent == 'greeting') are left alone — the bot should
+    answer "สวัสดีครับ" without immediately yelling at the user to switch
+    channels.
+    """
+    if not reply:
+        return reply
+    if intent == "greeting":
+        return reply
+    if "HANDOFF" in reply.upper():
+        return reply
+    cta = " ทักทีมทาง LINE / Messenger เดี๋ยวขอข้อมูลเพิ่มแล้วช่วยดูให้นะครับ [[HANDOFF]]"
+    return reply.rstrip() + cta
+
+
 def extract_handoff(reply: str) -> tuple[str, bool]:
     """Strip [[HANDOFF]] marker from text. Returns (clean_text, handoff_flag)."""
     if not reply:

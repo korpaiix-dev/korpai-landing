@@ -43,28 +43,53 @@ from session_store import RateLimiter, SessionStore
 # ---------------------------------------------------------------------------
 load_dotenv()
 
+
+def env_str(name: str, default: str = "") -> str:
+    """Read env var and strip surrounding whitespace + trailing inline `# comment`.
+
+    systemd EnvironmentFile keeps everything after `=` literally, so a line
+    like `FOO=60   # ttl` makes os.environ['FOO'] == '60   # ttl'. We strip
+    that defensively so int() / bool checks below don't blow up.
+    """
+    raw = os.environ.get(name, default)
+    if raw is None:
+        return default
+    # cut the first " #" sequence (space + hash) to preserve hashes in values
+    if " #" in raw:
+        raw = raw.split(" #", 1)[0]
+    return raw.strip()
+
+
+def env_int(name: str, default: int) -> int:
+    val = env_str(name, str(default))
+    try:
+        return int(val)
+    except (TypeError, ValueError):
+        return default
+
+
 LOG = logging.getLogger("korpai.chat")
 logging.basicConfig(
-    level=os.environ.get("LOG_LEVEL", "INFO"),
+    level=env_str("LOG_LEVEL", "INFO"),
     format="%(asctime)s %(levelname)s %(name)s %(message)s",
 )
 
-COOKIE_NAME = os.environ.get("CHAT_COOKIE_NAME", "korpai_chat_sid")
-COOKIE_SECURE = os.environ.get("CHAT_COOKIE_SECURE", "true").lower() == "true"
-SESSION_TTL = int(os.environ.get("CHAT_SESSION_TTL_MIN", "60"))
-SESSION_MAX_TURNS = int(os.environ.get("CHAT_SESSION_MAX_TURNS", "30"))
+COOKIE_NAME = env_str("CHAT_COOKIE_NAME", "korpai_chat_sid")
+COOKIE_SECURE = env_str("CHAT_COOKIE_SECURE", "true").lower() == "true"
+SESSION_TTL = env_int("CHAT_SESSION_TTL_MIN", 60)
+SESSION_MAX_TURNS = env_int("CHAT_SESSION_MAX_TURNS", 30)
 
-MODEL_FAST = os.environ.get("OPENROUTER_MODEL_FAST", "anthropic/claude-haiku-4.5")
-MODEL_DEEP = os.environ.get("OPENROUTER_MODEL_DEEP", "anthropic/claude-sonnet-4.6")
+MODEL_FAST = env_str("OPENROUTER_MODEL_FAST", "anthropic/claude-haiku-4.5")
+MODEL_DEEP = env_str("OPENROUTER_MODEL_DEEP", "anthropic/claude-sonnet-4.6")
 
-LINE_URL = os.environ.get("HANDOFF_LINE_URL", "https://lin.ee/Qt6Vri4")
-FB_URL = os.environ.get("HANDOFF_FB_URL", "https://www.facebook.com/korpaiix")
-HANDOFF_WEBHOOK = os.environ.get("HANDOFF_WEBHOOK_URL", "").strip()
+LINE_URL = env_str("HANDOFF_LINE_URL", "https://lin.ee/Qt6Vri4")
+FB_URL = env_str("HANDOFF_FB_URL", "https://www.facebook.com/korpaiix")
+HANDOFF_WEBHOOK = env_str("HANDOFF_WEBHOOK_URL", "")
 
 sessions = SessionStore(ttl_minutes=SESSION_TTL, max_turns=SESSION_MAX_TURNS)
 limiter = RateLimiter(
-    per_minute=int(os.environ.get("CHAT_RL_MAX_PER_MIN", "20")),
-    per_hour=int(os.environ.get("CHAT_RL_MAX_PER_HOUR", "120")),
+    per_minute=env_int("CHAT_RL_MAX_PER_MIN", 20),
+    per_hour=env_int("CHAT_RL_MAX_PER_HOUR", 120),
 )
 
 origins = [

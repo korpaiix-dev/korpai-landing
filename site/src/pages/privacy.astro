@@ -1,0 +1,183 @@
+---
+import Layout from '~/layouts/Layout.astro';
+
+const title = 'นโยบายความเป็นส่วนตัว · KORP AI AUTOMATION';
+const description = 'นโยบายความเป็นส่วนตัวและ PDPA · เก็บ/ใช้/แบ่งปันข้อมูลแบบไหน · สิทธิของคุณ · วิธีติดต่อ DPO ของ KORP AI';
+const updated = '2026-04-22';
+---
+
+<Layout title={title} description={description} canonical="https://korpai.co/privacy">
+  <section class="kp-container py-24 md:py-32 max-w-3xl">
+    <div class="kp-reveal">
+      <span class="kp-eyebrow kp-eyebrow--cyan">Privacy · PDPA</span>
+      <h1
+        class="prose-kp mt-5 text-4xl md:text-5xl font-extrabold tracking-tight text-white"
+        style="line-height: 1.15;"
+      >
+        นโยบายความเป็นส่วนตัว
+      </h1>
+      <p class="prose-kp mt-3 text-sm" style="color: #8AA0C5;">
+        อัปเดตล่าสุด: {updated} · สอดคล้องกับ พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)
+      </p>
+
+      <div class="kp-privacy mt-12 space-y-10">
+        <section>
+          <h2>1. เราเก็บข้อมูลอะไรบ้าง</h2>
+          <p>
+            เมื่อคุณใช้เว็บไซต์ <strong>korpai.co</strong> หรือทักผ่าน chat widget, Line OA, หรือ Facebook Messenger
+            เราเก็บข้อมูลตามนี้:
+          </p>
+          <ul>
+            <li><strong>ข้อมูลที่คุณส่งมาเอง:</strong> ชื่อ · อีเมล · เบอร์โทร · ชื่อบริษัท · รายละเอียดโจทย์ที่อยากปรึกษา</li>
+            <li><strong>ข้อความใน chat widget:</strong> ทุก turn ที่คุยกับ AI — ใช้เพื่อตอบคำถามและส่งต่อทีมขาย</li>
+            <li><strong>Cookie สำหรับ session:</strong> <code>korpai_chat_sid</code> — ใช้แค่จำคุณระหว่างคุยกับ AI (อายุ 60 นาที)</li>
+            <li><strong>Log ทางเทคนิค:</strong> IP address, user agent, เวลา request — ใช้สำหรับ rate limit + ตรวจสอบความปลอดภัย</li>
+          </ul>
+          <p>เราไม่เก็บรหัสผ่าน · เลขบัตรเครดิต · เลขบัญชีธนาคาร · เลขบัตรประชาชน</p>
+        </section>
+
+        <section>
+          <h2>2. เอาข้อมูลไปทำอะไร</h2>
+          <ul>
+            <li>ตอบคำถามของคุณผ่าน AI Sales Agent</li>
+            <li>ส่งต่อทีมขายของ KORP AI เมื่อโจทย์เข้าเกณฑ์ (เพื่อปรึกษาแพ็กเกจ/ใบเสนอราคา)</li>
+            <li>ปรับปรุงคุณภาพ AI (สรุปเป็น aggregated stats — ไม่ใช้ชื่อจริงระบุตัวคน)</li>
+            <li>ส่งใบเสนอราคา/อัปเดตโครงการให้คุณตามที่คุณยินยอม</li>
+          </ul>
+          <p>
+            <strong>เราไม่ขายข้อมูล</strong> ของคุณให้บุคคลที่สาม · ไม่ส่งให้ผู้โฆษณาเพื่อ remarketing
+          </p>
+        </section>
+
+        <section>
+          <h2>3. ใครเข้าถึงข้อมูลได้บ้าง</h2>
+          <ul>
+            <li>ทีมงาน KORP AI ที่ดูแลโครงการของคุณ (จำกัดเฉพาะคนที่เกี่ยวข้อง)</li>
+            <li><strong>OpenRouter / Anthropic:</strong> ข้อความที่คุยกับ AI ถูกส่งไปประมวลผลที่ provider เพื่อ generate คำตอบ — ตามนโยบายของ Anthropic ข้อมูลจะ<em>ไม่</em>ถูกใช้ train โมเดล</li>
+            <li><strong>Line / Meta:</strong> ถ้าคุณคุยผ่าน Line OA หรือ Messenger ข้อมูลผ่าน platform เหล่านั้นตามนโยบายของแต่ละค่าย</li>
+            <li><strong>Cloud infra:</strong> ข้อมูลเก็บบน VPS DigitalOcean (สิงคโปร์/ไทย) ตามที่ลูกค้าเลือก</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>4. เก็บนานแค่ไหน</h2>
+          <ul>
+            <li>Chat session ใน RAM: 60 นาทีหลัง idle จะถูกลบทันที</li>
+            <li>Lead ที่ส่งต่อทีมขาย: เก็บ 24 เดือน หลังจากนั้นลบหรือ anonymize</li>
+            <li>Log ทางเทคนิค: 90 วัน</li>
+            <li>เอกสารสัญญา/ใบเสนอราคา: 5 ปี ตามกฎหมายภาษี</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>5. สิทธิของคุณ (ตาม PDPA)</h2>
+          <ul>
+            <li><strong>สิทธิเข้าถึง:</strong> ขอ copy ข้อมูลที่เราเก็บเกี่ยวกับคุณ</li>
+            <li><strong>สิทธิแก้ไข:</strong> ขอแก้ข้อมูลที่ผิด/ไม่อัปเดต</li>
+            <li><strong>สิทธิลบ:</strong> ขอให้ลบข้อมูลทั้งหมด (ยกเว้นที่ต้องเก็บตามกฎหมาย)</li>
+            <li><strong>สิทธิคัดค้าน:</strong> ปฏิเสธการใช้ข้อมูลเพื่อบางวัตถุประสงค์</li>
+            <li><strong>สิทธิถอนความยินยอม:</strong> เปลี่ยนใจเมื่อไหร่ก็ได้</li>
+          </ul>
+          <p>
+            ใช้สิทธิเหล่านี้ได้โดยอีเมลมาที่ <a href="mailto:hello@korpai.co">hello@korpai.co</a> —
+            ตอบกลับภายใน 30 วันตามกฎหมาย
+          </p>
+        </section>
+
+        <section>
+          <h2>6. Cookie</h2>
+          <p>
+            เราใช้ cookie ขั้นต่ำเท่าที่จำเป็น:
+          </p>
+          <ul>
+            <li><code>korpai_chat_sid</code> — จำ session chat (จำเป็น · ไม่มีไม่ทำงาน)</li>
+          </ul>
+          <p>เราไม่ใช้ tracking cookie สำหรับโฆษณา · ไม่มี Google Analytics ติดอยู่ ณ เวลานี้</p>
+        </section>
+
+        <section>
+          <h2>7. ความปลอดภัย</h2>
+          <ul>
+            <li>HTTPS ทุก endpoint (TLS 1.2+)</li>
+            <li>Rate limit ป้องกันการโจมตี — 20 req/นาที, 120 req/ชั่วโมง ต่อ IP</li>
+            <li>ข้อมูล secret เก็บใน <code>.env</code> นอก git · เข้าถึงผ่าน SSH key เท่านั้น</li>
+            <li>Log บันทึก IP เพื่อ audit · ไม่บันทึก message body ลงดิสก์</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>8. ติดต่อ Data Protection Officer (DPO)</h2>
+          <p>
+            <strong>KORP AI AUTOMATION</strong><br />
+            อีเมล: <a href="mailto:hello@korpai.co">hello@korpai.co</a><br />
+            Line: <a href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">@korpai</a><br />
+            Facebook: <a href="https://www.facebook.com/korpaiix" target="_blank" rel="noopener">korpaiix</a>
+          </p>
+          <p>
+            ถ้าไม่พอใจกับการดำเนินการของเรา คุณมีสิทธิร้องเรียนต่อ
+            <strong>สำนักงานคณะกรรมการคุ้มครองข้อมูลส่วนบุคคล (สคส.)</strong>
+          </p>
+        </section>
+
+        <section>
+          <h2>9. การเปลี่ยนแปลงนโยบาย</h2>
+          <p>
+            ถ้าเรามีการเปลี่ยนแปลงสำคัญจะอัปเดตวันที่ด้านบนและประกาศหน้านี้ —
+            แนะนำให้ตรวจสอบเป็นระยะ
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-16 flex flex-wrap gap-3">
+        <a href="/" class="kp-btn-primary">กลับหน้าแรก<span aria-hidden="true">→</span></a>
+        <a href="/#contact" class="kp-btn-secondary">ติดต่อทีม</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .kp-privacy h2 {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+  .kp-privacy p {
+    color: #B8C5DE;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0.5rem 0;
+  }
+  .kp-privacy ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    color: #B8C5DE;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .kp-privacy li {
+    margin: 0.25rem 0;
+  }
+  .kp-privacy a {
+    color: #26D7F6;
+    text-decoration: underline;
+    text-decoration-color: rgba(38, 215, 246, 0.4);
+    text-underline-offset: 3px;
+  }
+  .kp-privacy a:hover {
+    text-decoration-color: rgba(38, 215, 246, 0.8);
+  }
+  .kp-privacy code {
+    background: rgba(38, 215, 246, 0.08);
+    border: 1px solid rgba(38, 215, 246, 0.2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #C8E0F5;
+  }
+  .kp-privacy strong {
+    color: #fff;
+  }
+</style>

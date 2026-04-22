@@ -14,11 +14,55 @@ if (!caseStudy) {
 
 const pageTitle = `${caseStudy.client} · ${caseStudy.industry} — KORP AI`;
 const canonical = `https://korpai.co/portfolio/${caseStudy.slug}`;
+const ogImage = `https://korpai.co${caseStudy.img}`;
 
 const otherCases = portfolio.filter((c) => c.slug !== caseStudy.slug).slice(0, 3);
+
+// CreativeWork (Case Study) JSON-LD — answer-engine ready
+const caseStudyJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  '@id': canonical,
+  name: `${caseStudy.client} — ${caseStudy.industry}`,
+  headline: caseStudy.tagline,
+  description: caseStudy.seoDesc,
+  url: canonical,
+  image: ogImage,
+  inLanguage: 'th-TH',
+  about: caseStudy.industry,
+  keywords: caseStudy.techUsed.join(', '),
+  author: {
+    '@type': 'Organization',
+    name: 'KORP AI AUTOMATION',
+    url: 'https://korpai.co',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'KORP AI AUTOMATION',
+    url: 'https://korpai.co',
+    logo: { '@type': 'ImageObject', url: 'https://korpai.co/assets/logo-icon.png' },
+  },
+  workExample: caseStudy.outcome.map((o) => ({
+    '@type': 'Thing',
+    name: o.label,
+    description: `${o.metric} — ${o.detail}`,
+  })),
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'หน้าแรก', item: 'https://korpai.co/' },
+    { '@type': 'ListItem', position: 2, name: 'ผลงาน', item: 'https://korpai.co/#portfolio' },
+    { '@type': 'ListItem', position: 3, name: caseStudy.client, item: canonical },
+  ],
+};
 ---
 
-<Layout title={pageTitle} description={caseStudy.seoDesc} canonical={canonical} image={caseStudy.img}>
+<Layout title={pageTitle} description={caseStudy.seoDesc} canonical={canonical} image={ogImage}>
+  <script type="application/ld+json" set:html={JSON.stringify(caseStudyJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
   <article class="kp-detail">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="kp-container pt-28 md:pt-32">

@@ -9,7 +9,19 @@
 
 ## 🎯 CURRENT PHASE
 
-**Overnight batch — site polish + Phase 1.5 foundation + FB migration plan** — 🟢 รอบนี้ทำค้างคืนตามที่บอสสั่ง "ไปทำส่วนอื่นมาให้จบเลย"
+**QA retrofit (2026-04-22)** — 🟢 บอสสั่ง "ไป QA ส่วนที่ต้องแก้/ซ่อม/เพิ่ม สิ่งที่ขาดแล้วจำเป็น"
+- Layout.astro: ถอด `ChatWidget` import + render ออก (รอ task #68 backend wire-up — กัน /privacy 404 link โผล่ทุกหน้า)
+- `src/pages/services/[slug].astro`: เพิ่ม Service + BreadcrumbList JSON-LD (4 หน้า)
+- `src/pages/portfolio/[slug].astro`: เพิ่ม CreativeWork (case study) + BreadcrumbList JSON-LD (6 หน้า)
+- `src/pages/404.astro` ใหม่: branded 404 พร้อม link กลับ + 4 service cards
+- Blog 6 บทความ: เพิ่ม `heroImage` + `author` ใน frontmatter ทั้งหมด
+- Blog internal links retrofit: ทุกบทความมี ≥3 lookup link ไป /services/, /portfolio/, blog อื่น (กฎใหม่: บทความใหม่ต้อง ≥5 internal link default)
+- Build verified: 19 pages (เพิ่ม /404), JSON-LD `@type":"Service"` + `@type":"CreativeWork"` อยู่ใน HTML จริง
+- **Last deploy:** TBD (commit pending) — VPS auto-pull cron จะดึงเอง
+
+---
+
+**Earlier — Overnight batch — site polish + Phase 1.5 foundation + FB migration plan** — 🟢 รอบนี้ทำค้างคืนตามที่บอสสั่ง "ไปทำส่วนอื่นมาให้จบเลย"
 - OG default image `/og-default.png` (199KB, 1200x630, branded) ✅
 - Dockerfile multi-stage + `docker-compose.yml` + `deploy/nginx.conf` + `.dockerignore` ✅
 - `docs/DEPLOYMENT.md` §6.5 Phase 1.5 switchover plan (ยังไม่ execute บน prod) ✅

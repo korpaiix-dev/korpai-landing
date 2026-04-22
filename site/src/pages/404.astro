@@ -1,0 +1,79 @@
+---
+import Layout from '~/layouts/Layout.astro';
+
+const title = '404 — ไม่พบหน้านี้ · KORP AI AUTOMATION';
+const description = 'ไม่พบหน้าที่คุณหา · กลับไปหน้าแรก หรือดูบริการ AI Sales Agent, Automation, Dashboard ของเรา';
+---
+
+<Layout title={title} description={description} canonical="https://korpai.co/404">
+  <section class="kp-container py-32 md:py-40 text-center">
+    <div class="max-w-2xl mx-auto kp-reveal">
+      <span class="kp-eyebrow kp-eyebrow--cyan">Error 404</span>
+      <h1
+        class="prose-kp mt-5 text-6xl md:text-8xl font-extrabold tracking-tight kp-grad"
+        style="line-height: 1;"
+      >
+        404
+      </h1>
+      <p class="prose-kp mt-6 text-2xl md:text-3xl font-bold text-white">
+        ไม่พบหน้าที่คุณหา
+      </p>
+      <p class="prose-kp mt-4 text-base md:text-lg" style="color: #B8C5DE;">
+        หน้านี้ถูกย้าย ลบไปแล้ว หรือ URL พิมพ์ผิด · ลองเริ่มจากจุดเหล่านี้แทน
+      </p>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-3">
+        <a href="/" class="kp-btn-primary">
+          กลับหน้าแรก
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="/blog" class="kp-btn-secondary">อ่านบทความ</a>
+        <a href="/#contact" class="kp-btn-secondary">ติดต่อทีม</a>
+      </div>
+
+      <div class="mt-16 grid gap-4 md:grid-cols-2 text-left">
+        <a href="/services/ai-chatbot" class="kp-rc-card kp-404-card">
+          <span class="kp-eyebrow">Service</span>
+          <h2 class="mt-3 text-lg font-semibold text-white">AI Sales Agent</h2>
+          <p class="mt-2 text-sm" style="color: #8AA0C5;">
+            ตอบแชทลูกค้า 24 ชม. คัดกรอง ส่งต่อทีมขาย
+          </p>
+        </a>
+        <a href="/services/automation" class="kp-rc-card kp-404-card">
+          <span class="kp-eyebrow">Service</span>
+          <h2 class="mt-3 text-lg font-semibold text-white">Automation Workflow</h2>
+          <p class="mt-2 text-sm" style="color: #8AA0C5;">
+            ตัดงานซ้ำ ๆ ของทีม คืนเวลาให้ไปทำงานสำคัญ
+          </p>
+        </a>
+        <a href="/services/dashboard" class="kp-rc-card kp-404-card">
+          <span class="kp-eyebrow">Service</span>
+          <h2 class="mt-3 text-lg font-semibold text-white">Dashboard ธุรกิจ</h2>
+          <p class="mt-2 text-sm" style="color: #8AA0C5;">
+            รวมข้อมูลจากทุกที่มาดูในที่เดียว ตัดสินใจเร็วขึ้น
+          </p>
+        </a>
+        <a href="/services/custom-ai" class="kp-rc-card kp-404-card">
+          <span class="kp-eyebrow">Service</span>
+          <h2 class="mt-3 text-lg font-semibold text-white">Custom AI</h2>
+          <p class="mt-2 text-sm" style="color: #8AA0C5;">
+            AI เฉพาะธุรกิจคุณ — RAG, agents, workflow
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .kp-404-card {
+    padding: 22px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+  .kp-404-card:hover {
+    border-color: rgba(38, 215, 246, 0.28);
+    transform: translateY(-2px);
+  }
+</style>

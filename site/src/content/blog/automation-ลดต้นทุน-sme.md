@@ -5,13 +5,15 @@ pubDate: 2026-04-21
 category: "Automation"
 tags: ["Automation", "n8n", "Make", "Zapier", "SME", "Workflow"]
 readingMinutes: 7
+heroImage: "/assets/img/automation.jpg"
+author: "ทีม KORP AI"
 ---
 
 ## ทำไม SME ถึงจ่ายค่างานซ้ำ ๆ โดยไม่รู้ตัว
 
 พนักงาน 1 คนใช้เวลาวันละ 2 ชม. copy ข้อมูลจาก Facebook Form ไป Google Sheet แล้ว forward Line แจ้งทีมขาย 2 ชม. × 22 วัน = 44 ชม./เดือน คิดเป็นเงินค่างานแล้วไม่ต่ำกว่า 5,000 บาท/เดือน ทั้งที่ automation 1 flow ทำแทนได้ใน 60 วินาทีต่อเคส
 
-นี่คือ 5 flow ที่ทีม KORP ทำให้ลูกค้า SME แล้วเห็นผลจริงภายใน 2 สัปดาห์
+นี่คือ 5 flow ที่ทีม KORP ทำให้ลูกค้า SME แล้วเห็นผลจริงภายใน 2 สัปดาห์ (ทั้งหมดอยู่ภายใต้ [บริการ Automation Workflow](/services/automation) ของเรา)
 
 ## Flow 1: Facebook Lead → CRM → Line ทีมขาย
 
@@ -19,7 +21,7 @@ readingMinutes: 7
 
 **Automation:** Facebook Lead Ads → n8n/Make → บันทึกเข้า Google Sheet / HubSpot → ส่ง notification เข้า Line กลุ่มทีมขายพร้อมข้อมูลลูกค้า + เวลาโทรกลับดีที่สุด
 
-**ผล:** ทีมขายรับลีดในไม่เกิน 2 นาที conversion เพิ่ม 30–50%
+**ผล:** ทีมขายรับลีดในไม่เกิน 2 นาที conversion เพิ่ม 30–50% · ดูเคสจริงที่ [พี่นิดแฟชั่น — ปิดการขาย AI 24 ชม.](/portfolio/fashion-line-commerce)
 
 ## Flow 2: ออเดอร์บน Shopee/Lazada → ปริ้นใบปะหน้า → แจ้งแพ็ค
 
@@ -51,7 +53,7 @@ readingMinutes: 7
 
 **Automation:** ลูกค้าจองคิวผ่าน Line/เว็บ → เข้า Google Calendar ทีม → ส่ง reminder Line อัตโนมัติ 24 ชม. + 1 ชม. ก่อนนัด → ถ้าลูกค้าตอบยกเลิกได้ ก็ release คิวให้คนอื่น
 
-**ผล:** no-show ลด 50–70% · ประหยัดเวลาทีมโทรเตือน · ลูกค้ารู้สึก professional
+**ผล:** no-show ลด 50–70% · ประหยัดเวลาทีมโทรเตือน · ลูกค้ารู้สึก professional · เคสจริงที่เราทำคือ [คลินิกฟ้าใส — Admin auto](/portfolio/derma-clinic-admin)
 
 ## Tool ที่ใช้ทำได้จริง (เลือกให้เหมาะกับขนาดธุรกิจ)
 
@@ -79,6 +81,6 @@ readingMinutes: 7
 
 Automation ไม่ใช่เรื่อง fancy — มันคือการคืนเวลา 10–40 ชม./เดือนให้ทีมคุณไปทำงานที่สำคัญกว่า
 
-ถ้าอยากรู้ว่าธุรกิจคุณเริ่ม flow ไหนก่อนคุ้มสุด ทักมาเล่าโจทย์ ทีม KORP ประเมินฟรี
+ถ้าอยากรู้ว่าธุรกิจคุณเริ่ม flow ไหนก่อนคุ้มสุด [ทักมาเล่าโจทย์](/#contact) ทีม KORP ประเมินฟรี
 
 — ทีม KORP AI

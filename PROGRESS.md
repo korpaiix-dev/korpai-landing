@@ -9,6 +9,25 @@
 
 ## 🎯 CURRENT PHASE
 
+**1-2-3 sprint (2026-04-22)** — 🟡 บอสสั่ง "ทำ 1 2 3 เรียงไปเลย" — 3 of 3 done
+1. **#68 Wire chat backend → VPS** — เตรียมพร้อมรอบอสรัน 1 คำสั่ง
+   - `chat-backend/deploy/install.sh` (idempotent: rsync + venv + pip + systemd + nginx auto-patch + health check)
+   - `chat-backend/deploy/SETUP.md` (5-step boss guide)
+   - `site/src/pages/privacy.astro` (PDPA-compliant — ก่อนหน้านี้ ChatWidget link ไป 404)
+   - `Footer.astro` link → `/privacy`
+   - Build verified: 20 pages (เพิ่ม /privacy)
+   - Deploy: commit `2f3f16c` → live
+   - **Action บอส:** SSH VPS · `bash /root/korpai-landing/chat-backend/deploy/install.sh` · กรอก `OPENROUTER_API_KEY` ใน `/opt/korpai-chat/.env` · re-run install · บอกผม → ผม re-import ChatWidget
+2. **Agency client intake system** — pipeline + template พร้อมรับ lead จริง
+   - `clients/_TEMPLATE.md` (copy-this schema)
+   - `clients/_LEADS.md` (Hot/Warm/Cold/Lost funnel + conversion targets)
+   - `clients/_INTAKE_QUESTIONS.md` (5 round-1 + 5 round-2 + red flags + auto-handoff trigger)
+   - `clients/README.md` (workflow Lead → Proposal → Signed → In Progress)
+   - Deploy: commit `1aebbeb` (hub repo)
+3. **PageSpeed Insights official run** — สร้าง checklist ให้บอสกด (Google block sandbox)
+   - `Downloads/korpai-pagespeed-checklist.md` (4 URL + ตารางบันทึกคะแนน + fallback Chrome DevTools Lighthouse)
+   - **Action บอส:** กด PageSpeed 4 URL · ส่งคะแนนกลับ · ผมแก้ถ้า < 90
+
 **Lighthouse audit + perf fix (2026-04-22)** — 🟢 ปิด task #71 — รอบ audit หลัง QA retrofit
 - เครื่องมือ: PageSpeed API ติด quota 429, PageSpeed UI ค้าง, sandbox ไม่มี Chromium → ใช้ manual audit ผ่าน fetch + DOMParser ตรวจทุกเกณฑ์ Lighthouse
 - ผล audit (4 URL ตัวแทน: `/`, `/services/ai-chatbot/`, `/portfolio/fashion-line-commerce/`, `/blog/rag-คืออะไร/`):

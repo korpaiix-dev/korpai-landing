@@ -484,6 +484,9 @@ const {
     const GREETING_FALLBACK =
       'สวัสดีครับ ทีม KORP AI ช่วยอะไรได้บ้าง? 👋\n\nเล่าคร่าวๆ ว่าธุรกิจคุณทำอะไร' +
       ' และอยากแก้ปัญหาเรื่องไหนครับ';
+    const GREETING_BACKEND_DOWN =
+      'สวัสดีครับ 👋\n\nระบบ AI กำลังตั้งค่า ช่วงนี้ทักทีมเราตรงทาง LINE OA หรือ Messenger สะดวกสุด' +
+      ' — ตอบเร็วภายใน 1 ชม. ในเวลาทำการ (9-21 น.) ครับ';
 
     // ---- Rendering helpers ----
     const addBubble = (role, text) => {
@@ -519,8 +522,13 @@ const {
         }
       } catch (_) { /* fall through */ }
       // Fallback: backend not available (or blocked by ad blocker).
-      // Still show greeting and push user toward LINE/FB.
-      addBubble('assistant', GREETING_FALLBACK);
+      // Show backend-down greeting + immediately surface LINE/FB handoff.
+      addBubble('assistant', GREETING_BACKEND_DOWN);
+      showHandoff();
+      // Disable composer when backend is down so users don't type into the void.
+      input.disabled = true;
+      input.placeholder = 'AI ออฟไลน์ — กดปุ่ม LINE / Messenger ด้านบน';
+      sendBtn.disabled = true;
       return false;
     };
 

@@ -2,7 +2,7 @@
 import '~/styles/global.css';
 import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
-// ChatWidget removed pending backend wire-up (task #68). Re-import after API is live.
+import ChatWidget from '~/components/ChatWidget.astro';
 
 interface Props {
   title?: string;
@@ -97,7 +97,7 @@ const jsonLd = {
     </main>
     <Footer />
 
-    <!-- ChatWidget de-rendered until backend (task #68) is live to avoid surfacing /privacy 404 -->
+    <ChatWidget />
 
 
     <script is:inline>

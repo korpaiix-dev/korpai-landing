@@ -2,18 +2,24 @@
 
 > Landing page ของ **KORP AI AUTOMATION** — AI Agency สำหรับ SME ไทย
 > โดเมน: [korpai.co](https://korpai.co)
-> Repo: [github.com/korpaiix-dev/korpai-landing](https://github.com/korpaiix-dev/korpai-landing)
 
 ---
 
-## 0. ก่อนเริ่ม — repo นี้เป็นเฉพาะ landing page
+## 🌐 Sister repos (3 repos ทำงานเชื่อมกัน)
 
-Repo นี้เก็บแค่โค้ด landing page (public). **Source of truth ของทั้ง agency** อยู่ที่ repo กลางชื่อ **`korp-ai-hq`** (private):
+| Repo | URL | บทบาท |
+|---|---|---|
+| **korp-ai-hq** | [github.com/korpaiix-dev/korp-ai-hq](https://github.com/korpaiix-dev/korp-ai-hq) (private) | 📚 docs hub — **เริ่มอ่านที่นี่ก่อน** |
+| **korpai-landing** (this) | [github.com/korpaiix-dev/korpai-landing](https://github.com/korpaiix-dev/korpai-landing) | 🌐 marketing site (Astro → korpai.co) |
+| **korpai-agents** | [github.com/korpaiix-dev/korpai-agents](https://github.com/korpaiix-dev/korpai-agents) (private) | 🤖 chatbot ที่ตอบลูกค้า LINE/FB ที่มาจาก landing |
 
-- Master spec, project map, VPS inventory, credentials index, session memory, rules, playbook
-- 👉 https://github.com/korpaiix-dev/korp-ai-hq (ขออนุญาตบอสไผ่ก่อนเข้า)
+**ทำงานเชื่อมกันยังไง:**
+- Landing → ดึง brand/style จาก `korp-ai-hq/docs/brand/`
+- Landing → drive traffic ไป LINE/FB → chatbot ที่ `korpai-agents` รับต่อ
+- Agents → push blog ใหม่เข้า landing repo ผ่าน `file_write_blog_pr` tool → auto-deploy
+- ทั้ง 3 repos รัน VPS เดียวกัน (`139.59.123.146`) auto-pull ทุก 2 นาที
 
-ถ้าเป็น session ใหม่ที่ต้องสานงานต่อ — **เริ่มอ่านที่ `korp-ai-hq` ก่อน** แล้วค่อยกลับมาทำงานใน repo นี้ จะไม่ทำงานซ้ำซ้อน
+ถ้าเป็น session ใหม่ — **เริ่มอ่านที่ `korp-ai-hq/README.md` ก่อน**.
 
 ---
 

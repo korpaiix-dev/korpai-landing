@@ -55,7 +55,7 @@ const timeline = [
     <div class="kp-container grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
       <div class="kp-reveal">
         <span class="kp-pill">Fashion AI Kit · พร้อมใช้ใน 7–14 วัน</span>
-        <h1 class="mt-6 max-w-3xl text-5xl font-bold tracking-[-0.045em] text-white md:text-6xl lg:text-7xl leading-[0.96]">
+        <h1 class="mt-6 max-w-3xl text-5xl font-bold tracking-[-0.045em] text-white md:text-6xl lg:text-7xl leading-[1.12] md:leading-[1.08] lg:leading-[1.06]">
           คลังตอบแชท + คอนเทนต์สำหรับร้านเสื้อผ้า
         </h1>
         <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
@@ -73,47 +73,41 @@ const timeline = [
       </div>
 
       <div class="kp-reveal" style="transition-delay:90ms">
-        <div class="fashion-demo-shell" data-fashion-demo>
-          <div class="fashion-demo-topbar">
+        <div class="sample-workspace" data-sample-workspace>
+          <div class="sample-topbar">
             <div>
-              <div class="text-xs text-cyan-300">Live Demo</div>
-              <div class="text-sm font-semibold text-white">Linn Studio · AI Content Kit</div>
+              <div class="sample-kicker">ตัวอย่างไฟล์ส่งมอบจริง</div>
+              <div class="sample-client">Linn Studio · Pro Kit</div>
             </div>
-            <div class="hidden rounded-full border border-emerald-300/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200 sm:block">Ready to copy</div>
+            <div class="sample-badge">Client-ready</div>
           </div>
 
-          <div class="fashion-demo-tabs" role="tablist" aria-label="ตัวอย่างงานใน Demo Kit">
-            <button class="is-active" type="button" data-demo-tab="faq">FAQ</button>
-            <button type="button" data-demo-tab="chat">Chat</button>
-            <button type="button" data-demo-tab="caption">Caption</button>
-            <button type="button" data-demo-tab="hook">Hook</button>
-            <button type="button" data-demo-tab="product">SKU</button>
+          <div class="sample-tabs" role="tablist" aria-label="ตัวอย่างงานจริงที่ลูกค้าจะได้รับ">
+            <button class="is-active" type="button" data-sample="faq">FAQ Sheet</button>
+            <button type="button" data-sample="chat">Chat Script</button>
+            <button type="button" data-sample="caption">Content Calendar</button>
+            <button type="button" data-sample="hook">TikTok Hooks</button>
+            <button type="button" data-sample="sku">SKU Sheet</button>
           </div>
 
-          <div class="fashion-demo-grid">
-            <aside class="fashion-demo-list">
-              <button class="is-active" type="button" data-demo-item="0"><span>01</span><b>ไซซ์ / ทรง</b><small>ตอบคำถามก่อนซื้อ</small></button>
-              <button type="button" data-demo-item="1"><span>02</span><b>ส่งของ / Tracking</b><small>ลดคำถามซ้ำหลังสั่ง</small></button>
-              <button type="button" data-demo-item="2"><span>03</span><b>คอนเทนต์ขาย</b><small>ใช้ลง FB / IG / TikTok</small></button>
-            </aside>
+          <section class="sample-document" aria-live="polite">
+            <div class="doc-head">
+              <div>
+                <div id="sampleType" class="doc-type">FAQ SHEET</div>
+                <h3 id="sampleTitle">FAQ พร้อมใช้สำหรับแอดมิน 60 ข้อ</h3>
+              </div>
+              <span id="sampleCount">Preview 3/60</span>
+            </div>
 
-            <section class="fashion-demo-preview" aria-live="polite">
-              <div class="fashion-preview-header">
-                <span id="demoKind">FAQ Library</span>
-                <small id="demoMeta">Customer Q&A · ready</small>
+            <div id="sampleContent" class="doc-content">
+              <div class="real-table">
+                <div class="real-row real-head"><span>หมวด</span><span>คำถามลูกค้า</span><span>คำตอบที่แอดมินใช้ตอบได้ทันที</span></div>
+                <div class="real-row"><span>ไซซ์</span><b>อก 36 ใส่ M ได้ไหม?</b><p>ถ้าชอบพอดีตัวใส่ M ได้ค่ะ แต่ถ้าชอบสบายช่วงอก แนะนำ L จะขยับง่ายกว่า เดี๋ยวแอดมินส่งตารางไซซ์ให้เทียบอีกครั้งนะคะ</p></div>
+                <div class="real-row"><span>จัดส่ง</span><b>โอนแล้วส่งวันนี้ไหม?</b><p>ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ หลังแพ็กเสร็จจะแจ้งเลขพัสดุให้ในแชทนี้นะคะ</p></div>
+                <div class="real-row"><span>ดูแลผ้า</span><b>ผ้าลินินซักเครื่องได้ไหม?</b><p>ซักเครื่องได้โดยใส่ถุงถนอมผ้าและเลือกโหมดอ่อนโยนค่ะ แนะนำตากในที่ร่มเพื่อช่วยรักษาทรงและสีของผ้า</p></div>
               </div>
-              <h3 id="demoTitle">ลูกค้าถาม: ไซซ์ M อก 36 ใส่ได้ไหม?</h3>
-              <p id="demoBody">ถ้าชอบพอดีตัว ใส่ M ได้ค่ะ แต่ถ้าชอบสบายช่วงอก แนะนำ L เพื่อให้ขยับง่ายขึ้นค่ะ</p>
-              <div class="fashion-copy-box">
-                <small>Output พร้อมใช้</small>
-                <p id="demoOutput">แนะนำ L จะสบายกว่าค่ะ โดยเฉพาะถ้าชอบใส่แบบไม่รัดช่วงอก เดี๋ยวแอดมินส่งตารางไซซ์ให้เทียบอีกครั้งนะคะ</p>
-              </div>
-              <div class="fashion-demo-actions">
-                <button type="button" data-copy-demo>Copy sample</button>
-                <a href="#demo-kit">ดูตัวอย่างทั้งหมด →</a>
-              </div>
-            </section>
-          </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -255,198 +249,182 @@ const timeline = [
 </Layout>
 
 <style>
-  .fashion-demo-shell {
+  .sample-workspace {
     position: relative;
     overflow: hidden;
-    border-radius: 28px;
+    border-radius: 30px;
     border: 1px solid rgba(255,255,255,0.12);
     background:
-      radial-gradient(circle at 18% 12%, rgba(38,215,246,0.18), transparent 34%),
-      radial-gradient(circle at 90% 80%, rgba(124,95,255,0.18), transparent 38%),
-      rgba(7, 12, 24, 0.88);
-    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.45), 0 0 70px rgba(38,215,246,0.11);
+      radial-gradient(circle at 18% 12%, rgba(38,215,246,0.16), transparent 34%),
+      radial-gradient(circle at 92% 90%, rgba(124,95,255,0.16), transparent 42%),
+      rgba(7, 12, 24, 0.92);
+    box-shadow: 0 28px 90px rgba(0,0,0,0.48), 0 0 70px rgba(38,215,246,0.10);
     padding: 18px;
   }
-  .fashion-demo-topbar,
-  .fashion-preview-header,
-  .fashion-demo-actions {
+  .sample-topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    padding: 4px 2px 16px;
   }
-  .fashion-demo-tabs {
-    display: flex;
-    gap: 8px;
-    margin-top: 18px;
-    padding: 6px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.045);
-    border: 1px solid rgba(255,255,255,0.07);
-    overflow-x: auto;
+  .sample-kicker { color:#26d7f6; font-size:12px; font-weight:900; letter-spacing:.08em; }
+  .sample-client { margin-top:3px; color:white; font-size:15px; font-weight:800; }
+  .sample-badge {
+    border-radius:999px;
+    border:1px solid rgba(16,185,129,.25);
+    background:rgba(16,185,129,.12);
+    color:#a7f3d0;
+    padding:7px 12px;
+    font-size:12px;
+    font-weight:900;
+    white-space:nowrap;
   }
-  .fashion-demo-tabs button {
-    flex: 1 0 auto;
-    border: 0;
-    border-radius: 999px;
-    padding: 9px 13px;
-    color: #9fb0d0;
-    background: transparent;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 180ms ease;
+  .sample-tabs {
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:6px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.045);
   }
-  .fashion-demo-tabs button.is-active,
-  .fashion-demo-tabs button:hover {
-    color: #061018;
-    background: #26d7f6;
+  .sample-tabs button {
+    flex:1 0 auto;
+    border:0;
+    border-radius:999px;
+    padding:10px 13px;
+    background:transparent;
+    color:#9fb0d0;
+    font-size:12px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.18s ease;
   }
-  .fashion-demo-grid {
-    display: grid;
-    grid-template-columns: 0.42fr 0.58fr;
-    gap: 14px;
-    margin-top: 14px;
+  .sample-tabs button.is-active,
+  .sample-tabs button:hover { background:#26d7f6; color:#041018; }
+  .sample-document {
+    margin-top:14px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.10);
+    background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.03));
+    padding:18px;
+    min-height:390px;
   }
-  .fashion-demo-list {
-    display: grid;
-    gap: 10px;
+  .doc-head {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:14px;
+    padding-bottom:14px;
+    border-bottom:1px solid rgba(255,255,255,.08);
   }
-  .fashion-demo-list button {
-    text-align: left;
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 18px;
-    background: rgba(255,255,255,0.04);
-    color: white;
-    padding: 14px;
-    cursor: pointer;
-    transition: 180ms ease;
-  }
-  .fashion-demo-list button.is-active,
-  .fashion-demo-list button:hover {
-    border-color: rgba(38,215,246,0.42);
-    background: rgba(38,215,246,0.10);
-    transform: translateY(-1px);
-  }
-  .fashion-demo-list span {
-    display: inline-flex;
-    color: #26d7f6;
-    font-size: 11px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    margin-bottom: 8px;
-  }
-  .fashion-demo-list b,
-  .fashion-demo-list small { display: block; }
-  .fashion-demo-list b { font-size: 14px; }
-  .fashion-demo-list small { margin-top: 4px; color: #8aa0c5; font-size: 12px; line-height: 1.45; }
-  .fashion-demo-preview {
-    min-height: 340px;
-    border-radius: 22px;
-    border: 1px solid rgba(255,255,255,0.10);
-    background: linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.035));
-    padding: 20px;
-  }
-  .fashion-preview-header span {
-    color: #26d7f6;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-  .fashion-preview-header small { color: #8aa0c5; }
-  .fashion-demo-preview h3 {
-    margin-top: 26px;
-    color: white;
-    font-size: clamp(1.35rem, 2.5vw, 2rem);
-    line-height: 1.18;
-    letter-spacing: -0.035em;
-  }
-  .fashion-demo-preview > p {
-    margin-top: 13px;
-    color: #b9c7df;
-    line-height: 1.72;
-  }
-  .fashion-copy-box {
-    margin-top: 24px;
-    border-radius: 18px;
-    border: 1px solid rgba(38,215,246,0.20);
-    background: rgba(0,0,0,0.22);
-    padding: 16px;
-  }
-  .fashion-copy-box small { color: #26d7f6; font-weight: 700; }
-  .fashion-copy-box p { margin-top: 8px; color: #e6ebf5; font-size: 14px; line-height: 1.65; }
-  .fashion-demo-actions { margin-top: 18px; }
-  .fashion-demo-actions button,
-  .fashion-demo-actions a {
-    border-radius: 999px;
-    padding: 10px 14px;
-    font-size: 13px;
-    font-weight: 800;
-    text-decoration: none;
-  }
-  .fashion-demo-actions button {
-    border: 0;
-    color: #061018;
-    background: white;
-    cursor: pointer;
-  }
-  .fashion-demo-actions a { color: #9beeff; }
-
-  @media (max-width: 760px) {
-    .fashion-demo-grid { grid-template-columns: 1fr; }
-    .fashion-demo-list { grid-template-columns: 1fr; }
-    .fashion-demo-preview { min-height: auto; }
+  .doc-type { color:#26d7f6; font-size:11px; font-weight:950; letter-spacing:.18em; }
+  .doc-head h3 { margin-top:7px; color:white; font-size:24px; line-height:1.22; letter-spacing:-.035em; }
+  .doc-head span { color:#8aa0c5; font-size:12px; white-space:nowrap; }
+  .doc-content { margin-top:16px; }
+  .real-table { border-radius:18px; border:1px solid rgba(255,255,255,.08); overflow:hidden; }
+  .real-row { display:grid; grid-template-columns:76px 1.05fr 1.55fr; gap:12px; align-items:start; padding:12px 13px; border-top:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.025); }
+  .real-row:first-child { border-top:0; }
+  .real-head { background:rgba(38,215,246,.10); }
+  .real-head span { color:#9beeff; font-size:11px; font-weight:950; letter-spacing:.08em; }
+  .real-row span { color:#26d7f6; font-size:11px; font-weight:900; }
+  .real-row b { color:white; font-size:13px; line-height:1.45; }
+  .real-row p { margin:0; color:#b7c5df; font-size:12.5px; line-height:1.6; }
+  .chat-thread { display:grid; gap:10px; }
+  .bubble { max-width:88%; border-radius:18px; padding:12px 14px; font-size:13px; line-height:1.6; }
+  .bubble.customer { background:rgba(255,255,255,.075); color:#d9e3f7; }
+  .bubble.admin { margin-left:auto; background:rgba(38,215,246,.14); border:1px solid rgba(38,215,246,.22); color:#effcff; }
+  .script-note { margin-top:12px; border-radius:16px; padding:13px; background:rgba(0,0,0,.22); color:#9fb0d0; font-size:12px; line-height:1.55; }
+  .calendar-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .content-card { border-radius:18px; border:1px solid rgba(255,255,255,.085); background:rgba(255,255,255,.04); padding:14px; }
+  .content-card small { color:#26d7f6; font-weight:900; }
+  .content-card b { display:block; margin-top:8px; color:white; font-size:14px; }
+  .content-card p { margin-top:7px; color:#b7c5df; font-size:12.5px; line-height:1.6; }
+  .hook-list { display:grid; gap:10px; }
+  .hook-item { display:grid; grid-template-columns:38px 1fr; gap:12px; border-radius:17px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.035); padding:13px; }
+  .hook-item span { color:#26d7f6; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:12px; }
+  .hook-item b { color:white; font-size:13px; }
+  .hook-item p { margin-top:4px; color:#b7c5df; font-size:12.5px; line-height:1.55; }
+  .sku-sheet { display:grid; grid-template-columns:.75fr 1.25fr; gap:12px; }
+  .sku-photo { border-radius:20px; min-height:230px; background:linear-gradient(135deg, rgba(38,215,246,.18), rgba(124,95,255,.16)), url('/assets/img/fashion-ai-kit/hero.jpg') center/cover; border:1px solid rgba(255,255,255,.10); }
+  .sku-fields { display:grid; gap:10px; }
+  .field { border-radius:15px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); padding:11px; }
+  .field small { color:#26d7f6; font-weight:900; }
+  .field p { margin-top:5px; color:#dce6f8; font-size:12.5px; line-height:1.55; }
+  @media (max-width:760px) {
+    .real-row, .sku-sheet { grid-template-columns:1fr; }
+    .calendar-grid { grid-template-columns:1fr; }
+    .sample-document { min-height:auto; }
   }
 </style>
 
 <script is:inline>
   (() => {
-    const root = document.querySelector('[data-fashion-demo]');
+    const root = document.querySelector('[data-sample-workspace]');
     if (!root) return;
-    const data = {
-      faq: [
-        ['FAQ Library', 'Customer Q&A · ready', 'ลูกค้าถาม: ไซซ์ M อก 36 ใส่ได้ไหม?', 'ถ้าชอบพอดีตัว ใส่ M ได้ค่ะ แต่ถ้าชอบสบายช่วงอก แนะนำ L เพื่อให้ขยับง่ายขึ้นค่ะ', 'แนะนำ L จะสบายกว่าค่ะ โดยเฉพาะถ้าชอบใส่แบบไม่รัดช่วงอก เดี๋ยวแอดมินส่งตารางไซซ์ให้เทียบอีกครั้งนะคะ'],
-        ['FAQ Library', 'Shipping policy', 'ลูกค้าถาม: ส่งวันนี้ได้ไหม?', 'ถ้าชำระก่อนรอบตัด ร้านสามารถจัดส่งรอบวันนี้ได้ และส่งเลขพัสดุให้หลังแพ็กเรียบร้อย', 'ถ้าชำระก่อน 14:00 น. แอดมินจัดส่งรอบวันนี้ได้ค่ะ หลังจากนั้นจะเป็นรอบวันทำการถัดไปนะคะ'],
-        ['FAQ Library', 'Fabric care', 'ลูกค้าถาม: ผ้าหดไหม?', 'ตอบแบบปลอดภัย ไม่การันตีเกินจริง พร้อมแนะนำวิธีซักที่เหมาะกับเนื้อผ้า', 'แนะนำซักมือหรือใส่ถุงถนอมผ้า ใช้น้ำอุณหภูมิปกติ และตากในที่ร่มเพื่อช่วยรักษาทรงให้อยู่ได้นานค่ะ'],
-      ],
-      chat: [
-        ['Chat Template', 'Pre-sale', 'ลูกค้าถาม: สูง 160 ใส่ยาวไหม?', 'Template ช่วยถามข้อมูลเพิ่มก่อนตอบ เพื่อไม่เดาไซซ์แทนลูกค้า', 'ขอทราบความยาวที่ชอบประมาณไหนคะ เหนือเข่า/คลุมเข่า/ยาวกลางน่อง เดี๋ยวแอดมินเทียบกับความยาวชุดให้ค่ะ'],
-        ['Chat Template', 'Post-sale', 'ลูกค้าขอเลขพัสดุ', 'คำตอบหลังการขายที่สุภาพและลดภาระแอดมิน', 'เลขพัสดุของคุณลูกค้าคือ [TRACKING] ค่ะ สามารถเช็กสถานะได้ที่ [LINK] ถ้าขนส่งอัปเดตช้า แอดมินช่วยตามให้ได้นะคะ'],
-        ['Chat Template', 'Upsell', 'ลูกค้าซื้อเดรส 1 ตัว', 'ประโยคเสนอสินค้าเสริมแบบไม่กดดัน', 'เดรสตัวนี้ลูกค้าหลายท่านแมตช์กับ belt รุ่น [NAME] แล้วทรงสวยขึ้นค่ะ ถ้าสนใจ แอดมินส่งรูปคู่ให้ดูได้นะคะ'],
-      ],
-      caption: [
-        ['Caption Pack', 'Instagram', 'Caption สำหรับคอลเลกชันใหม่', 'สั้น กระชับ ภาพนำ ขายแบบ premium ไม่ยัดเยียด', 'New linen set — เรียบ เบา ใส่ง่าย เหมาะกับวันที่อยากดูดีแบบไม่ต้องพยายามมาก 🤍 #minimalstyle #linenset'],
-        ['Caption Pack', 'Facebook', 'โพสต์เล่า value ของสินค้า', 'ยาวขึ้นเล็กน้อย เพื่ออธิบายทรง ผ้า และโอกาสใช้งาน', 'เซ็ตนี้ออกแบบให้หยิบใส่ได้ตั้งแต่วันทำงานจนถึง dinner เบา ๆ ผ้าทิ้งตัวสวย ไม่แนบจนเกินไป และแมตช์แยกชิ้นได้คุ้มค่ะ'],
-        ['Caption Pack', 'TikTok', 'Caption คลิปลองชุด', 'เปิดด้วย pain point และ CTA ง่าย', 'ชุดเดียวที่ช่วยให้ “วันรีบ ๆ” ดูตั้งใจแต่งขึ้นทันที — อยากดูสีไหนคอมเมนต์ไว้ค่ะ'],
-      ],
-      hook: [
-        ['TikTok Hook', '3-sec opener', 'Hook สำหรับคลิปลองชุด', 'ประโยคแรกต้องหยุดนิ้วและโยงกับ pain ของลูกค้า', 'หยุดก่อน ถ้าคุณกำลังหาเซ็ตทำงานที่ใส่แล้วดูแพง แต่ไม่ต้องรีดนาน'],
-        ['TikTok Hook', 'Live selling', 'Hook เปิดไลฟ์', 'เปิดขายชัด แต่ยังฟังเป็นธรรมชาติ', 'วันนี้มี 3 รุ่นที่สาวออฟฟิศควรมี เพราะใส่ซ้ำได้ทั้งสัปดาห์โดยไม่ดูจำเจ'],
-        ['TikTok Hook', 'Restock', 'Hook สินค้ากลับมาเติม', 'ใช้ urgency แบบไม่เว่อร์', 'ตัวที่ DM ถามเยอะที่สุดกลับมาแล้ว รอบนี้สีเดิมแต่ผ้าดีขึ้น'],
-      ],
-      product: [
-        ['Product Description', 'SEO-friendly', 'เดรสลินินทรงตรง', 'คำอธิบายใช้ลงเว็บ/marketplace พร้อมจุดขายหลัก', 'เดรสลินินทรงตรง เนื้อผ้าเบา ระบายอากาศดี มีซับใน ใส่ง่ายทั้งวัน เหมาะกับลุคทำงาน คาเฟ่ หรือทริปวันหยุด'],
-        ['Product Description', 'Size note', 'กางเกงเอวสูง', 'ลดคำถามเรื่องทรงและไซซ์ตั้งแต่หน้าสินค้า', 'กางเกงเอวสูงทรงกระบอก ช่วยพรางสะโพกและทำให้ช่วงขาดูยาวขึ้น แนะนำเทียบเอว/สะโพกจริงก่อนเลือกไซซ์'],
-        ['Product Description', 'Care note', 'เสื้อ knit', 'เพิ่มวิธีดูแลเพื่อลดปัญหาหลังขาย', 'เสื้อ knit สัมผัสนุ่ม ยืดหยุ่นกำลังดี แนะนำซักมือและตากพาดเพื่อรักษาทรง ไม่ควรแขวนตอนเปียก'],
-      ],
+    const samples = {
+      faq: {
+        type: 'FAQ SHEET', title: 'FAQ พร้อมใช้สำหรับแอดมิน 60 ข้อ', count: 'Preview 3/60',
+        html: `<div class="real-table">
+          <div class="real-row real-head"><span>หมวด</span><span>คำถามลูกค้า</span><span>คำตอบที่แอดมินใช้ตอบได้ทันที</span></div>
+          <div class="real-row"><span>ไซซ์</span><b>อก 36 ใส่ M ได้ไหม?</b><p>ถ้าชอบพอดีตัวใส่ M ได้ค่ะ แต่ถ้าชอบสบายช่วงอก แนะนำ L จะขยับง่ายกว่า เดี๋ยวแอดมินส่งตารางไซซ์ให้เทียบอีกครั้งนะคะ</p></div>
+          <div class="real-row"><span>จัดส่ง</span><b>โอนแล้วส่งวันนี้ไหม?</b><p>ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ หลังแพ็กเสร็จจะแจ้งเลขพัสดุให้ในแชทนี้นะคะ</p></div>
+          <div class="real-row"><span>ดูแลผ้า</span><b>ผ้าลินินซักเครื่องได้ไหม?</b><p>ซักเครื่องได้โดยใส่ถุงถนอมผ้าและเลือกโหมดอ่อนโยนค่ะ แนะนำตากในที่ร่มเพื่อช่วยรักษาทรงและสีของผ้า</p></div>
+        </div>`
+      },
+      chat: {
+        type: 'CHAT SCRIPT', title: 'Template ตอบแชทแบบ conversation', count: 'Preview 1/60',
+        html: `<div class="chat-thread">
+          <div class="bubble customer">สูง 160 หนัก 52 อก 36 เอว 28 ใส่เดรสตัวนี้ไซซ์ไหนดีคะ?</div>
+          <div class="bubble admin">จากสัดส่วนที่แจ้งมา แนะนำไซซ์ L ค่ะ ช่วงอกจะใส่สบายกว่า M และยังได้ทรงตรงสวย ไม่รัดช่วงเอวเกินไปนะคะ</div>
+          <div class="bubble customer">ถ้าอยากใส่พอดีตัวล่ะคะ?</div>
+          <div class="bubble admin">ถ้าชอบพอดีตัวมาก ๆ M ใส่ได้ค่ะ แต่แอดมินแนะนำ L มากกว่า เพราะผ้าทรงนี้เวลานั่ง/เดินจะขยับสบายกว่า เดี๋ยวส่งรูปเทียบความยาวให้ดูเพิ่มนะคะ</div>
+          <div class="script-note"><b>ใช้เมื่อ:</b> ลูกค้าบอกสัดส่วนครบ · <b>ห้ามใช้เมื่อ:</b> ลูกค้ายังไม่บอกอก/เอว ต้องถามเพิ่มก่อน</div>
+        </div>`
+      },
+      caption: {
+        type: 'CONTENT CALENDAR', title: 'Caption พร้อมโพสต์ 30 วัน', count: 'Preview 4 posts',
+        html: `<div class="calendar-grid">
+          <div class="content-card"><small>DAY 01 · IG</small><b>New Linen Set</b><p>ลุคเรียบที่หยิบใส่ได้ทั้งวัน — เซ็ตผ้าลินินทรงสบาย ใส่ง่าย ถ่ายรูปขึ้น และแมตช์ได้หลายโอกาส 🤍</p></div>
+          <div class="content-card"><small>DAY 03 · FB</small><b>Behind the fabric</b><p>ผ้าที่เลือกใช้ในคอลเลกชันนี้เน้นเบา ระบายอากาศดี และไม่แนบตัว เหมาะกับอากาศเมืองไทยจริง ๆ ค่ะ</p></div>
+          <div class="content-card"><small>DAY 05 · TikTok</small><b>Try-on caption</b><p>ชุดเดียวที่ช่วยให้ “วันรีบ ๆ” ดูตั้งใจแต่งขึ้นทันที — อยากดูสีไหนคอมเมนต์ไว้ค่ะ</p></div>
+          <div class="content-card"><small>DAY 07 · Sale</small><b>Soft CTA</b><p>ถ้ากำลังหาเดรสที่ใส่ทำงานได้และต่อด้วยดินเนอร์ได้เลย รุ่นนี้คือชิ้นที่ควรมีในตู้ค่ะ</p></div>
+        </div>`
+      },
+      hook: {
+        type: 'TIKTOK HOOKS', title: 'Hook คลิปสั้นพร้อมมุมถ่าย', count: 'Preview 5/40',
+        html: `<div class="hook-list">
+          <div class="hook-item"><span>01</span><div><b>หยุดก่อน ถ้าคุณกำลังหาเซ็ตทำงานที่ดูแพง แต่ไม่ต้องรีดนาน</b><p>มุมถ่าย: เปิดด้วย close-up เนื้อผ้า → zoom out full outfit</p></div></div>
+          <div class="hook-item"><span>02</span><div><b>ชุดนี้ใส่ไปออฟฟิศได้ แต่หลังเลิกงานไปคาเฟ่ต่อก็ยังรอด</b><p>มุมถ่าย: transition จาก blazer → ถือกระเป๋าเล็ก</p></div></div>
+          <div class="hook-item"><span>03</span><div><b>3 จุดที่ทำให้เดรสตัวนี้พรางหุ่นดีกว่าที่คิด</b><p>มุมถ่าย: ชี้ช่วงไหล่ เอว ความยาว พร้อม text overlay</p></div></div>
+          <div class="hook-item"><span>04</span><div><b>ถ้าคุณไม่ชอบชุดรัด แต่ยังอยากดูมีทรง ลองดูตัวนี้</b><p>มุมถ่าย: เดิน/นั่งให้เห็นการขยับของผ้า</p></div></div>
+        </div>`
+      },
+      sku: {
+        type: 'SKU SHEET', title: 'Product Description พร้อมลง Marketplace', count: 'Preview 1/30 SKU',
+        html: `<div class="sku-sheet">
+          <div class="sku-photo" aria-hidden="true"></div>
+          <div class="sku-fields">
+            <div class="field"><small>ชื่อสินค้า</small><p>Linn Linen Straight Dress — Ivory</p></div>
+            <div class="field"><small>คำอธิบายสั้น</small><p>เดรสลินินทรงตรง เนื้อผ้าเบา ระบายอากาศดี มีซับใน ใส่ง่ายทั้งวัน เหมาะกับลุคทำงาน คาเฟ่ หรือทริปวันหยุด</p></div>
+            <div class="field"><small>จุดขาย</small><p>ทรงไม่รัดช่วงเอว · ผ้าเบาไม่แนบตัว · มีซับใน · แมตช์กับ blazer หรือ sandal ได้</p></div>
+            <div class="field"><small>Care note</small><p>แนะนำซักมือหรือโหมดถนอมผ้า ตากในที่ร่ม และรีดไฟอ่อนจากด้านใน</p></div>
+          </div>
+        </div>`
+      }
     };
-    let tab = 'faq';
-    let item = 0;
-    const setActive = () => {
-      root.querySelectorAll('[data-demo-tab]').forEach((b) => b.classList.toggle('is-active', b.dataset.demoTab === tab));
-      root.querySelectorAll('[data-demo-item]').forEach((b) => b.classList.toggle('is-active', Number(b.dataset.demoItem) === item));
-      const row = data[tab][item];
-      ['demoKind','demoMeta','demoTitle','demoBody','demoOutput'].forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = row[i];
-      });
+    const render = (key) => {
+      const s = samples[key] || samples.faq;
+      root.querySelector('#sampleType').textContent = s.type;
+      root.querySelector('#sampleTitle').textContent = s.title;
+      root.querySelector('#sampleCount').textContent = s.count;
+      root.querySelector('#sampleContent').innerHTML = s.html;
     };
-    root.querySelectorAll('[data-demo-tab]').forEach((b) => b.addEventListener('click', () => { tab = b.dataset.demoTab; item = 0; setActive(); }));
-    root.querySelectorAll('[data-demo-item]').forEach((b) => b.addEventListener('click', () => { item = Number(b.dataset.demoItem); setActive(); }));
-    root.querySelector('[data-copy-demo]')?.addEventListener('click', async (e) => {
-      const btn = e.currentTarget;
-      const text = document.getElementById('demoOutput')?.textContent || '';
-      try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy sample', 1200); } catch {}
-    });
+    root.querySelectorAll('[data-sample]').forEach((btn) => btn.addEventListener('click', () => {
+      root.querySelectorAll('[data-sample]').forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      render(btn.dataset.sample);
+    }));
   })();
 </script>

@@ -1,95 +1,95 @@
 ---
 import Layout from '~/layouts/Layout.astro';
 ---
-<Layout title="Mockup: Fashion AI Sales Automation Dashboard | KORP AI" description="Mockup หน้าตาระบบ AI Sales Automation สำหรับร้านเสื้อผ้าออนไลน์" canonical="https://korpai.co/fashion-ai-kit/demo">
+<Layout title="ตัวอย่างระบบช่วยขายร้านเสื้อผ้า | KORP AI" description="ตัวอย่างหน้าระบบช่วยตอบแชทและช่วยขายสำหรับร้านเสื้อผ้าออนไลน์" canonical="https://korpai.co/fashion-ai-kit/demo">
   <section class="mock-shell">
     <aside class="app-sidebar">
       <a href="/fashion-ai-kit" class="back">← กลับหน้าแพ็กเกจ</a>
-      <div class="app-brand"><div class="brand-logo">LS</div><div><b>Linn Studio</b><span>AI Sales Automation</span></div></div>
+      <div class="app-brand"><div class="brand-logo">LS</div><div><b>Linn Studio</b><span>ระบบช่วยขายอัตโนมัติ</span></div></div>
       <nav>
-        <a class="active" href="#overview">Overview</a>
-        <a href="#inbox">AI Inbox</a>
-        <a href="#products">Products</a>
-        <a href="#automation">Automation</a>
-        <a href="#insights">Insights</a>
-        <a href="#content">Content AI</a>
+        <a class="active" href="#overview">ภาพรวม</a>
+        <a href="#inbox">กล่องแชท AI</a>
+        <a href="#products">สินค้า</a>
+        <a href="#automation">ระบบออโต้</a>
+        <a href="#insights">ข้อมูลลูกค้า</a>
+        <a href="#content">ไอเดียโพสต์</a>
       </nav>
-      <div class="agent-status"><small>AI Agent</small><strong>Online</strong><p>ตอบจากสินค้า 128 SKU + FAQ 84 ข้อ</p></div>
+      <div class="agent-status"><small>ผู้ช่วย AI</small><strong>เปิดใช้งาน</strong><p>รู้ข้อมูลสินค้า 128 รายการ + คำถามพบบ่อย 84 ข้อ</p></div>
     </aside>
 
     <main class="app-main">
       <header class="app-topbar">
-        <div><span class="crumb">Dashboard / Fashion Store</span><h1>AI Sales Automation Dashboard</h1></div>
-        <div class="top-actions"><button>Export Report</button><a href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">ขอระบบแบบนี้</a></div>
+        <div><span class="crumb">หน้าระบบ / ร้านเสื้อผ้า</span><h1>ระบบช่วยขายอัตโนมัติ Dashboard</h1></div>
+        <div class="top-actions"><button>ดาวน์โหลดรายงาน</button><a href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">อยากได้ระบบแบบนี้</a></div>
       </header>
 
       <section id="overview" class="kpi-grid">
-        <article><small>AI handled today</small><b>186</b><span>+32% จากเมื่อวาน</span></article>
-        <article><small>Handoff to admin</small><b>14</b><span>เฉพาะเคสเสี่ยง</span></article>
-        <article><small>Hot SKU</small><b>Linen Dress</b><span>42 conversations</span></article>
-        <article><small>Revenue assist</small><b>฿38,420</b><span>จากแชทที่ AI ช่วยปิด</span></article>
+        <article><small>AI ช่วยตอบวันนี้</small><b>186</b><span>+32% จากเมื่อวาน</span></article>
+        <article><small>ส่งต่อแอดมิน</small><b>14</b><span>เคสที่ต้องให้คนจริงดู</span></article>
+        <article><small>สินค้าที่คนถามเยอะ</small><b>Linen Dress</b><span>ลูกค้าถาม 42 ครั้ง</span></article>
+        <article><small>ยอดขายที่ช่วยปิด</small><b>฿38,420</b><span>จากแชทที่ระบบช่วยตอบ</span></article>
       </section>
 
       <section class="workspace-grid">
         <section id="inbox" class="panel inbox-panel">
-          <div class="panel-head"><div><small>AI INBOX</small><h2>แชทลูกค้าแบบ real-time</h2></div><span class="live-dot">Live</span></div>
+          <div class="panel-head"><div><small>กล่องแชท AI</small><h2>แชทลูกค้าที่ระบบกำลังช่วยตอบ</h2></div><span class="live-dot">กำลังทำงาน</span></div>
           <div class="inbox-layout">
             <div class="conversation-list">
-              <button class="active"><b>คุณมายด์</b><span>ถามไซซ์เดรส Ivory</span><em>AI replying</em></button>
-              <button><b>คุณแพรว</b><span>ขอส่งด่วน กทม.</span><em>Need admin</em></button>
-              <button><b>คุณนัท</b><span>ถามกางเกงเอวสูง</span><em>Resolved</em></button>
-              <button><b>คุณบี</b><span>ถามโปรซื้อ 2 ชิ้น</span><em>AI replying</em></button>
+              <button class="active"><b>ลูกค้ามายด์</b><span>ถามไซซ์เดรสสีครีม</span><em>AI กำลังตอบ</em></button>
+              <button><b>ลูกค้าแพรว</b><span>ขอส่งด่วนใน กทม.</span><em>รอแอดมินดู</em></button>
+              <button><b>ลูกค้านัท</b><span>ถามกางเกงเอวสูง</span><em>ตอบจบแล้ว</em></button>
+              <button><b>ลูกค้าบี</b><span>ถามโปรซื้อ 2 ชิ้น</span><em>AI กำลังตอบ</em></button>
             </div>
             <div class="chat-window">
-              <div class="chat-meta"><b>คุณมายด์</b><span>Intent: size recommendation · Confidence 91%</span></div>
+              <div class="chat-meta"><b>ลูกค้ามายด์</b><span>เรื่องที่ถาม: แนะนำไซซ์ที่เหมาะ · มั่นใจ 91%</span></div>
               <div class="bubble customer">สูง 160 อก 36 เอว 28 เดรส Linen Straight สีครีมควรใส่ไซซ์ไหนดีคะ?</div>
-              <div class="bubble ai">แนะนำไซซ์ L ค่ะ รุ่นนี้ทรงตรง ถ้าอก 36 จะใส่สบายกว่า M และยังได้ทรงสวย ไม่รัดช่วงอกนะคะ</div>
+              <div class="bubble ai">แนะนำไซซ์ที่เหมาะ L ค่ะ รุ่นนี้ทรงตรง ถ้าอก 36 จะใส่สบายกว่า M และยังได้ทรงสวย ไม่รัดช่วงอกนะคะ</div>
               <div class="bubble customer">ส่งวันนี้ได้ไหมคะ</div>
               <div class="bubble ai">ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ ต้องการให้แอดมินส่งลิงก์ชำระเงินให้ไหมคะ?</div>
-              <div class="ai-tools"><span>Used: Product DB</span><span>Used: Shipping Policy</span><span>Next: Send payment link</span></div>
+              <div class="ai-tools"><span>ใช้ข้อมูลสินค้า</span><span>ใช้นโยบายส่งของ</span><span>ขั้นต่อไป: ส่งลิงก์จ่ายเงิน</span></div>
             </div>
           </div>
         </section>
 
         <aside class="panel right-stack">
-          <div class="panel-head compact"><div><small>AI DECISION</small><h2>เหตุผลที่ AI ใช้ตอบ</h2></div></div>
-          <div class="decision-card"><small>Matched product</small><b>Linen Straight Dress — Ivory</b><p>Stock: M 4, L 8 · Length 112cm · Fit: straight / relaxed</p></div>
-          <div class="decision-card"><small>Size rule</small><b>อก 36 → แนะนำ L</b><p>ถ้าลูกค้าชอบพอดีตัวให้เสนอ M เป็นทางเลือก แต่ default คือ L</p></div>
-          <div class="decision-card warn"><small>Escalation rule</small><b>ส่งด่วน/ส่วนลด → ส่งต่อแอดมิน</b><p>AI ไม่อนุมัติส่วนลดหรือรับประกันส่งด่วนเอง</p></div>
+          <div class="panel-head compact"><div><small>AI ใช้อะไรตอบ</small><h2>ข้อมูลที่ระบบใช้ตอบลูกค้า</h2></div></div>
+          <div class="decision-card"><small>สินค้าที่ตรงกับคำถาม</small><b>Linen Straight Dress — สีครีม</b><p>สต็อก: M 4, L 8 · Length 112cm · ทรงตรง / ใส่สบาย</p></div>
+          <div class="decision-card"><small>กฎแนะนำไซซ์ที่เหมาะ</small><b>อก 36 → แนะนำ L</b><p>ถ้าลูกค้าชอบพอดีตัวให้เสนอ M เป็นทางเลือก แต่ default คือ L</p></div>
+          <div class="decision-card warn"><small>กฎส่งต่อแอดมิน</small><b>ส่งด่วน/ส่วนลด → ส่งต่อแอดมิน</b><p>AI ไม่อนุมัติส่วนลดหรือรับประกันส่งด่วนเอง</p></div>
         </aside>
       </section>
 
       <section class="lower-grid">
         <section id="products" class="panel product-panel">
-          <div class="panel-head"><div><small>PRODUCT KNOWLEDGE</small><h2>ฐานข้อมูลสินค้าที่ AI ใช้อ้างอิง</h2></div><button>+ Add SKU</button></div>
+          <div class="panel-head"><div><small>ข้อมูลสินค้าในระบบ</small><h2>ข้อมูลสินค้าที่ AI ใช้ตอบลูกค้า</h2></div><button>+ เพิ่มสินค้า</button></div>
           <div class="product-table">
-            <div class="row head"><span>SKU</span><span>Stock</span><span>AI notes</span><span>Status</span></div>
-            <div class="row"><b>Linen Straight Dress</b><span>M:4 / L:8</span><p>แนะนำ L เมื่ออก 36+, ทรงตรงไม่รัดเอว</p><em>Active</em></div>
-            <div class="row"><b>Soft Tailored Pants</b><span>S:2 / M:9</span><p>เอวสูง ช่วยพรางสะโพก เหมาะกับ office look</p><em>Active</em></div>
-            <div class="row"><b>Knit Relax Top</b><span>Free size</span><p>ต้องแจ้งวิธีซัก ห้ามแขวนตอนเปียก</p><em>Need photo</em></div>
+            <div class="row head"><span>SKU</span><span>สต็อก</span><span>หมายเหตุให้ AI</span><span>สถานะ</span></div>
+            <div class="row"><b>Linen Straight Dress</b><span>M:4 / L:8</span><p>แนะนำ L เมื่ออก 36+, ทรงตรงไม่รัดเอว</p><em>ใช้งาน</em></div>
+            <div class="row"><b>Soft Tailored Pants</b><span>S:2 / M:9</span><p>เอวสูง ช่วยพรางสะโพก เหมาะกับ office look</p><em>ใช้งาน</em></div>
+            <div class="row"><b>Knit Relax Top</b><span>Free size</span><p>ต้องแจ้งวิธีซัก ห้ามแขวนตอนเปียก</p><em>รอรูปเพิ่ม</em></div>
           </div>
         </section>
 
         <section id="automation" class="panel automation-panel">
-          <div class="panel-head"><div><small>AUTOMATION FLOW</small><h2>กฎการทำงานอัตโนมัติ</h2></div></div>
+          <div class="panel-head"><div><small>ขั้นตอนอัตโนมัติ</small><h2>กฎการทำงานอัตโนมัติ</h2></div></div>
           <div class="flow-board">
-            <div><small>Trigger</small><b>ลูกค้าถามไซซ์</b><p>ถามส่วนสูง/อก/เอวเพิ่มถ้ายังไม่ครบ</p></div>
+            <div><small>Trigger</small><b>ลูกค้าถามไซซ์</b><p>ถ้าข้อมูลไม่ครบ ระบบจะถามเพิ่มก่อนตอบ</p></div>
             <span>→</span>
-            <div><small>AI Action</small><b>แนะนำไซซ์</b><p>ตอบจาก fit rule + ตารางไซซ์</p></div>
+            <div><small>สิ่งที่ AI ทำ</small><b>แนะนำไซซ์ที่เหมาะ</b><p>ตอบจากกฎไซซ์ + ตารางไซซ์ของร้าน</p></div>
             <span>→</span>
-            <div><small>System</small><b>Log Insight</b><p>บันทึกว่าสินค้านี้ถูกถามไซซ์</p></div>
+            <div><small>ระบบบันทึก</small><b>เก็บข้อมูลไว้ดูต่อ</b><p>บันทึกว่าสินค้านี้มีคนถามไซซ์บ่อย</p></div>
           </div>
         </section>
       </section>
 
       <section class="lower-grid bottom">
         <section id="insights" class="panel insights-panel">
-          <div class="panel-head"><div><small>INSIGHTS</small><h2>ข้อมูลจากแชทที่เอาไปแก้ร้านได้</h2></div></div>
-          <div class="chart-wrap"><div class="bar" style="height:86%"><span>Size</span></div><div class="bar" style="height:62%"><span>Shipping</span></div><div class="bar" style="height:48%"><span>Fabric</span></div><div class="bar" style="height:34%"><span>Return</span></div><div class="bar" style="height:28%"><span>Promo</span></div></div>
+          <div class="panel-head"><div><small>ข้อมูลลูกค้า</small><h2>ข้อมูลจากแชทที่ช่วยให้ร้านขายดีขึ้น</h2></div></div>
+          <div class="chart-wrap"><div class="bar" style="height:86%"><span>ไซซ์</span></div><div class="bar" style="height:62%"><span>ส่งของ</span></div><div class="bar" style="height:48%"><span>เนื้อผ้า</span></div><div class="bar" style="height:34%"><span>คืนสินค้า</span></div><div class="bar" style="height:28%"><span>โปรโมชัน</span></div></div>
         </section>
         <section id="content" class="panel content-panel">
-          <div class="panel-head"><div><small>CONTENT AI</small><h2>โพสต์ที่ AI แนะนำจากคำถามจริง</h2></div><button>Generate</button></div>
-          <div class="content-ideas"><article><small>Post idea</small><b>อก 36 ใส่ M หรือ L?</b><p>ทำ carousel เทียบไซซ์ M/L พร้อมภาพคนสูง 158–165</p></article><article><small>TikTok hook</small><b>3 จุดที่ทำให้เดรสทรงตรงไม่ตัน</b><p>ตอบ pain เรื่องความยาวและช่วงอกที่ถามซ้ำ 42 ครั้ง</p></article></div>
+          <div class="panel-head"><div><small>ไอเดียโพสต์</small><h2>ไอเดียโพสต์จากคำถามจริงของลูกค้า</h2></div><button>สร้างเพิ่ม</button></div>
+          <div class="content-ideas"><article><small>ไอเดียโพสต์</small><b>อก 36 ใส่ M หรือ L?</b><p>ทำ carousel เทียบไซซ์ M/L พร้อมภาพคนสูง 158–165</p></article><article><small>ไอเดียคลิป TikTok</small><b>3 จุดที่ทำให้เดรสทรงตรงไม่ตัน</b><p>ตอบคำถามเรื่องความยาวและช่วงอกที่ลูกค้าถามซ้ำ 42 ครั้ง</p></article></div>
         </section>
       </section>
     </main>

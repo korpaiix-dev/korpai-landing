@@ -2,9 +2,9 @@
 import Layout from '~/layouts/Layout.astro';
 
 const packages = [
-  { name: 'Starter Automation', price: '29,000', monthly: '9,900', tag: 'ร้านเริ่มจริงจัง', items: ['AI ตอบ FAQ/สินค้า/จัดส่ง', 'ฐานข้อมูลสินค้า 50 SKU', 'handoff ให้แอดมินเมื่อไม่มั่นใจ', 'Google Sheet/Notion dashboard', 'เทรนทีม 1 รอบ'] },
-  { name: 'Growth Automation', price: '49,000', monthly: '14,900', tag: 'แนะนำ', highlight: true, items: ['ทุกอย่างใน Starter', 'AI แนะนำไซซ์/สินค้าเบื้องต้น', 'เก็บคำถามลูกค้าเป็น insight', 'AI เสนอ caption จากสินค้าที่คนถามเยอะ', 'LINE OA หรือ Facebook Inbox 1 ช่องทาง'] },
-  { name: 'Scale Automation', price: '89,000', monthly: '29,000', tag: 'แบรนด์ที่แชทเยอะ', items: ['เชื่อมหลายช่องทาง', 'dashboard ผู้บริหาร', 'content engine รายสัปดาห์', 'workflow แจ้งเตือนทีมขาย', 'ปรับระบบ/คำตอบทุกเดือน'] },
+  { name: 'Starter Automation', price: '14,900', monthly: '4,900', tag: 'เริ่มแทนงานแอดมินซ้ำ', items: ['AI ตอบ FAQ/สินค้า/จัดส่ง', 'ฐานข้อมูลสินค้า 30 SKU', 'ส่งต่อแอดมินเมื่อไม่มั่นใจ', 'สรุปคำถามซ้ำที่ทำให้เสียเวลา', 'เทรนทีม 1 รอบ'] },
+  { name: 'Growth Automation', price: '29,000', monthly: '9,900', tag: 'แนะนำ', highlight: true, items: ['ทุกอย่างใน Starter', 'AI แนะนำไซซ์/สินค้าเบื้องต้น', 'ช่วยลดแชทซ้ำก่อนต้องจ้างแอดมินเพิ่ม', 'AI เสนอ caption จากคำถามลูกค้าจริง', 'LINE OA หรือ Facebook Inbox 1 ช่องทาง'] },
+  { name: 'Scale Automation', price: '49,000', monthly: '19,900', tag: 'ร้านที่กำลังจะเพิ่มทีม', items: ['เชื่อมหลายช่องทาง', 'หน้าสรุปลดต้นทุน/แชทที่ AI ช่วยตอบ', 'ระบบช่วยทีมขายติดตามลูกค้า', 'workflow แจ้งเตือนแอดมิน', 'ปรับระบบ/คำตอบทุกเดือน'] },
 ];
 
 const flow = [
@@ -64,8 +64,8 @@ const flow = [
 
   <section class="section border-t kp-hairline">
     <div class="kp-container">
-      <div class="section-head"><span class="kp-pill">แพ็กเกจ</span><h2>แพ็กเกจแบบระบบ + ดูแลรายเดือน</h2><p>เป้าหมายไม่ใช่ขายไฟล์ครั้งเดียว แต่ติดตั้งระบบที่ร้านใช้ต่อได้จริง</p></div>
-      <div class="price-grid">{packages.map((p)=><article class={`kp-card price ${p.highlight?'hot':''}`}>{p.highlight && <div class="hot-label">แนะนำ</div>}<span>{p.tag}</span><h3>{p.name}</h3><div class="setup">฿{p.price}<small>setup</small></div><div class="monthly">฿{p.monthly}/เดือน</div><ul>{p.items.map((it)=><li>{it}</li>)}</ul></article>)}</div>
+      <div class="section-head"><span class="kp-pill">แพ็กเกจ</span><h2>เริ่มให้ AI ช่วยงานซ้ำ ก่อนต้องจ้างแอดมินเพิ่ม</h2><p>ตั้งราคาให้เทียบกับค่าแรงแอดมินจริง: ลดเวลาตอบคำถามซ้ำ ลดแชทหลุด ลดปัญหาพนักงาน และค่อยขยายเมื่อร้านเห็นผล</p></div>
+      <div class="price-grid">{packages.map((p)=><article class={`kp-card price ${p.highlight?'hot':''}`}>{p.highlight && <div class="hot-label">แนะนำ</div>}<span>{p.tag}</span><h3>{p.name}</h3><div class="setup">฿{p.price}<small>setup</small></div><div class="monthly">฿{p.monthly}/เดือน</div><div class="roi-note">ถูกกว่าจ้างแอดมินเพิ่ม 1 คน</div><ul>{p.items.map((it)=><li>{it}</li>)}</ul></article>)}</div>
     </div>
   </section>
 
@@ -146,4 +146,8 @@ const flow = [
     .automation-hero h1 { font-size: 2.05rem !important; max-width: 310px !important; }
     .automation-hero p { max-width: 330px !important; }
   }
+</style>
+
+<style>
+  .roi-note { color:#f0c48a; font-size:12px; font-weight:900; margin-top:8px; }
 </style>

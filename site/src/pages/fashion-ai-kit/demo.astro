@@ -84,3 +84,16 @@ import Layout from '~/layouts/Layout.astro';
     .msg { max-width:90%; }
   }
 </style>
+
+<style>
+  :global(html), :global(body) { overflow-x: hidden; }
+  .work-main, .work-grid, .chat-room, .right-panel, .panel, .messages, .suggestion { min-width: 0; max-width: 100%; }
+  .msg, .suggestion p { overflow-wrap: anywhere; }
+  @media(max-width:1120px){
+    .work-main { max-width:100vw; overflow:hidden; }
+    .room-head, .suggestion div, .top-buttons { flex-wrap: wrap; }
+    .room-head button, .suggestion button, .top-buttons a, .top-buttons button { white-space: normal; }
+    .msg { max-width: 86% !important; }
+    .chat-room { padding: 14px !important; }
+  }
+</style>

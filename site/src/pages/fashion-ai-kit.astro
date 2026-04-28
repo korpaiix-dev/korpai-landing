@@ -112,3 +112,15 @@ const flow = [
     .boutique-card > img { aspect-ratio: 4/3; }
   }
 </style>
+
+<style>
+  :global(html), :global(body) { overflow-x: hidden; }
+  .automation-hero-grid > *, .boutique-card, .automation-console { min-width: 0; }
+  .automation-hero h1 { overflow-wrap: anywhere; word-break: normal; }
+  @media (max-width:640px){
+    .automation-hero { padding-top: 96px; }
+    .automation-hero h1 { font-size: 2.25rem !important; line-height: 1.18 !important; letter-spacing: -0.035em !important; }
+    .automation-hero p { font-size: 16px !important; line-height: 1.75; }
+    .hero-actions a { width: 100%; }
+  }
+</style>

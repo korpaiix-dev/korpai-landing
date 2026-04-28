@@ -124,3 +124,19 @@ const flow = [
     .hero-actions a { width: 100%; }
   }
 </style>
+
+<style>
+  @media (max-width: 640px) {
+    .kp-container, .automation-hero-grid, .automation-hero-grid > div { width: 100% !important; max-width: 100% !important; }
+    .automation-hero-grid { display: block !important; }
+    .automation-hero h1 {
+      font-size: 1.95rem !important;
+      line-height: 1.22 !important;
+      max-width: calc(100vw - 40px) !important;
+      word-break: keep-all !important;
+      overflow-wrap: normal !important;
+    }
+    .automation-hero p { max-width: calc(100vw - 40px) !important; }
+    .boutique-card { width: 100% !important; max-width: calc(100vw - 40px) !important; box-sizing: border-box; }
+  }
+</style>

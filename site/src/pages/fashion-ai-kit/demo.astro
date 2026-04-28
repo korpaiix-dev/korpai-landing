@@ -1,132 +1,143 @@
 ---
 import Layout from '~/layouts/Layout.astro';
 ---
-<Layout title="ตัวอย่างหน้าระบบช่วยตอบแชทร้านเสื้อผ้า | KORP AI" description="Mockup หน้าจอใช้งานจริงของระบบ AI ช่วยตอบแชทและช่วยขายสำหรับร้านเสื้อผ้าออนไลน์" canonical="https://korpai.co/fashion-ai-kit/demo">
-  <section class="work-app">
-    <aside class="leftbar">
-      <a class="back" href="/fashion-ai-kit">← กลับ</a>
-      <div class="shop"><div>LS</div><b>Linn Studio</b><span>ระบบช่วยตอบแชท</span></div>
-      <nav><a class="active">กล่องแชท</a><a>สินค้า</a><a>คำตอบ AI</a><a>งานที่ต้องทำ</a><a>ตั้งค่าร้าน</a></nav>
-      <div class="ai-switch"><span></span><div><b>AI เปิดอยู่</b><small>ช่วยตอบแชทอัตโนมัติ</small></div></div>
+
+<Layout title="ตัวอย่างหน้าระบบช่วยตอบแชทร้านเสื้อผ้า | KORP AI" description="Mockup หน้าจอใช้งานจริงของระบบ AI ช่วยตอบแชท ลดงานแอดมิน และช่วยขายสำหรับร้านเสื้อผ้าออนไลน์" canonical="https://korpai.co/fashion-ai-kit/demo">
+  <section class="app-shell">
+    <aside class="sidebar">
+      <a class="back" href="/fashion-ai-kit">← กลับหน้าแพ็กเกจ</a>
+      <div class="shop-card">
+        <div class="logo">LS</div>
+        <b>Linn Studio</b>
+        <span>AI Sales Automation</span>
+      </div>
+      <nav class="side-nav" aria-label="เมนูระบบตัวอย่าง">
+        <button class="active" data-view="inbox">กล่องแชท</button>
+        <button data-view="products">สินค้า</button>
+        <button data-view="answers">คำตอบ AI</button>
+        <button data-view="tasks">งานที่ต้องทำ</button>
+        <button data-view="insights">สรุปลดต้นทุน</button>
+      </nav>
+      <div class="ai-status"><i></i><div><b>AI เปิดอยู่</b><small>ตอบคำถามซ้ำ + ส่งต่อเคสยาก</small></div></div>
     </aside>
 
-    <main class="work-main">
-      <header class="work-top">
-        <div><a class="mobile-back" href="/fashion-ai-kit">← กลับหน้าแพ็กเกจ</a><small>ตัวอย่างหน้าระบบใช้งานจริง</small><h1>กล่องแชทร้าน Linn Studio</h1></div>
-        <div class="top-buttons"><button>พัก AI ชั่วคราว</button><a href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">อยากได้ระบบนี้</a></div>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <a class="mobile-back" href="/fashion-ai-kit">← กลับหน้าแพ็กเกจ</a>
+          <small>Interactive mockup · กดเมนู/ลูกค้า/ปุ่มได้</small>
+          <h1 data-title>กล่องแชทร้าน Linn Studio</h1>
+        </div>
+        <div class="top-actions">
+          <button id="toggle-ai">พัก AI ชั่วคราว</button>
+          <a href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">อยากได้ระบบนี้</a>
+        </div>
       </header>
 
-      <div class="work-grid">
-        <section class="chat-list panel">
-          <div class="panel-title"><b>ลูกค้าที่ทักมา</b><span>วันนี้ 24 แชท</span></div>
-          <button class="active"><div><b>ลูกค้ามายด์</b><p>ถามไซซ์เดรสสีครีม</p></div><em>AI ตอบอยู่</em></button>
-          <button><div><b>ลูกค้าแพรว</b><p>ขอส่งด่วนใน กทม.</p></div><em class="warn">รอแอดมิน</em></button>
-          <button><div><b>ลูกค้านัท</b><p>ถามกางเกงเอวสูง</p></div><em>ตอบจบแล้ว</em></button>
-          <button><div><b>ลูกค้าบี</b><p>ถามโปรซื้อ 2 ชิ้น</p></div><em>AI ตอบอยู่</em></button>
-        </section>
+      <section class="quick-stats">
+        <article><span>แชทวันนี้</span><b>24</b><em>AI ช่วยตอบ 18</em></article>
+        <article><span>เวลาที่ประหยัด</span><b>3.6 ชม.</b><em>เทียบงานแอดมินซ้ำ</em></article>
+        <article><span>รอแอดมิน</span><b>2</b><em>เคสต้องใช้คนตัดสินใจ</em></article>
+        <article><span>คำถามฮิต</span><b>ไซซ์</b><em>ควรทำโพสต์/FAQ เพิ่ม</em></article>
+      </section>
 
-        <section class="chat-room panel">
-          <div class="room-head"><div><b>ลูกค้ามายด์</b><span>กำลังดูสินค้า: Linen Straight Dress — สีครีม</span></div><button>ส่งต่อแอดมิน</button></div>
-          <div class="messages">
-            <div class="msg customer">มีเดรสสีครีมไหมคะ สูง 160 อก 36 ใส่ไซซ์ไหนดี?</div>
-            <div class="msg ai"><small>AI ตอบจากข้อมูลสินค้า</small>มีค่ะ รุ่น Linen Straight สีครีมเหลือไซซ์ M/L จากอก 36 แนะนำ L จะใส่สบายกว่า และยังได้ทรงตรงสวยนะคะ</div>
-            <div class="msg customer">ส่งวันนี้ได้ไหมคะ?</div>
-            <div class="msg ai"><small>AI ตอบจากนโยบายส่งของ</small>ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ ต้องการให้แอดมินส่งลิงก์ชำระเงินให้ไหมคะ?</div>
-          </div>
-          <div class="suggestion">
-            <label>คำตอบที่ AI เตรียมไว้</label>
-            <p>ได้เลยค่ะ เดี๋ยวแอดมินส่งลิงก์ชำระเงินให้ พร้อมสรุปไซซ์ L สีครีม 1 ตัวนะคะ</p>
-            <div><button>แก้คำตอบ</button><button class="primary">ส่งข้อความ</button></div>
-          </div>
-          <div class="composer"><input placeholder="พิมพ์ตอบเอง หรือให้ AI ช่วยร่างคำตอบ..."/><button>ส่ง</button></div>
-        </section>
+      <section class="view active" data-panel="inbox">
+        <div class="work-grid">
+          <section class="panel chat-list">
+            <div class="panel-head"><b>ลูกค้าที่ทักมา</b><span>กดเพื่อเปลี่ยนเคส</span></div>
+            <button class="customer-row active" data-customer="mind"><div><b>ลูกค้ามายด์</b><p>ถามไซซ์เดรสสีครีม</p></div><em>AI ตอบอยู่</em></button>
+            <button class="customer-row" data-customer="praew"><div><b>ลูกค้าแพรว</b><p>ขอส่งด่วนใน กทม.</p></div><em class="warn">รอแอดมิน</em></button>
+            <button class="customer-row" data-customer="nut"><div><b>ลูกค้านัท</b><p>ถามกางเกงเอวสูง</p></div><em>ตอบจบแล้ว</em></button>
+            <button class="customer-row" data-customer="bee"><div><b>ลูกค้าบี</b><p>ถามโปรซื้อ 2 ชิ้น</p></div><em>AI ตอบอยู่</em></button>
+          </section>
 
-        <aside class="right-panel">
-          <section class="panel customer-card"><div class="panel-title"><b>ข้อมูลลูกค้า</b></div><div class="avatar">M</div><h3>ลูกค้ามายด์</h3><p>สนใจเดรสสีครีม · มีโอกาสซื้อสูง</p><div class="tags"><span>ถามไซซ์</span><span>พร้อมซื้อ</span><span>ส่งวันนี้</span></div></section>
-          <section class="panel product-card"><div class="panel-title"><b>สินค้าที่เกี่ยวข้อง</b><span>ในสต็อก</span></div><div class="product-img"></div><h3>Linen Straight Dress</h3><p>สีครีม · M เหลือ 4 / L เหลือ 8</p><ul><li>อก 36 → แนะนำ L</li><li>ความยาว 112 ซม.</li><li>ส่งวันนี้ได้ก่อน 14:00</li></ul></section>
-          <section class="panel task-card"><div class="panel-title"><b>ระบบบันทึกให้แล้ว</b></div><label><input type="checkbox" checked/> ลูกค้าถามเรื่องไซซ์</label><label><input type="checkbox" checked/> สินค้านี้ถูกถามบ่อย</label><label><input type="checkbox"/> ถามแอดมินเรื่องส่งลิงก์จ่ายเงิน</label></section>
-        </aside>
-      </div>
+          <section class="panel chat-room">
+            <div class="room-head"><div><b id="customer-name">ลูกค้ามายด์</b><span id="customer-topic">กำลังดูสินค้า: Linen Straight Dress — สีครีม</span></div><button id="handoff-btn">ส่งต่อแอดมิน</button></div>
+            <div class="messages" id="messages"></div>
+            <div class="suggestion">
+              <label>คำตอบที่ AI เตรียมไว้</label>
+              <p id="ai-draft">ได้เลยค่ะ เดี๋ยวแอดมินส่งลิงก์ชำระเงินให้ พร้อมสรุปไซซ์ L สีครีม 1 ตัวนะคะ</p>
+              <div><button id="edit-answer">แก้คำตอบ</button><button class="primary" id="send-answer">ส่งข้อความ</button></div>
+            </div>
+            <div class="composer"><input id="composer" placeholder="พิมพ์ตอบเอง หรือให้ AI ช่วยร่างคำตอบ..."/><button id="composer-send">ส่ง</button></div>
+          </section>
+
+          <aside class="right-col">
+            <section class="panel customer-card"><div class="panel-head"><b>ข้อมูลลูกค้า</b></div><div class="avatar" id="avatar">M</div><h3 id="profile-name">ลูกค้ามายด์</h3><p id="profile-note">สนใจเดรสสีครีม · มีโอกาสซื้อสูง</p><div class="tags" id="tags"><span>ถามไซซ์</span><span>พร้อมซื้อ</span><span>ส่งวันนี้</span></div></section>
+            <section class="panel product-card"><div class="panel-head"><b>สินค้าที่ AI ใช้ตอบ</b><span>ในสต็อก</span></div><div class="product-img"></div><h3 id="product-name">Linen Straight Dress</h3><p id="product-stock">สีครีม · M เหลือ 4 / L เหลือ 8</p><ul id="product-rules"><li>อก 36 → แนะนำ L</li><li>ความยาว 112 ซม.</li><li>ส่งวันนี้ได้ก่อน 14:00</li></ul></section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" data-panel="products">
+        <div class="panel products-view">
+          <div class="panel-head"><b>ฐานข้อมูลสินค้า</b><span>AI ใช้อ้างอิง ไม่ตอบมั่ว</span></div>
+          <div class="product-grid">
+            <article><div class="pic"></div><b>Linen Straight Dress</b><span>ครีม · M/L</span><p>ทรงตรง ผ้าลินินผสม แนะนำ L สำหรับอก 36</p><button data-demo-toast="อัปเดตสินค้าแล้ว">แก้ข้อมูล</button></article>
+            <article><div class="pic p2"></div><b>High Waist Trousers</b><span>ดำ/เบจ · S/M/L</span><p>เอวสูง ทรงเก็บสะโพก เหมาะกับลูกค้าสูง 155–170</p><button data-demo-toast="เปิด size guide แล้ว">ดูไซซ์</button></article>
+            <article><div class="pic p3"></div><b>Soft Knit Cardigan</b><span>ฟ้า/เทา · Free size</span><p>สินค้าถูกถามบ่อยเรื่องสีจริงและความหนา</p><button data-demo-toast="เพิ่ม FAQ ให้ AI แล้ว">เพิ่ม FAQ</button></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-panel="answers">
+        <div class="panel answers-view">
+          <div class="panel-head"><b>คำตอบ AI ที่ร้านควบคุมได้</b><span>แก้ tone / เงื่อนไข / ความเสี่ยง</span></div>
+          <div class="answer-list">
+            <article><b>ถามไซซ์</b><p>AI ต้องถามส่วนสูง/อก/เอวก่อน ถ้าข้อมูลไม่ครบ ห้ามฟันธงไซซ์</p><button data-demo-toast="บันทึกกฎคำตอบไซซ์แล้ว">บันทึก</button></article>
+            <article><b>ถามส่งของ</b><p>ถ้าชำระก่อน 14:00 ส่งวันนี้ หลังจากนั้นส่งรอบถัดไป</p><button data-demo-toast="บันทึกกฎจัดส่งแล้ว">บันทึก</button></article>
+            <article><b>คืน/เปลี่ยนสินค้า</b><p>เคสคืนเงิน/เปลี่ยนสินค้าให้ส่งต่อแอดมินเสมอ</p><button data-demo-toast="ตั้งค่า handoff แล้ว">เปิดส่งต่อ</button></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-panel="tasks">
+        <div class="panel tasks-view">
+          <div class="panel-head"><b>งานที่ระบบสร้างให้</b><span>จากแชทจริงวันนี้</span></div>
+          <div class="task-list">
+            <label><input type="checkbox" checked/> เพิ่มรูปเทียบความยาวเดรส Linen Straight</label>
+            <label><input type="checkbox"/> ทำโพสต์ “สูง 160 ใส่ไซซ์อะไร”</label>
+            <label><input type="checkbox"/> ให้แอดมินส่งลิงก์ชำระเงินให้ลูกค้ามายด์</label>
+            <label><input type="checkbox"/> เพิ่ม FAQ เรื่องส่งด่วน กทม.</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-panel="insights">
+        <div class="insight-grid">
+          <article class="panel"><div class="panel-head"><b>งานซ้ำที่ AI ช่วยตอบ</b><span>วันนี้</span></div><div class="big">18 แชท</div><p>ลดเวลาตอบคำถามพื้นฐานประมาณ 3.6 ชั่วโมง</p></article>
+          <article class="panel"><div class="panel-head"><b>ค่าใช้จ่ายที่ช่วยประหยัด</b><span>ประมาณการ</span></div><div class="big">฿520/วัน</div><p>เทียบเวลางานแอดมินที่ต้องตอบคำถามซ้ำ</p></article>
+          <article class="panel"><div class="panel-head"><b>โอกาสขาย</b><span>จากแชท</span></div><div class="bar"><i style="width:72%"></i></div><p>72% ของแชทวันนี้เกี่ยวกับสินค้า/ไซซ์ พร้อมปิดการขายได้</p></article>
+          <article class="panel"><div class="panel-head"><b>สิ่งที่ควรทำต่อ</b></div><ul><li>ทำ size guide แบบรูปภาพ</li><li>ทำโพสต์ FAQ เรื่องส่งวันนี้</li><li>เพิ่มคำตอบเรื่องเปลี่ยนไซซ์</li></ul></article>
+        </div>
+      </section>
     </main>
   </section>
+  <div class="toast" id="toast">บันทึกแล้ว</div>
 </Layout>
 
 <style>
-.work-app{min-height:100vh;display:grid;grid-template-columns:250px 1fr;background:#05070e;color:#e6ebf5}.leftbar{position:sticky;top:0;height:100vh;padding:20px;border-right:1px solid rgba(255,255,255,.08);background:rgba(3,7,18,.9)}.back{color:#8aa0c5;text-decoration:none;font-size:13px}.shop{margin-top:22px;padding:14px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:rgba(255,255,255,.04)}.shop div{width:44px;height:44px;border-radius:15px;background:#26d7f6;color:#061018;display:grid;place-items:center;font-weight:950}.shop b,.shop span{display:block}.shop b{margin-top:10px;color:white}.shop span{color:#8aa0c5;font-size:12px;margin-top:3px}.leftbar nav{display:grid;gap:8px;margin-top:24px}.leftbar nav a{padding:12px 14px;border-radius:14px;color:#9fb0d0;font-weight:800;font-size:13px}.leftbar nav a.active,.leftbar nav a:hover{background:rgba(38,215,246,.11);color:white}.ai-switch{position:absolute;left:20px;right:20px;bottom:20px;display:flex;gap:10px;align-items:center;border:1px solid rgba(16,185,129,.22);border-radius:18px;background:rgba(16,185,129,.08);padding:13px}.ai-switch>span{width:10px;height:10px;border-radius:99px;background:#34d399;box-shadow:0 0 18px #34d399}.ai-switch b,.ai-switch small{display:block}.ai-switch small{color:#8aa0c5}.work-main{padding:24px;min-width:0}.work-top{display:flex;justify-content:space-between;gap:18px;align-items:center}.work-top small{color:#26d7f6;font-weight:900}.work-top h1{color:white;font-size:30px;letter-spacing:-.035em}.top-buttons{display:flex;gap:10px}.top-buttons button,.top-buttons a,.room-head button,.suggestion button,.composer button{border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.06);color:white;padding:10px 14px;font-weight:850;text-decoration:none}.top-buttons a,.suggestion .primary,.composer button{background:#26d7f6;color:#061018;border:0}.work-grid{display:grid;grid-template-columns:280px minmax(420px,1fr) 320px;gap:14px;margin-top:20px}.panel{border:1px solid rgba(255,255,255,.09);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025));padding:16px;box-shadow:0 20px 60px rgba(0,0,0,.18)}.panel-title{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:13px}.panel-title b{color:white}.panel-title span{color:#8aa0c5;font-size:12px}.chat-list{display:grid;align-content:start;gap:10px}.chat-list button{text-align:left;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.035);padding:13px;color:white;display:flex;justify-content:space-between;gap:10px}.chat-list button.active{border-color:rgba(38,215,246,.36);background:rgba(38,215,246,.10)}.chat-list p{color:#8aa0c5;font-size:12px;margin-top:4px}.chat-list em{color:#a7f3d0;font-size:11px;font-style:normal;white-space:nowrap}.chat-list em.warn{color:#fbbf24}.chat-room{display:grid;grid-template-rows:auto 1fr auto auto;min-height:720px}.room-head{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px}.room-head b,.room-head span{display:block}.room-head span{color:#8aa0c5;font-size:12px;margin-top:4px}.messages{padding:18px 4px;display:grid;align-content:start;gap:12px}.msg{max-width:78%;border-radius:18px;padding:13px 15px;line-height:1.6;font-size:14px}.msg small{display:block;color:#9beeff;font-size:11px;font-weight:900;margin-bottom:5px}.customer{background:rgba(255,255,255,.08);color:#dbe6fa}.ai{margin-left:auto;background:rgba(38,215,246,.15);border:1px solid rgba(38,215,246,.22);color:#effcff}.suggestion{border:1px solid rgba(38,215,246,.18);border-radius:20px;background:rgba(38,215,246,.06);padding:14px}.suggestion label{color:#26d7f6;font-weight:900;font-size:12px}.suggestion p{margin-top:8px;color:#e6ebf5;line-height:1.55}.suggestion div{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}.composer{display:flex;gap:10px;margin-top:12px}.composer input{flex:1;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(0,0,0,.22);color:white;padding:0 15px}.right-panel{display:grid;align-content:start;gap:14px}.avatar{width:58px;height:58px;border-radius:20px;background:#26d7f6;color:#061018;display:grid;place-items:center;font-weight:950;font-size:24px}.customer-card h3,.product-card h3{color:white;margin-top:12px}.customer-card p,.product-card p,.task-card label{color:#aebddb;font-size:13px;line-height:1.55}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.tags span{color:#9beeff;border:1px solid rgba(38,215,246,.18);border-radius:999px;padding:6px 9px;font-size:11px}.product-img{height:145px;border-radius:18px;background:linear-gradient(135deg,rgba(38,215,246,.14),rgba(124,95,255,.16)),url('/assets/img/fashion-ai-kit/store-ops.png') center/cover;border:1px solid rgba(255,255,255,.10)}.product-card ul{margin-top:12px;padding-left:18px;color:#c8d5ec;font-size:13px;line-height:1.8}.task-card{display:grid;gap:10px}.task-card label{display:flex;gap:8px;align-items:center}@media(max-width:1120px){.work-app{grid-template-columns:1fr}.leftbar{position:relative;height:auto}.ai-switch{position:static;margin-top:20px}.work-grid{grid-template-columns:1fr}.chat-room{min-height:auto}.work-top{display:block}.top-buttons{margin-top:14px}.composer input{min-height:44px}}
+:global(body>header),:global(body>footer),:global(.kp-contact-float){display:none!important}:global(html),:global(body){overflow-x:hidden}.app-shell{min-height:100vh;display:grid;grid-template-columns:260px 1fr;background:linear-gradient(135deg,#080706 0%,#10141b 45%,#241811 100%);color:#f7efe6}.sidebar{position:sticky;top:0;height:100vh;padding:20px;border-right:1px solid rgba(244,211,161,.13);background:rgba(13,10,9,.86)}.back,.mobile-back{color:#cdbfaf;text-decoration:none;font-size:13px}.shop-card{margin-top:22px;border:1px solid rgba(244,211,161,.15);border-radius:22px;padding:15px;background:rgba(255,255,255,.045)}.logo,.avatar{width:48px;height:48px;border-radius:16px;background:#f4d3a1;color:#17110b;display:grid;place-items:center;font-weight:950}.shop-card b,.shop-card span{display:block}.shop-card b{margin-top:10px}.shop-card span,.ai-status small{color:#b9aa99;font-size:12px}.side-nav{display:grid;gap:8px;margin-top:24px}.side-nav button{border:0;text-align:left;padding:12px 14px;border-radius:14px;background:transparent;color:#cdbfaf;font-weight:850;cursor:pointer}.side-nav button.active,.side-nav button:hover{background:rgba(244,211,161,.13);color:#fff}.ai-status{position:absolute;left:20px;right:20px;bottom:20px;display:flex;gap:10px;align-items:center;border:1px solid rgba(52,211,153,.24);border-radius:18px;background:rgba(52,211,153,.08);padding:13px}.ai-status i{width:10px;height:10px;border-radius:99px;background:#34d399;box-shadow:0 0 18px #34d399}.main{padding:24px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px}.topbar small{color:#f0c48a;font-weight:900}.topbar h1{margin:3px 0 0;color:#fff;font-size:32px;letter-spacing:-.04em}.top-actions{display:flex;gap:10px}.top-actions button,.top-actions a,.room-head button,.suggestion button,.composer button,.product-grid button,.answer-list button{border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.06);color:#fff;padding:10px 14px;font-weight:850;text-decoration:none;cursor:pointer}.top-actions a,.suggestion .primary,.composer button{background:#f4d3a1;color:#17110b;border:0}.quick-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}.quick-stats article,.panel{border:1px solid rgba(244,211,161,.13);border-radius:24px;background:rgba(22,18,16,.72);box-shadow:0 20px 70px rgba(0,0,0,.16)}.quick-stats article{padding:15px}.quick-stats span,.panel-head span{display:block;color:#b9aa99;font-size:12px}.quick-stats b{display:block;margin-top:5px;color:#fff;font-size:25px}.quick-stats em{display:block;margin-top:3px;color:#f0c48a;font-style:normal;font-size:12px}.view{display:none;margin-top:16px}.view.active{display:block}.work-grid{display:grid;grid-template-columns:280px minmax(420px,1fr) 330px;gap:14px}.panel{padding:16px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.panel-head b{color:#fff}.chat-list{display:grid;align-content:start;gap:10px}.customer-row{display:flex;justify-content:space-between;gap:10px;text-align:left;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.035);padding:13px;color:#fff;cursor:pointer}.customer-row.active{border-color:rgba(244,211,161,.36);background:rgba(244,211,161,.12)}.customer-row p{color:#b9aa99;font-size:12px;margin:4px 0 0}.customer-row em{color:#a7f3d0;font-size:11px;font-style:normal;white-space:nowrap}.customer-row em.warn{color:#fbbf24}.chat-room{display:grid;grid-template-rows:auto 1fr auto auto;min-height:720px}.room-head{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px}.room-head b,.room-head span{display:block}.room-head span{color:#b9aa99;font-size:12px;margin-top:4px}.messages{padding:18px 4px;display:grid;align-content:start;gap:12px}.msg{max-width:78%;border-radius:18px;padding:13px 15px;line-height:1.6;font-size:14px}.msg small{display:block;color:#f0c48a;font-size:11px;font-weight:900;margin-bottom:5px}.msg.customer{background:rgba(255,255,255,.08);color:#fff}.msg.ai{margin-left:auto;background:rgba(244,211,161,.12);border:1px solid rgba(244,211,161,.22);color:#fff7ec}.suggestion{border:1px solid rgba(244,211,161,.22);border-radius:20px;background:rgba(244,211,161,.08);padding:14px}.suggestion label{color:#f0c48a;font-weight:900;font-size:12px}.suggestion p{margin:8px 0 0;color:#fff;line-height:1.55}.suggestion div{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}.composer{display:flex;gap:10px;margin-top:12px}.composer input{flex:1;min-width:0;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(0,0,0,.22);color:#fff;padding:0 15px}.right-col{display:grid;align-content:start;gap:14px}.customer-card h3,.product-card h3{color:#fff;margin:12px 0 0}.customer-card p,.product-card p{color:#b9aa99;font-size:13px;line-height:1.55}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.tags span{color:#f0c48a;border:1px solid rgba(244,211,161,.22);border-radius:999px;padding:6px 9px;font-size:11px}.product-img,.pic{height:145px;border-radius:18px;background:linear-gradient(135deg,rgba(244,211,161,.16),rgba(38,215,246,.10)),url('/assets/img/fashion-ai-kit/store-ops.png') center/cover;border:1px solid rgba(255,255,255,.10)}.product-card ul{margin-top:12px;padding-left:18px;color:#eadfd2;font-size:13px;line-height:1.8}.product-grid,.answer-list,.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.product-grid article,.answer-list article{border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:14px;background:rgba(255,255,255,.035)}.product-grid b,.answer-list b{display:block;margin-top:12px;color:#fff}.product-grid span{color:#f0c48a;font-size:12px}.product-grid p,.answer-list p,.insight-grid p,.insight-grid li{color:#cdbfaf;line-height:1.6}.pic.p2{background-image:linear-gradient(135deg,rgba(244,211,161,.16),rgba(38,215,246,.10)),url('/assets/img/fashion-ai-kit/boutique-hero.png')}.pic.p3{background-image:linear-gradient(135deg,rgba(244,211,161,.16),rgba(38,215,246,.10)),url('/assets/img/fashion-ai-kit/store-ops.png')}.task-list{display:grid;gap:12px}.task-list label{border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:14px;color:#eadfd2;background:rgba(255,255,255,.035)}.insight-grid{grid-template-columns:repeat(2,1fr)}.big{color:#fff;font-size:42px;font-weight:950}.bar{height:12px;border-radius:999px;background:rgba(255,255,255,.09);overflow:hidden;margin:18px 0}.bar i{display:block;height:100%;border-radius:999px;background:#f4d3a1}.toast{position:fixed;right:22px;bottom:22px;background:#f4d3a1;color:#17110b;border-radius:999px;padding:12px 16px;font-weight:900;box-shadow:0 16px 40px rgba(0,0,0,.25);opacity:0;transform:translateY(10px);transition:.2s}.toast.show{opacity:1;transform:translateY(0)}.mobile-back{display:none}
+@media(max-width:1120px){.app-shell{display:block}.sidebar{display:none}.main{width:100vw;max-width:100vw;overflow:hidden;padding:16px 14px 36px}.mobile-back{display:inline-block}.topbar{display:block}.top-actions{display:grid;grid-template-columns:1fr;margin-top:12px}.quick-stats,.work-grid,.product-grid,.answer-list,.insight-grid{grid-template-columns:1fr}.quick-stats{gap:10px}.chat-room{min-height:auto;max-width:calc(100vw - 28px)}.chat-list{order:2}.right-col{order:3}.msg{max-width:100%;margin-left:0!important;font-size:13px}.room-head{display:block}.room-head button{display:none}.suggestion div{display:grid;grid-template-columns:1fr}.composer input{min-height:44px}.panel,.view,.work-grid{max-width:calc(100vw - 28px)}}
 </style>
 
-<style>
-  /* Demo page should feel like a real app, not a normal marketing page */
-  :global(body > header), :global(body > footer), :global(.kp-contact-float) { display: none !important; }
-  .work-app { padding-top: 0 !important; }
-</style>
-
-
-<style>
-  /* Boutique app theme + mobile: show real workspace first */
-  .work-app { background:linear-gradient(135deg,#080706 0%, #10141b 45%, #241811 100%) !important; }
-  .leftbar, .panel { background:rgba(22,18,16,.72) !important; border-color:rgba(244,211,161,.13) !important; }
-  .shop div, .avatar, .composer button, .suggestion .primary, .top-buttons a { background:#f4d3a1 !important; color:#17110b !important; }
-  .leftbar nav a.active, .chat-list button.active { background:rgba(244,211,161,.12) !important; border-color:rgba(244,211,161,.28) !important; }
-  .work-top small, .suggestion label, .msg small, .tags span { color:#f0c48a !important; }
-  .msg.ai, .suggestion { background:rgba(244,211,161,.12) !important; border-color:rgba(244,211,161,.22) !important; color:#fff7ec !important; }
-  .product-img { background:linear-gradient(135deg,rgba(244,211,161,.16),rgba(38,215,246,.10)), url('/assets/img/fashion-ai-kit/store-ops.png') center/cover !important; }
-  .mobile-back { display:none; color:#c3b8ad; text-decoration:none; margin-bottom:12px; font-size:13px; }
-  @media(max-width:1120px){
-    .leftbar { display:none !important; }
-    .mobile-back { display:inline-block; }
-    .work-main { padding:18px 14px 40px !important; }
-    .work-top h1 { font-size:28px !important; line-height:1.12; }
-    .work-grid { margin-top:16px; }
-    .chat-list { order:2; }
-    .chat-room { order:1; }
-    .right-panel { order:3; }
-    .msg { max-width:90%; }
-  }
-</style>
-
-<style>
-  :global(html), :global(body) { overflow-x: hidden; }
-  .work-main, .work-grid, .chat-room, .right-panel, .panel, .messages, .suggestion { min-width: 0; max-width: 100%; }
-  .msg, .suggestion p { overflow-wrap: anywhere; }
-  @media(max-width:1120px){
-    .work-main { max-width:100vw; overflow:hidden; }
-    .room-head, .suggestion div, .top-buttons { flex-wrap: wrap; }
-    .room-head button, .suggestion button, .top-buttons a, .top-buttons button { white-space: normal; }
-    .msg { max-width: 86% !important; }
-    .chat-room { padding: 14px !important; }
-  }
-</style>
-
-<style>
-  * { box-sizing: border-box; }
-  @media(max-width:1120px){
-    .work-app { width:100vw !important; max-width:100vw !important; overflow-x:hidden !important; display:block !important; }
-    .work-main { width:100vw !important; max-width:100vw !important; padding:16px 14px 36px !important; overflow-x:hidden !important; }
-    .work-grid { display:flex !important; flex-direction:column !important; width:100% !important; max-width:100% !important; gap:14px !important; }
-    .panel, .chat-room, .chat-list, .right-panel { width:100% !important; max-width:100% !important; overflow:hidden !important; }
-    .room-head button { display:none !important; }
-    .messages { width:100% !important; max-width:100% !important; overflow:hidden !important; }
-    .msg { max-width:82% !important; font-size:13px !important; line-height:1.55 !important; }
-    .suggestion { width:100% !important; }
-    .suggestion div { display:grid !important; grid-template-columns:1fr 1fr; gap:8px; }
-    .suggestion button { width:100% !important; padding-left:8px !important; padding-right:8px !important; }
-    .composer { width:100% !important; }
-    .composer input { min-width:0 !important; width:100% !important; }
-    .top-buttons { display:grid !important; grid-template-columns:1fr 1fr; }
-    .top-buttons button, .top-buttons a { text-align:center; padding-left:8px !important; padding-right:8px !important; }
-  }
-</style>
-
-<style>
-  @media(max-width:1120px){
-    .work-top, .work-grid, .panel, .chat-room, .chat-list, .right-panel { max-width: calc(100vw - 28px) !important; }
-    .top-buttons { display:grid !important; grid-template-columns:1fr !important; max-width: calc(100vw - 28px) !important; }
-    .top-buttons button, .top-buttons a { width:100% !important; }
-    .room-head { display:block !important; }
-    .room-head span { white-space:normal !important; }
-    .msg { max-width:100% !important; width:auto !important; margin-left:0 !important; overflow-wrap:anywhere !important; word-break:break-word !important; }
-    .suggestion div { grid-template-columns:1fr !important; }
-    .suggestion p { overflow-wrap:anywhere !important; word-break:break-word !important; }
-  }
-</style>
+<script is:inline>
+const customers={
+  mind:{name:'ลูกค้ามายด์',avatar:'M',topic:'กำลังดูสินค้า: Linen Straight Dress — สีครีม',note:'สนใจเดรสสีครีม · มีโอกาสซื้อสูง',tags:['ถามไซซ์','พร้อมซื้อ','ส่งวันนี้'],product:'Linen Straight Dress',stock:'สีครีม · M เหลือ 4 / L เหลือ 8',rules:['อก 36 → แนะนำ L','ความยาว 112 ซม.','ส่งวันนี้ได้ก่อน 14:00'],draft:'ได้เลยค่ะ เดี๋ยวแอดมินส่งลิงก์ชำระเงินให้ พร้อมสรุปไซซ์ L สีครีม 1 ตัวนะคะ',messages:[['customer','มีเดรสสีครีมไหมคะ สูง 160 อก 36 ใส่ไซซ์ไหนดี?'],['ai','AI ตอบจากข้อมูลสินค้า','มีค่ะ รุ่น Linen Straight สีครีมเหลือไซซ์ M/L จากอก 36 แนะนำ L จะใส่สบายกว่า และยังได้ทรงตรงสวยนะคะ'],['customer','ส่งวันนี้ได้ไหมคะ?'],['ai','AI ตอบจากนโยบายส่งของ','ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ ต้องการให้แอดมินส่งลิงก์ชำระเงินให้ไหมคะ?']]},
+  praew:{name:'ลูกค้าแพรว',avatar:'P',topic:'ต้องการส่งด่วนใน กทม.',note:'รีบใช้สินค้า · ต้องให้แอดมินยืนยันค่าส่ง',tags:['ส่งด่วน','รอแอดมิน','กทม.'],product:'Soft Knit Cardigan',stock:'สีฟ้า · Free size เหลือ 6',rules:['ส่งด่วนต้องเช็กเขตก่อน','ค่าส่งคิดตามระยะ','เคสนี้ส่งต่อแอดมิน'],draft:'เคสส่งด่วนเดี๋ยวแอดมินเช็กพื้นที่และค่าส่งให้นะคะ ขอเขต/แขวงปลายทางเพิ่มเติมได้ไหมคะ',messages:[['customer','วันนี้ส่งด่วนได้ไหมคะ อยู่พระราม 9'],['ai','AI ตรวจนโยบายแล้วส่งต่อ','ส่งด่วนมีค่ะ แต่ต้องให้แอดมินเช็กค่าส่งตามพื้นที่ก่อนนะคะ ขอเขต/แขวงปลายทางเพิ่มได้ไหมคะ']]},
+  nut:{name:'ลูกค้านัท',avatar:'N',topic:'ถามกางเกงเอวสูงสีดำ',note:'ถามข้อมูลครบ · AI ตอบจบแล้ว',tags:['ตอบจบ','ถามเอว','สีดำ'],product:'High Waist Trousers',stock:'สีดำ · S/M/L พร้อมส่ง',rules:['เอว 27 → แนะนำ M','ทรงเอวสูง เก็บสะโพก','เปลี่ยนไซซ์ได้ภายใน 7 วัน'],draft:'ถ้าเอว 27 แนะนำ M ค่ะ รุ่นนี้เอวสูง ทรงเก็บสะโพก ใส่ทำงานได้เลยค่ะ',messages:[['customer','เอว 27 สะโพก 37 ใส่กางเกงตัวไหนดีคะ'],['ai','AI ตอบจากตารางไซซ์','แนะนำ High Waist Trousers ไซซ์ M ค่ะ รุ่นนี้เอวสูง ทรงเก็บสะโพกและมีสีดำพร้อมส่งค่ะ']]},
+  bee:{name:'ลูกค้าบี',avatar:'B',topic:'ถามโปรซื้อ 2 ชิ้น',note:'สนใจโปร · มีโอกาส upsell',tags:['ถามโปร','upsell','AI ตอบอยู่'],product:'Linen Straight Dress + Cardigan',stock:'จับคู่โปรได้ · เหลือครบ',rules:['ซื้อ 2 ชิ้นลด 100','ส่งฟรีเมื่อครบ 1,500','AI แนะนำคู่สีได้'],draft:'ถ้ารับเดรสคู่กับ cardigan ร้านมีโปรลด 100 บาท และยอดครบส่งฟรีค่ะ อยากให้ช่วยจับคู่สีให้ไหมคะ',messages:[['customer','ถ้าซื้อเดรสกับเสื้อคลุมมีโปรไหมคะ'],['ai','AI ตอบจากโปรร้าน','มีค่ะ ซื้อ 2 ชิ้นลด 100 บาท และถ้ายอดครบ 1,500 ส่งฟรีค่ะ เดี๋ยวช่วยจับคู่สีให้ได้นะคะ']]}
+};
+const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800)}
+function renderCustomer(id){const c=customers[id];$('#customer-name').textContent=c.name;$('#customer-topic').textContent=c.topic;$('#avatar').textContent=c.avatar;$('#profile-name').textContent=c.name;$('#profile-note').textContent=c.note;$('#product-name').textContent=c.product;$('#product-stock').textContent=c.stock;$('#ai-draft').textContent=c.draft;$('#tags').innerHTML=c.tags.map(t=>`<span>${t}</span>`).join('');$('#product-rules').innerHTML=c.rules.map(r=>`<li>${r}</li>`).join('');$('#messages').innerHTML=c.messages.map(m=>m[0]==='customer'?`<div class="msg customer">${m[1]}</div>`:`<div class="msg ai"><small>${m[1]}</small>${m[2]}</div>`).join('');}
+$$('.customer-row').forEach(b=>b.addEventListener('click',()=>{$$('.customer-row').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCustomer(b.dataset.customer);toast('เปลี่ยนเคสลูกค้าแล้ว')}));
+$$('[data-view]').forEach(b=>b.addEventListener('click',()=>{$$('[data-view]').forEach(x=>x.classList.remove('active'));b.classList.add('active');$$('.view').forEach(v=>v.classList.remove('active'));$(`[data-panel="${b.dataset.view}"]`).classList.add('active');$('[data-title]').textContent=b.textContent.trim()==='กล่องแชท'?'กล่องแชทร้าน Linn Studio':b.textContent.trim();toast('เปิดเมนู '+b.textContent.trim())}));
+$('#toggle-ai').addEventListener('click',e=>{e.currentTarget.textContent=e.currentTarget.textContent.includes('พัก')?'เปิด AI อีกครั้ง':'พัก AI ชั่วคราว';toast(e.currentTarget.textContent.includes('เปิด')?'พัก AI แล้ว':'เปิด AI แล้ว')});
+$('#handoff-btn').addEventListener('click',()=>toast('ส่งต่อแอดมินพร้อมสรุปแชทแล้ว'));
+$('#edit-answer').addEventListener('click',()=>{$('#composer').value=$('#ai-draft').textContent;toast('ดึงคำตอบลงช่องแก้แล้ว')});
+$('#send-answer').addEventListener('click',()=>toast('ส่งข้อความตัวอย่างแล้ว'));
+$('#composer-send').addEventListener('click',()=>toast('ส่งข้อความตัวอย่างแล้ว'));
+$$('[data-demo-toast]').forEach(b=>b.addEventListener('click',()=>toast(b.dataset.demoToast)));
+renderCustomer('mind');
+</script>

@@ -252,3 +252,15 @@ renderCustomer('mind');
     .composer button { min-width:54px !important; padding-left:8px !important; padding-right:8px !important; }
   }
 </style>
+
+<style>
+  /* Prevent long Thai sentences from making cards feel fat/clipped */
+  .panel, .msg, .suggestion p, .customer-row, .order-list div, .stock-table div { overflow-wrap:anywhere !important; word-break:break-word !important; }
+  @media(max-width:1120px){
+    .msg { font-size:12px !important; line-height:1.48 !important; padding:9px 10px !important; }
+    .suggestion p { font-size:12px !important; }
+    .chat-room { padding:11px !important; }
+    .quick-stats b { font-size:20px !important; }
+    .quick-stats article { padding:10px !important; }
+  }
+</style>

@@ -235,3 +235,20 @@ renderCustomer('mind');
     .product-img, .pic { height: 130px !important; }
   }
 </style>
+
+<style>
+  /* Final mobile fix: single-column app, no side-by-side crowding */
+  @media(max-width:1120px){
+    .work-grid { display:flex !important; flex-direction:column !important; grid-template-columns:none !important; gap:10px !important; }
+    .chat-room { order:1 !important; width:100% !important; max-width:100% !important; }
+    .chat-list { order:2 !important; width:100% !important; max-width:100% !important; }
+    .right-col { order:3 !important; width:100% !important; max-width:100% !important; }
+    .right-col, .chat-list { display:grid !important; }
+    .messages { max-height:none !important; }
+    .suggestion { margin-top:4px !important; }
+    .quick-stats article { min-width:0 !important; }
+    .top-actions button, .top-actions a { width:100% !important; }
+    .composer { display:grid !important; grid-template-columns:1fr 54px !important; }
+    .composer button { min-width:54px !important; padding-left:8px !important; padding-right:8px !important; }
+  }
+</style>

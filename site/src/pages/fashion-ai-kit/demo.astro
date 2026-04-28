@@ -117,3 +117,16 @@ import Layout from '~/layouts/Layout.astro';
     .top-buttons button, .top-buttons a { text-align:center; padding-left:8px !important; padding-right:8px !important; }
   }
 </style>
+
+<style>
+  @media(max-width:1120px){
+    .work-top, .work-grid, .panel, .chat-room, .chat-list, .right-panel { max-width: calc(100vw - 28px) !important; }
+    .top-buttons { display:grid !important; grid-template-columns:1fr !important; max-width: calc(100vw - 28px) !important; }
+    .top-buttons button, .top-buttons a { width:100% !important; }
+    .room-head { display:block !important; }
+    .room-head span { white-space:normal !important; }
+    .msg { max-width:100% !important; width:auto !important; margin-left:0 !important; overflow-wrap:anywhere !important; word-break:break-word !important; }
+    .suggestion div { grid-template-columns:1fr !important; }
+    .suggestion p { overflow-wrap:anywhere !important; word-break:break-word !important; }
+  }
+</style>

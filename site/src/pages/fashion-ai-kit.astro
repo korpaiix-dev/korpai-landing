@@ -2,429 +2,78 @@
 import Layout from '~/layouts/Layout.astro';
 
 const packages = [
-  {
-    name: 'Basic Kit',
-    price: '9,900',
-    tag: 'ร้านเริ่มต้น',
-    items: ['FAQ สินค้า 30 ข้อ', 'Template ตอบแชท 30 แบบ', 'Caption 20 ชิ้น', 'Hook TikTok/Reels 20 ชิ้น', 'Product Description 15 SKU', 'Mini Audit 3 หน้า'],
-  },
-  {
-    name: 'Pro Kit',
-    price: '24,000',
-    tag: 'แนะนำ',
-    highlight: true,
-    items: ['FAQ สินค้า 60 ข้อ', 'Template ตอบแชท 60 แบบ', 'Caption 40 ชิ้น', 'Hook TikTok/Reels 40 ชิ้น', 'Product Description 30 SKU', 'Mini Audit 6 หน้า + Roadmap'],
-  },
-  {
-    name: 'Premium Kit',
-    price: '39,000',
-    tag: 'แบรนด์โตเร็ว',
-    items: ['FAQ 120 ข้อ + แบ่งหมวด', 'Template 100 แบบ + Tone Matrix', 'Caption 80 ชิ้น + Calendar', 'Hook 80 ชิ้น', 'Description 60 SKU + SEO', 'Strategy Session 1 ชม.'],
-  },
+  { name: 'Starter Automation', price: '29,000', monthly: '9,900', tag: 'ร้านเริ่มจริงจัง', items: ['AI ตอบ FAQ/สินค้า/จัดส่ง', 'ฐานข้อมูลสินค้า 50 SKU', 'handoff ให้แอดมินเมื่อไม่มั่นใจ', 'Google Sheet/Notion dashboard', 'เทรนทีม 1 รอบ'] },
+  { name: 'Growth Automation', price: '49,000', monthly: '14,900', tag: 'แนะนำ', highlight: true, items: ['ทุกอย่างใน Starter', 'AI แนะนำไซซ์/สินค้าเบื้องต้น', 'เก็บคำถามลูกค้าเป็น insight', 'AI เสนอ caption จากสินค้าที่คนถามเยอะ', 'LINE OA หรือ Facebook Inbox 1 ช่องทาง'] },
+  { name: 'Scale Automation', price: '89,000', monthly: '29,000', tag: 'แบรนด์ที่แชทเยอะ', items: ['เชื่อมหลายช่องทาง', 'dashboard ผู้บริหาร', 'content engine รายสัปดาห์', 'workflow แจ้งเตือนทีมขาย', 'ปรับระบบ/คำตอบทุกเดือน'] },
 ];
 
-const demoFaq = [
-  ['ไซซ์ M อก 36 ใส่ได้ไหม?', 'ถ้าชอบพอดีตัว ใส่ M ได้ค่ะ แต่ถ้าชอบสบายช่วงอก แนะนำ L เพื่อให้ขยับง่ายขึ้นค่ะ'],
-  ['ส่งของกี่วัน?', 'หลังชำระเงิน ร้านจะจัดส่งภายใน 1–2 วันทำการ และเลขพัสดุจะแจ้งในแชทค่ะ'],
-  ['ผ้าหดไหม?', 'ขึ้นกับวิธีซักและชนิดผ้าค่ะ เราจะแนะนำวิธีดูแลผ้าให้ในหน้าสินค้า เพื่อให้ทรงอยู่ได้นานที่สุด'],
-];
-
-const deliverables = [
-  ['FAQ Library', 'รวมคำถามซ้ำเรื่องไซซ์ สี ผ้า ส่งของ คืนสินค้า พร้อมคำตอบที่เข้ากับแบรนด์'],
-  ['Chat Templates', 'ประโยคตอบลูกค้าก่อนขาย หลังขาย ต่อรองราคา เคลมสินค้า และ upsell'],
-  ['Content Pack', 'Caption, Hook TikTok/Reels, ไอเดียโพสต์ และ content calendar สำหรับ 30 วัน'],
-  ['Product Description', 'คำอธิบายสินค้าแบบขายได้จริง อ่านง่าย ใช้ลงเว็บ Shopee Lazada หรือ Facebook ได้'],
-  ['Mini Audit', 'ชี้จุดรั่วบนหน้าร้าน/คอนเทนต์ พร้อมแผนแก้ 30 วัน'],
-  ['Prompt Pack', 'ชุด prompt ให้ทีมร้านใช้ AI ต่อเอง โดยยังคุม tone แบรนด์ได้'],
-];
-
-const timeline = [
-  ['Day 1', 'รับ brief + ดูร้าน + สรุป Brand Voice'],
-  ['Day 2–4', 'ผลิต FAQ, Template, Caption, Hook และ Description'],
-  ['Day 5–7', 'QC งาน + ส่ง Demo Kit + แนะนำวิธีใช้จริงกับทีมแอดมิน'],
+const flow = [
+  ['ลูกค้าทักมา', 'ถามไซซ์ สี ราคา ส่งของ หรือสินค้าแนะนำผ่าน LINE/Facebook'],
+  ['AI ตอบจากข้อมูลร้าน', 'ตอบจากสินค้า/FAQ/นโยบายจริง ไม่มั่ว และถามข้อมูลเพิ่มเมื่อจำเป็น'],
+  ['ส่งต่อแอดมินเมื่อเสี่ยง', 'เคสคืนสินค้า ต่อรองหนัก หรือข้อมูลไม่ครบ จะส่งต่อคนจริงพร้อมสรุปบริบท'],
+  ['เก็บ insight อัตโนมัติ', 'คำถามยอดฮิต สินค้าที่คนสนใจ ปัญหาที่ลูกค้าถามซ้ำ ถูกเก็บเข้า dashboard'],
+  ['สร้าง action ต่อ', 'ระบบเสนอ FAQ ใหม่ / caption / post idea จากข้อมูลแชทจริงของร้าน'],
 ];
 ---
 
-<Layout
-  title="AI Content + FAQ Kit สำหรับร้านเสื้อผ้าออนไลน์ | KORP AI"
-  description="KORP AI ช่วยร้านเสื้อผ้าออนไลน์ทำ FAQ, Template ตอบแชท, Caption, Hook TikTok และ Product Description พร้อมใช้ภายใน 7-14 วัน"
-  canonical="https://korpai.co/fashion-ai-kit"
-  image="https://korpai.co/assets/img/fashion-ai-kit/hero.jpg"
->
-  <section class="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
-    <div class="kp-container grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-      <div class="kp-reveal">
-        <span class="kp-pill">Fashion AI Kit · พร้อมใช้ใน 7–14 วัน</span>
-        <h1 class="mt-6 max-w-3xl text-5xl font-bold tracking-[-0.045em] text-white md:text-6xl lg:text-7xl leading-[1.12] md:leading-[1.08] lg:leading-[1.06]">
-          คลังตอบแชท + คอนเทนต์สำหรับร้านเสื้อผ้า
-        </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
-          ทำ FAQ, template ตอบลูกค้า, caption, hook TikTok และคำอธิบายสินค้า ให้ทีมร้านก็อปไปใช้ได้ทันที
-        </p>
-        <div class="mt-7 flex flex-wrap gap-4">
-          <a class="kp-btn-primary" href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">ขอ Audit ตัวอย่างฟรี</a>
-          <a class="kp-btn-secondary" href="/fashion-ai-kit/demo">เปิดหน้า Demo ใช้งานจริง</a>
-        </div>
-        <div class="mt-7 grid max-w-xl grid-cols-3 gap-3 text-center">
-          <div class="kp-card p-4"><div class="text-2xl font-bold text-white">30–120</div><div class="mt-1 text-xs text-slate-400">FAQ พร้อมใช้</div></div>
-          <div class="kp-card p-4"><div class="text-2xl font-bold text-white">7–14</div><div class="mt-1 text-xs text-slate-400">วันส่งงาน</div></div>
-          <div class="kp-card p-4"><div class="text-2xl font-bold text-white">100%</div><div class="mt-1 text-xs text-slate-400">ปรับตามแบรนด์</div></div>
-        </div>
+<Layout title="AI Sales Automation สำหรับร้านเสื้อผ้าออนไลน์ | KORP AI" description="ระบบ AI ตอบแชท แนะนำสินค้า เก็บ insight และสร้างคอนเทนต์จากคำถามลูกค้าจริง สำหรับร้านเสื้อผ้าออนไลน์" canonical="https://korpai.co/fashion-ai-kit">
+  <section class="automation-hero">
+    <div class="kp-container automation-hero-grid">
+      <div>
+        <span class="kp-pill">AI Sales Automation · Fashion Store</span>
+        <h1>ระบบออโต้ที่ช่วยร้านเสื้อผ้าตอบแชท ขาย และเก็บ insight เอง</h1>
+        <p>ไม่ใช่ไฟล์ให้แอดมิน copy-paste แต่เป็นระบบ AI ที่ต่อเข้ากับงานขายจริง: ตอบลูกค้า แนะนำไซซ์ ส่งต่อแอดมิน และสรุปว่าลูกค้าถามอะไรเยอะที่สุด</p>
+        <div class="hero-actions"><a class="kp-btn-primary" href="/fashion-ai-kit/demo">เปิด Demo ระบบ</a><a class="kp-btn-secondary" href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">ขอประเมินร้านฟรี</a></div>
+        <div class="hero-metrics"><div><b>24/7</b><span>ตอบคำถามซ้ำ</span></div><div><b>3–14 วัน</b><span>ขึ้นระบบแรก</span></div><div><b>100K+</b><span>เป้ารายได้/เดือน</span></div></div>
       </div>
-
-      <div class="kp-reveal" style="transition-delay:90ms">
-        <div class="sample-workspace" data-sample-workspace>
-          <div class="sample-topbar">
-            <div>
-              <div class="sample-kicker">ตัวอย่างไฟล์ส่งมอบจริง</div>
-              <div class="sample-client">Linn Studio · Pro Kit</div>
-            </div>
-            <div class="sample-badge">Client-ready</div>
-          </div>
-
-          <div class="sample-tabs" role="tablist" aria-label="ตัวอย่างงานจริงที่ลูกค้าจะได้รับ">
-            <button class="is-active" type="button" data-sample="faq">FAQ Sheet</button>
-            <button type="button" data-sample="chat">Chat Script</button>
-            <button type="button" data-sample="caption">Content Calendar</button>
-            <button type="button" data-sample="hook">TikTok Hooks</button>
-            <button type="button" data-sample="sku">SKU Sheet</button>
-          </div>
-
-          <section class="sample-document" aria-live="polite">
-            <div class="doc-head">
-              <div>
-                <div id="sampleType" class="doc-type">FAQ SHEET</div>
-                <h3 id="sampleTitle">FAQ พร้อมใช้สำหรับแอดมิน 60 ข้อ</h3>
-              </div>
-              <span id="sampleCount">Preview 3/60</span>
-            </div>
-
-            <div id="sampleContent" class="doc-content">
-              <div class="real-table">
-                <div class="real-row real-head"><span>หมวด</span><span>คำถามลูกค้า</span><span>คำตอบที่แอดมินใช้ตอบได้ทันที</span></div>
-                <div class="real-row"><span>ไซซ์</span><b>อก 36 ใส่ M ได้ไหม?</b><p>ถ้าชอบพอดีตัวใส่ M ได้ค่ะ แต่ถ้าชอบสบายช่วงอก แนะนำ L จะขยับง่ายกว่า เดี๋ยวแอดมินส่งตารางไซซ์ให้เทียบอีกครั้งนะคะ</p></div>
-                <div class="real-row"><span>จัดส่ง</span><b>โอนแล้วส่งวันนี้ไหม?</b><p>ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ หลังแพ็กเสร็จจะแจ้งเลขพัสดุให้ในแชทนี้นะคะ</p></div>
-                <div class="real-row"><span>ดูแลผ้า</span><b>ผ้าลินินซักเครื่องได้ไหม?</b><p>ซักเครื่องได้โดยใส่ถุงถนอมผ้าและเลือกโหมดอ่อนโยนค่ะ แนะนำตากในที่ร่มเพื่อช่วยรักษาทรงและสีของผ้า</p></div>
-              </div>
-            </div>
-          </section>
+      <div class="automation-console">
+        <div class="console-top"><span>Live automation demo</span><b>LINE/Facebook → AI → Dashboard</b></div>
+        <div class="phone-chat">
+          <div class="msg customer">สูง 160 อก 36 ใส่เดรสรุ่น Linen Straight ไซซ์ไหนดีคะ?</div>
+          <div class="msg ai">แนะนำไซซ์ L ค่ะ รุ่นนี้ทรงตรง ถ้าอก 36 จะใส่สบายกว่า M เดี๋ยวส่งรูปเทียบความยาวให้ดูนะคะ</div>
+          <div class="msg customer">ส่งวันนี้ได้ไหมคะ?</div>
+          <div class="msg ai">ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ หลังแพ็กเสร็จจะแจ้งเลขพัสดุในแชทนี้ค่ะ</div>
         </div>
+        <div class="console-dashboard"><div><small>Top question</small><b>ไซซ์ / ทรง</b></div><div><small>Hot SKU</small><b>Linen Dress</b></div><div><small>Next action</small><b>เพิ่ม size guide</b></div></div>
       </div>
     </div>
   </section>
 
-  <section class="relative border-t kp-hairline py-20 md:py-24">
+  <section class="section border-t kp-hairline">
     <div class="kp-container">
-      <div class="mx-auto max-w-3xl text-center kp-reveal">
-        <span class="kp-pill">Pain ที่แก้ให้</span>
-        <h2 class="prose-kp mt-5">ร้านเสื้อผ้าไม่ได้ขาดสินค้า แต่ขาดระบบตอบและระบบคอนเทนต์</h2>
-      </div>
-      <div class="mt-12 grid gap-5 md:grid-cols-3">
+      <div class="section-head"><span class="kp-pill">What it automates</span><h2>ระบบนี้ทำงานแทน “งานซ้ำ” ไม่ใช่แทนเจ้าของร้านทั้งหมด</h2><p>AI รับเคสพื้นฐานและเก็บข้อมูลให้ ส่วนเคสที่ต้องตัดสินใจ/มีความเสี่ยง จะส่งต่อคนจริงทันที</p></div>
+      <div class="feature-grid">
         {[
-          ['แอดมินตอบไซซ์/สี/ส่งของซ้ำทุกวัน', 'คำถามเดิมกินเวลาทีม และลูกค้าที่รอคำตอบนานมักหลุดก่อนตัดสินใจซื้อ'],
-          ['ต้องโพสต์ทุกวันแต่คิด caption ไม่ทัน', 'คอลเลกชันเปลี่ยนเร็ว แต่ทีมไม่มีคลังคอนเทนต์ที่พร้อมใช้ต่อเนื่อง'],
-          ['ข้อมูลสินค้าไม่ครบจนลูกค้าถามวน', 'รายละเอียดผ้า ทรง การดูแล และขนาด ถ้าไม่ชัด จะกลายเป็นภาระแชททันที'],
-        ].map((item, i) => (
-          <article class="kp-card kp-reveal" style={`transition-delay:${i * 70}ms`}>
-            <h3 class="prose-kp">{item[0]}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-slate-400">{item[1]}</p>
-          </article>
-        ))}
+          ['AI Chat Agent','ตอบคำถามไซซ์ สี ผ้า ราคา การส่ง คืนสินค้า และถามข้อมูลเพิ่มก่อนแนะนำ'],
+          ['Product Knowledge Base','จัดข้อมูลสินค้า/FAQ/นโยบายร้านให้ AI ใช้อ้างอิง ไม่ตอบจากความจำมั่ว'],
+          ['Admin Handoff','เคสยากส่งต่อแอดมินพร้อมสรุปว่าลูกค้าต้องการอะไร ไม่ต้องอ่านแชทย้อนยาว'],
+          ['Insight Dashboard','ดูคำถามยอดฮิต สินค้าที่ถูกถามเยอะ จุดที่หน้าร้านข้อมูลไม่ครบ'],
+          ['Content Trigger','เอาคำถามจริงของลูกค้ามาแนะนำ caption/post/FAQ ใหม่ให้ร้านโพสต์ต่อ'],
+          ['Monthly Optimization','ปรับคำตอบ เพิ่มสินค้าใหม่ และลดจุดที่ AI ตอบไม่ได้ทุกเดือน'],
+        ].map((f, i) => <article class="kp-card feature"><span>{String(i+1).padStart(2,'0')}</span><h3>{f[0]}</h3><p>{f[1]}</p></article>)}
       </div>
     </div>
   </section>
 
-  <section id="demo-kit" class="relative border-t kp-hairline py-20 md:py-24 overflow-hidden">
+  <section class="section border-t kp-hairline">
+    <div class="kp-container flow-wrap">
+      <div><span class="kp-pill">Automation flow</span><h2>จากแชทลูกค้า → ยอดขาย → insight → คอนเทนต์</h2><p>ทุกบทสนทนาไม่หายไปเฉย ๆ แต่กลายเป็นข้อมูลให้ร้านขายดีขึ้นเรื่อย ๆ</p></div>
+      <div class="flow-list">{flow.map((s,i)=><div class="flow-item"><b>{String(i+1).padStart(2,'0')}</b><div><h3>{s[0]}</h3><p>{s[1]}</p></div></div>)}</div>
+    </div>
+  </section>
+
+  <section class="section border-t kp-hairline">
     <div class="kp-container">
-      <div class="mx-auto max-w-3xl text-center kp-reveal">
-        <span class="kp-pill">Interactive Demo</span>
-        <h2 class="prose-kp mt-5">กดดูตัวอย่างงานจริงในแต่ละหมวด</h2>
-        <p class="prose-kp mt-5">ลูกค้าไม่ได้เห็นแค่ภาพสวย แต่เห็นตัวอย่าง output ที่จะได้จริง: FAQ, แชท, caption, hook และคำอธิบายสินค้า</p>
-      </div>
-
-      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {[
-          ['FAQ Library', 'Q: ไซซ์ M อก 36 ใส่ได้ไหม?', 'A: ถ้าชอบพอดีตัวใส่ M ได้ค่ะ แต่ถ้าอยากขยับสบาย แนะนำ L พร้อมเทียบตารางไซซ์ก่อนสั่งค่ะ'],
-          ['Chat Template', 'ลูกค้าถามว่าส่งวันนี้ได้ไหม', 'ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ หลังจากนั้นจะเป็นรอบวันทำการถัดไปนะคะ'],
-          ['Caption', 'New drop: linen set', 'ลุคเรียบที่หยิบใส่ได้ทั้งวัน — เซ็ตผ้าลินินทรงสบาย ใส่ง่าย ถ่ายรูปขึ้น และแมตช์ได้หลายโอกาส'],
-          ['TikTok Hook', '3 วิแรกสำหรับคลิป', 'หยุดก่อน ถ้าคุณกำลังหาเซ็ตทำงานที่ใส่แล้วดูแพง แต่ไม่ต้องรีดนาน'],
-          ['Product Description', 'เดรสผ้าไหมอิตาลี', 'เดรสทรงตรงผ้าสัมผัสนุ่ม มีซับใน ใส่ออกงานหรือดินเนอร์ได้ เหมาะกับคนที่ชอบลุค minimal luxury'],
-          ['Mini Audit', 'จุดรั่วบนหน้าร้าน', 'หน้าสินค้ามีรูปสวยแล้ว แต่ยังขาดตารางไซซ์และคำแนะนำทรง ทำให้ลูกค้าต้องทักถามก่อนซื้อ'],
-        ].map((card, i) => (
-          <article class="kp-card kp-reveal" style={`transition-delay:${i * 55}ms`}>
-            <div class="text-xs font-mono tracking-[0.18em] text-cyan-300">{card[0]}</div>
-            <h3 class="mt-4 text-lg font-semibold text-white">{card[1]}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-slate-400">{card[2]}</p>
-          </article>
-        ))}
-      </div>
+      <div class="section-head"><span class="kp-pill">Packages</span><h2>แพ็กเกจแบบระบบ + ดูแลรายเดือน</h2><p>เป้าหมายไม่ใช่ขายไฟล์ครั้งเดียว แต่ติดตั้งระบบที่ร้านใช้ต่อได้จริง</p></div>
+      <div class="price-grid">{packages.map((p)=><article class={`kp-card price ${p.highlight?'hot':''}`}>{p.highlight && <div class="hot-label">แนะนำ</div>}<span>{p.tag}</span><h3>{p.name}</h3><div class="setup">฿{p.price}<small>setup</small></div><div class="monthly">฿{p.monthly}/เดือน</div><ul>{p.items.map((it)=><li>{it}</li>)}</ul></article>)}</div>
     </div>
   </section>
 
-  <section class="relative border-t kp-hairline py-20 md:py-24">
-    <div class="kp-container">
-      <div class="max-w-3xl kp-reveal">
-        <span class="kp-pill">Deliverables</span>
-        <h2 class="prose-kp mt-5">1 Kit ครอบคลุมทั้งแชท คอนเทนต์ และหน้าสินค้า</h2>
-      </div>
-      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {deliverables.map((d, i) => (
-          <article class="kp-card kp-reveal" style={`transition-delay:${i * 50}ms`}>
-            <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-400/10 text-sm font-bold text-cyan-300">{String(i + 1).padStart(2, '0')}</div>
-            <h3 class="prose-kp">{d[0]}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-slate-400">{d[1]}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="relative border-t kp-hairline py-20 md:py-24">
-    <div class="kp-container">
-      <div class="mx-auto max-w-3xl text-center kp-reveal">
-        <span class="kp-pill">Packages</span>
-        <h2 class="prose-kp mt-5">เลือกแพ็กเกจตามขนาดร้าน</h2>
-        <p class="prose-kp mt-5">ราคาไม่รวม VAT 7% และสามารถต่อยอดเป็น retainer รายเดือนได้หลังส่งงานชุดแรก</p>
-      </div>
-      <div class="mt-12 grid gap-5 lg:grid-cols-3">
-        {packages.map((p, i) => (
-          <article class={`kp-card kp-reveal relative ${p.highlight ? 'border-cyan-300/40 bg-cyan-400/[0.06]' : ''}`} style={`transition-delay:${i * 80}ms`}>
-            {p.highlight && <div class="absolute right-5 top-5 rounded-full bg-cyan-300 px-3 py-1 text-xs font-bold text-slate-950">ขายดีที่สุด</div>}
-            <div class="text-sm text-cyan-300">{p.tag}</div>
-            <h3 class="mt-3 text-2xl font-bold text-white">{p.name}</h3>
-            <div class="mt-5 flex items-end gap-1"><span class="text-4xl font-extrabold text-white">฿{p.price}</span><span class="pb-1 text-sm text-slate-400">/ครั้ง</span></div>
-            <ul class="mt-7 space-y-3">
-              {p.items.map((it) => <li class="flex gap-3 text-sm leading-relaxed text-slate-300"><span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-cyan-300"></span>{it}</li>)}
-            </ul>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="relative border-t kp-hairline py-20 md:py-24">
-    <div class="kp-container grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-      <div class="kp-reveal">
-        <span class="kp-pill">Process</span>
-        <h2 class="prose-kp mt-5">ส่งงานเร็ว แต่มี QC ทุกขั้น</h2>
-        <p class="prose-kp mt-5">งานเกี่ยวกับไซซ์ ราคา นโยบายคืนสินค้า และขนส่ง ห้ามมั่ว เราจึงเริ่มจากข้อมูลจริงของร้าน แล้วตรวจทุกชิ้นก่อนส่ง</p>
-      </div>
-      <div class="grid gap-4">
-        {timeline.map((t, i) => (
-          <div class="kp-card kp-reveal flex gap-5" style={`transition-delay:${i * 70}ms`}>
-            <div class="min-w-20 text-sm font-mono text-cyan-300">{t[0]}</div>
-            <div><h3 class="font-semibold text-white">{t[1]}</h3><p class="mt-1 text-sm text-slate-400">เหมาะกับทีมที่อยากเริ่มใช้ AI แบบปลอดภัย ไม่เสี่ยงเอาข้อความผิดไปตอบลูกค้า</p></div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="relative border-t kp-hairline py-20 md:py-24">
-    <div class="kp-container">
-      <div class="kp-card kp-reveal overflow-hidden p-8 md:p-12">
-        <div class="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-center">
-          <div>
-            <span class="kp-pill">Free Sample</span>
-            <h2 class="prose-kp mt-5">อยากเห็นก่อนว่าร้านคุณจะได้อะไร?</h2>
-            <p class="prose-kp mt-5">ส่งชื่อร้าน/ลิงก์เพจ/ช่องทางขายมาให้เรา เราจะดูร้านและทำตัวอย่าง audit สั้น ๆ ให้ก่อน ถ้าเห็นภาพค่อยเริ่มแพ็กเกจจริง</p>
-            <div class="mt-8 flex flex-wrap gap-4">
-              <a class="kp-btn-line" href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">ทัก LINE เพื่อขอตัวอย่าง</a>
-              <a class="kp-btn-fb" href="https://www.facebook.com/korpaiix" target="_blank" rel="noopener">ทัก Facebook Page</a>
-            </div>
-          </div>
-          <div class="rounded-3xl border border-white/10 bg-black/20 p-5">
-            <div class="text-sm font-semibold text-white">ข้อมูลที่ส่งมาได้เลย</div>
-            <ul class="mt-4 space-y-3 text-sm text-slate-300">
-              <li>• ลิงก์ร้าน / Facebook / IG / TikTok / Shopee</li>
-              <li>• สินค้าหลักที่ขาย และช่วงราคา</li>
-              <li>• ปัญหาหนักสุดตอนนี้: ตอบแชท / คอนเทนต์ / หน้าสินค้า</li>
-              <li>• จำนวน SKU หรือจำนวนแชทโดยประมาณต่อวัน</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+  <section class="section border-t kp-hairline">
+    <div class="kp-container cta-box"><div><span class="kp-pill">Ready?</span><h2>ส่งลิงก์ร้านมา เดี๋ยวเราประเมิน flow ที่ควรออโต้ให้ก่อน</h2><p>เราจะดูว่าร้านควรเริ่มจากตอบแชท, FAQ, แนะนำไซซ์, dashboard หรือ content trigger ก่อน เพื่อให้คุ้มที่สุด</p></div><a class="kp-btn-line" href="https://lin.ee/Qt6Vri4" target="_blank" rel="noopener">ทัก LINE เพื่อประเมินฟรี</a></div>
   </section>
 </Layout>
 
 <style>
-  .sample-workspace {
-    position: relative;
-    overflow: hidden;
-    border-radius: 30px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background:
-      radial-gradient(circle at 18% 12%, rgba(38,215,246,0.16), transparent 34%),
-      radial-gradient(circle at 92% 90%, rgba(124,95,255,0.16), transparent 42%),
-      rgba(7, 12, 24, 0.92);
-    box-shadow: 0 28px 90px rgba(0,0,0,0.48), 0 0 70px rgba(38,215,246,0.10);
-    padding: 18px;
-  }
-  .sample-topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 4px 2px 16px;
-  }
-  .sample-kicker { color:#26d7f6; font-size:12px; font-weight:900; letter-spacing:.08em; }
-  .sample-client { margin-top:3px; color:white; font-size:15px; font-weight:800; }
-  .sample-badge {
-    border-radius:999px;
-    border:1px solid rgba(16,185,129,.25);
-    background:rgba(16,185,129,.12);
-    color:#a7f3d0;
-    padding:7px 12px;
-    font-size:12px;
-    font-weight:900;
-    white-space:nowrap;
-  }
-  .sample-tabs {
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding:6px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(255,255,255,.045);
-  }
-  .sample-tabs button {
-    flex:1 0 auto;
-    border:0;
-    border-radius:999px;
-    padding:10px 13px;
-    background:transparent;
-    color:#9fb0d0;
-    font-size:12px;
-    font-weight:900;
-    cursor:pointer;
-    transition:.18s ease;
-  }
-  .sample-tabs button.is-active,
-  .sample-tabs button:hover { background:#26d7f6; color:#041018; }
-  .sample-document {
-    margin-top:14px;
-    border-radius:24px;
-    border:1px solid rgba(255,255,255,.10);
-    background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.03));
-    padding:18px;
-    min-height:390px;
-  }
-  .doc-head {
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:14px;
-    padding-bottom:14px;
-    border-bottom:1px solid rgba(255,255,255,.08);
-  }
-  .doc-type { color:#26d7f6; font-size:11px; font-weight:950; letter-spacing:.18em; }
-  .doc-head h3 { margin-top:7px; color:white; font-size:24px; line-height:1.22; letter-spacing:-.035em; }
-  .doc-head span { color:#8aa0c5; font-size:12px; white-space:nowrap; }
-  .doc-content { margin-top:16px; }
-  .real-table { border-radius:18px; border:1px solid rgba(255,255,255,.08); overflow:hidden; }
-  .real-row { display:grid; grid-template-columns:76px 1.05fr 1.55fr; gap:12px; align-items:start; padding:12px 13px; border-top:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.025); }
-  .real-row:first-child { border-top:0; }
-  .real-head { background:rgba(38,215,246,.10); }
-  .real-head span { color:#9beeff; font-size:11px; font-weight:950; letter-spacing:.08em; }
-  .real-row span { color:#26d7f6; font-size:11px; font-weight:900; }
-  .real-row b { color:white; font-size:13px; line-height:1.45; }
-  .real-row p { margin:0; color:#b7c5df; font-size:12.5px; line-height:1.6; }
-  .chat-thread { display:grid; gap:10px; }
-  .bubble { max-width:88%; border-radius:18px; padding:12px 14px; font-size:13px; line-height:1.6; }
-  .bubble.customer { background:rgba(255,255,255,.075); color:#d9e3f7; }
-  .bubble.admin { margin-left:auto; background:rgba(38,215,246,.14); border:1px solid rgba(38,215,246,.22); color:#effcff; }
-  .script-note { margin-top:12px; border-radius:16px; padding:13px; background:rgba(0,0,0,.22); color:#9fb0d0; font-size:12px; line-height:1.55; }
-  .calendar-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-  .content-card { border-radius:18px; border:1px solid rgba(255,255,255,.085); background:rgba(255,255,255,.04); padding:14px; }
-  .content-card small { color:#26d7f6; font-weight:900; }
-  .content-card b { display:block; margin-top:8px; color:white; font-size:14px; }
-  .content-card p { margin-top:7px; color:#b7c5df; font-size:12.5px; line-height:1.6; }
-  .hook-list { display:grid; gap:10px; }
-  .hook-item { display:grid; grid-template-columns:38px 1fr; gap:12px; border-radius:17px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.035); padding:13px; }
-  .hook-item span { color:#26d7f6; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:12px; }
-  .hook-item b { color:white; font-size:13px; }
-  .hook-item p { margin-top:4px; color:#b7c5df; font-size:12.5px; line-height:1.55; }
-  .sku-sheet { display:grid; grid-template-columns:.75fr 1.25fr; gap:12px; }
-  .sku-photo { border-radius:20px; min-height:230px; background:linear-gradient(135deg, rgba(38,215,246,.18), rgba(124,95,255,.16)), url('/assets/img/fashion-ai-kit/hero.jpg') center/cover; border:1px solid rgba(255,255,255,.10); }
-  .sku-fields { display:grid; gap:10px; }
-  .field { border-radius:15px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); padding:11px; }
-  .field small { color:#26d7f6; font-weight:900; }
-  .field p { margin-top:5px; color:#dce6f8; font-size:12.5px; line-height:1.55; }
-  @media (max-width:760px) {
-    .real-row, .sku-sheet { grid-template-columns:1fr; }
-    .calendar-grid { grid-template-columns:1fr; }
-    .sample-document { min-height:auto; }
-  }
+.automation-hero{padding:140px 0 90px;overflow:hidden}.automation-hero-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:42px;align-items:center}.automation-hero h1{margin-top:22px;color:white;font-size:clamp(2.8rem,6vw,5.8rem);line-height:1.06;letter-spacing:-.06em;max-width:900px}.automation-hero p{margin-top:22px;color:#8aa0c5;font-size:19px;line-height:1.75;max-width:680px}.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}.hero-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px;max-width:620px}.hero-metrics div{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);border-radius:18px;padding:15px}.hero-metrics b{display:block;color:white;font-size:24px}.hero-metrics span{display:block;color:#8aa0c5;font-size:12px;margin-top:4px}.automation-console{border:1px solid rgba(255,255,255,.12);border-radius:32px;background:radial-gradient(circle at 20% 10%,rgba(38,215,246,.17),transparent 34%),rgba(7,12,24,.9);padding:20px;box-shadow:0 30px 90px rgba(0,0,0,.45)}.console-top{display:flex;justify-content:space-between;gap:12px;color:#8aa0c5;font-size:12px}.console-top b{color:white}.phone-chat{margin-top:18px;border-radius:26px;border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.22);padding:18px;display:grid;gap:12px}.msg{max-width:82%;padding:13px 15px;border-radius:18px;font-size:14px;line-height:1.65}.msg.customer{background:rgba(255,255,255,.08);color:#dbe6fa}.msg.ai{margin-left:auto;background:rgba(38,215,246,.15);border:1px solid rgba(38,215,246,.22);color:#effcff}.console-dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.console-dashboard div{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.04);padding:14px}.console-dashboard small{color:#26d7f6;font-weight:900}.console-dashboard b{display:block;color:white;margin-top:6px}.section{padding:84px 0}.section-head{text-align:center;max-width:760px;margin:0 auto}.section-head h2,.flow-wrap h2,.cta-box h2{color:white;margin-top:18px;font-size:clamp(2rem,4vw,3.4rem);line-height:1.12;letter-spacing:-.045em}.section-head p,.flow-wrap p,.cta-box p{color:#8aa0c5;margin-top:16px;font-size:17px;line-height:1.7}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}.feature span{color:#26d7f6;font-family:ui-monospace,monospace}.feature h3{color:white;margin-top:14px;font-size:20px}.feature p{color:#8aa0c5;margin-top:10px;line-height:1.65}.flow-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:38px}.flow-list{display:grid;gap:14px}.flow-item{display:grid;grid-template-columns:56px 1fr;gap:14px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:rgba(255,255,255,.035);padding:18px}.flow-item b{color:#26d7f6}.flow-item h3{color:white}.flow-item p{color:#8aa0c5;margin-top:6px}.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}.price{position:relative}.price.hot{border-color:rgba(38,215,246,.45);background:rgba(38,215,246,.055)}.hot-label{position:absolute;right:18px;top:18px;background:#26d7f6;color:#061018;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900}.price>span{color:#26d7f6}.price h3{color:white;margin-top:10px;font-size:24px}.setup{color:white;font-size:38px;font-weight:950;margin-top:18px}.setup small{font-size:13px;color:#8aa0c5;margin-left:6px}.monthly{color:#a7f3d0;margin-top:8px;font-weight:800}.price ul{display:grid;gap:10px;margin-top:22px;padding:0;list-style:none}.price li{color:#c8d5ec;font-size:14px;line-height:1.5}.price li:before{content:'✓';color:#26d7f6;margin-right:8px}.cta-box{display:flex;align-items:center;justify-content:space-between;gap:28px;border:1px solid rgba(255,255,255,.10);border-radius:30px;background:rgba(255,255,255,.04);padding:34px}@media(max-width:980px){.automation-hero-grid,.flow-wrap,.feature-grid,.price-grid{grid-template-columns:1fr}.hero-metrics,.console-dashboard{grid-template-columns:1fr}.cta-box{display:block}.cta-box .kp-btn-line{margin-top:24px}.automation-hero{padding-top:115px}}
 </style>
-
-<script is:inline>
-  (() => {
-    const root = document.querySelector('[data-sample-workspace]');
-    if (!root) return;
-    const samples = {
-      faq: {
-        type: 'FAQ SHEET', title: 'FAQ พร้อมใช้สำหรับแอดมิน 60 ข้อ', count: 'Preview 3/60',
-        html: `<div class="real-table">
-          <div class="real-row real-head"><span>หมวด</span><span>คำถามลูกค้า</span><span>คำตอบที่แอดมินใช้ตอบได้ทันที</span></div>
-          <div class="real-row"><span>ไซซ์</span><b>อก 36 ใส่ M ได้ไหม?</b><p>ถ้าชอบพอดีตัวใส่ M ได้ค่ะ แต่ถ้าชอบสบายช่วงอก แนะนำ L จะขยับง่ายกว่า เดี๋ยวแอดมินส่งตารางไซซ์ให้เทียบอีกครั้งนะคะ</p></div>
-          <div class="real-row"><span>จัดส่ง</span><b>โอนแล้วส่งวันนี้ไหม?</b><p>ถ้าชำระก่อน 14:00 น. ร้านจัดส่งรอบวันนี้ได้ค่ะ หลังแพ็กเสร็จจะแจ้งเลขพัสดุให้ในแชทนี้นะคะ</p></div>
-          <div class="real-row"><span>ดูแลผ้า</span><b>ผ้าลินินซักเครื่องได้ไหม?</b><p>ซักเครื่องได้โดยใส่ถุงถนอมผ้าและเลือกโหมดอ่อนโยนค่ะ แนะนำตากในที่ร่มเพื่อช่วยรักษาทรงและสีของผ้า</p></div>
-        </div>`
-      },
-      chat: {
-        type: 'CHAT SCRIPT', title: 'Template ตอบแชทแบบ conversation', count: 'Preview 1/60',
-        html: `<div class="chat-thread">
-          <div class="bubble customer">สูง 160 หนัก 52 อก 36 เอว 28 ใส่เดรสตัวนี้ไซซ์ไหนดีคะ?</div>
-          <div class="bubble admin">จากสัดส่วนที่แจ้งมา แนะนำไซซ์ L ค่ะ ช่วงอกจะใส่สบายกว่า M และยังได้ทรงตรงสวย ไม่รัดช่วงเอวเกินไปนะคะ</div>
-          <div class="bubble customer">ถ้าอยากใส่พอดีตัวล่ะคะ?</div>
-          <div class="bubble admin">ถ้าชอบพอดีตัวมาก ๆ M ใส่ได้ค่ะ แต่แอดมินแนะนำ L มากกว่า เพราะผ้าทรงนี้เวลานั่ง/เดินจะขยับสบายกว่า เดี๋ยวส่งรูปเทียบความยาวให้ดูเพิ่มนะคะ</div>
-          <div class="script-note"><b>ใช้เมื่อ:</b> ลูกค้าบอกสัดส่วนครบ · <b>ห้ามใช้เมื่อ:</b> ลูกค้ายังไม่บอกอก/เอว ต้องถามเพิ่มก่อน</div>
-        </div>`
-      },
-      caption: {
-        type: 'CONTENT CALENDAR', title: 'Caption พร้อมโพสต์ 30 วัน', count: 'Preview 4 posts',
-        html: `<div class="calendar-grid">
-          <div class="content-card"><small>DAY 01 · IG</small><b>New Linen Set</b><p>ลุคเรียบที่หยิบใส่ได้ทั้งวัน — เซ็ตผ้าลินินทรงสบาย ใส่ง่าย ถ่ายรูปขึ้น และแมตช์ได้หลายโอกาส 🤍</p></div>
-          <div class="content-card"><small>DAY 03 · FB</small><b>Behind the fabric</b><p>ผ้าที่เลือกใช้ในคอลเลกชันนี้เน้นเบา ระบายอากาศดี และไม่แนบตัว เหมาะกับอากาศเมืองไทยจริง ๆ ค่ะ</p></div>
-          <div class="content-card"><small>DAY 05 · TikTok</small><b>Try-on caption</b><p>ชุดเดียวที่ช่วยให้ “วันรีบ ๆ” ดูตั้งใจแต่งขึ้นทันที — อยากดูสีไหนคอมเมนต์ไว้ค่ะ</p></div>
-          <div class="content-card"><small>DAY 07 · Sale</small><b>Soft CTA</b><p>ถ้ากำลังหาเดรสที่ใส่ทำงานได้และต่อด้วยดินเนอร์ได้เลย รุ่นนี้คือชิ้นที่ควรมีในตู้ค่ะ</p></div>
-        </div>`
-      },
-      hook: {
-        type: 'TIKTOK HOOKS', title: 'Hook คลิปสั้นพร้อมมุมถ่าย', count: 'Preview 5/40',
-        html: `<div class="hook-list">
-          <div class="hook-item"><span>01</span><div><b>หยุดก่อน ถ้าคุณกำลังหาเซ็ตทำงานที่ดูแพง แต่ไม่ต้องรีดนาน</b><p>มุมถ่าย: เปิดด้วย close-up เนื้อผ้า → zoom out full outfit</p></div></div>
-          <div class="hook-item"><span>02</span><div><b>ชุดนี้ใส่ไปออฟฟิศได้ แต่หลังเลิกงานไปคาเฟ่ต่อก็ยังรอด</b><p>มุมถ่าย: transition จาก blazer → ถือกระเป๋าเล็ก</p></div></div>
-          <div class="hook-item"><span>03</span><div><b>3 จุดที่ทำให้เดรสตัวนี้พรางหุ่นดีกว่าที่คิด</b><p>มุมถ่าย: ชี้ช่วงไหล่ เอว ความยาว พร้อม text overlay</p></div></div>
-          <div class="hook-item"><span>04</span><div><b>ถ้าคุณไม่ชอบชุดรัด แต่ยังอยากดูมีทรง ลองดูตัวนี้</b><p>มุมถ่าย: เดิน/นั่งให้เห็นการขยับของผ้า</p></div></div>
-        </div>`
-      },
-      sku: {
-        type: 'SKU SHEET', title: 'Product Description พร้อมลง Marketplace', count: 'Preview 1/30 SKU',
-        html: `<div class="sku-sheet">
-          <div class="sku-photo" aria-hidden="true"></div>
-          <div class="sku-fields">
-            <div class="field"><small>ชื่อสินค้า</small><p>Linn Linen Straight Dress — Ivory</p></div>
-            <div class="field"><small>คำอธิบายสั้น</small><p>เดรสลินินทรงตรง เนื้อผ้าเบา ระบายอากาศดี มีซับใน ใส่ง่ายทั้งวัน เหมาะกับลุคทำงาน คาเฟ่ หรือทริปวันหยุด</p></div>
-            <div class="field"><small>จุดขาย</small><p>ทรงไม่รัดช่วงเอว · ผ้าเบาไม่แนบตัว · มีซับใน · แมตช์กับ blazer หรือ sandal ได้</p></div>
-            <div class="field"><small>Care note</small><p>แนะนำซักมือหรือโหมดถนอมผ้า ตากในที่ร่ม และรีดไฟอ่อนจากด้านใน</p></div>
-          </div>
-        </div>`
-      }
-    };
-    const render = (key) => {
-      const s = samples[key] || samples.faq;
-      root.querySelector('#sampleType').textContent = s.type;
-      root.querySelector('#sampleTitle').textContent = s.title;
-      root.querySelector('#sampleCount').textContent = s.count;
-      root.querySelector('#sampleContent').innerHTML = s.html;
-    };
-    root.querySelectorAll('[data-sample]').forEach((btn) => btn.addEventListener('click', () => {
-      root.querySelectorAll('[data-sample]').forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      render(btn.dataset.sample);
-    }));
-  })();
-</script>

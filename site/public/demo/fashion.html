@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FashionFlow — ระบบจัดการร้านเสื้อผ้าอัจฉริยะ (Demo)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F6FB;--surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+  --border:#E5E7EB;--border-2:#D1D5DB;
+  --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
+  --primary:#4F46E5;--primary-hover:#4338CA;--primary-soft:#EEF2FF;
+  --success:#10B981;--success-soft:#D1FAE5;
+  --warning:#F59E0B;--warning-soft:#FEF3C7;
+  --danger:#EF4444;--danger-soft:#FEE2E2;
+  --info:#3B82F6;--info-soft:#DBEAFE;
+  --purple:#8B5CF6;--purple-soft:#EDE9FE;
+  --pink:#EC4899;--pink-soft:#FCE7F3;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04);
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-lg:0 10px 25px rgba(0,0,0,.08),0 4px 10px rgba(0,0,0,.04);
+  --radius:12px;--radius-sm:8px;
+}
+html,body{height:100%}
+body{
+  font-family:'Noto Sans Thai','Inter',sans-serif;
+  background:var(--bg);color:var(--text);
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+.app{display:flex;min-height:100vh}
+.sidebar{
+  width:248px;background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:50;
+}
+.brand{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.brand-logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#4F46E5 0%,#7C3AED 100%);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px}
+.brand-name{font-weight:800;font-size:16px;letter-spacing:-.3px}
+.brand-tag{font-size:11px;color:var(--text-3);font-weight:500}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}
+.nav-section{font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:14px 12px 6px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:8px;color:var(--text-2);cursor:pointer;font-weight:500;font-size:13.5px;margin-bottom:2px;transition:all .15s;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.nav-item:hover{background:var(--surface-3);color:var(--text)}
+.nav-item.active{background:var(--primary-soft);color:var(--primary);font-weight:600}
+.nav-item .ic{font-size:17px;width:20px;text-align:center}
+.nav-item .badge{margin-left:auto;background:var(--danger);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700}
+.nav-item.active .badge{background:var(--primary)}
+.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
+.user-card{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;cursor:pointer;transition:.15s}
+.user-card:hover{background:var(--surface-3)}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#10B981,#3B82F6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.user-name{font-weight:600;font-size:13px;line-height:1.2}
+.user-role{font-size:11px;color:var(--text-3)}
+
+.main{flex:1;margin-left:248px;display:flex;flex-direction:column;min-width:0}
+.topbar{height:64px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:18px;position:sticky;top:0;z-index:40}
+.page-title{font-size:18px;font-weight:700;letter-spacing:-.3px}
+.page-sub{font-size:12px;color:var(--text-3)}
+.topbar-spacer{flex:1}
+.search{display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);padding:7px 12px;border-radius:8px;width:280px}
+.search input{border:none;background:none;outline:none;flex:1;font-size:13px;font-family:inherit;color:var(--text)}
+.icon-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);position:relative;transition:.15s}
+.icon-btn:hover{background:var(--surface-2);color:var(--text)}
+.icon-btn .dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid #fff}
+
+.content{padding:24px;flex:1;overflow:auto}
+.page{display:none}
+.page.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* === KPI cards === */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.kpi-card{background:var(--surface);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm);border:1px solid var(--border);position:relative;overflow:hidden}
+.kpi-label{font-size:12px;color:var(--text-2);font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.kpi-value{font-size:26px;font-weight:800;letter-spacing:-.5px;font-family:'Inter','Noto Sans Thai'}
+.kpi-delta{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;margin-top:6px}
+.kpi-delta.up{color:var(--success)}
+.kpi-delta.down{color:var(--danger)}
+.kpi-icon{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+/* === Cards / sections === */
+.card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:700}
+.card-sub{font-size:12px;color:var(--text-3);margin-top:2px}
+.row{display:grid;gap:16px;margin-bottom:20px}
+.row.r-2{grid-template-columns:2fr 1fr}
+.row.r-half{grid-template-columns:1fr 1fr}
+.row.r-3{grid-template-columns:repeat(3,1fr)}
+
+/* === Buttons === */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-weight:600;font-size:13px;font-family:inherit;border:1px solid transparent;cursor:pointer;transition:.15s;background:var(--surface-3);color:var(--text);white-space:nowrap}
+.btn:hover{background:var(--border)}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.primary:hover{background:var(--primary-hover)}
+.btn.success{background:var(--success);color:#fff}
+.btn.success:hover{filter:brightness(.92)}
+.btn.danger{background:var(--danger);color:#fff}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text-2)}
+.btn.ghost:hover{background:var(--surface-2);color:var(--text)}
+.btn.sm{padding:5px 10px;font-size:12px}
+.btn-icon{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--text-2);display:inline-flex;align-items:center;justify-content:center;transition:.15s}
+.btn-icon:hover{background:var(--surface-2);color:var(--text)}
+
+/* === Tables === */
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;padding:11px 14px;font-weight:600;font-size:11.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.tbl td{padding:13px 14px;border-bottom:1px solid var(--border)}
+.tbl tr:hover td{background:var(--surface-2)}
+.tbl tr:last-child td{border-bottom:none}
+
+/* === Pills / chips === */
+.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:600}
+.pill.success{background:var(--success-soft);color:#047857}
+.pill.warning{background:var(--warning-soft);color:#92400E}
+.pill.danger{background:var(--danger-soft);color:#B91C1C}
+.pill.info{background:var(--info-soft);color:#1E40AF}
+.pill.neutral{background:var(--surface-3);color:var(--text-2)}
+.pill.purple{background:var(--purple-soft);color:#6D28D9}
+.pill.pink{background:var(--pink-soft);color:#BE185D}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* === Forms === */
+.form-grid{display:grid;gap:14px}
+.form-grid.cols-2{grid-template-columns:1fr 1fr}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:13.5px;font-family:inherit;color:var(--text);outline:none;transition:.15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.field textarea{resize:vertical;min-height:84px}
+
+/* === Modal === */
+.modal-bg{position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-bg.show{display:flex;animation:fadeIn .2s}
+.modal{background:var(--surface);border-radius:14px;width:100%;max-width:520px;max-height:90vh;overflow:auto;box-shadow:var(--shadow-lg);animation:popIn .25s}
+@keyframes popIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
+.modal-h{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-weight:700;font-size:16px}
+.modal-body{padding:20px 22px}
+.modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background:var(--surface-2)}
+.x-btn{width:30px;height:30px;border:none;background:none;cursor:pointer;border-radius:6px;color:var(--text-2);font-size:18px;display:flex;align-items:center;justify-content:center}
+.x-btn:hover{background:var(--surface-3);color:var(--text)}
+
+/* === Toast === */
+.toasts{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:200}
+.toast{background:var(--surface);padding:12px 16px;border-radius:10px;box-shadow:var(--shadow-lg);border:1px solid var(--border);display:flex;align-items:center;gap:10px;min-width:260px;animation:slideIn .3s;font-size:13px;font-weight:500}
+.toast.success{border-left:4px solid var(--success)}
+.toast.error{border-left:4px solid var(--danger)}
+.toast.info{border-left:4px solid var(--info)}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+/* === Misc === */
+.empty{text-align:center;padding:40px 20px;color:var(--text-3);font-size:13px}
+.divider{height:1px;background:var(--border);margin:14px 0}
+.tabs{display:flex;gap:4px;margin-bottom:18px;background:var(--surface-3);padding:4px;border-radius:10px;width:fit-content}
+.tab{padding:7px 16px;border:none;background:none;border-radius:7px;cursor:pointer;font-weight:600;color:var(--text-2);font-size:13px;font-family:inherit}
+.tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
+.flex{display:flex;align-items:center;gap:10px}
+.flex.between{justify-content:space-between}
+.gap-sm{gap:6px}.gap-lg{gap:16px}
+.text-2{color:var(--text-2)}.text-3{color:var(--text-3)}
+.fw-700{font-weight:700}.fw-600{font-weight:600}
+.fz-12{font-size:12px}.fz-13{font-size:13px}.fz-18{font-size:18px}
+.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mt-8{margin-top:8px}
+.bar-stock{height:6px;background:var(--surface-3);border-radius:3px;overflow:hidden}
+.bar-stock>span{display:block;height:100%;background:var(--success);transition:width .3s}
+.bar-stock.warn>span{background:var(--warning)}
+.bar-stock.dang>span{background:var(--danger)}
+
+/* === Automation === */
+.auto-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;transition:.15s}
+.auto-row:hover{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.auto-info h4{font-size:14px;font-weight:700;margin-bottom:3px}
+.auto-info p{font-size:12.5px;color:var(--text-2)}
+.switch{position:relative;width:42px;height:24px;background:var(--border);border-radius:12px;cursor:pointer;transition:.2s;flex-shrink:0}
+.switch.on{background:var(--success)}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch.on::after{left:20px}
+
+/* === LINE / Chat === */
+.chat-layout{display:grid;grid-template-columns:300px 1fr;gap:0;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;height:600px}
+.chat-list{border-right:1px solid var(--border);overflow:auto;background:var(--surface-2)}
+.chat-list-h{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:700;font-size:14px;background:var(--surface)}
+.chat-item{padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;gap:10px;transition:.15s}
+.chat-item:hover{background:var(--surface)}
+.chat-item.active{background:var(--primary-soft)}
+.chat-meta{flex:1;min-width:0}
+.chat-name{font-weight:600;font-size:13.5px;display:flex;justify-content:space-between;gap:6px}
+.chat-time{font-size:11px;color:var(--text-3);font-weight:500}
+.chat-preview{font-size:12.5px;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.chat-pane{display:flex;flex-direction:column;background:var(--surface)}
+.chat-h{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.chat-msgs{flex:1;padding:18px;overflow:auto;background:linear-gradient(180deg,#FAFBFC 0%,#F4F6FB 100%)}
+.msg{max-width:70%;margin-bottom:10px;padding:9px 13px;border-radius:14px;font-size:13.5px;line-height:1.45;word-wrap:break-word}
+.msg.in{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px}
+.msg.out{background:var(--primary);color:#fff;border-bottom-right-radius:4px;margin-left:auto}
+.msg.bot{background:#06C755;color:#fff;border-bottom-left-radius:4px}
+.msg-time{font-size:10.5px;color:var(--text-3);margin-top:2px;text-align:right}
+.msg.in .msg-time,.msg.bot .msg-time{text-align:left;color:var(--text-3)}
+.msg.out .msg-time{color:rgba(255,255,255,.8)}
+.chat-input{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--surface)}
+.chat-input input{flex:1;padding:9px 14px;border-radius:20px;border:1px solid var(--border);font-family:inherit;font-size:13.5px;outline:none}
+.chat-input input:focus{border-color:var(--primary)}
+
+/* === Status / mock === */
+.brand-line{background:#06C755;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.5px}
+.status-cooking{background:#FEF3C7;color:#92400E}
+/* Channel sub-tabs */
+.ch-tabs{display:flex;gap:3px;padding:4px;background:var(--surface-2);border-radius:8px;margin:10px 14px 0}
+.ch-tab{flex:1;padding:6px 4px;border:none;background:none;border-radius:6px;cursor:pointer;font-size:11.5px;font-weight:600;color:var(--text-2);font-family:inherit;display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap}
+.ch-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
+.ch-tab .ch-cnt{display:inline-block;background:var(--surface-3);padding:0 5px;border-radius:99px;font-size:10px;font-weight:700}
+.ch-tab.active .ch-cnt{background:var(--primary-soft);color:var(--primary)}
+.ch-badge{display:inline-block;font-size:9px;font-weight:800;padding:1px 5px;border-radius:3px;letter-spacing:.5px;color:#fff;margin-right:5px;vertical-align:middle}
+.ch-badge.line{background:#06C755}
+.ch-badge.fb{background:#1877F2}
+.ch-badge.ig{background:linear-gradient(45deg,#F58529 0%,#DD2A7B 50%,#8134AF 100%)}
+.ch-icon{width:18px;height:18px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800}
+.ch-icon.line{background:#06C755}
+.ch-icon.fb{background:#1877F2}
+.ch-icon.ig{background:linear-gradient(45deg,#F58529 0%,#DD2A7B 50%,#8134AF 100%)}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.menu-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:.2s}
+.menu-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.menu-img{height:120px;background:linear-gradient(135deg,#FFA94D,#FA5252);display:flex;align-items:center;justify-content:center;font-size:48px}
+.menu-info{padding:12px}
+.menu-name{font-weight:700;font-size:14px;margin-bottom:3px}
+.menu-price{color:var(--primary);font-weight:700;font-size:15px;font-family:'Inter','Noto Sans Thai'}
+
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:.2s}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .row.r-2,.row.r-half,.row.r-3{grid-template-columns:1fr}
+  .search{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ====== SIDEBAR ====== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">F</div>
+      <div>
+        <div class="brand-name">FashionFlow</div>
+        <div class="brand-tag">Fashion OS</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-section">หลัก</div>
+      <button class="nav-item active" data-nav="dashboard"><span class="ic">📊</span>แดชบอร์ด</button>
+      <button class="nav-item" data-nav="orders"><span class="ic">👗</span>คำสั่งซื้อ<span class="badge" id="badge-orders">3</span></button>
+      <button class="nav-item" data-nav="menu"><span class="ic">📖</span>สินค้า</button>
+      <button class="nav-item" data-nav="stock"><span class="ic">📦</span>สต็อกสินค้า<span class="badge" id="badge-stock">2</span></button>
+      <div class="nav-section">การเงิน</div>
+      <button class="nav-item" data-nav="sales"><span class="ic">💰</span>ยอดขาย</button>
+      <button class="nav-item" data-nav="accounting"><span class="ic">🧾</span>บัญชี P&L</button>
+      <div class="nav-section">ระบบอัตโนมัติ</div>
+      <button class="nav-item" data-nav="automation"><span class="ic">⚡</span>Automation</button>
+      <button class="nav-item" data-nav="line"><span class="ic">💬</span>LINE & Chat</button>
+      <div class="nav-section">อื่นๆ</div>
+      <button class="nav-item" data-nav="settings"><span class="ic">⚙️</span>ตั้งค่า</button>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="user-card">
+        <div class="avatar">บส</div>
+        <div style="flex:1;min-width:0">
+          <div class="user-name">บอสไผ่</div>
+          <div class="user-role">เจ้าของร้าน</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ====== MAIN ====== -->
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <div class="page-title" id="topTitle">แดชบอร์ด</div>
+        <div class="page-sub" id="topSub">ภาพรวมยอดขายวันนี้</div>
+      </div>
+      <div class="topbar-spacer"></div>
+      <div class="search">
+        <span>🔍</span>
+        <input placeholder="ค้นหา คำสั่งซื้อ, สินค้า, ลูกค้า...">
+      </div>
+      <button class="icon-btn" title="แจ้งเตือน" onclick="toast('คุณมีแจ้งเตือนใหม่ 3 รายการ','info')">🔔<span class="dot"></span></button>
+      <button class="icon-btn" title="ช่วยเหลือ" onclick="toast('Help center เร็วๆ นี้','info')">❓</button>
+    </header>
+
+    <div class="content">
+      <!-- ===================== DASHBOARD ===================== -->
+      <section class="page active" data-page="dashboard">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">ยอดขายวันนี้</div>
+            <div class="kpi-value">฿<span id="kpiSales">42,890</span></div>
+            <div class="kpi-delta up">▲ 12.4% จากเมื่อวาน</div>
+            <div class="kpi-icon" style="background:var(--success-soft);color:var(--success)">💰</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">คำสั่งซื้อ</div>
+            <div class="kpi-value" id="kpiOrders">87</div>
+            <div class="kpi-delta up">▲ 8 รายการ</div>
+            <div class="kpi-icon" style="background:var(--info-soft);color:var(--info)">🧾</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">ออเดอร์เฉลี่ย</div>
+            <div class="kpi-value">฿840</div>
+            <div class="kpi-delta down">▼ 2.1%</div>
+            <div class="kpi-icon" style="background:var(--purple-soft);color:var(--purple)">📊</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">สต็อกสินค้าใกล้หมด</div>
+            <div class="kpi-value" id="kpiStock">3</div>
+            <div class="kpi-delta" style="color:var(--warning)">⚠ ต้องสั่งเพิ่ม</div>
+            <div class="kpi-icon" style="background:var(--warning-soft);color:var(--warning)">📦</div>
+          </div>
+        </div>
+
+        <div class="row r-2">
+          <div class="card">
+            <div class="card-h">
+              <div>
+                <div class="card-title">รายได้ 7 วันที่ผ่านมา</div>
+                <div class="card-sub">เปรียบเทียบกับสัปดาห์ก่อน</div>
+              </div>
+              <div class="tabs" style="margin-bottom:0">
+                <button class="tab active" onclick="changeRange(this,7)">7 วัน</button>
+                <button class="tab" onclick="changeRange(this,14)">14 วัน</button>
+                <button class="tab" onclick="changeRange(this,30)">30 วัน</button>
+              </div>
+            </div>
+            <canvas id="chartRevenue" height="100"></canvas>
+          </div>
+          <div class="card">
+            <div class="card-h">
+              <div class="card-title">สินค้าขายดีวันนี้</div>
+            </div>
+            <div id="topItems"></div>
+          </div>
+        </div>
+
+        <div class="row r-2">
+          <div class="card">
+            <div class="card-h">
+              <div class="card-title">คำสั่งซื้อล่าสุด</div>
+              <button class="btn sm ghost" onclick="navigateTo('orders')">ดูทั้งหมด →</button>
+            </div>
+            <table class="tbl">
+              <thead><tr><th>เลขที่</th><th>ลูกค้า</th><th>รายการ</th><th>ยอด</th><th>สถานะ</th></tr></thead>
+              <tbody id="recentOrders"></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-h">
+              <div class="card-title">กิจกรรมล่าสุด</div>
+            </div>
+            <div id="activityFeed"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ORDERS ===================== -->
+      <section class="page" data-page="orders">
+        <div class="card mb-16">
+          <div class="card-h">
+            <div>
+              <div class="card-title">คำสั่งซื้อทั้งหมด</div>
+              <div class="card-sub" id="ordersCountSub">87 คำสั่งซื้อ</div>
+            </div>
+            <div class="flex gap-sm">
+              <select class="btn ghost" id="filterStatus" onchange="renderOrders()" style="padding:8px 14px">
+                <option value="all">ทุกสถานะ</option>
+                <option value="received">รับคำสั่งซื้อ</option>
+                <option value="cooking">กำลังแพ็ค</option>
+                <option value="served">จัดส่งแล้ว</option>
+                <option value="paid">สำเร็จ</option>
+              </select>
+              <button class="btn primary" onclick="openOrderModal()">+ คำสั่งซื้อใหม่</button>
+            </div>
+          </div>
+          <table class="tbl">
+            <thead><tr><th>เลขที่</th><th>ลูกค้า</th><th>เวลา</th><th>รายการ</th><th>ยอดรวม</th><th>สถานะ</th><th></th></tr></thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================== MENU ===================== -->
+      <section class="page" data-page="menu">
+        <div class="card mb-16">
+          <div class="card-h">
+            <div>
+              <div class="card-title">สินค้าทั้งหมด</div>
+              <div class="card-sub">เปิด/ปิดขาย แก้ไขราคาได้ทุกสินค้า</div>
+            </div>
+            <button class="btn primary" onclick="toast('เพิ่มสินค้าใหม่ — ฟีเจอร์ demo','info')">+ เพิ่มสินค้า</button>
+          </div>
+          <div class="tabs"><button class="tab active">ทั้งหมด</button><button class="tab">เสื้อ</button><button class="tab">กางเกง</button><button class="tab">เครื่องประดับ</button></div>
+          <div class="menu-grid" id="menuGrid"></div>
+        </div>
+      </section>
+
+      <!-- ===================== STOCK ===================== -->
+      <section class="page" data-page="stock">
+        <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="kpi-card"><div class="kpi-label">SKU ทั้งหมด</div><div class="kpi-value">42</div><div class="kpi-icon" style="background:var(--info-soft);color:var(--info)">📦</div></div>
+          <div class="kpi-card"><div class="kpi-label">ใกล้หมด</div><div class="kpi-value" style="color:var(--warning)">3</div><div class="kpi-icon" style="background:var(--warning-soft);color:var(--warning)">⚠️</div></div>
+          <div class="kpi-card"><div class="kpi-label">มูลค่าสต็อกสินค้า</div><div class="kpi-value">฿84,200</div><div class="kpi-icon" style="background:var(--success-soft);color:var(--success)">💵</div></div>
+        </div>
+        <div class="card">
+          <div class="card-h">
+            <div class="card-title">รายการสินค้าในสต็อกสินค้า</div>
+            <div class="flex gap-sm">
+              <button class="btn ghost" onclick="toast('ส่งออก CSV เรียบร้อย','success')">⬇ Export</button>
+              <button class="btn primary" onclick="openStockModal()">+ รับเข้าสินค้า</button>
+            </div>
+          </div>
+          <table class="tbl">
+            <thead><tr><th>รหัส</th><th>ชื่อสินค้า</th><th>หมวด</th><th>คงเหลือ</th><th>ความคืบหน้า</th><th>มูลค่า</th><th></th></tr></thead>
+            <tbody id="stockBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================== SALES ===================== -->
+      <section class="page" data-page="sales">
+        <div class="tabs">
+          <button class="tab active" onclick="salesRange(this,'day')">รายวัน</button>
+          <button class="tab" onclick="salesRange(this,'week')">รายสัปดาห์</button>
+          <button class="tab" onclick="salesRange(this,'month')">รายเดือน</button>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">รายได้รวม</div><div class="kpi-value">฿<span id="sRev">312,450</span></div><div class="kpi-delta up">▲ 14% WoW</div></div>
+          <div class="kpi-card"><div class="kpi-label">คำสั่งซื้อรวม</div><div class="kpi-value"><span id="sOrd">428</span></div><div class="kpi-delta up">▲ 8.2%</div></div>
+          <div class="kpi-card"><div class="kpi-label">ออเดอร์เฉลี่ย</div><div class="kpi-value">฿<span id="sAvg">730</span></div><div class="kpi-delta up">▲ 5.1%</div></div>
+          <div class="kpi-card"><div class="kpi-label">ลูกค้าใหม่</div><div class="kpi-value">42</div><div class="kpi-delta up">▲ 12</div></div>
+        </div>
+        <div class="row r-2">
+          <div class="card"><div class="card-h"><div class="card-title">แนวโน้มยอดขาย</div></div><canvas id="chartSales" height="100"></canvas></div>
+          <div class="card"><div class="card-h"><div class="card-title">สัดส่วนหมวดสินค้า</div></div><canvas id="chartPie" height="120"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div class="card-title">ยอดขายตามสินค้า (Top 10)</div></div>
+          <table class="tbl">
+            <thead><tr><th>สินค้า</th><th>จำนวน</th><th>ยอดขาย</th><th>%</th></tr></thead>
+            <tbody id="salesByItem"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================== ACCOUNTING ===================== -->
+      <section class="page" data-page="accounting">
+        <div class="tabs">
+          <button class="tab active">งบกำไรขาดทุน</button>
+          <button class="tab">รายการทั้งหมด</button>
+          <button class="tab">รายเดือน</button>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">รายรับ (เดือนนี้)</div><div class="kpi-value" style="color:var(--success)">฿1,418,800</div><div class="kpi-delta up">▲ 18%</div></div>
+          <div class="kpi-card"><div class="kpi-label">รายจ่าย</div><div class="kpi-value" style="color:var(--danger)">฿684,200</div><div class="kpi-delta down">▼ 4%</div></div>
+          <div class="kpi-card"><div class="kpi-label">กำไรสุทธิ</div><div class="kpi-value" style="color:var(--primary)">฿734,600</div><div class="kpi-delta up">▲ 34%</div></div>
+          <div class="kpi-card"><div class="kpi-label">Margin</div><div class="kpi-value">51.8%</div><div class="kpi-delta up">▲ 8pp</div></div>
+        </div>
+        <div class="card">
+          <div class="card-h">
+            <div><div class="card-title">งบกำไรขาดทุน — เดือนเมษายน 2026</div><div class="card-sub">P&L Statement</div></div>
+            <button class="btn ghost" onclick="toast('ส่งออก PDF','success')">📄 Export PDF</button>
+          </div>
+          <div class="row r-half" style="margin-bottom:0">
+            <div>
+              <h4 style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--success)">รายรับ</h4>
+              <table class="tbl">
+                <tbody>
+                  <tr><td>ยอดขายเสื้อผ้า</td><td style="text-align:right;font-weight:600">฿742,400</td></tr>
+                  <tr><td>เครื่องประดับ + รองเท้า</td><td style="text-align:right;font-weight:600">฿248,200</td></tr>
+                  <tr><td>ขายออนไลน์ (Shopee, Lazada, IG)</td><td style="text-align:right;font-weight:600">฿428,200</td></tr>
+                  <tr><td style="font-weight:700">รวมรายรับ</td><td style="text-align:right;font-weight:800;color:var(--success)">฿1,418,800</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <h4 style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--danger)">รายจ่าย</h4>
+              <table class="tbl">
+                <tbody>
+                  <tr><td>ต้นทุนสินค้า (COGS)</td><td style="text-align:right;font-weight:600">฿218,400</td></tr>
+                  <tr><td>ค่าแรงพนักงาน</td><td style="text-align:right;font-weight:600">฿98,000</td></tr>
+                  <tr><td>ค่าเช่า</td><td style="text-align:right;font-weight:600">฿45,000</td></tr>
+                  <tr><td>ค่าน้ำ-ไฟ</td><td style="text-align:right;font-weight:600">฿18,400</td></tr>
+                  <tr><td>การตลาด</td><td style="text-align:right;font-weight:600">฿12,500</td></tr>
+                  <tr><td>อื่นๆ</td><td style="text-align:right;font-weight:600">฿20,000</td></tr>
+                  <tr><td style="font-weight:700">รวมรายจ่าย</td><td style="text-align:right;font-weight:800;color:var(--danger)">฿684,200</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="flex between" style="padding:8px 4px">
+            <div style="font-weight:800;font-size:16px">กำไรสุทธิ (Net Profit)</div>
+            <div style="font-weight:800;font-size:22px;color:var(--primary)">฿734,600</div>
+          </div>
+        </div>
+        <div class="card mt-8" style="margin-top:16px">
+          <div class="card-h"><div class="card-title">เปรียบเทียบรายเดือน</div></div>
+          <canvas id="chartMonthly" height="80"></canvas>
+        </div>
+      </section>
+
+      <!-- ===================== AUTOMATION ===================== -->
+      <section class="page" data-page="automation">
+        <div class="row r-2">
+          <div class="card">
+            <div class="card-h">
+              <div><div class="card-title">Workflow ทั้งหมด</div><div class="card-sub">เปิด/ปิดได้ทันที — ทำงานอัตโนมัติ 24/7</div></div>
+              <button class="btn primary" onclick="toast('สร้าง workflow ใหม่ — เปิดใน demo จริง','info')">+ สร้างใหม่</button>
+            </div>
+            <div id="autoList"></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><div class="card-title">Run Log วันนี้</div></div>
+            <div id="autoLog" style="font-family:'JetBrains Mono',monospace;font-size:12px"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== LINE / CHAT ===================== -->
+      <section class="page" data-page="line">
+        <div class="tabs">
+          <button class="tab active" onclick="chatTab(this,'inbox')">📥 Inbox</button>
+          <button class="tab" onclick="chatTab(this,'broadcast')">📢 Broadcast</button>
+          <button class="tab" onclick="chatTab(this,'bot')">🤖 Chatbot</button>
+          <button class="tab" onclick="chatTab(this,'members')">👥 สมาชิก</button>
+        </div>
+
+        <div id="chatInbox" class="chat-panel">
+          <div class="chat-layout">
+            <div class="chat-list">
+              <div class="chat-list-h">การสนทนา <span id="chatTotal" class="text-3" style="font-weight:500;font-size:12px">(12)</span></div>
+              <div class="ch-tabs" id="chTabs">
+                <button class="ch-tab active" onclick="switchChannel(this,'all')"><span>ทั้งหมด</span><span class="ch-cnt" id="cnAll">12</span></button>
+                <button class="ch-tab" onclick="switchChannel(this,'line')"><span class="ch-icon line">L</span><span class="ch-cnt" id="cnLine">5</span></button>
+                <button class="ch-tab" onclick="switchChannel(this,'fb')"><span class="ch-icon fb">f</span><span class="ch-cnt" id="cnFb">4</span></button>
+                <button class="ch-tab" onclick="switchChannel(this,'ig')"><span class="ch-icon ig">📷</span><span class="ch-cnt" id="cnIg">3</span></button>
+              </div>
+              <div id="chatItems"></div>
+            </div>
+            <div class="chat-pane">
+              <div class="chat-h">
+                <div class="avatar" id="activeChatAvatar" style="background:linear-gradient(135deg,#06C755,#22C55E)">คม</div>
+                <div style="flex:1">
+                  <div style="font-weight:700;font-size:14px" id="activeChatName">คุณก้อง — VIP</div>
+                  <div style="font-size:12px;color:var(--text-3)" id="activeChatChannel"><span class="ch-badge line">LINE</span> ออนไลน์</div>
+                </div>
+                <button class="btn ghost sm" onclick="toast('โอนแชทไปทีมแล้ว','success')">โอนแชท</button>
+              </div>
+              <div class="chat-msgs" id="chatMsgs"></div>
+              <div class="chat-input">
+                <input id="chatTextInput" placeholder="พิมพ์ข้อความ... (Enter เพื่อส่ง)" onkeypress="if(event.key==='Enter')sendChat()">
+                <button class="btn primary" onclick="sendChat()">ส่ง</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatBroadcast" class="chat-panel" style="display:none">
+          <div class="row r-2">
+            <div class="card">
+              <div class="card-h"><div class="card-title">📢 Broadcast Composer</div></div>
+              <div class="form-grid">
+                <div class="field"><label>เลือก Channel (เลือกได้หลายอัน)</label>
+                  <div class="flex gap-sm" style="flex-wrap:wrap">
+                    <label class="auto-row" style="margin:0;padding:8px 12px;cursor:pointer;flex:1;min-width:160px"><input type="checkbox" checked style="margin-right:8px"><div class="auto-info"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:6px"><span class="ch-icon line" style="width:18px;height:18px">L</span>LINE OA</h4><p style="font-size:11px">1,248 followers</p></div></label>
+                    <label class="auto-row" style="margin:0;padding:8px 12px;cursor:pointer;flex:1;min-width:160px"><input type="checkbox" checked style="margin-right:8px"><div class="auto-info"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:6px"><span class="ch-icon fb" style="width:18px;height:18px">f</span>Facebook</h4><p style="font-size:11px">3,200 fans</p></div></label>
+                    <label class="auto-row" style="margin:0;padding:8px 12px;cursor:pointer;flex:1;min-width:160px"><input type="checkbox" style="margin-right:8px"><div class="auto-info"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:6px"><span class="ch-icon ig" style="width:18px;height:18px">📷</span>Instagram</h4><p style="font-size:11px">2,140 followers</p></div></label>
+                    <label class="auto-row" style="margin:0;padding:8px 12px;cursor:pointer;flex:1;min-width:160px"><input type="checkbox" style="margin-right:8px"><div class="auto-info"><h4 style="font-size:12.5px;">📱 SMS</h4><p style="font-size:11px">842 contacts</p></div></label>
+                  </div>
+                </div>
+                <div class="field"><label>Template</label>
+                  <select onchange="loadTpl(this)">
+                    <option value="">-- เลือก template --</option>
+                    <option value="promo">🔥 โปรโมชั่นรายสัปดาห์</option>
+                    <option value="newmenu">🆕 แนะนำสินค้าใหม่</option>
+                    <option value="event">🎉 อีเวนต์/วันหยุด</option>
+                    <option value="reminder">⏰ ไม่ได้เจอกันนาน</option>
+                  </select>
+                </div>
+                <div class="field"><label>ข้อความ</label>
+                  <textarea id="bcMsg" rows="6" placeholder="พิมพ์ข้อความที่จะ broadcast..."></textarea>
+                </div>
+                <div class="field"><label>เวลา</label>
+                  <select><option>ส่งทันที</option><option>กำหนดเวลา</option></select>
+                </div>
+                <div class="flex gap-sm">
+                  <button class="btn ghost" onclick="toast('บันทึกเป็น draft','info')">บันทึก draft</button>
+                  <button class="btn primary" onclick="sendBroadcast()" style="flex:1">📤 ส่ง broadcast</button>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-h"><div class="card-title">ประวัติการส่ง</div></div>
+              <div id="bcHist"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatBot" class="chat-panel" style="display:none">
+          <div class="row r-2">
+            <div class="card">
+              <div class="card-h"><div class="card-title">🤖 Chatbot Auto-reply</div></div>
+              <div id="botRules"></div>
+              <button class="btn primary" style="width:100%;margin-top:12px" onclick="toast('สร้างกฎใหม่ — demo','info')">+ เพิ่มกฎตอบอัตโนมัติ</button>
+            </div>
+            <div class="card">
+              <div class="card-h"><div class="card-title">สถิติ Bot 7 วัน</div></div>
+              <div class="kpi-grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+                <div class="kpi-card"><div class="kpi-label">ตอบได้</div><div class="kpi-value" style="font-size:22px">312</div><div class="fz-12 text-2">82.5%</div></div>
+                <div class="kpi-card"><div class="kpi-label">โอนพนักงาน</div><div class="kpi-value" style="font-size:22px">66</div><div class="fz-12 text-2">17.5%</div></div>
+              </div>
+              <canvas id="chartBot" height="100"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatMembers" class="chat-panel" style="display:none">
+          <div class="card">
+            <div class="card-h">
+              <div><div class="card-title">สมาชิก LINE OA</div><div class="card-sub">1,248 followers • 312 active 7 วัน</div></div>
+              <button class="btn primary" onclick="toast('Export สมาชิก CSV','success')">⬇ Export</button>
+            </div>
+            <table class="tbl">
+              <thead><tr><th>ชื่อ</th><th>เบอร์</th><th>Tag</th><th>ยอดสะสม</th><th>คะแนน</th><th>ล่าสุด</th></tr></thead>
+              <tbody id="memberBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== SETTINGS ===================== -->
+      <section class="page" data-page="settings">
+        <div class="row r-half">
+          <div class="card">
+            <div class="card-h"><div class="card-title">ข้อมูลร้าน</div></div>
+            <div class="form-grid">
+              <div class="field"><label>ชื่อร้าน</label><input value="Fashion Boutique สาขาสยาม"></div>
+              <div class="field"><label>เบอร์</label><input value="082-XXX-XXXX"></div>
+              <div class="field"><label>ที่อยู่</label><textarea rows="2">99/9 สยาม สแควร์ กรุงเทพฯ 10110</textarea></div>
+              <button class="btn primary" onclick="toast('บันทึกข้อมูลร้านเรียบร้อย','success')">💾 บันทึก</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><div class="card-title">การเชื่อมต่อ</div></div>
+            <div class="auto-row"><div class="auto-info"><h4>💚 LINE OA</h4><p>เชื่อมต่อแล้ว · 1,248 followers</p></div><div class="switch on"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>🔵 Facebook Page</h4><p>เชื่อมต่อแล้ว · 3,200 fans</p></div><div class="switch on"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>📊 Google Sheets</h4><p>Export คำสั่งซื้ออัตโนมัติ</p></div><div class="switch on"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>💳 PromptPay QR + ผ่อน 0%</h4><p>รับชำระอัตโนมัติ</p></div><div class="switch on"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>🟠 LINE MAN / Grab</h4><p>ยังไม่ได้เชื่อมต่อ</p></div><div class="switch"></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ====== MODAL ====== -->
+<div class="modal-bg" id="modal">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<!-- ====== TOASTS ====== -->
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ============= STATE ============= */
+const state={
+  orders:[
+    {id:'#SO1042',table:'คุณก้อง',time:'18:42',items:'เสื้อ Polo Premium (M) x2, กางเกงยีนส์ (32)',total:1980,status:'cooking'},
+    {id:'#SO1041',table:'คุณเมย์',time:'18:38',items:'เสื้อยืด Cotton (S) x3, ถุงเท้า x2',total:840,status:'received'},
+    {id:'#SO1040',table:'คุณตั้ม',time:'18:30',items:'รองเท้า Sneaker (42), หมวก Cap',total:2680,status:'cooking'},
+    {id:'#SO1039',table:'Shopee',time:'18:18',items:'กระเป๋าหนัง, สายเข็มขัด',total:2240,status:'served'},
+    {id:'#SO1038',table:'Lazada',time:'18:05',items:'ชุดเดรส (M), รองเท้าส้นสูง',total:3450,status:'served'},
+    {id:'#SO1037',table:'คุณนิด',time:'17:48',items:'เสื้อแจ็คเก็ตยีนส์, กางเกงยีนส์',total:2890,status:'paid'},
+    {id:'#SO1036',table:'คุณอริสา',time:'17:32',items:'ชุดสูท (Premium), เนคไท x2',total:8420,status:'paid'},
+    {id:'#SO1035',table:'IG @style',time:'17:15',items:'เสื้อยืด Limited Edition x4',total:1980,status:'paid'},
+    {id:'#SO1034',table:'Shopee',time:'17:00',items:'รองเท้า Sneaker (40)',total:2480,status:'paid'},
+    {id:'#SO1033',table:'คุณบอส',time:'16:48',items:'เสื้อเชิ้ต Slim (L), กางเกง Chino',total:2180,status:'paid'},
+    {id:'#SO1032',table:'คุณวิภา',time:'16:30',items:'กระเป๋าหนังแฟชั่น (สีดำ)',total:4280,status:'paid'},
+    {id:'#SO1031',table:'LAZ',time:'16:15',items:'ชุดเดรส (S) x2, ผ้าพันคอ',total:3140,status:'paid'},
+    {id:'#SO1030',table:'Walk-in',time:'16:00',items:'เสื้อ Polo (M) x2, กางเกง Chino x2',total:2580,status:'paid'},
+    {id:'#SO1029',table:'คุณภัทร์',time:'15:42',items:'รองเท้า Sneaker (43), ถุงเท้า x3',total:2640,status:'paid'},
+    {id:'#SO1028',table:'TikTok Live',time:'15:25',items:'ชุดเดรสลายดอก (Limited) x4',total:5560,status:'paid'},
+    {id:'#SO1027',table:'IG @love',time:'15:10',items:'เซ็ตเครื่องประดับ (สร้อย+ต่างหู+กำไล)',total:3680,status:'paid'},
+    {id:'#SO1026',table:'Walk-in',time:'14:48',items:'หมวก Cap, แว่นตากันแดด',total:1240,status:'paid'},
+    {id:'#SO1025',table:'คุณกานต์',time:'14:30',items:'ชุดสูท (M), เชิ้ตขาว, เนคไท',total:7820,status:'paid'},
+    {id:'#SO1024',table:'Shopee',time:'14:15',items:'กางเกงยีนส์ x3, เข็มขัด',total:3180,status:'paid'},
+    {id:'#SO1023',table:'Walk-in',time:'14:00',items:'เสื้อยืด (S) x2, กระเป๋าผ้า',total:840,status:'paid'},
+  ],
+  menu:[
+    {n:'เสื้อ Polo Premium',p:680,emo:'👕',cat:'main'},
+    {n:'เสื้อ Polo Slim Fit',p:580,emo:'👔',cat:'main'},
+    {n:'เสื้อยืด Cotton 100%',p:280,emo:'🎽',cat:'main'},
+    {n:'เสื้อยืด Limited Edition',p:495,emo:'👕',cat:'main'},
+    {n:'เสื้อเชิ้ตทำงาน Slim',p:890,emo:'👔',cat:'main'},
+    {n:'เสื้อแจ็คเก็ตยีนส์',p:1480,emo:'🧥',cat:'main'},
+    {n:'เสื้อสเวตเตอร์',p:880,emo:'🧶',cat:'main'},
+    {n:'ชุดเดรสมินิ',p:1280,emo:'👗',cat:'main'},
+    {n:'ชุดเดรสลายดอก',p:1390,emo:'👗',cat:'main'},
+    {n:'ชุดสูท Premium',p:6800,emo:'🤵',cat:'main'},
+    {n:'กางเกงยีนส์ Slim',p:1280,emo:'👖',cat:'main'},
+    {n:'กางเกง Chino',p:980,emo:'👖',cat:'main'},
+    {n:'กางเกงขาสั้น',p:580,emo:'🩳',cat:'main'},
+    {n:'กระโปรง A-line',p:780,emo:'👗',cat:'main'},
+    {n:'รองเท้า Sneaker',p:2480,emo:'👟',cat:'dessert'},
+    {n:'รองเท้า Loafers',p:1880,emo:'👞',cat:'dessert'},
+    {n:'รองเท้าส้นสูง',p:1680,emo:'👠',cat:'dessert'},
+    {n:'รองเท้าผ้าใบ Canvas',p:980,emo:'👟',cat:'dessert'},
+    {n:'กระเป๋าหนังแฟชั่น',p:2880,emo:'👜',cat:'dessert'},
+    {n:'กระเป๋า Backpack',p:1480,emo:'🎒',cat:'dessert'},
+    {n:'กระเป๋าผ้า Tote',p:480,emo:'👜',cat:'dessert'},
+    {n:'หมวก Cap',p:380,emo:'🧢',cat:'drink'},
+    {n:'หมวกปีกกว้าง',p:580,emo:'👒',cat:'drink'},
+    {n:'แว่นตากันแดด',p:880,emo:'🕶️',cat:'drink'},
+    {n:'สร้อยคอแฟชั่น',p:480,emo:'📿',cat:'drink'},
+    {n:'ต่างหู',p:280,emo:'💎',cat:'drink'},
+    {n:'นาฬิกาข้อมือ',p:1880,emo:'⌚',cat:'drink'},
+    {n:'เข็มขัดหนัง',p:680,emo:'👔',cat:'drink'},
+    {n:'ผ้าพันคอ',p:380,emo:'🧣',cat:'drink'},
+    {n:'ถุงเท้าแฟชั่น',p:120,emo:'🧦',cat:'drink'},
+  ],
+  stock:[
+    {sku:'TS-M-WHT',name:'เสื้อ Polo Premium - White (M)',cat:'เสื้อ',qty:18,unit:'ตัว',min:10,max:50,price:340},
+    {sku:'TS-L-WHT',name:'เสื้อ Polo Premium - White (L)',cat:'เสื้อ',qty:8,unit:'ตัว',min:10,max:50,price:340},
+    {sku:'TS-M-NVY',name:'เสื้อ Polo Premium - Navy (M)',cat:'เสื้อ',qty:24,unit:'ตัว',min:10,max:50,price:340},
+    {sku:'TS-L-NVY',name:'เสื้อ Polo Premium - Navy (L)',cat:'เสื้อ',qty:12,unit:'ตัว',min:10,max:50,price:340},
+    {sku:'TT-S-BLK',name:'เสื้อยืด Cotton (S)',cat:'เสื้อ',qty:32,unit:'ตัว',min:15,max:80,price:140},
+    {sku:'TT-M-BLK',name:'เสื้อยืด Cotton (M)',cat:'เสื้อ',qty:28,unit:'ตัว',min:15,max:80,price:140},
+    {sku:'TT-LE-001',name:'เสื้อยืด Limited Edition',cat:'เสื้อ',qty:6,unit:'ตัว',min:10,max:30,price:240},
+    {sku:'JK-M-DEN',name:'แจ็คเก็ตยีนส์ (M)',cat:'เสื้อ',qty:14,unit:'ตัว',min:8,max:30,price:680},
+    {sku:'JK-L-DEN',name:'แจ็คเก็ตยีนส์ (L)',cat:'เสื้อ',qty:9,unit:'ตัว',min:8,max:30,price:680},
+    {sku:'SH-M-WHT',name:'เสื้อเชิ้ตทำงาน (M)',cat:'เสื้อ',qty:16,unit:'ตัว',min:10,max:40,price:420},
+    {sku:'DR-M-FLR',name:'ชุดเดรสลายดอก (M)',cat:'กางเกง',qty:9,unit:'ชุด',min:6,max:25,price:680},
+    {sku:'DR-S-FLR',name:'ชุดเดรสลายดอก (S)',cat:'กางเกง',qty:5,unit:'ชุด',min:6,max:25,price:680},
+    {sku:'JN-30',name:'กางเกงยีนส์ Slim (30)',cat:'กางเกง',qty:14,unit:'ตัว',min:8,max:35,price:540},
+    {sku:'JN-32',name:'กางเกงยีนส์ Slim (32)',cat:'กางเกง',qty:18,unit:'ตัว',min:8,max:35,price:540},
+    {sku:'JN-34',name:'กางเกงยีนส์ Slim (34)',cat:'กางเกง',qty:6,unit:'ตัว',min:8,max:35,price:540},
+    {sku:'CH-M-KHK',name:'กางเกง Chino (M)',cat:'กางเกง',qty:18,unit:'ตัว',min:10,max:40,price:480},
+    {sku:'SK-S-BLK',name:'กระโปรง A-line (S)',cat:'กางเกง',qty:11,unit:'ตัว',min:6,max:25,price:380},
+    {sku:'SN-40-WHT',name:'รองเท้า Sneaker (40)',cat:'รองเท้า',qty:7,unit:'คู่',min:5,max:25,price:1240},
+    {sku:'SN-42-WHT',name:'รองเท้า Sneaker (42)',cat:'รองเท้า',qty:14,unit:'คู่',min:5,max:25,price:1240},
+    {sku:'SN-44-WHT',name:'รองเท้า Sneaker (44)',cat:'รองเท้า',qty:3,unit:'คู่',min:5,max:25,price:1240},
+    {sku:'LF-42-BRN',name:'รองเท้า Loafers (42)',cat:'รองเท้า',qty:8,unit:'คู่',min:4,max:18,price:940},
+    {sku:'HL-37-BLK',name:'รองเท้าส้นสูง (37)',cat:'รองเท้า',qty:9,unit:'คู่',min:5,max:20,price:840},
+    {sku:'BG-LTH-BLK',name:'กระเป๋าหนัง (สีดำ)',cat:'กระเป๋า',qty:11,unit:'ใบ',min:6,max:25,price:1440},
+    {sku:'BG-LTH-BRN',name:'กระเป๋าหนัง (สีน้ำตาล)',cat:'กระเป๋า',qty:8,unit:'ใบ',min:6,max:25,price:1440},
+    {sku:'BG-BPK-001',name:'กระเป๋า Backpack',cat:'กระเป๋า',qty:14,unit:'ใบ',min:8,max:30,price:740},
+    {sku:'BG-TT-001',name:'กระเป๋าผ้า Tote',cat:'กระเป๋า',qty:48,unit:'ใบ',min:24,max:120,price:240},
+    {sku:'AC-CAP-001',name:'หมวก Cap',cat:'เครื่องประดับ',qty:32,unit:'ใบ',min:15,max:60,price:190},
+    {sku:'AC-NK-001',name:'สร้อยคอแฟชั่น',cat:'เครื่องประดับ',qty:42,unit:'เส้น',min:20,max:80,price:240},
+    {sku:'AC-BLT-001',name:'เข็มขัดหนัง',cat:'เครื่องประดับ',qty:24,unit:'เส้น',min:12,max:48,price:340},
+  ],
+  topItems:[
+    {name:'เสื้อ Polo Premium',count:24,rev:16320},
+    {name:'กางเกงยีนส์ Slim',count:18,rev:23040},
+    {name:'รองเท้า Sneaker',count:12,rev:29760},
+    {name:'เสื้อยืด Cotton',count:32,rev:8960},
+    {name:'กระเป๋าหนังแฟชั่น',count:8,rev:23040},
+  ],
+  activity:[
+    {ic:'🆕',c:'success',t:'คำสั่งซื้อใหม่ #SO1042 — คุณก้อง',time:'2 นาที'},
+    {ic:'💚',c:'info',t:'ลูกค้าใหม่ใน LINE: คุณกุ้ง สอบถามไซส์',time:'8 นาที'},
+    {ic:'⚠️',c:'warning',t:'สต็อกใกล้หมด: รองเท้า Sneaker (44) เหลือ 3 คู่',time:'14 นาที'},
+    {ic:'📷',c:'pink',t:'IG: @aurora แท็กรูปเสื้อในสตอรี่',time:'22 นาที'},
+    {ic:'💰',c:'info',t:'ชำระเงินสำเร็จ #SO1038 — ฿3,450 (Lazada)',time:'37 นาที'},
+    {ic:'🔵',c:'info',t:'FB Message: คุณภัทร์ถามเรื่องส่วนลด',time:'52 นาที'},
+    {ic:'🤖',c:'purple',t:'Bot ตอบลูกค้า 18 ข้อความ (size guide)',time:'1 ชม.'},
+    {ic:'⭐',c:'warning',t:'รีวิว 5 ดาวจาก @stylelover_th',time:'1.5 ชม.'},
+    {ic:'📦',c:'success',t:'รับเข้าสินค้า: เสื้อ Polo รุ่นใหม่ 50 ตัว',time:'2 ชม.'},
+    {ic:'📊',c:'neutral',t:'รายงานยอดขายส่งให้แล้ว',time:'2 ชม.'},
+  ],
+  automation:[
+    {id:1,name:'แจ้งเตือนสต็อกใกล้หมด',desc:'ส่ง LINE ทันทีเมื่อสินค้าเหลือต่ำกว่า min',on:true,runs:14},
+    {id:2,name:'สั่งซื้ออัตโนมัติ',desc:'สั่งสินค้าจาก supplier เมื่อสต็อกถึง reorder point',on:true,runs:5},
+    {id:3,name:'รายงานยอดขายรายวัน',desc:'ส่ง LINE สรุปยอดขายทุกวันเวลา 22:00',on:true,runs:1},
+    {id:4,name:'ตอบลูกค้าอัตโนมัติ (Size Guide)',desc:'Bot ตอบเรื่องไซส์, การวัดตัว, ตารางไซส์',on:true,runs:218},
+    {id:5,name:'แจ้งเตือนวันเกิดสมาชิก',desc:'ส่งคูปองวันเกิด 20% ผ่าน LINE ทุกเดือน',on:true,runs:8},
+    {id:6,name:'Sync Shopee/Lazada Inventory',desc:'อัปเดตสต็อกข้าม channel ทุก 15 นาที',on:true,runs:96},
+    {id:7,name:'Auto-post New Arrivals',desc:'โพสต์สินค้าใหม่ลง IG/FB อัตโนมัติทุก 9:00',on:true,runs:1},
+    {id:8,name:'Cart Abandonment Reminder',desc:'แจ้งเตือนลูกค้าทิ้ง cart ภายใน 1 ชั่วโมง',on:true,runs:14},
+  ],
+  autoLog:[
+    {t:'18:42:01',msg:'auto-reply triggered',det:'ลูกค้าถาม "ไซส์ M รอบอกเท่าไร"',type:'success'},
+    {t:'18:30:14',msg:'low_stock_alert',det:'รองเท้า Sneaker (44) 3 คู่ < min 5',type:'warning'},
+    {t:'18:00:00',msg:'sync_marketplace',det:'อัปเดต Shopee+Lazada 142 SKUs',type:'info'},
+    {t:'17:30:22',msg:'auto-reorder',det:'สั่ง Polo Premium (L) จาก supplier 30 ตัว',type:'success'},
+    {t:'17:00:00',msg:'auto_post_ig',det:'โพสต์สินค้าใหม่ลง IG @fashionflow',type:'success'},
+    {t:'16:45:00',msg:'sync_marketplace',det:'อัปเดต Shopee+Lazada 142 SKUs',type:'info'},
+    {t:'14:12:08',msg:'auto-reply triggered',det:'ลูกค้าถาม "เปลี่ยนไซส์ได้ไหม"',type:'success'},
+    {t:'12:48:33',msg:'cart_abandonment',det:'ส่ง LINE reminder ถึง 8 ลูกค้า',type:'success'},
+  ],
+  chats:[
+    {id:1,name:'คุณก้อง',tag:'VIP',ch:'line',last:'ขอ pre-order เสื้อ Polo รุ่นใหม่ครับ',time:'13:42',unread:0,active:true},
+    {id:2,name:'คุณเมย์',tag:'',ch:'line',last:'ขอบคุณค่ะ ใส่แล้วสวยมาก',time:'12:18',unread:0},
+    {id:3,name:'คุณตั้ม',tag:'NEW',ch:'fb',last:'รองเท้าไซส์ 42 มีไหมครับ',time:'11:50',unread:2},
+    {id:4,name:'คุณบอส',tag:'',ch:'line',last:'มีโปรลดเสื้อสูทไหม',time:'10:30',unread:1},
+    {id:5,name:'@aurora_style',tag:'VIP',ch:'ig',last:'ขอ collab รีวิวสินค้าได้ไหมคะ',time:'09:48',unread:0},
+    {id:6,name:'@stylelover_th',tag:'VIP',ch:'ig',last:'(รูปภาพ) แท็กในสตอรี่ใส่ชุดของร้าน',time:'09:12',unread:1},
+    {id:7,name:'คุณป๋อง',tag:'',ch:'fb',last:'สั่งสำหรับงานเลี้ยง 30 ชุด',time:'08:50',unread:0},
+    {id:8,name:'คุณกุ้ง',tag:'NEW',ch:'line',last:'ขอ size chart ครับ',time:'เมื่อวาน',unread:0},
+    {id:9,name:'Maria K.',tag:'',ch:'fb',last:'Do you ship to Singapore?',time:'เมื่อวาน',unread:0},
+    {id:10,name:'@pinks_ig',tag:'NEW',ch:'ig',last:'ชุดเดรสนี้มีไซส์ S ไหมคะ',time:'เมื่อวาน',unread:0},
+    {id:11,name:'คุณกานต์',tag:'',ch:'fb',last:'ลองชุดสูทที่ร้านได้ไหม',time:'2 วัน',unread:0},
+    {id:12,name:'@fashion_bo',tag:'VIP',ch:'ig',last:'รีวิวลงเพจแล้วนะคะ ❤️',time:'2 วัน',unread:0},
+  ],
+  activeChannel:'all',
+  msgsByChat:{
+    1:[
+      {who:'in',t:'สวัสดีครับ เสื้อ Polo รุ่นใหม่มาเมื่อไหร่ครับ',time:'13:35'},
+      {who:'bot',t:'สวัสดีครับ 🙏 รุ่นใหม่จะวางขายวันที่ 5 พ.ค.ครับ — เปิดให้ pre-order ก่อนได้',time:'13:35'},
+      {who:'in',t:'อยาก pre-order ครับ ไซส์ M สีกรม',time:'13:38'},
+      {who:'bot',t:'รับเรื่อง pre-order แล้วครับ 📋 ทีมงานจะส่งราคาและวิธีชำระภายใน 5 นาทีครับ',time:'13:38'},
+      {who:'out',t:'สวัสดีครับ คุณก้อง — Polo Premium (M, สีกรม) ราคา ฿680 ครับ มัดจำ 30% = ฿204',time:'13:40'},
+      {who:'in',t:'ขอ pre-order เสื้อ Polo รุ่นใหม่ครับ',time:'13:42'},
+    ],
+    2:[
+      {who:'in',t:'ของถึงแล้วค่ะ ใส่แล้วสวยมาก ✨',time:'12:10'},
+      {who:'in',t:'(รูปภาพ) แม่ก็ชอบด้วย',time:'12:11'},
+      {who:'out',t:'ขอบคุณมากเลยครับคุณเมย์ 🙏 สวยจริงๆ',time:'12:14'},
+      {who:'out',t:'ฝากแชร์ให้เพื่อนๆ ด้วยนะครับ มีคูปองส่วนลด ฿100 ฝากไว้ — รหัส MAY100',time:'12:15'},
+      {who:'in',t:'ขอบคุณค่ะ ใส่แล้วสวยมาก',time:'12:18'},
+    ],
+    3:[
+      {who:'in',t:'สวัสดีครับ รองเท้า Sneaker ไซส์ 42 มีสต็อกไหม',time:'11:42'},
+      {who:'bot',t:'สวัสดีครับ! รองเท้า Sneaker (42) มี 14 คู่ — ราคา ฿2,480',time:'11:42'},
+      {who:'in',t:'ค่าส่งกี่บาทครับ',time:'11:45'},
+      {who:'bot',t:'ส่งฟรี EMS เมื่อซื้อขั้นต่ำ ฿890 ครับ ได้รับใน 1-2 วันทำการ',time:'11:46'},
+      {who:'in',t:'รองเท้าไซส์ 42 มีไหมครับ',time:'11:50'},
+      {who:'in',t:'สั่งเลยครับ ส่งไปแถวอโศกได้ไหม',time:'11:50'},
+    ],
+    4:[
+      {who:'in',t:'สวัสดีครับ มีโปรอะไรไหมครับ',time:'10:25'},
+      {who:'bot',t:'สวัสดีครับ 🙏 ตอนนี้มีโปรเด็ดๆ ครับ:',time:'10:25'},
+      {who:'bot',t:'🔥 สูทพรีเมียม ลด 20% ทุก ศ-อา · 👗 ชุดเดรส ลด 15% · 🎁 ซื้อ 2 ชิ้น ลดทันที 10%',time:'10:25'},
+      {who:'in',t:'มีโปรลดเสื้อสูทไหม',time:'10:30'},
+    ],
+    5:[
+      {who:'in',t:'สวัสดีค่ะ อยากร่วมรีวิวสินค้าให้แบรนด์ค่ะ',time:'09:30'},
+      {who:'in',t:'IG ของหนูมี followers 38K ค่ะ',time:'09:35'},
+      {who:'out',t:'สวัสดีครับ ขอบคุณที่สนใจ! ส่ง email proposal มาที่ marketing@fashionflow.co ได้เลยครับ',time:'09:42'},
+      {who:'in',t:'ขอ collab รีวิวสินค้าได้ไหมคะ',time:'09:48'},
+    ],
+    6:[
+      {who:'in',t:'(รูปภาพ) แท็กในสตอรี่ใส่ชุดของร้าน',time:'09:10'},
+      {who:'in',t:'ชอบมากๆค่ะ คนเข้ามาทักเยอะเลย',time:'09:11'},
+      {who:'out',t:'ขอบคุณมากเลยครับ! ❤️ รีพอสไปเรียบร้อย',time:'09:30'},
+      {who:'out',t:'ฝากคูปองส่วนลดวงในให้ครับ — IGFAN15 ลด 15%',time:'09:31'},
+    ],
+    7:[
+      {who:'in',t:'สั่งเสื้อสำหรับงานเลี้ยงบริษัท 30 ชุดได้ไหมครับ',time:'08:30'},
+      {who:'out',t:'ได้แน่นอนครับ! รับสกรีนโลโก้บริษัทด้วยถ้าต้องการ',time:'08:35'},
+      {who:'out',t:'ส่ง catalog Polo สกรีน + ราคาประมาณการให้ดูเลยครับ',time:'08:36'},
+      {who:'in',t:'สั่งสำหรับงานเลี้ยง 30 ชุด',time:'08:50'},
+    ],
+    8:[
+      {who:'in',t:'สวัสดีครับ ขอ size chart ครับ',time:'เมื่อวาน 18:30'},
+      {who:'bot',t:'สวัสดีครับ! ส่ง size chart ให้แล้วครับ → fashionflow.co/size',time:'เมื่อวาน 18:30'},
+      {who:'bot',t:'(รูปภาพ size chart) — เสื้อ S/M/L/XL พร้อมรอบอก-เอว',time:'เมื่อวาน 18:30'},
+    ],
+    9:[
+      {who:'in',t:'Do you ship to Singapore?',time:'เมื่อวาน 14:20'},
+      {who:'bot',t:'Hi! 🙏 Yes! We ship internationally via DHL — 3-5 business days. Shipping ~฿650',time:'เมื่อวาน 14:20'},
+      {who:'in',t:'Great! Will order this weekend',time:'เมื่อวาน 14:25'},
+      {who:'out',t:'Thank you! Use code FIRSTSG20 for 20% off your first order',time:'เมื่อวาน 14:30'},
+    ],
+    10:[
+      {who:'in',t:'สวัสดีค่ะ ชุดเดรสลายดอกในรูปนี้มีไซส์ S ไหมคะ',time:'เมื่อวาน 11:15'},
+      {who:'bot',t:'สวัสดีครับ! ชุดเดรสลายดอก (S) เหลือ 5 ชุด ราคา ฿1,390 ครับ',time:'เมื่อวาน 11:18'},
+      {who:'in',t:'ขอบคุณค่ะ จะสั่งคืนนี้ค่ะ',time:'เมื่อวาน 11:20'},
+    ],
+    11:[
+      {who:'in',t:'อยากมาลองชุดสูทที่ร้านได้ไหมครับ',time:'2 วัน'},
+      {who:'out',t:'รับทราบครับคุณกานต์ ร้านเปิด 10:00-21:00 ครับ',time:'2 วัน'},
+      {who:'in',t:'อาทิตย์นี้ 14:00 ได้ไหม',time:'2 วัน'},
+      {who:'out',t:'ได้ครับ! จะเตรียมสูท Premium 3 รุ่นและเทเลอร์รอครับ — โน้ตชื่อ "กานต์" ไว้แล้ว ✓',time:'2 วัน'},
+    ],
+    12:[
+      {who:'in',t:'รีวิวลงเพจแล้วนะคะ ❤️',time:'2 วัน'},
+      {who:'in',t:'(ลิงก์โพสต์ IG)',time:'2 วัน'},
+      {who:'out',t:'ขอบคุณมากเลยครับ! รีพอสในเพจ + ส่งคูปองพิเศษให้แล้วครับ 🎁',time:'2 วัน'},
+      {who:'out',t:'พิเศษสำหรับ Top Reviewer — ส่วนลด 30% บัตรกำนัลค่ะ',time:'2 วัน'},
+    ],
+  },
+  msgs:[],
+  bcHistory:[
+    {t:'โปรพรีเซลรุ่นใหม่ ลด 20%',ch:'LINE OA',sent:1840,open:1248,clk:284,when:'2 วันก่อน',sts:'success'},
+    {t:'New Arrival — Polo Premium คอลเลคชั่นใหม่',ch:'LINE + FB + IG',sent:8624,open:4824,clk:842,when:'5 วันก่อน',sts:'success'},
+    {t:'ขอบคุณลูกค้า + คูปอง ฿200',ch:'LINE OA',sent:1840,open:1424,clk:340,when:'1 สัปดาห์',sts:'success'},
+    {t:'รีโพสต์รีวิวลูกค้า',ch:'IG + FB',sent:6784,open:3624,clk:248,when:'10 วัน',sts:'success'},
+    {t:'แจกคูปองวันเกิด เมษา',ch:'LINE OA',sent:124,open:118,clk:62,when:'2 สัปดาห์',sts:'success'},
+    {t:'Black Friday ลดเปะ 50%',ch:'LINE + FB + IG + SMS',sent:9824,open:7140,clk:2148,when:'3 สัปดาห์',sts:'success'},
+    {t:'ครบรอบ 5 ปี — Member Only Sale',ch:'LINE + Email',sent:3840,open:3120,clk:824,when:'1 เดือน',sts:'success'},
+  ],
+  botRules:[
+    {q:'ไซส์ / size / รอบอก',a:'ส่ง size chart พร้อมวิธีวัดตัว',hits:218,on:true},
+    {q:'ขอเมนูสินค้า / มีอะไรขาย',a:'ส่ง catalog + ลิงก์ดูสินค้าทั้งหมด',hits:142,on:true},
+    {q:'มีโปรโมชั่นอะไรไหม',a:'ส่งโปรล่าสุด + คูปองส่วนลด',hits:98,on:true},
+    {q:'ค่าส่ง / shipping',a:'ส่งฟรีเมื่อซื้อขั้นต่ำ ฿890 / ปกติ ฿49',hits:84,on:true},
+    {q:'เปลี่ยน / คืนสินค้าได้ไหม',a:'เปลี่ยนได้ภายใน 7 วัน หากไม่ผ่านการใช้งาน',hits:62,on:true},
+    {q:'มีหน้าร้านที่ไหน',a:'มีสาขาสยาม + ส่ง Google Maps',hits:48,on:true},
+    {q:'จ่ายเงินยังไง',a:'PromptPay QR, บัตรเครดิต, ผ่อน 0% Shopee Pay Later',hits:42,on:true},
+    {q:'pre-order ได้ไหม',a:'รับ pre-order ทุกสินค้า — มัดจำ 30%',hits:24,on:true},
+    {q:'มีพีเอสไซส์ไหม',a:'มีค่ะ XL, XXL ครบ — ดูใน catalog',hits:18,on:true},
+    {q:'ทำชุดงานแต่งได้ไหม',a:'รับครับ ทีมจะติดต่อภายใน 30 นาที',hits:14,on:true},
+    {q:'มีสินค้าผู้ชาย/ผู้หญิง',a:'มีทั้งสองครับ ส่ง catalog แยก',hits:12,on:true},
+    {q:'ที่จอดรถ',a:'มีที่จอดฟรี 30 คัน',hits:8,on:false},
+  ],
+  members:[
+    {n:'คุณนิด รุ่งทิวา',phone:'061-333-XXXX',tag:'VIP',spent:42180,points:421,last:'1 วัน'},
+    {n:'คุณก้อง สมพงษ์',phone:'081-234-XXXX',tag:'VIP',spent:34800,points:348,last:'2 วัน'},
+    {n:'คุณวิภา รัตนา',phone:'089-555-XXXX',tag:'VIP',spent:28420,points:284,last:'5 วัน'},
+    {n:'คุณอริสา วงศ์ทอง',phone:'096-333-XXXX',tag:'VIP',spent:24820,points:248,last:'3 วัน'},
+    {n:'คุณภัทร์ มหาชัย',phone:'062-888-XXXX',tag:'VIP',spent:18420,points:184,last:'4 วัน'},
+    {n:'คุณบอส ชลธี',phone:'095-222-XXXX',tag:'Regular',spent:8420,points:84,last:'1 สัปดาห์'},
+    {n:'คุณบุญ พงษ์ศักดิ์',phone:'083-666-XXXX',tag:'Regular',spent:6840,points:68,last:'2 สัปดาห์'},
+    {n:'คุณโบ จิราวรรณ',phone:'096-444-XXXX',tag:'Regular',spent:5240,points:52,last:'3 วัน'},
+    {n:'คุณวสันต์ จันทร์แสง',phone:'084-555-XXXX',tag:'Regular',spent:4480,points:44,last:'5 วัน'},
+    {n:'คุณป๋อง ธีรวัฒน์',phone:'086-777-XXXX',tag:'Regular',spent:3120,points:31,last:'2 วัน'},
+    {n:'คุณอ๋อง สุวรรณ',phone:'097-333-XXXX',tag:'Regular',spent:2680,points:26,last:'1 สัปดาห์'},
+    {n:'คุณตั้ม ปิยะ',phone:'085-111-XXXX',tag:'NEW',spent:1840,points:18,last:'วันนี้'},
+    {n:'คุณกุ้ง ปริมา',phone:'088-444-XXXX',tag:'NEW',spent:980,points:9,last:'เมื่อวาน'},
+    {n:'@stylelover_th',phone:'IG DM',tag:'VIP',spent:14820,points:148,last:'2 วัน'},
+    {n:'@aurora_style',phone:'IG DM',tag:'Regular',spent:3840,points:38,last:'4 วัน'},
+    {n:'foodie_bo → fashion_bo',phone:'IG DM',tag:'NEW',spent:840,points:8,last:'2 วัน'},
+  ],
+};
+
+let nextOrderId=1043;
+const charts={};
+
+/* ============= UTIL ============= */
+const fmt=n=>n.toLocaleString('th-TH');
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+
+function toast(msg,type='info'){
+  const el=document.createElement('div');
+  el.className='toast '+type;
+  el.innerHTML=`<span>${type==='success'?'✅':type==='error'?'❌':'ℹ️'}</span><span>${msg}</span>`;
+  $('#toasts').appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateX(20px)';setTimeout(()=>el.remove(),300)},3000);
+}
+
+function statusPill(s){
+  const map={
+    received:['neutral','รับคำสั่งซื้อ'],
+    cooking:['warning','กำลังแพ็ค'],
+    served:['info','จัดส่งแล้ว'],
+    paid:['success','สำเร็จ']
+  };
+  const [c,l]=map[s];
+  return `<span class="pill ${c}"><span class="dot"></span>${l}</span>`;
+}
+
+/* ============= NAV ============= */
+const titles={dashboard:['แดชบอร์ด','ภาพรวมยอดขายวันนี้'],orders:['คำสั่งซื้อ','จัดการคำสั่งซื้อทั้งหมด'],menu:['สินค้า','สินค้าและราคา'],stock:['สต็อกสินค้า','คลังเสื้อผ้าและสินค้า'],sales:['ยอดขาย','สถิติและการวิเคราะห์'],accounting:['บัญชี P&L','งบกำไรขาดทุน'],automation:['Automation','ระบบทำงานอัตโนมัติ'],line:['LINE & Chat','การสนทนาและ broadcast'],settings:['ตั้งค่า','การตั้งค่าระบบ']};
+
+function navigateTo(p){
+  $$('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.nav===p));
+  $$('.page').forEach(s=>s.classList.toggle('active',s.dataset.page===p));
+  const [t,sub]=titles[p];
+  $('#topTitle').textContent=t;$('#topSub').textContent=sub;
+  if(p==='sales')renderSalesPage();
+  if(p==='accounting')renderAccountingChart();
+  if(p==='line')chatTab($('.tab.active'),'inbox');
+}
+$$('.nav-item').forEach(b=>b.addEventListener('click',()=>navigateTo(b.dataset.nav)));
+
+/* ============= DASHBOARD ============= */
+function renderDashboard(){
+  $('#kpiOrders').textContent=state.orders.length;
+  $('#recentOrders').innerHTML=state.orders.slice(0,5).map(o=>`
+    <tr><td class="fw-700">${o.id}</td><td>${o.table}</td><td class="text-2" style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${o.items}</td><td class="fw-600">฿${fmt(o.total)}</td><td>${statusPill(o.status)}</td></tr>
+  `).join('');
+  $('#topItems').innerHTML=state.topItems.map((it,i)=>`
+    <div class="flex between" style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div class="flex"><div style="width:28px;height:28px;border-radius:7px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">${i+1}</div><div><div class="fw-600 fz-13">${it.name}</div><div class="fz-12 text-3">${it.count} จาน</div></div></div>
+      <div class="fw-700">฿${fmt(it.rev)}</div>
+    </div>
+  `).join('');
+  $('#activityFeed').innerHTML=state.activity.map(a=>`
+    <div class="flex" style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="width:34px;height:34px;border-radius:50%;background:var(--${a.c}-soft);display:flex;align-items:center;justify-content:center;font-size:14px">${a.ic}</div>
+      <div style="flex:1"><div class="fz-13">${a.t}</div><div class="fz-12 text-3">${a.time} ที่แล้ว</div></div>
+    </div>
+  `).join('');
+  drawRevenueChart(7);
+}
+
+function drawRevenueChart(days){
+  const ctx=$('#chartRevenue').getContext('2d');
+  if(charts.rev)charts.rev.destroy();
+  const labels=[],data=[],prev=[];
+  for(let i=days-1;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    labels.push(d.toLocaleDateString('th-TH',{day:'2-digit',month:'short'}));
+    data.push(15000+Math.floor(Math.random()*18000)+(i<3?5000:0));
+    prev.push(13000+Math.floor(Math.random()*14000));
+  }
+  charts.rev=new Chart(ctx,{type:'line',data:{labels,datasets:[
+    {label:'สัปดาห์นี้',data,borderColor:'#4F46E5',backgroundColor:'rgba(79,70,229,.08)',borderWidth:2.5,tension:.4,fill:true,pointRadius:0,pointHoverRadius:5},
+    {label:'สัปดาห์ก่อน',data:prev,borderColor:'#94A3B8',borderWidth:2,tension:.4,fill:false,borderDash:[5,5],pointRadius:0}
+  ]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:true,position:'top',align:'end',labels:{boxWidth:12,boxHeight:12,padding:14,font:{family:'Noto Sans Thai',size:12}}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'฿'+(v/1000)+'k',font:{family:'Inter',size:11}},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false},ticks:{font:{family:'Noto Sans Thai',size:11}}}}}});
+}
+
+function changeRange(btn,days){
+  $$('.tabs .tab').forEach(t=>{if(t.parentNode===btn.parentNode)t.classList.toggle('active',t===btn)});
+  drawRevenueChart(days);
+}
+
+function renderOrders(){
+  const f=$('#filterStatus').value;
+  const list=f==='all'?state.orders:state.orders.filter(o=>o.status===f);
+  $('#ordersBody').innerHTML=list.map(o=>`
+    <tr>
+      <td class="fw-700">${o.id}</td>
+      <td>${o.table}</td>
+      <td class="text-2">${o.time}</td>
+      <td class="text-2" style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${o.items}</td>
+      <td class="fw-700">฿${fmt(o.total)}</td>
+      <td>${statusPill(o.status)}</td>
+      <td>
+        <div class="flex gap-sm">
+          <button class="btn-icon" title="ดูรายละเอียด" onclick="viewOrder('${o.id}')">👁️</button>
+          ${o.status!=='paid'?`<button class="btn-icon" title="เปลี่ยนสถานะ" onclick="advanceStatus('${o.id}')">→</button>`:''}
+          <button class="btn-icon" title="พิมพ์บิล" onclick="toast('พิมพ์บิล ${o.id} แล้ว','success')">🖨️</button>
+        </div>
+      </td>
+    </tr>`).join('');
+  $('#ordersCountSub').textContent=`${list.length} คำสั่งซื้อ`;
+  $('#kpiOrders').textContent=state.orders.length;
+}
+
+function advanceStatus(id){
+  const o=state.orders.find(x=>x.id===id);
+  const flow=['received','cooking','served','paid'];
+  const idx=flow.indexOf(o.status);
+  if(idx<flow.length-1){
+    o.status=flow[idx+1];
+    toast(`เปลี่ยนสถานะ ${id} เป็น "${{received:'รับคำสั่งซื้อ',cooking:'กำลังแพ็ค',served:'จัดส่งแล้ว',paid:'สำเร็จ'}[o.status]}"`,'success');
+    renderOrders();renderDashboard();
+  }
+}
+
+function viewOrder(id){
+  const o=state.orders.find(x=>x.id===id);
+  $('#modalBox').innerHTML=`
+    <div class="modal-h"><div><div class="modal-title">คำสั่งซื้อ ${o.id}</div><div class="card-sub">ลูกค้า ${o.table} • ${o.time} น.</div></div><button class="x-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="card" style="background:var(--surface-2);padding:14px;margin-bottom:14px">
+        <div class="fw-600 mb-12">รายการอาหาร</div>
+        <div class="text-2 fz-13">${o.items}</div>
+      </div>
+      <div class="flex between"><div class="text-2">ยอดรวม</div><div class="fw-700">฿${fmt(o.total)}</div></div>
+      <div class="flex between mt-8"><div class="text-2">VAT 7%</div><div>฿${fmt(Math.round(o.total*.07))}</div></div>
+      <div class="divider"></div>
+      <div class="flex between"><div class="fw-700">รวมสุทธิ</div><div class="fw-700" style="font-size:18px;color:var(--primary)">฿${fmt(Math.round(o.total*1.07))}</div></div>
+      <div class="mt-8" style="margin-top:14px"><div class="text-2 fz-12 mb-12">สถานะปัจจุบัน</div>${statusPill(o.status)}</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost" onclick="closeModal()">ปิด</button>
+      <button class="btn primary" onclick="closeModal();toast('พิมพ์บิล ${o.id} แล้ว','success')">🖨️ พิมพ์บิล</button>
+    </div>`;
+  openModal();
+}
+
+function openOrderModal(){
+  $('#modalBox').innerHTML=`
+    <div class="modal-h"><div class="modal-title">+ คำสั่งซื้อใหม่</div><button class="x-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-grid cols-2">
+          <div class="field"><label>ลูกค้า</label><select id="newTable"><option>A1</option><option>A2</option><option>A3</option><option>B1</option><option>B2</option><option>C1</option><option>Take-away</option></select></div>
+          <div class="field"><label>เวลา</label><input id="newTime" value="${new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})}" readonly></div>
+        </div>
+        <div class="field"><label>รายการอาหาร</label><textarea id="newItems" rows="3" placeholder="สเต็กเนื้อ x2, สลัด, น้ำเปล่า"></textarea></div>
+        <div class="field"><label>ยอดรวม (บาท)</label><input id="newTotal" type="number" placeholder="0"></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn ghost" onclick="closeModal()">ยกเลิก</button><button class="btn primary" onclick="saveOrder()">บันทึก</button></div>`;
+  openModal();
+}
+
+function saveOrder(){
+  const items=$('#newItems').value.trim();
+  const total=parseFloat($('#newTotal').value)||0;
+  if(!items||!total){toast('กรอกรายการและยอดให้ครบ','error');return}
+  state.orders.unshift({id:'#'+(nextOrderId++),table:$('#newTable').value,time:$('#newTime').value,items,total,status:'received'});
+  closeModal();renderOrders();renderDashboard();updateBadges();
+  toast('เพิ่มคำสั่งซื้อใหม่เรียบร้อย','success');
+}
+
+/* ============= MENU ============= */
+function renderMenu(){
+  $('#menuGrid').innerHTML=state.menu.map(m=>`
+    <div class="menu-card">
+      <div class="menu-img" style="background:linear-gradient(135deg,${m.cat==='dessert'?'#FFB6C1,#FF69B4':m.cat==='drink'?'#87CEEB,#4682B4':'#FFA94D,#FA5252'})">${m.emo}</div>
+      <div class="menu-info">
+        <div class="menu-name">${m.n}</div>
+        <div class="flex between">
+          <div class="menu-price">฿${m.p}</div>
+          <button class="btn-icon" title="แก้ไข" onclick="toast('แก้ไข ${m.n} — demo','info')">✏️</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ============= STOCK ============= */
+function renderStock(){
+  $('#stockBody').innerHTML=state.stock.map(s=>{
+    const pct=Math.round(s.qty/s.max*100);
+    let cls='';
+    if(s.qty<=s.min)cls='dang';else if(s.qty<=s.min*1.5)cls='warn';
+    const value=Math.round(s.qty*s.price);
+    return `<tr>
+      <td class="fz-12 text-3">${s.sku}</td>
+      <td class="fw-600">${s.name}</td>
+      <td><span class="pill neutral">${s.cat}</span></td>
+      <td class="fw-700">${s.qty} ${s.unit}</td>
+      <td style="min-width:140px"><div class="bar-stock ${cls}"><span style="width:${pct}%"></span></div><div class="fz-12 text-3 mt-8">${pct}% (min ${s.min})</div></td>
+      <td class="fw-600">฿${fmt(value)}</td>
+      <td><button class="btn-icon" onclick="toast('สั่งเพิ่ม ${s.name}','success')">+</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function openStockModal(){
+  const opts=state.stock.map(s=>`<option value="${s.sku}">${s.name}</option>`).join('');
+  $('#modalBox').innerHTML=`
+    <div class="modal-h"><div class="modal-title">📦 รับเข้าสินค้า</div><button class="x-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>วัตถุดิบ</label><select id="stkSku">${opts}</select></div>
+        <div class="form-grid cols-2">
+          <div class="field"><label>จำนวน</label><input id="stkQty" type="number" placeholder="10"></div>
+          <div class="field"><label>ราคา/หน่วย</label><input id="stkPrice" type="number" placeholder="0"></div>
+        </div>
+        <div class="field"><label>หมายเหตุ</label><input placeholder="เช่น ใบส่งของ #INV-001"></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn ghost" onclick="closeModal()">ยกเลิก</button><button class="btn primary" onclick="saveStock()">บันทึก</button></div>`;
+  openModal();
+}
+
+function saveStock(){
+  const sku=$('#stkSku').value;
+  const qty=parseFloat($('#stkQty').value)||0;
+  if(!qty){toast('กรอกจำนวน','error');return}
+  const item=state.stock.find(s=>s.sku===sku);
+  item.qty+=qty;
+  closeModal();renderStock();updateBadges();
+  toast(`รับเข้า ${item.name} +${qty} ${item.unit}`,'success');
+}
+
+/* ============= SALES ============= */
+function salesRange(btn,r){
+  $$('.tab').forEach(t=>{if(t.parentNode===btn.parentNode)t.classList.toggle('active',t===btn)});
+  const data={day:[28450,87,327],week:[198450,624,318],month:[824800,2540,325]}[r];
+  $('#sRev').textContent=fmt(data[0]);$('#sOrd').textContent=fmt(data[1]);$('#sAvg').textContent=fmt(data[2]);
+  drawSalesChart(r);
+}
+
+function renderSalesPage(){
+  drawSalesChart('day');drawPieChart();
+  $('#salesByItem').innerHTML=state.menu.slice(0,10).map((m,i)=>{
+    const cnt=Math.floor(50-i*4+Math.random()*8);
+    const rev=cnt*m.p;
+    return `<tr><td class="fw-600">${m.emo} ${m.n}</td><td>${cnt}</td><td class="fw-700">฿${fmt(rev)}</td><td><div class="bar-stock"><span style="width:${100-i*8}%;background:var(--primary)"></span></div></td></tr>`;
+  }).join('');
+}
+
+function drawSalesChart(r){
+  const ctx=$('#chartSales').getContext('2d');
+  if(charts.sales)charts.sales.destroy();
+  const config={
+    day:{labels:['11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00'],data:[1800,2400,3600,3200,2400,2100,3800,5400,7200,6400,3600]},
+    week:{labels:['จ','อ','พ','พฤ','ศ','ส','อา'],data:[24800,28200,26400,29800,42600,48200,38400]},
+    month:{labels:['ส.1','ส.2','ส.3','ส.4'],data:[184400,198200,214800,227400]},
+  }[r];
+  charts.sales=new Chart(ctx,{type:'bar',data:{labels:config.labels,datasets:[{label:'ยอดขาย',data:config.data,backgroundColor:'#4F46E5',borderRadius:6,barThickness:r==='day'?16:r==='week'?28:48}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'฿'+(v/1000).toFixed(0)+'k'},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+}
+
+function drawPieChart(){
+  const ctx=$('#chartPie').getContext('2d');
+  if(charts.pie)charts.pie.destroy();
+  charts.pie=new Chart(ctx,{type:'doughnut',data:{labels:['เสื้อ','กางเกง','เครื่องประดับ','Delivery'],datasets:[{data:[68,12,16,4],backgroundColor:['#4F46E5','#EC4899','#06B6D4','#F59E0B'],borderWidth:0}]},options:{plugins:{legend:{position:'right',labels:{font:{family:'Noto Sans Thai',size:12},padding:12,boxWidth:12}}},cutout:'65%'}});
+}
+
+/* ============= ACCOUNTING ============= */
+function renderAccountingChart(){
+  const ctx=$('#chartMonthly').getContext('2d');
+  if(charts.monthly)charts.monthly.destroy();
+  charts.monthly=new Chart(ctx,{type:'bar',data:{labels:['พ.ย.','ธ.ค.','ม.ค.','ก.พ.','มี.ค.','เม.ย.'],datasets:[
+    {label:'รายรับ',data:[420000,512000,489000,548000,572000,624800],backgroundColor:'#10B981',borderRadius:5},
+    {label:'รายจ่าย',data:[342000,398000,378000,402000,425000,412300],backgroundColor:'#EF4444',borderRadius:5},
+    {label:'กำไรสุทธิ',data:[78000,114000,111000,146000,147000,212500],backgroundColor:'#4F46E5',borderRadius:5},
+  ]},options:{responsive:true,plugins:{legend:{position:'top',align:'end',labels:{font:{family:'Noto Sans Thai',size:12},boxWidth:12}}},scales:{y:{ticks:{callback:v=>'฿'+(v/1000).toFixed(0)+'k'},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+}
+
+/* ============= AUTOMATION ============= */
+function renderAutomation(){
+  $('#autoList').innerHTML=state.automation.map(a=>`
+    <div class="auto-row">
+      <div class="auto-info">
+        <h4>${a.name}</h4>
+        <p>${a.desc}</p>
+        <div class="fz-12 text-3 mt-8">⚡ รัน ${a.runs} ครั้งวันนี้</div>
+      </div>
+      <div class="switch ${a.on?'on':''}" onclick="toggleAuto(${a.id},this)"></div>
+    </div>`).join('');
+  $('#autoLog').innerHTML=state.autoLog.map(l=>{
+    const c={success:'#10B981',warning:'#F59E0B',info:'#3B82F6',error:'#EF4444'}[l.type];
+    return `<div style="padding:8px 0;border-bottom:1px solid var(--border)">
+      <div class="flex" style="gap:8px"><span style="color:var(--text-3)">${l.t}</span><span style="color:${c};font-weight:700">${l.msg}</span></div>
+      <div style="color:var(--text-2);padding-left:12px;font-size:11.5px;font-family:'Noto Sans Thai'">${l.det}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleAuto(id,el){
+  const a=state.automation.find(x=>x.id===id);
+  a.on=!a.on;
+  el.classList.toggle('on',a.on);
+  toast(`${a.on?'เปิด':'ปิด'} "${a.name}"`,a.on?'success':'info');
+}
+
+/* ============= LINE / CHAT ============= */
+const chLabel={line:'LINE',fb:'FACEBOOK',ig:'INSTAGRAM'};
+const chShort={line:'LINE',fb:'FB',ig:'IG'};
+const chGrad={line:'#06C755,#22C55E',fb:'#1877F2,#3B82F6',ig:'#F58529,#DD2A7B'};
+
+function switchChannel(btn,ch){
+  $$('#chTabs .ch-tab').forEach(b=>b.classList.toggle('active',b===btn));
+  state.activeChannel=ch;
+  renderChats();
+}
+
+function chatTab(btn,t){
+  $$('.tabs .tab').forEach(b=>{if(b.parentNode===btn.parentNode)b.classList.toggle('active',b===btn)});
+  ['chatInbox','chatBroadcast','chatBot','chatMembers'].forEach(id=>$('#'+id).style.display='none');
+  $('#chat'+t.charAt(0).toUpperCase()+t.slice(1)).style.display='block';
+  if(t==='inbox'){
+    renderChats();
+    if(state.msgs.length===0){
+      const active=state.chats.find(c=>c.active)||state.chats[0];
+      state.msgs=[...(state.msgsByChat[active.id]||[])];
+    }
+    renderMsgs();
+  }
+  if(t==='broadcast'){renderBroadcastHist();}
+  if(t==='bot'){renderBotRules();drawBotChart();}
+  if(t==='members'){renderMembers();}
+}
+
+function renderChats(){
+  const count={all:state.chats.length,line:0,fb:0,ig:0};
+  state.chats.forEach(c=>count[c.ch]++);
+  $('#cnAll').textContent=count.all;$('#cnLine').textContent=count.line;$('#cnFb').textContent=count.fb;$('#cnIg').textContent=count.ig;
+  const ch=state.activeChannel||'all';
+  const list=ch==='all'?state.chats:state.chats.filter(c=>c.ch===ch);
+  $('#chatTotal').textContent=`(${list.length})`;
+  $('#chatItems').innerHTML=list.length?list.map(c=>{
+    const initial=c.n.startsWith('คุณ')?c.n.slice(3,4):c.n.charAt(0).toUpperCase();
+    return `
+    <div class="chat-item ${c.active?'active':''}" onclick="selectChat(${c.id},this)">
+      <div style="position:relative">
+        <div class="avatar" style="background:linear-gradient(135deg,${c.tag==='VIP'?'#F59E0B,#EF4444':c.tag==='NEW'?'#06C755,#22C55E':'#3B82F6,#8B5CF6'});width:38px;height:38px">${initial}</div>
+        <div class="ch-icon ${c.ch}" style="position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;border:2px solid var(--surface-2);font-size:8px">${c.ch==='line'?'L':c.ch==='fb'?'f':'📷'}</div>
+      </div>
+      <div class="chat-meta">
+        <div class="chat-name"><span><span class="ch-badge ${c.ch}">${chShort[c.ch]}</span>${c.n} ${c.tag?`<span class="pill ${c.tag==='VIP'?'warning':'success'}" style="margin-left:4px;font-size:9.5px;padding:1px 6px">${c.tag}</span>`:''}</span><span class="chat-time">${c.time}</span></div>
+        <div class="chat-preview">${c.last}</div>
+      </div>
+      ${c.unread?`<div style="background:var(--danger);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;align-self:center">${c.unread}</div>`:''}
+    </div>`}).join(''):`<div class="empty">ยังไม่มีข้อความใน ${chLabel[ch]||'ช่องทางนี้'}</div>`;
+}
+
+function selectChat(id,el){
+  state.chats.forEach(c=>c.active=c.id===id);
+  $$('.chat-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  const c=state.chats.find(x=>x.id===id);
+  $('#activeChatName').textContent=c.n+(c.tag?' — '+c.tag:'');
+  $('#activeChatChannel').innerHTML=`<span class="ch-badge ${c.ch}">${chLabel[c.ch]}</span> ออนไลน์`;
+  $('#activeChatAvatar').style.background=`linear-gradient(135deg,${chGrad[c.ch]})`;
+  $('#activeChatAvatar').textContent=c.n.startsWith('คุณ')?c.n.slice(3,4):c.n.charAt(0).toUpperCase();
+  state.msgs=[...(state.msgsByChat[id]||[])];
+  renderMsgs();
+  c.unread=0;
+  renderChats();
+}
+
+function renderMsgs(){
+  $('#chatMsgs').innerHTML=state.msgs.map(m=>`
+    <div class="msg ${m.who}">${m.t.replace(/\n/g,'<br>')}<div class="msg-time">${m.time}${m.who==='bot'?' • 🤖 Bot':''}${m.who==='out'?' • อ่านแล้ว':''}</div></div>
+  `).join('');
+  $('#chatMsgs').scrollTop=$('#chatMsgs').scrollHeight;
+}
+
+function sendChat(){
+  const v=$('#chatTextInput').value.trim();
+  if(!v)return;
+  const time=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+  state.msgs.push({who:'out',t:v,time});
+  $('#chatTextInput').value='';
+  renderMsgs();
+  toast('ส่งข้อความผ่าน LINE OA','success');
+  setTimeout(()=>{
+    state.msgs.push({who:'in',t:'รับทราบครับ ขอบคุณ 🙏',time:new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})});
+    renderMsgs();
+  },1800);
+}
+
+const tplMsgs={
+  promo:'🔥 โปรโมชั่นพิเศษ! Polo Premium ลด 20% เฉพาะ ศุกร์-เสาร์-อาทิตย์นี้เท่านั้น 🛍️ ช้อปได้ที่หน้าร้าน + ออนไลน์',
+  newmenu:'🆕 New Arrival! เสื้อ Polo Premium คอลเลคชั่นใหม่ ราคาพิเศษ ฿580 (ปกติ ฿680) — มาเป็นคนแรก 👕',
+  event:'🎉 ฉลองครบรอบ 5 ปี! ลดทั้งร้าน 30% + ส่งฟรีไม่มีขั้นต่ำ ตลอดสัปดาห์ — รีบเลยก่อนของหมด',
+  reminder:'👋 ห่างหายกันไปนาน — เรามีคูปองส่วนลด ฿200 ฝากไว้ให้ ใช้ได้ภายใน 7 วัน รหัส: COMEBACK200',
+};
+function loadTpl(sel){if(sel.value)$('#bcMsg').value=tplMsgs[sel.value]}
+function sendBroadcast(){
+  if(!$('#bcMsg').value.trim()){toast('พิมพ์ข้อความก่อน','error');return}
+  toast('📤 ส่ง broadcast ไปถึงสมาชิกทั้งหมดเรียบร้อย','success');
+  $('#bcMsg').value='';
+}
+function renderBroadcastHist(){
+  $('#bcHist').innerHTML=state.bcHistory.map(h=>`
+    <div style="padding:12px 0;border-bottom:1px solid var(--border)">
+      <div class="flex between"><div class="fw-600 fz-13">${h.t}</div><span class="pill success" style="font-size:10px"><span class="dot"></span>ส่งสำเร็จ</span></div>
+      <div class="fz-12 text-3 mt-8">${h.ch} • ${h.when}</div>
+      <div class="flex" style="gap:14px;margin-top:8px;font-size:11.5px">
+        <div><span class="text-3">ส่ง</span> <span class="fw-700">${fmt(h.sent)}</span></div>
+        <div><span class="text-3">เปิดอ่าน</span> <span class="fw-700">${fmt(h.open)} (${Math.round(h.open/h.sent*100)}%)</span></div>
+        <div><span class="text-3">คลิก</span> <span class="fw-700">${fmt(h.clk)}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderBotRules(){
+  $('#botRules').innerHTML=state.botRules.map((r,i)=>`
+    <div class="auto-row">
+      <div class="auto-info" style="flex:1;min-width:0">
+        <h4 style="font-size:13px">"${r.q}"</h4>
+        <p style="font-size:12px">↪ ${r.a}</p>
+        <div class="fz-12 text-3 mt-8">🎯 ตอบไป ${r.hits} ครั้ง 7 วัน</div>
+      </div>
+      <div class="switch ${r.on?'on':''}" onclick="this.classList.toggle('on');toast('${r.on?'ปิด':'เปิด'} กฎตอบอัตโนมัติ','info')"></div>
+    </div>`).join('');
+}
+
+function drawBotChart(){
+  const ctx=$('#chartBot').getContext('2d');
+  if(charts.bot)charts.bot.destroy();
+  charts.bot=new Chart(ctx,{type:'line',data:{labels:['จ','อ','พ','พฤ','ศ','ส','อา'],datasets:[
+    {label:'Bot ตอบ',data:[42,38,52,48,58,62,54],borderColor:'#06C755',backgroundColor:'rgba(6,199,85,.1)',tension:.4,fill:true,borderWidth:2,pointRadius:0},
+    {label:'โอนพนักงาน',data:[8,7,12,10,11,9,9],borderColor:'#F59E0B',tension:.4,borderWidth:2,pointRadius:0}
+  ]},options:{plugins:{legend:{position:'top',align:'end',labels:{font:{family:'Noto Sans Thai',size:11},boxWidth:10}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+}
+
+function renderMembers(){
+  $('#memberBody').innerHTML=state.members.map(m=>`
+    <tr>
+      <td class="fw-600">${m.n}</td>
+      <td class="text-2">${m.phone}</td>
+      <td>${m.tag?`<span class="pill ${m.tag==='VIP'?'warning':m.tag==='NEW'?'success':'neutral'}">${m.tag}</span>`:'-'}</td>
+      <td class="fw-700">฿${fmt(m.spent)}</td>
+      <td>${m.points} คะแนน</td>
+      <td class="text-3 fz-12">${m.last}</td>
+    </tr>`).join('');
+}
+
+/* ============= MODAL ============= */
+function openModal(){$('#modal').classList.add('show')}
+function closeModal(){$('#modal').classList.remove('show')}
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+
+/* ============= INIT ============= */
+function updateBadges(){
+  const openOrders=state.orders.filter(o=>o.status!=='paid').length;
+  $('#badge-orders').textContent=openOrders;
+  const lowStock=state.stock.filter(s=>s.qty<=s.min).length;
+  $('#badge-stock').textContent=lowStock;
+  $('#kpiStock').textContent=lowStock;
+}
+function init(){
+  renderDashboard();renderOrders();renderMenu();renderStock();renderAutomation();
+  updateBadges();
+  setTimeout(()=>toast('ยินดีต้อนรับสู่ FashionFlow 🎉 — ลองคลิกสินค้าซ้ายดูทุกหน้าได้เลย','success'),500);
+}
+init();
+</script>
+</body>
+</html>

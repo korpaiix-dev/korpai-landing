@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaCRM — ระบบจัดการธุรกิจ SME (Demo)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F6FB;--surface:#FFFFFF;--surface-2:#F9FAFB;--surface-3:#F3F4F6;
+  --border:#E5E7EB;--border-2:#D1D5DB;
+  --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
+  --primary:#0EA5E9;--primary-hover:#0284C7;--primary-soft:#E0F2FE;
+  --success:#10B981;--success-soft:#D1FAE5;
+  --warning:#F59E0B;--warning-soft:#FEF3C7;
+  --danger:#EF4444;--danger-soft:#FEE2E2;
+  --info:#3B82F6;--info-soft:#DBEAFE;
+  --purple:#8B5CF6;--purple-soft:#EDE9FE;
+  --pink:#EC4899;--pink-soft:#FCE7F3;
+  --teal:#14B8A6;--teal-soft:#CCFBF1;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04);
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-lg:0 10px 25px rgba(0,0,0,.08),0 4px 10px rgba(0,0,0,.04);
+  --radius:12px;
+}
+html,body{height:100%}
+body{font-family:'Noto Sans Thai','Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.app{display:flex;min-height:100vh}
+.sidebar{width:248px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:50}
+.brand{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.brand-logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#0EA5E9 0%,#06B6D4 100%);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px}
+.brand-name{font-weight:800;font-size:16px;letter-spacing:-.3px}
+.brand-tag{font-size:11px;color:var(--text-3);font-weight:500}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}
+.nav-section{font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:14px 12px 6px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:8px;color:var(--text-2);cursor:pointer;font-weight:500;font-size:13.5px;margin-bottom:2px;transition:.15s;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.nav-item:hover{background:var(--surface-3);color:var(--text)}
+.nav-item.active{background:var(--primary-soft);color:var(--primary);font-weight:600}
+.nav-item .ic{font-size:17px;width:20px;text-align:center}
+.nav-item .badge{margin-left:auto;background:var(--danger);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700}
+.nav-item.active .badge{background:var(--primary)}
+.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
+.user-card{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;cursor:pointer}
+.user-card:hover{background:var(--surface-3)}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0EA5E9,#8B5CF6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.user-name{font-weight:600;font-size:13px;line-height:1.2}
+.user-role{font-size:11px;color:var(--text-3)}
+
+.main{flex:1;margin-left:248px;display:flex;flex-direction:column;min-width:0}
+.topbar{height:64px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:18px;position:sticky;top:0;z-index:40}
+.page-title{font-size:18px;font-weight:700;letter-spacing:-.3px}
+.page-sub{font-size:12px;color:var(--text-3)}
+.topbar-spacer{flex:1}
+.search{display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);padding:7px 12px;border-radius:8px;width:280px}
+.search input{border:none;background:none;outline:none;flex:1;font-size:13px;font-family:inherit;color:var(--text)}
+.icon-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);position:relative;transition:.15s}
+.icon-btn:hover{background:var(--surface-2);color:var(--text)}
+.icon-btn .dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid #fff}
+
+.content{padding:24px;flex:1;overflow:auto}
+.page{display:none}
+.page.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.kpi-card{background:var(--surface);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm);border:1px solid var(--border);position:relative;overflow:hidden}
+.kpi-label{font-size:12px;color:var(--text-2);font-weight:500;margin-bottom:8px}
+.kpi-value{font-size:26px;font-weight:800;letter-spacing:-.5px;font-family:'Inter','Noto Sans Thai'}
+.kpi-delta{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;margin-top:6px}
+.kpi-delta.up{color:var(--success)}
+.kpi-delta.down{color:var(--danger)}
+.kpi-icon{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+.card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.card-title{font-size:15px;font-weight:700}
+.card-sub{font-size:12px;color:var(--text-3);margin-top:2px}
+.row{display:grid;gap:16px;margin-bottom:20px}
+.row.r-2{grid-template-columns:2fr 1fr}
+.row.r-half{grid-template-columns:1fr 1fr}
+.row.r-3{grid-template-columns:repeat(3,1fr)}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-weight:600;font-size:13px;font-family:inherit;border:1px solid transparent;cursor:pointer;transition:.15s;background:var(--surface-3);color:var(--text);white-space:nowrap}
+.btn:hover{background:var(--border)}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.primary:hover{background:var(--primary-hover)}
+.btn.success{background:var(--success);color:#fff}
+.btn.danger{background:var(--danger);color:#fff}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text-2)}
+.btn.ghost:hover{background:var(--surface-2);color:var(--text)}
+.btn.sm{padding:5px 10px;font-size:12px}
+.btn-icon{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--text-2);display:inline-flex;align-items:center;justify-content:center;transition:.15s}
+.btn-icon:hover{background:var(--surface-2);color:var(--text)}
+
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;padding:11px 14px;font-weight:600;font-size:11.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.tbl td{padding:13px 14px;border-bottom:1px solid var(--border)}
+.tbl tr:hover td{background:var(--surface-2)}
+.tbl tr:last-child td{border-bottom:none}
+
+.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:600}
+.pill.success{background:var(--success-soft);color:#047857}
+.pill.warning{background:var(--warning-soft);color:#92400E}
+.pill.danger{background:var(--danger-soft);color:#B91C1C}
+.pill.info{background:var(--info-soft);color:#1E40AF}
+.pill.neutral{background:var(--surface-3);color:var(--text-2)}
+.pill.purple{background:var(--purple-soft);color:#6D28D9}
+.pill.pink{background:var(--pink-soft);color:#BE185D}
+.pill.teal{background:var(--teal-soft);color:#0F766E}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+.form-grid{display:grid;gap:14px}
+.form-grid.cols-2{grid-template-columns:1fr 1fr}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:13.5px;font-family:inherit;color:var(--text);outline:none;transition:.15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.field textarea{resize:vertical;min-height:84px}
+
+.modal-bg{position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-bg.show{display:flex;animation:fadeIn .2s}
+.modal{background:var(--surface);border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow:auto;box-shadow:var(--shadow-lg);animation:popIn .25s}
+@keyframes popIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
+.modal-h{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-weight:700;font-size:16px}
+.modal-body{padding:20px 22px}
+.modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background:var(--surface-2)}
+.x-btn{width:30px;height:30px;border:none;background:none;cursor:pointer;border-radius:6px;color:var(--text-2);font-size:18px;display:flex;align-items:center;justify-content:center}
+.x-btn:hover{background:var(--surface-3);color:var(--text)}
+
+.toasts{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:200}
+.toast{background:var(--surface);padding:12px 16px;border-radius:10px;box-shadow:var(--shadow-lg);border:1px solid var(--border);display:flex;align-items:center;gap:10px;min-width:260px;animation:slideIn .3s;font-size:13px;font-weight:500}
+.toast.success{border-left:4px solid var(--success)}
+.toast.error{border-left:4px solid var(--danger)}
+.toast.info{border-left:4px solid var(--info)}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+.divider{height:1px;background:var(--border);margin:14px 0}
+.tabs{display:flex;gap:4px;margin-bottom:18px;background:var(--surface-3);padding:4px;border-radius:10px;width:fit-content}
+.tab{padding:7px 16px;border:none;background:none;border-radius:7px;cursor:pointer;font-weight:600;color:var(--text-2);font-size:13px;font-family:inherit}
+.tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
+.flex{display:flex;align-items:center;gap:10px}
+.flex.between{justify-content:space-between}
+.gap-sm{gap:6px}.gap-lg{gap:16px}
+.text-2{color:var(--text-2)}.text-3{color:var(--text-3)}
+.fw-700{font-weight:700}.fw-600{font-weight:600}
+.fz-12{font-size:12px}.fz-13{font-size:13px}.fz-18{font-size:18px}
+.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mt-8{margin-top:8px}
+
+/* === Pipeline Kanban === */
+.kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;overflow-x:auto;padding-bottom:8px}
+.kb-col{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:12px;min-width:240px;min-height:520px}
+.kb-col-h{display:flex;align-items:center;justify-content:space-between;padding:4px 6px 10px;border-bottom:2px solid;margin-bottom:10px}
+.kb-col[data-stage="lead"] .kb-col-h{border-color:#94A3B8}
+.kb-col[data-stage="qualified"] .kb-col-h{border-color:var(--info)}
+.kb-col[data-stage="proposal"] .kb-col-h{border-color:var(--warning)}
+.kb-col[data-stage="negotiation"] .kb-col-h{border-color:var(--purple)}
+.kb-col[data-stage="won"] .kb-col-h{border-color:var(--success)}
+.kb-col-title{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+.kb-count{background:var(--surface-3);color:var(--text-2);font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px}
+.kb-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer;transition:.15s}
+.kb-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px);border-color:var(--primary)}
+.kb-deal-name{font-weight:700;font-size:13px;margin-bottom:4px}
+.kb-deal-co{font-size:11.5px;color:var(--text-3);margin-bottom:8px}
+.kb-deal-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.kb-deal-amt{color:var(--primary);font-weight:700;font-size:13px}
+.kb-tag{display:inline-block;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:600;margin-bottom:4px}
+
+/* === Customer card === */
+.cust-card{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;transition:.15s}
+.cust-card:hover{border-color:var(--primary);box-shadow:var(--shadow)}
+.cust-info{flex:1;min-width:0}
+.cust-name{font-weight:700;font-size:14.5px}
+.cust-co{font-size:12px;color:var(--text-2);margin-top:2px}
+.cust-meta{display:flex;gap:14px;margin-top:8px;font-size:11.5px;color:var(--text-3)}
+
+/* === Tasks === */
+.task-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:9px;margin-bottom:8px;background:var(--surface);transition:.15s}
+.task-row:hover{border-color:var(--primary)}
+.task-row.done{background:var(--surface-2);opacity:.7}
+.task-row.done .task-title{text-decoration:line-through;color:var(--text-3)}
+.task-cb{width:18px;height:18px;border:2px solid var(--border-2);border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;background:var(--surface);flex-shrink:0;font-size:11px;transition:.15s}
+.task-cb.done{background:var(--success);border-color:var(--success)}
+.task-info{flex:1}
+.task-title{font-weight:600;font-size:13.5px}
+.task-meta{font-size:11.5px;color:var(--text-3);margin-top:2px;display:flex;gap:10px}
+
+/* === Automation switch === */
+.auto-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;transition:.15s}
+.auto-row:hover{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.auto-info h4{font-size:14px;font-weight:700;margin-bottom:3px}
+.auto-info p{font-size:12.5px;color:var(--text-2)}
+.switch{position:relative;width:42px;height:24px;background:var(--border);border-radius:12px;cursor:pointer;transition:.2s;flex-shrink:0}
+.switch.on{background:var(--success)}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch.on::after{left:20px}
+
+/* === Chat === */
+.chat-layout{display:grid;grid-template-columns:300px 1fr;gap:0;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;height:600px}
+.chat-list{border-right:1px solid var(--border);overflow:auto;background:var(--surface-2)}
+.chat-list-h{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:700;font-size:14px;background:var(--surface)}
+.chat-item{padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;gap:10px;transition:.15s}
+.chat-item:hover{background:var(--surface)}
+.chat-item.active{background:var(--primary-soft)}
+.chat-meta{flex:1;min-width:0}
+.chat-name{font-weight:600;font-size:13.5px;display:flex;justify-content:space-between;gap:6px}
+.chat-time{font-size:11px;color:var(--text-3);font-weight:500}
+.chat-preview{font-size:12.5px;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.chat-pane{display:flex;flex-direction:column;background:var(--surface)}
+.chat-h{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.chat-msgs{flex:1;padding:18px;overflow:auto;background:linear-gradient(180deg,#FAFBFC 0%,#F4F6FB 100%)}
+.msg{max-width:70%;margin-bottom:10px;padding:9px 13px;border-radius:14px;font-size:13.5px;line-height:1.45;word-wrap:break-word}
+.msg.in{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px}
+.msg.out{background:var(--primary);color:#fff;border-bottom-right-radius:4px;margin-left:auto}
+.msg.bot{background:#06C755;color:#fff;border-bottom-left-radius:4px}
+.msg-time{font-size:10.5px;color:var(--text-3);margin-top:2px;text-align:right}
+.msg.in .msg-time,.msg.bot .msg-time{text-align:left;color:var(--text-3)}
+.msg.out .msg-time{color:rgba(255,255,255,.8)}
+.chat-input{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--surface)}
+.chat-input input{flex:1;padding:9px 14px;border-radius:20px;border:1px solid var(--border);font-family:inherit;font-size:13.5px;outline:none}
+.chat-input input:focus{border-color:var(--primary)}
+.brand-line{background:#06C755;color:#fff;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.5px}
+.bar{height:6px;background:var(--surface-3);border-radius:3px;overflow:hidden}
+.bar>span{display:block;height:100%;background:var(--primary);transition:width .3s}
+/* Channel sub-tabs */
+.ch-tabs{display:flex;gap:3px;padding:4px;background:var(--surface-2);border-radius:8px;margin:10px 14px 0}
+.ch-tab{flex:1;padding:6px 4px;border:none;background:none;border-radius:6px;cursor:pointer;font-size:11.5px;font-weight:600;color:var(--text-2);font-family:inherit;display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap}
+.ch-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
+.ch-tab .ch-cnt{display:inline-block;background:var(--surface-3);padding:0 5px;border-radius:99px;font-size:10px;font-weight:700}
+.ch-tab.active .ch-cnt{background:var(--primary-soft);color:var(--primary)}
+.ch-badge{display:inline-block;font-size:9px;font-weight:800;padding:1px 5px;border-radius:3px;letter-spacing:.5px;color:#fff;margin-right:5px;vertical-align:middle}
+.ch-badge.line{background:#06C755}
+.ch-badge.fb{background:#1877F2}
+.ch-badge.ig{background:linear-gradient(45deg,#F58529 0%,#DD2A7B 50%,#8134AF 100%)}
+.ch-badge.email{background:#EA4335}
+.ch-icon{width:18px;height:18px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800}
+.ch-icon.line{background:#06C755}
+.ch-icon.fb{background:#1877F2}
+.ch-icon.ig{background:linear-gradient(45deg,#F58529 0%,#DD2A7B 50%,#8134AF 100%)}
+.ch-icon.email{background:#EA4335}
+
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:.2s}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .row.r-2,.row.r-half,.row.r-3{grid-template-columns:1fr}
+  .kanban{grid-template-columns:repeat(5,260px)}
+  .search{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">N</div>
+      <div>
+        <div class="brand-name">NovaCRM</div>
+        <div class="brand-tag">Business OS</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-section">หลัก</div>
+      <button class="nav-item active" data-nav="dashboard"><span class="ic">📊</span>แดชบอร์ด</button>
+      <button class="nav-item" data-nav="customers"><span class="ic">👥</span>ลูกค้า / CRM</button>
+      <button class="nav-item" data-nav="pipeline"><span class="ic">🎯</span>Sales Pipeline<span class="badge" id="badgeDeals">12</span></button>
+      <button class="nav-item" data-nav="tasks"><span class="ic">✅</span>Tasks<span class="badge" id="badgeTasks">5</span></button>
+      <div class="nav-section">การเงิน</div>
+      <button class="nav-item" data-nav="reports"><span class="ic">📈</span>Reports</button>
+      <button class="nav-item" data-nav="accounting"><span class="ic">🧾</span>บัญชี P&L</button>
+      <div class="nav-section">ระบบอัตโนมัติ</div>
+      <button class="nav-item" data-nav="automation"><span class="ic">⚡</span>Automation</button>
+      <button class="nav-item" data-nav="line"><span class="ic">💬</span>LINE & Chat</button>
+      <div class="nav-section">อื่นๆ</div>
+      <button class="nav-item" data-nav="settings"><span class="ic">⚙️</span>ตั้งค่า</button>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="user-card">
+        <div class="avatar">บส</div>
+        <div style="flex:1;min-width:0">
+          <div class="user-name">บอสไผ่</div>
+          <div class="user-role">Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <div class="page-title" id="topTitle">แดชบอร์ด</div>
+        <div class="page-sub" id="topSub">ภาพรวมธุรกิจของคุณ</div>
+      </div>
+      <div class="topbar-spacer"></div>
+      <div class="search">
+        <span>🔍</span>
+        <input placeholder="ค้นหา ลูกค้า, ดีล, งาน...">
+      </div>
+      <button class="icon-btn" onclick="toast('แจ้งเตือนใหม่ 5 รายการ','info')">🔔<span class="dot"></span></button>
+      <button class="icon-btn" onclick="toast('Help center เร็วๆ นี้','info')">❓</button>
+    </header>
+
+    <div class="content">
+      <!-- ===================== DASHBOARD ===================== -->
+      <section class="page active" data-page="dashboard">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">รายได้เดือนนี้</div>
+            <div class="kpi-value">฿<span id="kpiRev">1.84M</span></div>
+            <div class="kpi-delta up">▲ 24% vs เดือนก่อน</div>
+            <div class="kpi-icon" style="background:var(--success-soft);color:var(--success)">💰</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">ดีลที่กำลังดำเนินการ</div>
+            <div class="kpi-value" id="kpiDeals">12</div>
+            <div class="kpi-delta up">มูลค่ารวม ฿4.2M</div>
+            <div class="kpi-icon" style="background:var(--info-soft);color:var(--info)">🎯</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">ลูกค้าใหม่</div>
+            <div class="kpi-value">38</div>
+            <div class="kpi-delta up">▲ 12 จากเป้า</div>
+            <div class="kpi-icon" style="background:var(--purple-soft);color:var(--purple)">👥</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Conversion Rate</div>
+            <div class="kpi-value">28.4%</div>
+            <div class="kpi-delta up">▲ 3.2pp</div>
+            <div class="kpi-icon" style="background:var(--warning-soft);color:var(--warning)">📈</div>
+          </div>
+        </div>
+
+        <div class="row r-2">
+          <div class="card">
+            <div class="card-h">
+              <div><div class="card-title">รายได้ 12 เดือน</div><div class="card-sub">เปรียบเทียบกับปีก่อน</div></div>
+            </div>
+            <canvas id="chartRev" height="100"></canvas>
+          </div>
+          <div class="card">
+            <div class="card-h"><div class="card-title">Sales Funnel</div></div>
+            <div id="funnelView"></div>
+          </div>
+        </div>
+
+        <div class="row r-2">
+          <div class="card">
+            <div class="card-h">
+              <div class="card-title">ดีลที่ใกล้ปิด</div>
+              <button class="btn sm ghost" onclick="navigateTo('pipeline')">ดู Pipeline →</button>
+            </div>
+            <table class="tbl">
+              <thead><tr><th>ดีล</th><th>ลูกค้า</th><th>มูลค่า</th><th>โอกาส</th><th>คาดปิด</th></tr></thead>
+              <tbody id="hotDeals"></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-h"><div class="card-title">งานสำคัญวันนี้</div></div>
+            <div id="todayTasks"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== CUSTOMERS ===================== -->
+      <section class="page" data-page="customers">
+        <div class="card mb-16">
+          <div class="card-h">
+            <div><div class="card-title">ลูกค้าทั้งหมด</div><div class="card-sub" id="custCount">ลูกค้าในระบบ</div></div>
+            <div class="flex gap-sm">
+              <select class="btn ghost" id="custFilter" onchange="renderCustomers()" style="padding:8px 14px">
+                <option value="all">ทุก Tag</option>
+                <option value="VIP">VIP</option>
+                <option value="Hot Lead">Hot Lead</option>
+                <option value="Customer">Customer</option>
+                <option value="Cold">Cold</option>
+              </select>
+              <button class="btn primary" onclick="openCustomerModal()">+ เพิ่มลูกค้า</button>
+            </div>
+          </div>
+          <div id="custList"></div>
+        </div>
+      </section>
+
+      <!-- ===================== PIPELINE ===================== -->
+      <section class="page" data-page="pipeline">
+        <div class="card mb-16" style="padding:14px 18px">
+          <div class="flex between" style="flex-wrap:wrap;gap:14px">
+            <div class="flex gap-lg">
+              <div><div class="fz-12 text-3">มูลค่ารวม</div><div class="fw-700 fz-18" style="color:var(--primary)">฿4,250,000</div></div>
+              <div><div class="fz-12 text-3">Weighted</div><div class="fw-700 fz-18">฿2,184,000</div></div>
+              <div><div class="fz-12 text-3">ดีลทั้งหมด</div><div class="fw-700 fz-18">12</div></div>
+              <div><div class="fz-12 text-3">เฉลี่ย/ดีล</div><div class="fw-700 fz-18">฿354K</div></div>
+            </div>
+            <button class="btn primary" onclick="openDealModal()">+ ดีลใหม่</button>
+          </div>
+        </div>
+        <div class="kanban" id="kanban"></div>
+      </section>
+
+      <!-- ===================== TASKS ===================== -->
+      <section class="page" data-page="tasks">
+        <div class="row r-2">
+          <div class="card">
+            <div class="card-h">
+              <div><div class="card-title">งานทั้งหมด</div><div class="card-sub" id="taskCount">12 งาน</div></div>
+              <div class="flex gap-sm">
+                <select class="btn ghost" id="taskFilter" onchange="renderTasks()" style="padding:8px 14px">
+                  <option value="all">ทั้งหมด</option>
+                  <option value="today">วันนี้</option>
+                  <option value="overdue">เลยกำหนด</option>
+                  <option value="done">เสร็จแล้ว</option>
+                </select>
+                <button class="btn primary" onclick="openTaskModal()">+ งานใหม่</button>
+              </div>
+            </div>
+            <div id="taskList"></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><div class="card-title">สรุปทีม</div></div>
+            <canvas id="chartTeam" height="200"></canvas>
+            <div class="divider"></div>
+            <div id="teamLoad"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== REPORTS ===================== -->
+      <section class="page" data-page="reports">
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">Pipeline Velocity</div><div class="kpi-value">14.2</div><div class="fz-12 text-2">วัน/ดีล</div></div>
+          <div class="kpi-card"><div class="kpi-label">Win Rate</div><div class="kpi-value">28.4%</div><div class="kpi-delta up">▲ 4pp</div></div>
+          <div class="kpi-card"><div class="kpi-label">Avg Deal Size</div><div class="kpi-value">฿354K</div><div class="kpi-delta up">▲ 12%</div></div>
+          <div class="kpi-card"><div class="kpi-label">CAC</div><div class="kpi-value">฿2,420</div><div class="kpi-delta down">▼ 8%</div></div>
+        </div>
+        <div class="row r-2">
+          <div class="card"><div class="card-h"><div class="card-title">รายได้รายเดือน</div></div><canvas id="chartRevMo" height="100"></canvas></div>
+          <div class="card"><div class="card-h"><div class="card-title">ที่มาของลูกค้า</div></div><canvas id="chartSrc" height="120"></canvas></div>
+        </div>
+        <div class="row r-half">
+          <div class="card"><div class="card-h"><div class="card-title">Pipeline Stage</div></div><canvas id="chartStage" height="100"></canvas></div>
+          <div class="card"><div class="card-h"><div class="card-title">Team Performance</div></div><canvas id="chartPerf" height="100"></canvas></div>
+        </div>
+      </section>
+
+      <!-- ===================== ACCOUNTING ===================== -->
+      <section class="page" data-page="accounting">
+        <div class="tabs">
+          <button class="tab active">งบกำไรขาดทุน</button>
+          <button class="tab">รายการทั้งหมด</button>
+          <button class="tab">รายเดือน</button>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">รายรับเดือนนี้</div><div class="kpi-value" style="color:var(--success)">฿1,842,400</div><div class="kpi-delta up">▲ 24%</div></div>
+          <div class="kpi-card"><div class="kpi-label">รายจ่าย</div><div class="kpi-value" style="color:var(--danger)">฿984,200</div><div class="kpi-delta up">▲ 8%</div></div>
+          <div class="kpi-card"><div class="kpi-label">กำไรสุทธิ</div><div class="kpi-value" style="color:var(--primary)">฿858,200</div><div class="kpi-delta up">▲ 42%</div></div>
+          <div class="kpi-card"><div class="kpi-label">Margin</div><div class="kpi-value">46.6%</div><div class="kpi-delta up">▲ 6pp</div></div>
+        </div>
+        <div class="card">
+          <div class="card-h">
+            <div><div class="card-title">งบกำไรขาดทุน — เมษายน 2026</div><div class="card-sub">P&L Statement</div></div>
+            <button class="btn ghost" onclick="toast('ส่งออก PDF เรียบร้อย','success')">📄 Export PDF</button>
+          </div>
+          <div class="row r-half" style="margin-bottom:0">
+            <div>
+              <h4 style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--success)">รายรับ</h4>
+              <table class="tbl">
+                <tbody>
+                  <tr><td>ขายสินค้า/บริการหลัก</td><td style="text-align:right;font-weight:600">฿1,524,000</td></tr>
+                  <tr><td>Subscription / Recurring</td><td style="text-align:right;font-weight:600">฿248,400</td></tr>
+                  <tr><td>Consulting / Service</td><td style="text-align:right;font-weight:600">฿70,000</td></tr>
+                  <tr><td style="font-weight:700">รวมรายรับ</td><td style="text-align:right;font-weight:800;color:var(--success)">฿1,842,400</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <h4 style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--danger)">รายจ่าย</h4>
+              <table class="tbl">
+                <tbody>
+                  <tr><td>ต้นทุนสินค้า/บริการ (COGS)</td><td style="text-align:right;font-weight:600">฿428,000</td></tr>
+                  <tr><td>ค่าแรงพนักงาน</td><td style="text-align:right;font-weight:600">฿320,000</td></tr>
+                  <tr><td>ค่าเช่าสำนักงาน</td><td style="text-align:right;font-weight:600">฿58,000</td></tr>
+                  <tr><td>ค่า Software / SaaS</td><td style="text-align:right;font-weight:600">฿42,200</td></tr>
+                  <tr><td>การตลาด / Ads</td><td style="text-align:right;font-weight:600">฿98,000</td></tr>
+                  <tr><td>อื่นๆ</td><td style="text-align:right;font-weight:600">฿38,000</td></tr>
+                  <tr><td style="font-weight:700">รวมรายจ่าย</td><td style="text-align:right;font-weight:800;color:var(--danger)">฿984,200</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="flex between" style="padding:8px 4px">
+            <div style="font-weight:800;font-size:16px">กำไรสุทธิ (Net Profit)</div>
+            <div style="font-weight:800;font-size:22px;color:var(--primary)">฿858,200</div>
+          </div>
+        </div>
+        <div class="card mt-8" style="margin-top:16px">
+          <div class="card-h"><div class="card-title">เปรียบเทียบรายเดือน</div></div>
+          <canvas id="chartMonthly" height="80"></canvas>
+        </div>
+      </section>
+
+      <!-- ===================== AUTOMATION ===================== -->
+      <section class="page" data-page="automation">
+        <div class="row r-2">
+          <div class="card">
+            <div class="card-h">
+              <div><div class="card-title">Workflow ทั้งหมด</div><div class="card-sub">เปิด/ปิดได้ทันที</div></div>
+              <button class="btn primary" onclick="toast('สร้าง workflow ใหม่ — demo','info')">+ สร้างใหม่</button>
+            </div>
+            <div id="autoList"></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><div class="card-title">Run Log วันนี้</div></div>
+            <div id="autoLog" style="font-size:12px"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== LINE / CHAT ===================== -->
+      <section class="page" data-page="line">
+        <div class="tabs">
+          <button class="tab active" onclick="chatTab(this,'inbox')">📥 Inbox</button>
+          <button class="tab" onclick="chatTab(this,'broadcast')">📢 Broadcast</button>
+          <button class="tab" onclick="chatTab(this,'bot')">🤖 Chatbot</button>
+          <button class="tab" onclick="chatTab(this,'members')">👥 สมาชิก</button>
+        </div>
+
+        <div id="chatInbox" class="chat-panel">
+          <div class="chat-layout">
+            <div class="chat-list">
+              <div class="chat-list-h">การสนทนา <span id="chatTotal" class="text-3" style="font-weight:500;font-size:12px">(12)</span></div>
+              <div class="ch-tabs" id="chTabs">
+                <button class="ch-tab active" onclick="switchChannel(this,'all')"><span>ทั้งหมด</span><span class="ch-cnt" id="cnAll">12</span></button>
+                <button class="ch-tab" onclick="switchChannel(this,'line')"><span class="ch-icon line">L</span><span class="ch-cnt" id="cnLine">4</span></button>
+                <button class="ch-tab" onclick="switchChannel(this,'fb')"><span class="ch-icon fb">f</span><span class="ch-cnt" id="cnFb">2</span></button>
+                <button class="ch-tab" onclick="switchChannel(this,'ig')"><span class="ch-icon ig">📷</span><span class="ch-cnt" id="cnIg">3</span></button>
+                <button class="ch-tab" onclick="switchChannel(this,'email')"><span class="ch-icon email">✉</span><span class="ch-cnt" id="cnEmail">3</span></button>
+              </div>
+              <div id="chatItems"></div>
+            </div>
+            <div class="chat-pane">
+              <div class="chat-h">
+                <div class="avatar" id="activeChatAvatar" style="background:linear-gradient(135deg,#06C755,#22C55E)">กต</div>
+                <div style="flex:1">
+                  <div style="font-weight:700;font-size:14px" id="activeChatName">คุณกานต์ — Hot Lead</div>
+                  <div style="font-size:12px;color:var(--text-3)" id="activeChatChannel"><span class="ch-badge line">LINE</span> ออนไลน์</div>
+                </div>
+                <button class="btn ghost sm" onclick="toast('สร้างดีลใหม่จากแชทนี้','success')">+ สร้างดีล</button>
+              </div>
+              <div class="chat-msgs" id="chatMsgs"></div>
+              <div class="chat-input">
+                <input id="chatTextInput" placeholder="พิมพ์ข้อความ... (Enter เพื่อส่ง)" onkeypress="if(event.key==='Enter')sendChat()">
+                <button class="btn primary" onclick="sendChat()">ส่ง</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatBroadcast" class="chat-panel" style="display:none">
+          <div class="row r-2">
+            <div class="card">
+              <div class="card-h"><div class="card-title">📢 Broadcast Composer</div></div>
+              <div class="form-grid">
+                <div class="field"><label>เลือก Channel (เลือกได้หลายอัน)</label>
+                  <div class="flex gap-sm" style="flex-wrap:wrap">
+                    <label class="auto-row" style="margin:0;padding:8px 12px;cursor:pointer;flex:1;min-width:160px"><input type="checkbox" checked style="margin-right:8px"><div class="auto-info"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:6px"><span class="ch-icon line" style="width:18px;height:18px">L</span>LINE OA</h4><p style="font-size:11px">842 followers</p></div></label>
+                    <label class="auto-row" style="margin:0;padding:8px 12px;cursor:pointer;flex:1;min-width:160px"><input type="checkbox" checked style="margin-right:8px"><div class="auto-info"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:6px"><span class="ch-icon email" style="width:18px;height:18px">✉</span>Email</h4><p style="font-size:11px">3,420 contacts</p></div></label>
+                    <label class="auto-row" style="margin:0;padding:8px 12px;cursor:pointer;flex:1;min-width:160px"><input type="checkbox" style="margin-right:8px"><div class="auto-info"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:6px"><span class="ch-icon fb" style="width:18px;height:18px">f</span>Facebook</h4><p style="font-size:11px">1,840 fans</p></div></label>
+                    <label class="auto-row" style="margin:0;padding:8px 12px;cursor:pointer;flex:1;min-width:160px"><input type="checkbox" style="margin-right:8px"><div class="auto-info"><h4 style="font-size:12.5px;display:flex;align-items:center;gap:6px"><span class="ch-icon ig" style="width:18px;height:18px">📷</span>Instagram</h4><p style="font-size:11px">680 followers</p></div></label>
+                  </div>
+                </div>
+                <div class="field"><label>Segment</label>
+                  <select><option>ทั้งหมด</option><option>VIP only (84 คน)</option><option>Hot Lead (38 คน)</option><option>Cold (240 คน)</option></select>
+                </div>
+                <div class="field"><label>Template</label>
+                  <select onchange="loadTpl(this)">
+                    <option value="">-- เลือก template --</option>
+                    <option value="webinar">📚 เชิญร่วม Webinar</option>
+                    <option value="promo">💰 โปรโมชั่นพิเศษ</option>
+                    <option value="newsletter">📰 Monthly Newsletter</option>
+                    <option value="event">🎉 อีเวนต์</option>
+                  </select>
+                </div>
+                <div class="field"><label>ข้อความ</label>
+                  <textarea id="bcMsg" rows="6" placeholder="พิมพ์ข้อความที่จะ broadcast..."></textarea>
+                </div>
+                <div class="flex gap-sm">
+                  <button class="btn ghost" onclick="toast('บันทึกเป็น draft','info')">บันทึก draft</button>
+                  <button class="btn primary" onclick="sendBroadcast()" style="flex:1">📤 ส่ง broadcast</button>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-h"><div class="card-title">ประวัติการส่ง</div></div>
+              <div id="bcHist"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatBot" class="chat-panel" style="display:none">
+          <div class="row r-2">
+            <div class="card">
+              <div class="card-h"><div class="card-title">🤖 Auto-reply Rules</div></div>
+              <div id="botRules"></div>
+              <button class="btn primary" style="width:100%;margin-top:12px" onclick="toast('สร้างกฎใหม่','info')">+ เพิ่มกฎตอบอัตโนมัติ</button>
+            </div>
+            <div class="card">
+              <div class="card-h"><div class="card-title">สถิติ Bot 7 วัน</div></div>
+              <div class="kpi-grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+                <div class="kpi-card"><div class="kpi-label">ตอบได้</div><div class="kpi-value" style="font-size:22px">418</div><div class="fz-12 text-2">76%</div></div>
+                <div class="kpi-card"><div class="kpi-label">โอนทีม</div><div class="kpi-value" style="font-size:22px">132</div><div class="fz-12 text-2">24%</div></div>
+              </div>
+              <canvas id="chartBot" height="100"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatMembers" class="chat-panel" style="display:none">
+          <div class="card">
+            <div class="card-h">
+              <div><div class="card-title">สมาชิก LINE OA</div><div class="card-sub">842 followers • 245 active 7 วัน</div></div>
+              <button class="btn primary" onclick="toast('Export สมาชิก CSV','success')">⬇ Export</button>
+            </div>
+            <table class="tbl">
+              <thead><tr><th>ชื่อ</th><th>บริษัท</th><th>Tag</th><th>มูลค่า Lifetime</th><th>ล่าสุด</th></tr></thead>
+              <tbody id="memberBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== SETTINGS ===================== -->
+      <section class="page" data-page="settings">
+        <div class="row r-half">
+          <div class="card">
+            <div class="card-h"><div class="card-title">ข้อมูลบริษัท</div></div>
+            <div class="form-grid">
+              <div class="field"><label>ชื่อบริษัท</label><input value="บริษัท ตัวอย่าง จำกัด"></div>
+              <div class="field"><label>เลขผู้เสียภาษี</label><input value="0-1234-56789-01-2"></div>
+              <div class="field"><label>ที่อยู่</label><textarea rows="2">123/4 อาคารตัวอย่าง ชั้น 5 ถ.สุขุมวิท กรุงเทพฯ 10110</textarea></div>
+              <button class="btn primary" onclick="toast('บันทึกเรียบร้อย','success')">💾 บันทึก</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><div class="card-title">การเชื่อมต่อ</div></div>
+            <div class="auto-row"><div class="auto-info"><h4>💚 LINE OA</h4><p>เชื่อมต่อแล้ว · 842 followers</p></div><div class="switch on"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>📧 Gmail / Email</h4><p>เชื่อมต่อแล้ว · sales@example.com</p></div><div class="switch on"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>📊 Google Sheets</h4><p>Sync ดีลและรายงาน</p></div><div class="switch on"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>🔵 Facebook Lead Ads</h4><p>นำ lead เข้าระบบอัตโนมัติ</p></div><div class="switch on"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>📱 WhatsApp Business</h4><p>ยังไม่ได้เชื่อมต่อ</p></div><div class="switch"></div></div>
+            <div class="auto-row"><div class="auto-info"><h4>💼 LinkedIn Sales Nav</h4><p>ยังไม่ได้เชื่อมต่อ</p></div><div class="switch"></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal"><div class="modal" id="modalBox"></div></div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ============= STATE ============= */
+const state={
+  customers:[
+    {n:'คุณธีรพล โยธินสกุล',co:'TPS Engineering',phone:'062-777-3344',email:'teerapol@tps.co.th',tag:'Customer',value:1840000,last:'1 สัปดาห์'},
+    {n:'คุณวิภา รัตนา',co:'ร้าน วิภา ฟุตแวร์',phone:'089-555-1234',email:'wipa@shop.com',tag:'VIP',value:1240000,last:'1 วัน'},
+    {n:'คุณนพดล สุขใจ',co:'บ.โลจิสติกส์ พลัส จก.',phone:'085-111-2233',email:'noppadon@logistic.com',tag:'Customer',value:840000,last:'3 วัน'},
+    {n:'คุณอริสา วงศ์ทอง',co:'Aurora Design Studio',phone:'096-333-9999',email:'arisa@aurora.studio',tag:'VIP',value:680000,last:'4 วัน'},
+    {n:'คุณรังสิมันต์ บัวขาว',co:'Mountain Coffee Co.',phone:'087-666-5555',email:'rangsiman@mtcoffee.com',tag:'Customer',value:520000,last:'5 วัน'},
+    {n:'คุณกานต์ ปัญญา',co:'บ.เทคโน เอเซีย จก.',phone:'081-234-5678',email:'kan@tech.co.th',tag:'Hot Lead',value:480000,last:'วันนี้'},
+    {n:'คุณเอกชัย พรหมศร',co:'EK Manufacturing',phone:'084-222-1133',email:'ekkachai@ekman.co.th',tag:'Customer',value:420000,last:'1 สัปดาห์'},
+    {n:'คุณพิมพ์ลดา จันทร์เกษม',co:'PJ Beauty Clinic',phone:'098-222-1111',email:'pim@pjbeauty.com',tag:'Hot Lead',value:320000,last:'วันนี้'},
+    {n:'คุณภัทร์ มหาชัย',co:'PR Agency Co.',phone:'061-888-7777',email:'patr@pragency.co',tag:'Hot Lead',value:320000,last:'2 ชม.'},
+    {n:'คุณกฤษณ์ บุญมา',co:'Krit Logistics',phone:'063-555-9090',email:'krit@kritlogi.co.th',tag:'Hot Lead',value:280000,last:'วันนี้'},
+    {n:'คุณวันชัย เขียวสด',co:'WC Construction',phone:'097-111-8888',email:'wanchai@wccon.co.th',tag:'Customer',value:240000,last:'2 สัปดาห์'},
+    {n:'คุณสุนันท์ มีสุข',co:'SunMee Café',phone:'088-666-7777',email:'sunan@sunmeecafe.com',tag:'Customer',value:184000,last:'1 สัปดาห์'},
+    {n:'คุณปิยะ จงเจริญ',co:'PJ Photography',phone:'090-333-2222',email:'piya@pjphoto.com',tag:'Hot Lead',value:120000,last:'2 วัน'},
+    {n:'คุณวสันต์ จันทรา',co:'Wassanat Boutique',phone:'099-444-5555',email:'wassan@boutique.com',tag:'Customer',value:98000,last:'1 สัปดาห์'},
+    {n:'คุณสมชาย ใจดี',co:'ร้านสมชาย เครื่องเขียน',phone:'095-444-5566',email:'somchai@stationery.com',tag:'Cold',value:0,last:'2 สัปดาห์'},
+    {n:'คุณนภัส ภูมิใจ',co:'Napatch Holding',phone:'084-888-2233',email:'napat@holding.com',tag:'Cold',value:0,last:'1 เดือน'},
+    {n:'คุณดิเรก บุณยรัตน์',co:'Direk Trading',phone:'062-888-9999',email:'direk@trading.co.th',tag:'Cold',value:0,last:'3 สัปดาห์'},
+    {n:'คุณนรินทร์ พิทักษ์',co:'NP Pharmacy',phone:'098-666-1234',email:'narin@nppharm.co.th',tag:'Cold',value:0,last:'1 เดือน'},
+  ],
+  deals:[
+    {id:1,name:'ระบบ ERP สำหรับโรงงาน',co:'เทคโน เอเซีย',amount:480000,prob:60,stage:'qualified',close:'15 พ.ค.',tag:'Enterprise',color:'info'},
+    {id:2,name:'Website + Online Booking',co:'PJ Beauty Clinic',amount:240000,prob:70,stage:'proposal',close:'8 พ.ค.',tag:'SMB',color:'purple'},
+    {id:3,name:'Marketing Automation',co:'PR Agency',amount:320000,prob:55,stage:'qualified',close:'22 พ.ค.',tag:'SMB',color:'purple'},
+    {id:4,name:'Mobile App ขายของ',co:'วิภา ฟุตแวร์',amount:680000,prob:80,stage:'negotiation',close:'5 พ.ค.',tag:'VIP',color:'warning'},
+    {id:5,name:'CRM System',co:'Aurora Design',amount:180000,prob:90,stage:'negotiation',close:'3 พ.ค.',tag:'VIP',color:'warning'},
+    {id:6,name:'Cloud Migration',co:'TPS Engineering',amount:920000,prob:40,stage:'lead',close:'30 พ.ค.',tag:'Enterprise',color:'info'},
+    {id:7,name:'Inventory System',co:'Mountain Coffee',amount:160000,prob:50,stage:'proposal',close:'18 พ.ค.',tag:'SMB',color:'purple'},
+    {id:8,name:'POS + Loyalty Program',co:'ร้านสมชาย',amount:120000,prob:30,stage:'lead',close:'25 พ.ค.',tag:'SMB',color:'purple'},
+    {id:9,name:'Data Analytics Platform',co:'Napatch Holding',amount:850000,prob:35,stage:'lead',close:'มิ.ย.',tag:'Enterprise',color:'info'},
+    {id:10,name:'AI Chatbot',co:'PJ Beauty Clinic',amount:80000,prob:95,stage:'won',close:'20 เม.ย.',tag:'SMB',color:'purple'},
+    {id:11,name:'E-commerce Platform',co:'Mountain Coffee',amount:240000,prob:95,stage:'won',close:'25 เม.ย.',tag:'SMB',color:'purple'},
+    {id:12,name:'HR System',co:'TPS Engineering',amount:380000,prob:50,stage:'qualified',close:'28 พ.ค.',tag:'Enterprise',color:'info'},
+    {id:13,name:'WMS — คลังสินค้า',co:'Krit Logistics',amount:540000,prob:65,stage:'qualified',close:'10 พ.ค.',tag:'Enterprise',color:'info'},
+    {id:14,name:'Digital Signage Network',co:'EK Manufacturing',amount:280000,prob:75,stage:'proposal',close:'6 พ.ค.',tag:'SMB',color:'purple'},
+    {id:15,name:'Booking System สปา',co:'PJ Beauty Clinic',amount:140000,prob:85,stage:'negotiation',close:'2 พ.ค.',tag:'VIP',color:'warning'},
+    {id:16,name:'Photographer CRM',co:'PJ Photography',amount:120000,prob:55,stage:'proposal',close:'14 พ.ค.',tag:'SMB',color:'purple'},
+    {id:17,name:'POS ระบบใหม่',co:'SunMee Café',amount:95000,prob:90,stage:'won',close:'15 เม.ย.',tag:'SMB',color:'purple'},
+    {id:18,name:'Inventory + Sales Online',co:'Wassanat Boutique',amount:180000,prob:60,stage:'qualified',close:'20 พ.ค.',tag:'SMB',color:'purple'},
+    {id:19,name:'Project Management Tool',co:'WC Construction',amount:240000,prob:45,stage:'lead',close:'มิ.ย.',tag:'Enterprise',color:'info'},
+    {id:20,name:'AI Lead Scoring',co:'PR Agency',amount:60000,prob:80,stage:'proposal',close:'12 พ.ค.',tag:'SMB',color:'purple'},
+  ],
+  tasks:[
+    {id:1,t:'ติดต่อกลับคุณกานต์ — เสนอราคา ERP',due:'วันนี้ 15:00',assign:'บอสไผ่',pri:'high',done:false},
+    {id:2,t:'ส่ง proposal ให้ PJ Beauty Clinic',due:'วันนี้ 17:00',assign:'บอสไผ่',pri:'high',done:false},
+    {id:3,t:'รีวิว contract วิภา ฟุตแวร์',due:'วันนี้ 18:00',assign:'พิม',pri:'high',done:false},
+    {id:4,t:'Demo system ให้ TPS Engineering',due:'พรุ่งนี้ 10:00',assign:'นพ',pri:'medium',done:false},
+    {id:5,t:'ตามผล proposal Aurora Design',due:'พรุ่งนี้',assign:'บอสไผ่',pri:'medium',done:false},
+    {id:6,t:'เซ็นสัญญา PJ Beauty (Chatbot)',due:'2 วัน',assign:'บอสไผ่',pri:'high',done:false},
+    {id:7,t:'Kickoff meeting กับ SunMee Café',due:'2 วัน',assign:'นพ',pri:'medium',done:false},
+    {id:8,t:'ส่ง quotation Krit Logistics WMS',due:'3 วัน',assign:'บอสไผ่',pri:'high',done:false},
+    {id:9,t:'ทำ contract template ใหม่',due:'สัปดาห์นี้',assign:'นพ',pri:'low',done:true},
+    {id:10,t:'สรุปยอดเดือน เม.ย. ส่งบัญชี',due:'30 เม.ย.',assign:'พิม',pri:'medium',done:false},
+    {id:11,t:'อัปเดต LinkedIn ของบริษัท',due:'สัปดาห์นี้',assign:'พิม',pri:'low',done:false},
+    {id:12,t:'รีบรีฟ Lead จาก FB Ads รอบล่าสุด',due:'2 วัน',assign:'พิม',pri:'medium',done:false},
+    {id:13,t:'เตรียมสไลด์ Webinar 10 พ.ค.',due:'4 วัน',assign:'นพ',pri:'medium',done:false},
+    {id:14,t:'นัด demo Mountain Coffee',due:'เลยกำหนด 1 วัน',assign:'นพ',pri:'high',done:false,overdue:true},
+    {id:15,t:'Follow up เลยกำหนด 3 lead เก่า',due:'เลยกำหนด 2 วัน',assign:'บอสไผ่',pri:'medium',done:false,overdue:true},
+    {id:16,t:'ตรวจ invoice เดือนก่อน',due:'เสร็จแล้ว',assign:'พิม',pri:'low',done:true},
+    {id:17,t:'ส่ง welcome email ลูกค้าใหม่ 5 คน',due:'เสร็จแล้ว',assign:'พิม',pri:'low',done:true},
+    {id:18,t:'อัปเดต Pipeline Sheet',due:'เสร็จแล้ว',assign:'นพ',pri:'low',done:true},
+  ],
+  team:[
+    {n:'บอสไผ่',role:'Sales Manager',deals:5,rev:1480000,pct:48},
+    {n:'นพ ตันนี้',role:'Sales Rep',deals:4,rev:920000,pct:30},
+    {n:'พิม จิรา',role:'Account Mgr',deals:3,rev:680000,pct:22},
+  ],
+  funnelStages:[
+    {n:'Lead',c:'#94A3B8',cnt:248,val:'฿4.2M'},
+    {n:'Qualified',c:'#3B82F6',cnt:84,val:'฿2.8M'},
+    {n:'Proposal',c:'#F59E0B',cnt:36,val:'฿1.6M'},
+    {n:'Negotiation',c:'#8B5CF6',cnt:18,val:'฿980K'},
+    {n:'Won',c:'#10B981',cnt:8,val:'฿624K'},
+  ],
+  automation:[
+    {id:1,name:'Auto-assign Lead ใหม่',desc:'เมื่อมี lead ใหม่จาก FB Ads / Form แจกให้ทีม sales อัตโนมัติ',on:true,runs:38},
+    {id:2,name:'Follow-up Email — 3 วัน',desc:'ส่งอีเมลตามผล lead อัตโนมัติหลังคุยครั้งแรก 3 วัน',on:true,runs:24},
+    {id:3,name:'Deal Stage → LINE Notify',desc:'แจ้งเตือน LINE ทีมเมื่อดีลย้าย stage',on:true,runs:18},
+    {id:4,name:'Birthday Greeting',desc:'ส่ง LINE/Email อวยพรวันเกิดลูกค้าทุกเดือน',on:true,runs:12},
+    {id:5,name:'รายงานยอดขายรายวัน',desc:'ส่งสรุปยอดให้ผู้บริหารทุกเช้า 9:00',on:true,runs:1},
+    {id:6,name:'Sync Google Sheets',desc:'อัปเดตดีลใน Sheet ทุก 30 นาที',on:true,runs:48},
+    {id:7,name:'Renewal Reminder',desc:'แจ้ง 30 วันก่อนสัญญาหมด',on:false,runs:0},
+    {id:8,name:'NPS Survey หลังปิดงาน',desc:'ส่งแบบสำรวจ NPS อัตโนมัติเมื่อดีล Won',on:true,runs:8},
+  ],
+  autoLog:[
+    {t:'14:32:01',msg:'lead_assigned',det:'มอบ lead "คุณกานต์" ให้ บอสไผ่',type:'success'},
+    {t:'14:18:42',msg:'deal_stage_change',det:'PJ Beauty Clinic → Negotiation',type:'info'},
+    {t:'13:55:00',msg:'follow_up_email',det:'ส่ง follow-up ถึง 3 lead',type:'success'},
+    {t:'12:30:00',msg:'sheets_sync',det:'อัปเดต 12 ดีล',type:'info'},
+    {t:'11:15:08',msg:'birthday_send',det:'ส่งอวยพรวันเกิด คุณวิภา',type:'success'},
+    {t:'10:00:00',msg:'daily_report',det:'ส่งรายงานยอดขาย 9 คน',type:'info'},
+    {t:'09:30:00',msg:'nps_sent',det:'ส่ง NPS Survey ดีล Mountain Coffee',type:'success'},
+    {t:'09:00:14',msg:'auto_reply',det:'Bot ตอบลูกค้า "ขอข้อมูลเพิ่ม"',type:'success'},
+  ],
+  chats:[
+    {id:1,name:'คุณกานต์',tag:'Hot Lead',ch:'line',last:'พรุ่งนี้ผมว่างคุยตอน 10 โมงครับ',time:'14:42',unread:1,active:true,init:'กต'},
+    {id:2,name:'คุณภัทร์',tag:'Hot Lead',ch:'email',last:'RE: ขอใบเสนอราคา ERP — มีตัวอย่าง case study ไหมครับ',time:'13:18',unread:2,init:'ภท'},
+    {id:3,name:'คุณวิภา',tag:'VIP',ch:'line',last:'ขอบคุณค่ะ ส่งสัญญามาเลย',time:'11:50',unread:0,init:'วภ'},
+    {id:4,name:'คุณนพดล',tag:'Customer',ch:'line',last:'ระบบล่มอีกแล้ว ช่วยด่วน',time:'10:30',unread:1,init:'นด'},
+    {id:5,name:'aurora.studio',tag:'VIP',ch:'ig',last:'นัดประชุมพรุ่งนี้นะคะ ส่ง portfolio ทาง IG ได้เลย',time:'09:48',unread:0,init:'อร'},
+    {id:6,name:'คุณพิมพ์',tag:'Hot Lead',ch:'fb',last:'(รูปภาพ) สนใจฟีเจอร์นี้',time:'09:12',unread:1,init:'พม'},
+    {id:7,name:'คุณรังสิมันต์',tag:'Customer',ch:'line',last:'ใช้งานได้แล้วครับ ขอบคุณ',time:'08:50',unread:0,init:'รส'},
+    {id:8,name:'คุณสมชาย',tag:'Cold',ch:'email',last:'RE: ติดตามผล proposal — พิจารณาดูก่อนนะครับ',time:'เมื่อวาน',unread:0,init:'สช'},
+    {id:9,name:'M.Tanaka',tag:'Hot Lead',ch:'fb',last:'Hi, interested in your CRM. How much?',time:'เมื่อวาน',unread:1,init:'MT'},
+    {id:10,name:'tps_engineer',tag:'Customer',ch:'ig',last:'ฝากแชร์โปสเตอร์งานหน่อยค่ะ',time:'2 วัน',unread:0,init:'TE'},
+    {id:11,name:'คุณนภัส',tag:'Cold',ch:'email',last:'RE: Webinar invite — ขอบคุณค่ะ',time:'2 วัน',unread:0,init:'นภ'},
+    {id:12,name:'mtcoffee_th',tag:'Customer',ch:'ig',last:'รีวิวลงเพจแล้วครับ ❤️',time:'3 วัน',unread:0,init:'MC'},
+  ],
+  activeChannel:'all',
+  msgsByChat:{
+    1:[
+      {who:'in',t:'สวัสดีครับ ผมสนใจระบบ ERP ที่ทีมคุณนำเสนอ',time:'14:20'},
+      {who:'bot',t:'สวัสดีครับ 🙏 ขอบคุณที่สนใจครับ ทีมงานจะติดต่อกลับภายใน 15 นาทีครับ',time:'14:20'},
+      {who:'out',t:'สวัสดีครับ คุณกานต์ ผมบอสไผ่ ส่งใบเสนอราคาให้แล้วครับ พรุ่งนี้สะดวกคุยกี่โมงครับ?',time:'14:25'},
+      {who:'in',t:'ขอบคุณครับ ดูรายละเอียดแล้ว มีคำถามเรื่อง integration กับระบบเก่า',time:'14:38'},
+      {who:'out',t:'รับทราบครับ — เรา integrate ได้กับ SAP, Oracle และ MySQL ครับ มีตัวอย่างที่ทำกับ บ.A',time:'14:40'},
+      {who:'in',t:'พรุ่งนี้ผมว่างคุยตอน 10 โมงครับ',time:'14:42'},
+    ],
+    2:[
+      {who:'in',t:'Subject: ขอใบเสนอราคา ERP\n\nสวัสดีครับ ผมต้องการใบเสนอราคาระบบ ERP สำหรับบริษัท 50 คน — มีฟีเจอร์อะไรบ้างขอ catalog ด้วยครับ',time:'13:00'},
+      {who:'out',t:'Subject: RE: ขอใบเสนอราคา ERP\n\nสวัสดีครับคุณภัทร์ แนบใบเสนอราคา + Catalog ฟีเจอร์ + Case Study 3 ลูกค้าให้แล้วครับ',time:'13:10'},
+      {who:'in',t:'มีตัวอย่าง case study ไหมครับ',time:'13:18'},
+      {who:'in',t:'อยากเทียบกับ SAP กับ Odoo ได้ไหม',time:'13:18'},
+    ],
+    3:[
+      {who:'out',t:'สวัสดีครับคุณวิภา ส่งสัญญาเรียบร้อยทาง email แล้วนะครับ',time:'11:30'},
+      {who:'out',t:'พิจารณาแล้วเซ็นและส่งกลับได้เลยครับ',time:'11:31'},
+      {who:'in',t:'ขอบคุณค่ะ ส่งสัญญามาเลย',time:'11:50'},
+      {who:'in',t:'จะเซ็นและส่งคืนภายในวันนี้ค่ะ',time:'11:51'},
+    ],
+    4:[
+      {who:'in',t:'ระบบล่มอีกแล้ว ช่วยด่วน',time:'10:30'},
+      {who:'bot',t:'รับเรื่องแล้วครับ! ทีม support กำลังตรวจสอบให้ทันทีครับ — ticket #4821',time:'10:30'},
+      {who:'out',t:'สวัสดีครับ ตรวจสอบแล้ว — server กลับมาแล้ว ลองเข้าใหม่ดูครับ ขออภัยที่ไม่สะดวกครับ',time:'10:32'},
+      {who:'out',t:'จะส่ง post-mortem report ให้ภายในวันนี้ครับ',time:'10:33'},
+    ],
+    5:[
+      {who:'in',t:'นัดประชุมพรุ่งนี้นะคะ ส่ง portfolio ทาง IG ได้เลย',time:'09:48'},
+      {who:'out',t:'รับทราบครับ! 10 โมงเช้า ส่ง portfolio ของเรามาให้ทาง DM เรียบร้อย',time:'09:50'},
+      {who:'out',t:'พรุ่งนี้ผมจะนำ demo ของ CRM ไปด้วยนะครับ',time:'09:51'},
+    ],
+    6:[
+      {who:'in',t:'(รูปภาพ) สนใจฟีเจอร์นี้',time:'09:10'},
+      {who:'bot',t:'สวัสดีครับ ฟีเจอร์ AI Lead Scoring ครับ ตอนนี้มีในแพ็คเกจ Pro ขึ้นไป',time:'09:11'},
+      {who:'out',t:'อยากให้ผม demo ให้ดูไหมครับ?',time:'09:12'},
+      {who:'out',t:'ส่งวิดีโอ demo 3 นาทีให้ดูก่อนครับ → bit.ly/lead-score',time:'09:13'},
+    ],
+    7:[
+      {who:'out',t:'สวัสดีครับ — ทีม dev แก้ bug แล้ว ลอง refresh และเข้าใหม่ครับ',time:'08:40'},
+      {who:'in',t:'ใช้งานได้แล้วครับ ขอบคุณ',time:'08:50'},
+      {who:'in',t:'ทีม support ของคุณเร็วมาก 👍',time:'08:51'},
+    ],
+    8:[
+      {who:'out',t:'Subject: ติดตามผล proposal\n\nสวัสดีครับคุณสมชาย ส่ง proposal ไว้ 2 อาทิตย์ที่แล้ว มีคำถามเพิ่มไหมครับ?',time:'เมื่อวาน 16:00'},
+      {who:'in',t:'Subject: RE: ติดตามผล proposal\n\nพิจารณาดูก่อนนะครับ',time:'เมื่อวาน 16:30'},
+    ],
+    9:[
+      {who:'in',t:'Hi, interested in your CRM. How much?',time:'เมื่อวาน 14:00'},
+      {who:'bot',t:'Hi! Plans start from ฿890/mo (Starter), ฿1,890 (Pro), ฿4,890 (Enterprise). Free 14-day trial → bit.ly/trial',time:'เมื่อวาน 14:00'},
+      {who:'in',t:'Got it. Will sign up',time:'เมื่อวาน 14:05'},
+      {who:'out',t:'Great! Reply here if you need help during trial',time:'เมื่อวาน 14:08'},
+    ],
+    10:[
+      {who:'in',t:'ฝากแชร์โปสเตอร์งานหน่อยค่ะ',time:'2 วัน'},
+      {who:'out',t:'รับทราบครับ! ขออนุมัติฝ่ายการตลาดก่อน จะรีพอสในสตอรี่ภายในวันนี้ครับ',time:'2 วัน'},
+      {who:'out',t:'รีพอสเรียบร้อยครับ + แท็กกลับให้ด้วย ✓',time:'2 วัน'},
+    ],
+    11:[
+      {who:'out',t:'Subject: เชิญร่วม Webinar — Sales Automation 2026\n\nเรียน คุณนภัส\nขอเชิญร่วม Webinar ฟรีวันที่ 10 พ.ค. 14:00 — bit.ly/sa-2026',time:'2 วัน'},
+      {who:'in',t:'Subject: RE: Webinar invite\n\nขอบคุณค่ะ ลงทะเบียนเรียบร้อย',time:'2 วัน'},
+      {who:'out',t:'Subject: RE: Webinar invite\n\nขอบคุณที่ลงทะเบียนครับ ส่ง zoom link ก่อนงานครับ',time:'2 วัน'},
+    ],
+    12:[
+      {who:'in',t:'รีวิวลงเพจแล้วครับ ❤️',time:'3 วัน'},
+      {who:'in',t:'(ลิงก์โพสต์ IG)',time:'3 วัน'},
+      {who:'out',t:'ขอบคุณมากเลยครับ! รีพอสในสตอรี่และส่งของขวัญพิเศษให้แล้วครับ',time:'3 วัน'},
+    ],
+  },
+  msgs:[],
+  bcHistory:[
+    {t:'เชิญร่วม Webinar — Sales Automation 2026',ch:'LINE + Email + IG',sent:6132,open:3424,clk:642,when:'2 วันก่อน'},
+    {t:'Promo: ลด 30% ระบบ Annual Plan',ch:'Email',sent:3420,open:1842,clk:380,when:'5 วันก่อน'},
+    {t:'Monthly Newsletter เม.ย. 2026',ch:'Email',sent:3420,open:2018,clk:240,when:'1 สัปดาห์'},
+    {t:'IG Story — เปิดตัวฟีเจอร์ใหม่',ch:'IG',sent:680,open:520,clk:84,when:'10 วัน'},
+    {t:'FB Live: AI Lead Scoring Demo',ch:'FB',sent:1840,open:1240,clk:340,when:'12 วัน'},
+    {t:'อบรมฟรี: AI สำหรับ SME',ch:'LINE + Email + FB',sent:6508,open:4120,clk:520,when:'2 สัปดาห์'},
+    {t:'Customer Success Story #4',ch:'Email + LinkedIn',sent:3420,open:2240,clk:420,when:'3 สัปดาห์'},
+    {t:'ครบ 5 ปี ลด 50% First Year',ch:'LINE + Email + FB + IG',sent:6982,open:5240,clk:1620,when:'1 เดือน'},
+  ],
+  botRules:[
+    {q:'ราคา / ค่าบริการ',a:'ส่ง pricing pack + ลิงก์เปรียบเทียบ',hits:124,on:true},
+    {q:'Demo / นัดดู',a:'ส่งลิงก์ Calendly สำหรับนัด demo',hits:84,on:true},
+    {q:'มีฟีเจอร์ X ไหม',a:'ส่งหน้าฟีเจอร์ทั้งหมด + วิดีโอแนะนำ',hits:62,on:true},
+    {q:'ระบบ integrate กับอะไรได้บ้าง',a:'ส่ง integration list',hits:48,on:true},
+    {q:'มี case study ไหม',a:'ส่ง 3 case studies + ROI calculator',hits:42,on:true},
+    {q:'Trial / ทดลองใช้',a:'ส่งลิงก์สมัคร 14-day free trial',hits:38,on:true},
+    {q:'รองรับ users กี่คน',a:'รองรับจาก 5-500 users — ปรับ scale ได้',hits:28,on:true},
+    {q:'ติดต่อทีม sales',a:'โอนแชทไป sales ทันที',hits:28,on:true},
+    {q:'มี Mobile app ไหม',a:'มี iOS + Android — ส่งลิงก์ดาวน์โหลด',hits:22,on:true},
+    {q:'support / help',a:'24/7 LIVE chat + Email + Phone',hits:18,on:true},
+    {q:'ภาษาที่รองรับ',a:'ไทย, อังกฤษ, จีน, เวียดนาม',hits:12,on:false},
+  ],
+  members:[
+    {n:'คุณธีรพล โยธินสกุล',co:'TPS Engineering',tag:'VIP',ltv:1840000,last:'1 สัปดาห์'},
+    {n:'คุณวิภา รัตนา',co:'วิภา ฟุตแวร์',tag:'VIP',ltv:1240000,last:'1 วัน'},
+    {n:'คุณนพดล สุขใจ',co:'โลจิสติกส์ พลัส',tag:'Customer',ltv:840000,last:'3 วัน'},
+    {n:'คุณอริสา วงศ์ทอง',co:'Aurora Design',tag:'VIP',ltv:680000,last:'4 วัน'},
+    {n:'คุณรังสิมันต์ บัวขาว',co:'Mountain Coffee',tag:'Customer',ltv:520000,last:'5 วัน'},
+    {n:'คุณกานต์ ปัญญา',co:'เทคโน เอเซีย',tag:'Hot Lead',ltv:480000,last:'วันนี้'},
+    {n:'คุณเอกชัย พรหมศร',co:'EK Manufacturing',tag:'Customer',ltv:420000,last:'1 สัปดาห์'},
+    {n:'คุณภัทร์ มหาชัย',co:'PR Agency',tag:'Hot Lead',ltv:320000,last:'2 ชม.'},
+    {n:'คุณพิมพ์ลดา จันทร์เกษม',co:'PJ Beauty Clinic',tag:'Hot Lead',ltv:320000,last:'วันนี้'},
+    {n:'คุณกฤษณ์ บุญมา',co:'Krit Logistics',tag:'Hot Lead',ltv:280000,last:'วันนี้'},
+    {n:'คุณวันชัย เขียวสด',co:'WC Construction',tag:'Customer',ltv:240000,last:'2 สัปดาห์'},
+    {n:'คุณสุนันท์ มีสุข',co:'SunMee Café',tag:'Customer',ltv:184000,last:'1 สัปดาห์'},
+    {n:'M. Tanaka',co:'Tanaka Trading',tag:'Hot Lead',ltv:160000,last:'เมื่อวาน'},
+    {n:'คุณปิยะ จงเจริญ',co:'PJ Photography',tag:'Hot Lead',ltv:120000,last:'2 วัน'},
+    {n:'คุณวสันต์ จันทรา',co:'Wassanat Boutique',tag:'Customer',ltv:98000,last:'1 สัปดาห์'},
+  ],
+};
+
+const charts={};
+const fmt=n=>n.toLocaleString('th-TH');
+const fmtK=n=>n>=1000000?'฿'+(n/1000000).toFixed(2)+'M':n>=1000?'฿'+(n/1000).toFixed(0)+'K':'฿'+n;
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+
+function toast(msg,type='info'){
+  const el=document.createElement('div');
+  el.className='toast '+type;
+  el.innerHTML=`<span>${type==='success'?'✅':type==='error'?'❌':'ℹ️'}</span><span>${msg}</span>`;
+  $('#toasts').appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateX(20px)';setTimeout(()=>el.remove(),300)},3000);
+}
+
+function tagPill(tag){
+  const map={VIP:['warning','VIP'],'Hot Lead':['danger','🔥 Hot'],Customer:['success','Customer'],Cold:['neutral','Cold']};
+  const [c,l]=map[tag]||['neutral',tag];
+  return `<span class="pill ${c}">${l}</span>`;
+}
+
+const titles={dashboard:['แดชบอร์ด','ภาพรวมธุรกิจของคุณ'],customers:['ลูกค้า / CRM','ฐานข้อมูลลูกค้าทั้งหมด'],pipeline:['Sales Pipeline','ดีลทั้งหมดแบบ Kanban'],tasks:['Tasks','งานและ to-do'],reports:['Reports','รายงานและสถิติ'],accounting:['บัญชี P&L','งบกำไรขาดทุน'],automation:['Automation','ระบบทำงานอัตโนมัติ'],line:['LINE & Chat','การสนทนาและ broadcast'],settings:['ตั้งค่า','การตั้งค่าระบบ']};
+
+function navigateTo(p){
+  $$('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.nav===p));
+  $$('.page').forEach(s=>s.classList.toggle('active',s.dataset.page===p));
+  const [t,sub]=titles[p];$('#topTitle').textContent=t;$('#topSub').textContent=sub;
+  if(p==='reports')renderReports();
+  if(p==='accounting')renderAccountingChart();
+  if(p==='line')chatTab($('.tab.active'),'inbox');
+  if(p==='tasks')drawTeamChart();
+}
+$$('.nav-item').forEach(b=>b.addEventListener('click',()=>navigateTo(b.dataset.nav)));
+
+/* ============= DASHBOARD ============= */
+function renderDashboard(){
+  // Funnel
+  $('#funnelView').innerHTML=state.funnelStages.map((s,i)=>{
+    const w=100-i*15;
+    return `<div style="margin-bottom:10px">
+      <div class="flex between" style="margin-bottom:4px">
+        <div class="fz-13 fw-600">${s.n}</div>
+        <div class="fz-12 text-2"><span class="fw-700">${s.cnt}</span> · ${s.val}</div>
+      </div>
+      <div style="height:30px;background:${s.c};width:${w}%;border-radius:5px;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:700">${Math.round((state.funnelStages[i+1]?state.funnelStages[i+1].cnt/s.cnt*100:100))}%</div>
+    </div>`;
+  }).join('');
+  // Hot deals
+  const hot=state.deals.filter(d=>d.prob>=70&&d.stage!=='won').sort((a,b)=>b.prob-a.prob);
+  $('#hotDeals').innerHTML=hot.map(d=>`
+    <tr>
+      <td class="fw-600">${d.name}</td>
+      <td class="text-2">${d.co}</td>
+      <td class="fw-700">฿${fmt(d.amount)}</td>
+      <td><div class="bar" style="width:80px"><span style="width:${d.prob}%;background:var(--success)"></span></div><div class="fz-12 text-3 mt-8">${d.prob}%</div></td>
+      <td class="text-2 fz-12">${d.close}</td>
+    </tr>`).join('');
+  // Today tasks
+  $('#todayTasks').innerHTML=state.tasks.filter(t=>!t.done).slice(0,5).map(t=>`
+    <div class="task-row">
+      <div class="task-cb" onclick="this.classList.toggle('done');this.innerHTML=this.classList.contains('done')?'✓':''"></div>
+      <div class="task-info">
+        <div class="task-title">${t.t}</div>
+        <div class="task-meta"><span>📅 ${t.due}</span><span>👤 ${t.assign}</span><span class="pill ${t.pri==='high'?'danger':t.pri==='medium'?'warning':'neutral'}" style="font-size:10px">${t.pri==='high'?'สูง':t.pri==='medium'?'ปานกลาง':'ต่ำ'}</span></div>
+      </div>
+    </div>
+  `).join('');
+  drawRevenueChart();
+}
+
+function drawRevenueChart(){
+  const ctx=$('#chartRev').getContext('2d');
+  if(charts.rev)charts.rev.destroy();
+  const labels=['พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.','ม.ค.','ก.พ.','มี.ค.','เม.ย.'];
+  charts.rev=new Chart(ctx,{type:'line',data:{labels,datasets:[
+    {label:'2026',data:[820,920,880,1050,1180,1240,1320,1480,1420,1560,1620,1842],borderColor:'#0EA5E9',backgroundColor:'rgba(14,165,233,.1)',borderWidth:2.5,tension:.4,fill:true,pointRadius:0},
+    {label:'2025',data:[680,720,710,820,890,920,980,1080,1140,1180,1240,1380],borderColor:'#94A3B8',borderWidth:2,tension:.4,fill:false,borderDash:[5,5],pointRadius:0}
+  ]},options:{plugins:{legend:{position:'top',align:'end',labels:{font:{family:'Noto Sans Thai',size:12},boxWidth:12}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'฿'+v+'K',font:{family:'Inter',size:11}},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false},ticks:{font:{family:'Noto Sans Thai',size:11}}}}}});
+}
+
+/* ============= CUSTOMERS ============= */
+function renderCustomers(){
+  const f=$('#custFilter').value;
+  const list=f==='all'?state.customers:state.customers.filter(c=>c.tag===f);
+  $('#custList').innerHTML=list.map(c=>`
+    <div class="cust-card">
+      <div class="avatar" style="width:42px;height:42px;background:linear-gradient(135deg,${c.tag==='VIP'?'#F59E0B,#EF4444':c.tag==='Hot Lead'?'#EF4444,#EC4899':c.tag==='Customer'?'#10B981,#3B82F6':'#94A3B8,#64748B'})">${c.n.slice(3,5)}</div>
+      <div class="cust-info">
+        <div class="flex between"><div class="cust-name">${c.n}</div>${tagPill(c.tag)}</div>
+        <div class="cust-co">🏢 ${c.co}</div>
+        <div class="cust-meta">
+          <span>📞 ${c.phone}</span><span>✉️ ${c.email}</span><span>💰 มูลค่า ฿${fmt(c.value)}</span><span>🕐 ${c.last}</span>
+        </div>
+      </div>
+      <div class="flex gap-sm">
+        <button class="btn-icon" onclick="toast('เปิดประวัติ ${c.n}','info')">👁️</button>
+        <button class="btn-icon" onclick="toast('สร้างดีลให้ ${c.n}','success')">+</button>
+      </div>
+    </div>`).join('');
+  $('#custCount').textContent=`${list.length} ลูกค้า`;
+}
+
+function openCustomerModal(){
+  $('#modalBox').innerHTML=`
+    <div class="modal-h"><div class="modal-title">+ ลูกค้าใหม่</div><button class="x-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-grid cols-2">
+          <div class="field"><label>ชื่อ-นามสกุล</label><input id="cN" placeholder="คุณ..."></div>
+          <div class="field"><label>บริษัท</label><input id="cC" placeholder="บ. ..."></div>
+        </div>
+        <div class="form-grid cols-2">
+          <div class="field"><label>เบอร์</label><input id="cP" placeholder="08X-XXX-XXXX"></div>
+          <div class="field"><label>อีเมล</label><input id="cE" placeholder="email@..."></div>
+        </div>
+        <div class="field"><label>Tag</label>
+          <select id="cT"><option>Hot Lead</option><option>VIP</option><option>Customer</option><option>Cold</option></select>
+        </div>
+        <div class="field"><label>หมายเหตุ</label><textarea rows="2"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn ghost" onclick="closeModal()">ยกเลิก</button><button class="btn primary" onclick="saveCustomer()">บันทึก</button></div>`;
+  openModal();
+}
+
+function saveCustomer(){
+  const n=$('#cN').value.trim();
+  if(!n){toast('กรอกชื่อก่อน','error');return}
+  state.customers.unshift({n,co:$('#cC').value||'-',phone:$('#cP').value||'-',email:$('#cE').value||'-',tag:$('#cT').value,value:0,last:'เพิ่งเพิ่ม'});
+  closeModal();renderCustomers();
+  toast('เพิ่มลูกค้าใหม่เรียบร้อย','success');
+}
+
+/* ============= PIPELINE ============= */
+const stages=[
+  {id:'lead',n:'🔍 Lead',ic:'🔍'},
+  {id:'qualified',n:'✓ Qualified',ic:'✓'},
+  {id:'proposal',n:'📋 Proposal',ic:'📋'},
+  {id:'negotiation',n:'🤝 Negotiation',ic:'🤝'},
+  {id:'won',n:'🎉 Won',ic:'🎉'},
+];
+
+function renderPipeline(){
+  $('#kanban').innerHTML=stages.map(s=>{
+    const items=state.deals.filter(d=>d.stage===s.id);
+    const total=items.reduce((a,b)=>a+b.amount,0);
+    return `<div class="kb-col" data-stage="${s.id}">
+      <div class="kb-col-h">
+        <div class="kb-col-title">${s.n}</div>
+        <span class="kb-count">${items.length}</span>
+      </div>
+      <div class="fz-12 text-3" style="margin-bottom:10px">฿${fmt(total)}</div>
+      ${items.map(d=>`
+        <div class="kb-card" onclick="viewDeal(${d.id})">
+          <span class="kb-tag pill ${d.color}">${d.tag}</span>
+          <div class="kb-deal-name">${d.name}</div>
+          <div class="kb-deal-co">🏢 ${d.co}</div>
+          <div class="bar"><span style="width:${d.prob}%;background:var(--${d.prob>=70?'success':d.prob>=50?'warning':'danger'})"></span></div>
+          <div class="kb-deal-foot">
+            <div class="fz-12 text-3">📅 ${d.close}</div>
+            <div class="kb-deal-amt">${fmtK(d.amount)}</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+function viewDeal(id){
+  const d=state.deals.find(x=>x.id===id);
+  $('#modalBox').innerHTML=`
+    <div class="modal-h"><div><div class="modal-title">${d.name}</div><div class="card-sub">🏢 ${d.co}</div></div><button class="x-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="kpi-grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div class="kpi-card" style="padding:14px"><div class="kpi-label">มูลค่า</div><div class="kpi-value" style="font-size:22px;color:var(--primary)">฿${fmt(d.amount)}</div></div>
+        <div class="kpi-card" style="padding:14px"><div class="kpi-label">โอกาสปิด</div><div class="kpi-value" style="font-size:22px">${d.prob}%</div></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Stage ปัจจุบัน</label>
+          <select id="dStage" onchange="moveDeal(${d.id},this.value)">
+            ${stages.map(s=>`<option value="${s.id}" ${s.id===d.stage?'selected':''}>${s.n}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field"><label>คาดปิดดีล</label><input value="${d.close}"></div>
+        <div class="field"><label>หมายเหตุ</label><textarea rows="3" placeholder="ลูกค้าสนใจมาก รอ POC ตรวจ..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn danger" onclick="dropDeal(${d.id})">❌ Lost</button>
+      <button class="btn ghost" onclick="closeModal()">ปิด</button>
+      <button class="btn success" onclick="winDeal(${d.id})">🎉 Won!</button>
+    </div>`;
+  openModal();
+}
+
+function moveDeal(id,stg){
+  const d=state.deals.find(x=>x.id===id);
+  d.stage=stg;
+  toast(`ย้ายดีล "${d.name}" → ${stages.find(s=>s.id===stg).n}`,'success');
+  renderPipeline();
+}
+
+function winDeal(id){
+  const d=state.deals.find(x=>x.id===id);
+  d.stage='won';d.prob=100;
+  closeModal();renderPipeline();
+  toast(`🎉 ปิดดีล "${d.name}" สำเร็จ! +฿${fmt(d.amount)}`,'success');
+}
+
+function dropDeal(id){
+  const d=state.deals.find(x=>x.id===id);
+  state.deals=state.deals.filter(x=>x.id!==id);
+  closeModal();renderPipeline();
+  toast(`ดีล "${d.name}" ถูกย้ายไป Lost`,'error');
+}
+
+function openDealModal(){
+  $('#modalBox').innerHTML=`
+    <div class="modal-h"><div class="modal-title">+ ดีลใหม่</div><button class="x-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>ชื่อดีล</label><input id="dN" placeholder="ระบบ..."></div>
+        <div class="field"><label>ลูกค้า / บริษัท</label><input id="dC" placeholder="บ. ..."></div>
+        <div class="form-grid cols-2">
+          <div class="field"><label>มูลค่า (บาท)</label><input id="dA" type="number" placeholder="0"></div>
+          <div class="field"><label>โอกาส (%)</label><input id="dP" type="number" value="50"></div>
+        </div>
+        <div class="field"><label>Stage</label>
+          <select id="dS">${stages.map(s=>`<option value="${s.id}">${s.n}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label>คาดปิดดีล</label><input id="dCl" placeholder="เช่น 30 พ.ค."></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn ghost" onclick="closeModal()">ยกเลิก</button><button class="btn primary" onclick="saveDeal()">บันทึก</button></div>`;
+  openModal();
+}
+
+function saveDeal(){
+  const n=$('#dN').value.trim();
+  const a=parseFloat($('#dA').value)||0;
+  if(!n||!a){toast('กรอกชื่อและมูลค่า','error');return}
+  state.deals.push({id:Date.now(),name:n,co:$('#dC').value||'-',amount:a,prob:parseInt($('#dP').value)||50,stage:$('#dS').value,close:$('#dCl').value||'TBD',tag:'New',color:'neutral'});
+  closeModal();renderPipeline();
+  toast(`เพิ่มดีลใหม่ "${n}" — ฿${fmt(a)}`,'success');
+}
+
+/* ============= TASKS ============= */
+function renderTasks(){
+  const f=$('#taskFilter').value;
+  let list=state.tasks;
+  if(f==='today')list=list.filter(t=>t.due.includes('วันนี้'));
+  if(f==='overdue')list=list.filter(t=>t.overdue);
+  if(f==='done')list=list.filter(t=>t.done);
+  $('#taskList').innerHTML=list.map(t=>`
+    <div class="task-row ${t.done?'done':''}">
+      <div class="task-cb ${t.done?'done':''}" onclick="toggleTask(${t.id},this)">${t.done?'✓':''}</div>
+      <div class="task-info">
+        <div class="task-title">${t.t}</div>
+        <div class="task-meta">
+          <span>📅 ${t.due}</span>
+          <span>👤 ${t.assign}</span>
+          <span class="pill ${t.pri==='high'?'danger':t.pri==='medium'?'warning':'neutral'}" style="font-size:10px">${t.pri==='high'?'สูง':t.pri==='medium'?'ปานกลาง':'ต่ำ'}</span>
+          ${t.overdue?'<span class="pill danger" style="font-size:10px">⚠ เลยกำหนด</span>':''}
+        </div>
+      </div>
+      <button class="btn-icon" onclick="toast('แก้ไข task','info')">✏️</button>
+    </div>`).join('');
+  $('#taskCount').textContent=`${list.length} งาน`;
+  $('#teamLoad').innerHTML=state.team.map(t=>`
+    <div style="margin-bottom:12px">
+      <div class="flex between"><div class="fw-600 fz-13">${t.n} <span class="text-3 fz-12">· ${t.role}</span></div><div class="fw-700">${t.deals} ดีล</div></div>
+      <div class="bar mt-8"><span style="width:${t.pct}%"></span></div>
+      <div class="fz-12 text-3 mt-8">฿${fmt(t.rev)} (${t.pct}% ของยอดรวม)</div>
+    </div>`).join('');
+}
+
+function toggleTask(id,el){
+  const t=state.tasks.find(x=>x.id===id);
+  t.done=!t.done;
+  el.classList.toggle('done',t.done);
+  el.innerHTML=t.done?'✓':'';
+  el.parentElement.classList.toggle('done',t.done);
+  toast(t.done?`เสร็จงาน "${t.t}" 🎉`:'ทำเครื่องหมายว่ายังไม่เสร็จ',t.done?'success':'info');
+}
+
+function openTaskModal(){
+  $('#modalBox').innerHTML=`
+    <div class="modal-h"><div class="modal-title">+ งานใหม่</div><button class="x-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>ชื่องาน</label><input id="tT" placeholder="เช่น ติดต่อกลับลูกค้า..."></div>
+        <div class="form-grid cols-2">
+          <div class="field"><label>กำหนดส่ง</label><input id="tD" placeholder="วันนี้ 17:00"></div>
+          <div class="field"><label>มอบให้</label><select id="tA"><option>บอสไผ่</option><option>นพ</option><option>พิม</option></select></div>
+        </div>
+        <div class="field"><label>ความสำคัญ</label><select id="tP"><option value="low">ต่ำ</option><option value="medium" selected>ปานกลาง</option><option value="high">สูง</option></select></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn ghost" onclick="closeModal()">ยกเลิก</button><button class="btn primary" onclick="saveTask()">บันทึก</button></div>`;
+  openModal();
+}
+
+function saveTask(){
+  const t=$('#tT').value.trim();
+  if(!t){toast('กรอกชื่องาน','error');return}
+  state.tasks.unshift({id:Date.now(),t,due:$('#tD').value||'TBD',assign:$('#tA').value,pri:$('#tP').value,done:false});
+  closeModal();renderTasks();
+  toast('เพิ่มงานใหม่เรียบร้อย','success');
+}
+
+function drawTeamChart(){
+  const ctx=$('#chartTeam').getContext('2d');
+  if(charts.team)charts.team.destroy();
+  charts.team=new Chart(ctx,{type:'doughnut',data:{labels:state.team.map(t=>t.n),datasets:[{data:state.team.map(t=>t.pct),backgroundColor:['#0EA5E9','#8B5CF6','#10B981'],borderWidth:0}]},options:{plugins:{legend:{position:'bottom',labels:{font:{family:'Noto Sans Thai',size:11},padding:10,boxWidth:10}}},cutout:'65%'}});
+}
+
+/* ============= REPORTS ============= */
+function renderReports(){
+  const c1=$('#chartRevMo').getContext('2d');
+  if(charts.revMo)charts.revMo.destroy();
+  charts.revMo=new Chart(c1,{type:'bar',data:{labels:['พ.ย.','ธ.ค.','ม.ค.','ก.พ.','มี.ค.','เม.ย.'],datasets:[{label:'รายได้',data:[1320,1480,1420,1560,1620,1842],backgroundColor:'#0EA5E9',borderRadius:6}]},options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'฿'+v+'K'},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+
+  const c2=$('#chartSrc').getContext('2d');
+  if(charts.src)charts.src.destroy();
+  charts.src=new Chart(c2,{type:'doughnut',data:{labels:['Facebook Ads','Google Ads','Referral','LINE OA','Direct','Cold Call'],datasets:[{data:[32,24,18,12,10,4],backgroundColor:['#3B82F6','#EF4444','#10B981','#06C755','#8B5CF6','#94A3B8'],borderWidth:0}]},options:{plugins:{legend:{position:'right',labels:{font:{family:'Noto Sans Thai',size:11},padding:10,boxWidth:10}}},cutout:'60%'}});
+
+  const c3=$('#chartStage').getContext('2d');
+  if(charts.stg)charts.stg.destroy();
+  charts.stg=new Chart(c3,{type:'bar',data:{labels:['Lead','Qualified','Proposal','Negotiation','Won'],datasets:[{label:'ดีล',data:[3,3,2,2,2],backgroundColor:['#94A3B8','#3B82F6','#F59E0B','#8B5CF6','#10B981'],borderRadius:5}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(0,0,0,.05)'}},y:{grid:{display:false}}}}});
+
+  const c4=$('#chartPerf').getContext('2d');
+  if(charts.perf)charts.perf.destroy();
+  charts.perf=new Chart(c4,{type:'bar',data:{labels:state.team.map(t=>t.n),datasets:[
+    {label:'ปิดได้',data:[5,4,3],backgroundColor:'#10B981',borderRadius:5},
+    {label:'กำลังดำเนิน',data:[7,5,4],backgroundColor:'#0EA5E9',borderRadius:5},
+  ]},options:{plugins:{legend:{position:'top',align:'end',labels:{font:{family:'Noto Sans Thai',size:11},boxWidth:10}}},scales:{y:{grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+}
+
+/* ============= ACCOUNTING ============= */
+function renderAccountingChart(){
+  const ctx=$('#chartMonthly').getContext('2d');
+  if(charts.monthly)charts.monthly.destroy();
+  charts.monthly=new Chart(ctx,{type:'bar',data:{labels:['พ.ย.','ธ.ค.','ม.ค.','ก.พ.','มี.ค.','เม.ย.'],datasets:[
+    {label:'รายรับ',data:[1320,1480,1420,1560,1620,1842],backgroundColor:'#10B981',borderRadius:5},
+    {label:'รายจ่าย',data:[820,920,890,940,962,984],backgroundColor:'#EF4444',borderRadius:5},
+    {label:'กำไรสุทธิ',data:[500,560,530,620,658,858],backgroundColor:'#0EA5E9',borderRadius:5}
+  ]},options:{plugins:{legend:{position:'top',align:'end',labels:{font:{family:'Noto Sans Thai',size:12},boxWidth:12}}},scales:{y:{ticks:{callback:v=>'฿'+v+'K'},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+}
+
+/* ============= AUTOMATION ============= */
+function renderAutomation(){
+  $('#autoList').innerHTML=state.automation.map(a=>`
+    <div class="auto-row">
+      <div class="auto-info">
+        <h4>${a.name}</h4>
+        <p>${a.desc}</p>
+        <div class="fz-12 text-3 mt-8">⚡ รัน ${a.runs} ครั้งวันนี้</div>
+      </div>
+      <div class="switch ${a.on?'on':''}" onclick="toggleAuto(${a.id},this)"></div>
+    </div>`).join('');
+  $('#autoLog').innerHTML=state.autoLog.map(l=>{
+    const c={success:'#10B981',warning:'#F59E0B',info:'#3B82F6',error:'#EF4444'}[l.type];
+    return `<div style="padding:8px 0;border-bottom:1px solid var(--border)">
+      <div class="flex" style="gap:8px"><span style="color:var(--text-3);font-family:'JetBrains Mono',monospace">${l.t}</span><span style="color:${c};font-weight:700">${l.msg}</span></div>
+      <div class="text-2" style="padding-left:12px;font-size:11.5px">${l.det}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleAuto(id,el){
+  const a=state.automation.find(x=>x.id===id);
+  a.on=!a.on;
+  el.classList.toggle('on',a.on);
+  toast(`${a.on?'เปิด':'ปิด'} "${a.name}"`,a.on?'success':'info');
+}
+
+/* ============= LINE / CHAT ============= */
+const chLabel={line:'LINE',fb:'FACEBOOK',ig:'INSTAGRAM',email:'EMAIL'};
+const chShort={line:'LINE',fb:'FB',ig:'IG',email:'EMAIL'};
+const chGrad={line:'#06C755,#22C55E',fb:'#1877F2,#3B82F6',ig:'#F58529,#DD2A7B',email:'#EA4335,#FBBC04'};
+const chIconLetter={line:'L',fb:'f',ig:'📷',email:'✉'};
+
+function switchChannel(btn,ch){
+  $$('#chTabs .ch-tab').forEach(b=>b.classList.toggle('active',b===btn));
+  state.activeChannel=ch;
+  renderChats();
+}
+
+function chatTab(btn,t){
+  $$('.tabs .tab').forEach(b=>{if(b.parentNode===btn.parentNode)b.classList.toggle('active',b===btn)});
+  ['chatInbox','chatBroadcast','chatBot','chatMembers'].forEach(id=>$('#'+id).style.display='none');
+  $('#chat'+t.charAt(0).toUpperCase()+t.slice(1)).style.display='block';
+  if(t==='inbox'){
+    renderChats();
+    if(state.msgs.length===0){
+      const active=state.chats.find(c=>c.active)||state.chats[0];
+      state.msgs=[...(state.msgsByChat[active.id]||[])];
+    }
+    renderMsgs();
+  }
+  if(t==='broadcast'){renderBroadcastHist();}
+  if(t==='bot'){renderBotRules();drawBotChart();}
+  if(t==='members'){renderMembers();}
+}
+
+function renderChats(){
+  const count={all:state.chats.length,line:0,fb:0,ig:0,email:0};
+  state.chats.forEach(c=>count[c.ch]++);
+  $('#cnAll').textContent=count.all;$('#cnLine').textContent=count.line;$('#cnFb').textContent=count.fb;$('#cnIg').textContent=count.ig;$('#cnEmail').textContent=count.email;
+  const ch=state.activeChannel||'all';
+  const list=ch==='all'?state.chats:state.chats.filter(c=>c.ch===ch);
+  $('#chatTotal').textContent=`(${list.length})`;
+  $('#chatItems').innerHTML=list.length?list.map(c=>`
+    <div class="chat-item ${c.active?'active':''}" onclick="selectChat(${c.id},this)">
+      <div style="position:relative">
+        <div class="avatar" style="background:linear-gradient(135deg,${c.tag==='VIP'?'#F59E0B,#EF4444':c.tag==='Hot Lead'?'#EF4444,#EC4899':c.tag==='Customer'?'#10B981,#3B82F6':'#94A3B8,#64748B'});width:38px;height:38px">${c.init}</div>
+        <div class="ch-icon ${c.ch}" style="position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;border:2px solid var(--surface-2);font-size:8px">${chIconLetter[c.ch]}</div>
+      </div>
+      <div class="chat-meta">
+        <div class="chat-name"><span><span class="ch-badge ${c.ch}">${chShort[c.ch]}</span>${c.name} ${c.tag?`<span class="pill ${c.tag==='VIP'?'warning':c.tag==='Hot Lead'?'danger':c.tag==='Customer'?'success':'neutral'}" style="margin-left:4px;font-size:9.5px;padding:1px 6px">${c.tag}</span>`:''}</span><span class="chat-time">${c.time}</span></div>
+        <div class="chat-preview">${c.last}</div>
+      </div>
+      ${c.unread?`<div style="background:var(--danger);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;align-self:center">${c.unread}</div>`:''}
+    </div>`).join(''):`<div class="empty">ยังไม่มีข้อความใน ${chLabel[ch]||'ช่องทางนี้'}</div>`;
+}
+
+function selectChat(id,el){
+  state.chats.forEach(c=>c.active=c.id===id);
+  $$('.chat-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  const c=state.chats.find(x=>x.id===id);
+  $('#activeChatName').textContent=c.name+(c.tag?' — '+c.tag:'');
+  $('#activeChatChannel').innerHTML=`<span class="ch-badge ${c.ch}">${chLabel[c.ch]}</span> ${c.ch==='email'?'อีเมลล่าสุด '+c.time:'ออนไลน์'}`;
+  $('#activeChatAvatar').style.background=`linear-gradient(135deg,${chGrad[c.ch]})`;
+  $('#activeChatAvatar').textContent=c.init;
+  state.msgs=[...(state.msgsByChat[id]||[])];
+  renderMsgs();
+  c.unread=0;
+  renderChats();
+}
+
+function renderMsgs(){
+  $('#chatMsgs').innerHTML=state.msgs.map(m=>`
+    <div class="msg ${m.who}">${m.t.replace(/\n/g,'<br>')}<div class="msg-time">${m.time}${m.who==='bot'?' • 🤖 Bot':''}${m.who==='out'?' • อ่านแล้ว':''}</div></div>
+  `).join('');
+  $('#chatMsgs').scrollTop=$('#chatMsgs').scrollHeight;
+}
+
+function sendChat(){
+  const v=$('#chatTextInput').value.trim();
+  if(!v)return;
+  const time=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+  state.msgs.push({who:'out',t:v,time});
+  $('#chatTextInput').value='';
+  renderMsgs();
+  toast('ส่งข้อความ','success');
+  setTimeout(()=>{
+    state.msgs.push({who:'in',t:'รับทราบครับ ขอบคุณ 🙏',time:new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})});
+    renderMsgs();
+  },1800);
+}
+
+const tplMsgs={
+  webinar:'📚 เชิญร่วม Webinar ฟรี!\n"AI Tools สำหรับ SME 2026"\n📅 วันเสาร์ที่ 10 พ.ค. เวลา 14:00-16:00\nลงทะเบียนฟรี → bit.ly/ai-sme-2026\nที่นั่งจำกัด รีบเลย!',
+  promo:'💰 โปรโมชั่นพิเศษ! ลด 30% สำหรับลูกค้าใหม่\nสมัครใช้งานภายใน 7 วัน รับฟรี Setup + 14 วันทดลอง\n🎁 พิเศษ: เริ่มต้นเพียง ฿890/เดือน\nคลิกดูรายละเอียด → bit.ly/promo30',
+  newsletter:'📰 Monthly Newsletter — เม.ย. 2026\n• เปิดตัวฟีเจอร์ใหม่: AI Lead Scoring\n• Case Study: บ.A เพิ่มยอดขาย 240% ใน 3 เดือน\n• Tips: 5 วิธีเพิ่ม conversion ในไตรมาสนี้\nอ่านเต็ม → bit.ly/newsletter-apr',
+  event:'🎉 ขอเชิญร่วมงาน "SME Tech Day 2026"\n📅 วันที่ 25 พ.ค. 2026\n📍 Bitec Bangna Hall 102\nเข้าฟรี! รับของที่ระลึก + Networking Lunch\nลงทะเบียน → bit.ly/sme-tech-2026',
+};
+function loadTpl(sel){if(sel.value)$('#bcMsg').value=tplMsgs[sel.value]}
+function sendBroadcast(){
+  if(!$('#bcMsg').value.trim()){toast('พิมพ์ข้อความก่อน','error');return}
+  toast('📤 ส่ง broadcast เข้าคิวเรียบร้อย','success');
+  $('#bcMsg').value='';
+}
+
+function renderBroadcastHist(){
+  $('#bcHist').innerHTML=state.bcHistory.map(h=>`
+    <div style="padding:12px 0;border-bottom:1px solid var(--border)">
+      <div class="flex between"><div class="fw-600 fz-13">${h.t}</div><span class="pill success" style="font-size:10px"><span class="dot"></span>ส่งสำเร็จ</span></div>
+      <div class="fz-12 text-3 mt-8">${h.ch} • ${h.when}</div>
+      <div class="flex" style="gap:14px;margin-top:8px;font-size:11.5px">
+        <div><span class="text-3">ส่ง</span> <span class="fw-700">${fmt(h.sent)}</span></div>
+        <div><span class="text-3">เปิดอ่าน</span> <span class="fw-700">${fmt(h.open)} (${Math.round(h.open/h.sent*100)}%)</span></div>
+        <div><span class="text-3">คลิก</span> <span class="fw-700">${fmt(h.clk)}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderBotRules(){
+  $('#botRules').innerHTML=state.botRules.map(r=>`
+    <div class="auto-row">
+      <div class="auto-info" style="flex:1;min-width:0">
+        <h4 style="font-size:13px">"${r.q}"</h4>
+        <p style="font-size:12px">↪ ${r.a}</p>
+        <div class="fz-12 text-3 mt-8">🎯 ตอบไป ${r.hits} ครั้ง 7 วัน</div>
+      </div>
+      <div class="switch ${r.on?'on':''}" onclick="this.classList.toggle('on');toast('${r.on?'ปิด':'เปิด'} กฎ','info')"></div>
+    </div>`).join('');
+}
+
+function drawBotChart(){
+  const ctx=$('#chartBot').getContext('2d');
+  if(charts.bot)charts.bot.destroy();
+  charts.bot=new Chart(ctx,{type:'line',data:{labels:['จ','อ','พ','พฤ','ศ','ส','อา'],datasets:[
+    {label:'Bot ตอบ',data:[58,52,68,62,72,78,68],borderColor:'#06C755',backgroundColor:'rgba(6,199,85,.1)',tension:.4,fill:true,borderWidth:2,pointRadius:0},
+    {label:'โอนทีม',data:[18,16,22,20,24,20,18],borderColor:'#F59E0B',tension:.4,borderWidth:2,pointRadius:0}
+  ]},options:{plugins:{legend:{position:'top',align:'end',labels:{font:{family:'Noto Sans Thai',size:11},boxWidth:10}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+}
+
+function renderMembers(){
+  $('#memberBody').innerHTML=state.members.map(m=>`
+    <tr>
+      <td class="fw-600">${m.n}</td>
+      <td class="text-2">${m.co}</td>
+      <td>${tagPill(m.tag)}</td>
+      <td class="fw-700">฿${fmt(m.ltv)}</td>
+      <td class="text-3 fz-12">${m.last}</td>
+    </tr>`).join('');
+}
+
+/* ============= MODAL ============= */
+function openModal(){$('#modal').classList.add('show')}
+function closeModal(){$('#modal').classList.remove('show')}
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+
+/* ============= INIT ============= */
+function updateBadges(){
+  const activeDeals=state.deals.filter(d=>d.stage!=='won').length;
+  $('#badgeDeals').textContent=activeDeals;
+  const openTasks=state.tasks.filter(t=>!t.done).length;
+  $('#badgeTasks').textContent=openTasks;
+}
+function init(){
+  renderDashboard();renderCustomers();renderPipeline();renderTasks();renderAutomation();
+  updateBadges();
+  setTimeout(()=>toast('ยินดีต้อนรับสู่ NovaCRM 🎉 ลองคลิกเมนูซ้าย ดู Pipeline และเปิดดีลดูได้','success'),500);
+}
+init();
+</script>
+</body>
+</html>

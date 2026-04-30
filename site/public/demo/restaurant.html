@@ -223,7 +223,10 @@ body{
 .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
 .menu-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:.2s}
 .menu-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.menu-img{height:120px;background:linear-gradient(135deg,#FFA94D,#FA5252);display:flex;align-items:center;justify-content:center;font-size:48px}
+.menu-img{height:140px;background:linear-gradient(135deg,#FFA94D,#FA5252);display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden;position:relative}
+.menu-img .emo-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px;z-index:0}
+.menu-img img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;transition:transform .4s}
+.menu-card:hover .menu-img img{transform:scale(1.06)}
 .menu-info{padding:12px}
 .menu-name{font-weight:700;font-size:14px;margin-bottom:3px}
 .menu-price{color:var(--primary);font-weight:700;font-size:15px;font-family:'Inter','Noto Sans Thai'}
@@ -1098,10 +1101,74 @@ function saveOrder(){
 }
 
 /* ============= MENU ============= */
+const FOOD_IMG = {
+  steak:'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=400&fit=crop&q=80',
+  wagyu:'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=400&fit=crop&q=80',
+  chicken:'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=400&fit=crop&q=80',
+  salmon:'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=400&h=400&fit=crop&q=80',
+  pork:'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=400&fit=crop&q=80',
+  burger:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=400&fit=crop&q=80',
+  pizza:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=400&fit=crop&q=80',
+  pizzaHawaii:'https://images.unsplash.com/photo-1571066811602-716837d681de?w=400&h=400&fit=crop&q=80',
+  salad:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop&q=80',
+  caesar:'https://images.unsplash.com/photo-1551248429-40975aa4de74?w=400&h=400&fit=crop&q=80',
+  friedRice:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=400&fit=crop&q=80',
+  padThai:'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&h=400&fit=crop&q=80',
+  tomYum:'https://images.unsplash.com/photo-1569562211093-4ed0d0758f12?w=400&h=400&fit=crop&q=80',
+  greenCurry:'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=400&h=400&fit=crop&q=80',
+  pasta:'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&h=400&fit=crop&q=80',
+  mushroom:'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&h=400&fit=crop&q=80',
+  tiramisu:'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=400&fit=crop&q=80',
+  chocoCake:'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=400&fit=crop&q=80',
+  cremeBrulee:'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=400&fit=crop&q=80',
+  iceCream:'https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?w=400&h=400&fit=crop&q=80',
+  mangoPudding:'https://images.unsplash.com/photo-1607478900766-efe13248b125?w=400&h=400&fit=crop&q=80',
+  cheesecake:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=400&fit=crop&q=80',
+  water:'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=400&fit=crop&q=80',
+  soda:'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=400&h=400&fit=crop&q=80',
+  latte:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop&q=80',
+  americano:'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400&h=400&fit=crop&q=80',
+  thaiTea:'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=400&fit=crop&q=80',
+  orange:'https://images.unsplash.com/photo-1546173159-315724a31696?w=400&h=400&fit=crop&q=80',
+  smoothie:'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=400&h=400&fit=crop&q=80',
+  wine:'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&h=400&fit=crop&q=80',
+};
+function imgFor(n){
+  if(n.includes('Wagyu'))return FOOD_IMG.wagyu;
+  if(n.includes('สเต็กเนื้อ')||n.includes('สเต็กเห็ด'))return n.includes('เห็ด')?FOOD_IMG.mushroom:FOOD_IMG.steak;
+  if(n.includes('สเต็กไก่')||n.includes('ไก่ย่าง'))return FOOD_IMG.chicken;
+  if(n.includes('แซลมอน')||n.includes('ปลา'))return FOOD_IMG.salmon;
+  if(n.includes('พอร์ค')||n.includes('หมู'))return FOOD_IMG.pork;
+  if(n.includes('แฮมเบอร์เกอร์'))return FOOD_IMG.burger;
+  if(n.includes('พิซซ่าฮาวาย'))return FOOD_IMG.pizzaHawaii;
+  if(n.includes('พิซซ่า'))return FOOD_IMG.pizza;
+  if(n.includes('สลัดซีซาร์'))return FOOD_IMG.caesar;
+  if(n.includes('สลัด'))return FOOD_IMG.salad;
+  if(n.includes('ข้าวผัด'))return FOOD_IMG.friedRice;
+  if(n.includes('ผัดไทย'))return FOOD_IMG.padThai;
+  if(n.includes('ต้มยำ'))return FOOD_IMG.tomYum;
+  if(n.includes('แกง'))return FOOD_IMG.greenCurry;
+  if(n.includes('พาสต้า'))return FOOD_IMG.pasta;
+  if(n.includes('ทีรามิสุ'))return FOOD_IMG.tiramisu;
+  if(n.includes('ช็อกโกแลตเค้ก'))return FOOD_IMG.chocoCake;
+  if(n.includes('ครีมบรูเล่'))return FOOD_IMG.cremeBrulee;
+  if(n.includes('ไอศกรีม'))return FOOD_IMG.iceCream;
+  if(n.includes('พุดดิ้งมะม่วง'))return FOOD_IMG.mangoPudding;
+  if(n.includes('ชีสเค้ก'))return FOOD_IMG.cheesecake;
+  if(n.includes('น้ำเปล่า'))return FOOD_IMG.water;
+  if(n.includes('โค้ก')||n.includes('สไปรท์'))return FOOD_IMG.soda;
+  if(n.includes('ลาเต้'))return FOOD_IMG.latte;
+  if(n.includes('อเมริกาโน่'))return FOOD_IMG.americano;
+  if(n.includes('ชาไทย'))return FOOD_IMG.thaiTea;
+  if(n.includes('น้ำส้ม'))return FOOD_IMG.orange;
+  if(n.includes('สมูทตี้'))return FOOD_IMG.smoothie;
+  if(n.includes('ไวน์'))return FOOD_IMG.wine;
+  return FOOD_IMG.steak;
+}
 function renderMenu(){
   $('#menuGrid').innerHTML=state.menu.map(m=>`
     <div class="menu-card">
-      <div class="menu-img" style="background:linear-gradient(135deg,${m.cat==='dessert'?'#FFB6C1,#FF69B4':m.cat==='drink'?'#87CEEB,#4682B4':'#FFA94D,#FA5252'})">${m.emo}</div>
+      <div class="menu-img" style="background:linear-gradient(135deg,${m.cat==='dessert'?'#FFB6C1,#FF69B4':m.cat==='drink'?'#87CEEB,#4682B4':'#FFA94D,#FA5252'})"><span class="emo-fallback">${m.emo}</span><img src="${imgFor(m.n)}" alt="${m.n}" loading="lazy" onerror="this.style.display='none'"></div>
       <div class="menu-info">
         <div class="menu-name">${m.n}</div>
         <div class="flex between">

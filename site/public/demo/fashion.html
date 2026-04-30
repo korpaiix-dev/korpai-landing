@@ -223,7 +223,10 @@ body{
 .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
 .menu-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:.2s}
 .menu-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.menu-img{height:120px;background:linear-gradient(135deg,#FFA94D,#FA5252);display:flex;align-items:center;justify-content:center;font-size:48px}
+.menu-img{height:140px;background:linear-gradient(135deg,#FFA94D,#FA5252);display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden;position:relative}
+.menu-img .emo-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px;z-index:0}
+.menu-img img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;transition:transform .4s}
+.menu-card:hover .menu-img img{transform:scale(1.06)}
 .menu-info{padding:12px}
 .menu-name{font-weight:700;font-size:14px;margin-bottom:3px}
 .menu-price{color:var(--primary);font-weight:700;font-size:15px;font-family:'Inter','Noto Sans Thai'}
@@ -1102,10 +1105,67 @@ function saveOrder(){
 }
 
 /* ============= MENU ============= */
+const FASHION_IMG = {
+  polo:'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400&h=400&fit=crop&q=80',
+  tshirt:'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop&q=80',
+  shirt:'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&q=80',
+  jacket:'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=400&fit=crop&q=80',
+  sweater:'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&h=400&fit=crop&q=80',
+  dress:'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=400&h=400&fit=crop&q=80',
+  suit:'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=400&fit=crop&q=80',
+  jeans:'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop&q=80',
+  shorts:'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&h=400&fit=crop&q=80',
+  skirt:'https://images.unsplash.com/photo-1577900232427-18219b9166a0?w=400&h=400&fit=crop&q=80',
+  sneaker:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop&q=80',
+  loafer:'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=400&h=400&fit=crop&q=80',
+  heels:'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=400&fit=crop&q=80',
+  canvas:'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400&h=400&fit=crop&q=80',
+  bagLeather:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=400&fit=crop&q=80',
+  backpack:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&q=80',
+  tote:'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=400&h=400&fit=crop&q=80',
+  cap:'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400&h=400&fit=crop&q=80',
+  hatWide:'https://images.unsplash.com/photo-1522682078546-47888fe04e81?w=400&h=400&fit=crop&q=80',
+  glasses:'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop&q=80',
+  necklace:'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop&q=80',
+  earring:'https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=400&h=400&fit=crop&q=80',
+  watch:'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=400&h=400&fit=crop&q=80',
+  belt:'https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=400&h=400&fit=crop&q=80',
+  scarf:'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400&h=400&fit=crop&q=80',
+  socks:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&h=400&fit=crop&q=80',
+};
+function imgFor(n){
+  if(n.includes('Polo'))return FASHION_IMG.polo;
+  if(n.includes('เสื้อยืด'))return FASHION_IMG.tshirt;
+  if(n.includes('เสื้อเชิ้ต'))return FASHION_IMG.shirt;
+  if(n.includes('แจ็คเก็ต'))return FASHION_IMG.jacket;
+  if(n.includes('สเวตเตอร์'))return FASHION_IMG.sweater;
+  if(n.includes('ชุดเดรส'))return FASHION_IMG.dress;
+  if(n.includes('ชุดสูท'))return FASHION_IMG.suit;
+  if(n.includes('ยีนส์ Slim')||n.includes('Chino'))return FASHION_IMG.jeans;
+  if(n.includes('ขาสั้น'))return FASHION_IMG.shorts;
+  if(n.includes('กระโปรง'))return FASHION_IMG.skirt;
+  if(n.includes('Sneaker'))return FASHION_IMG.sneaker;
+  if(n.includes('Loafers'))return FASHION_IMG.loafer;
+  if(n.includes('ส้นสูง'))return FASHION_IMG.heels;
+  if(n.includes('Canvas'))return FASHION_IMG.canvas;
+  if(n.includes('กระเป๋าหนัง'))return FASHION_IMG.bagLeather;
+  if(n.includes('Backpack'))return FASHION_IMG.backpack;
+  if(n.includes('Tote'))return FASHION_IMG.tote;
+  if(n.includes('Cap'))return FASHION_IMG.cap;
+  if(n.includes('ปีกกว้าง'))return FASHION_IMG.hatWide;
+  if(n.includes('แว่น'))return FASHION_IMG.glasses;
+  if(n.includes('สร้อย'))return FASHION_IMG.necklace;
+  if(n.includes('ต่างหู'))return FASHION_IMG.earring;
+  if(n.includes('นาฬิกา'))return FASHION_IMG.watch;
+  if(n.includes('เข็มขัด'))return FASHION_IMG.belt;
+  if(n.includes('ผ้าพันคอ'))return FASHION_IMG.scarf;
+  if(n.includes('ถุงเท้า'))return FASHION_IMG.socks;
+  return FASHION_IMG.tshirt;
+}
 function renderMenu(){
   $('#menuGrid').innerHTML=state.menu.map(m=>`
     <div class="menu-card">
-      <div class="menu-img" style="background:linear-gradient(135deg,${m.cat==='dessert'?'#FFB6C1,#FF69B4':m.cat==='drink'?'#87CEEB,#4682B4':'#FFA94D,#FA5252'})">${m.emo}</div>
+      <div class="menu-img" style="background:linear-gradient(135deg,${m.cat==='dessert'?'#FFB6C1,#FF69B4':m.cat==='drink'?'#87CEEB,#4682B4':'#FFA94D,#FA5252'})"><span class="emo-fallback">${m.emo}</span><img src="${imgFor(m.n)}" alt="${m.n}" loading="lazy" onerror="this.style.display='none'"></div>
       <div class="menu-info">
         <div class="menu-name">${m.n}</div>
         <div class="flex between">

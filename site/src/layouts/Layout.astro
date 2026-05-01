@@ -21,14 +21,68 @@ const {
 const siteName = 'KORP AI AUTOMATION';
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: siteName,
-  url: 'https://korpai.co',
-  logo: 'https://korpai.co/assets/logo-icon.png',
-  description,
-  sameAs: [],
-  contactPoint: [
-    { '@type': 'ContactPoint', contactType: 'customer service', availableLanguage: ['th', 'en'] },
+  '@graph': [
+    {
+      '@type': ['Organization', 'ProfessionalService'],
+      '@id': 'https://korpai.co/#organization',
+      name: siteName,
+      alternateName: ['KORP AI', 'KORP AI Automation', 'คอร์ป เอไอ'],
+      url: 'https://korpai.co',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://korpai.co/assets/logo-icon.png',
+        width: 512,
+        height: 512,
+      },
+      image: 'https://korpai.co/og-default.png',
+      description,
+      areaServed: [
+        { '@type': 'Country', name: 'Thailand' },
+        { '@type': 'Place', name: 'Southeast Asia' },
+      ],
+      knowsAbout: [
+        'AI Chatbot',
+        'Workflow Automation',
+        'Business Dashboard',
+        'RAG (Retrieval-Augmented Generation)',
+        'Line Official Account',
+        'Facebook Messenger Integration',
+        'n8n Automation',
+        'Claude API',
+        'OpenAI API',
+        'Gemini API',
+        'PDPA Compliance',
+        'Multi-LLM Gateway',
+        'OpenRouter',
+        'Model Context Protocol (MCP)',
+      ],
+      serviceType: ['AI Chatbot Development', 'Business Process Automation', 'Data Dashboard', 'Custom AI Integration'],
+      sameAs: [
+        'https://www.facebook.com/korpaiix',
+        'https://lin.ee/Qt6Vri4',
+      ],
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'customer service',
+          availableLanguage: ['th', 'en'],
+          areaServed: 'TH',
+        },
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://korpai.co/#website',
+      url: 'https://korpai.co',
+      name: siteName,
+      inLanguage: 'th-TH',
+      publisher: { '@id': 'https://korpai.co/#organization' },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: 'https://korpai.co/blog?q={search_term_string}',
+        'query-input': 'required name=search_term_string',
+      },
+    },
   ],
 };
 ---

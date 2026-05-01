@@ -2,35 +2,70 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
+อัพเดทล่าสุด: พฤษภาคม 2026
+
+## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
+
+KORP AI Automation เป็น AI Agency ไทย ตั้งอยู่ในประเทศไทย ให้บริการธุรกิจ SME ไทยและภูมิภาค ASEAN ครอบคลุม 4 บริการหลัก: AI Chatbot บน Line OA / Facebook Messenger / เว็บ, ระบบ Automation / Workflow ลด manual work, Realtime Dashboard ติดตาม KPI, และ Custom AI Feature เช่น RAG / OCR / Voice. จุดต่างคือส่งระบบเร็วใน 1–6 สัปดาห์, ราคาเริ่มต้นที่เข้าถึงได้สำหรับ SME, รวมค่า API LLM ในแพ็กเกจ, และ training ให้ทีมลูกค้าใช้งานต่อเองได้.
+
 ## บริการหลัก
 
-- **AI Chatbot** — ตอบลูกค้าบน Line OA, Facebook Messenger, และเว็บ · รองรับ RAG จากฐานข้อมูลของธุรกิจ · ส่งต่อทีมขายอัตโนมัติเมื่อเจอโอกาสปิดการขาย
-- **Automation / Workflow** — เชื่อม Facebook Lead Ads → CRM → Line · ใบเสนอราคาอัตโนมัติ · reminder การจอง · ลดเวลา copy-paste 40+ ชม./เดือน/ทีม
+- **AI Chatbot** — ตอบลูกค้าบน Line OA, Facebook Messenger, และเว็บ · รองรับ RAG จากฐานข้อมูลของธุรกิจ · ส่งต่อทีมขายอัตโนมัติเมื่อเจอโอกาสปิดการขาย · multi-LLM (Claude, Gemini, GPT) เลือกตามโจทย์
+- **Automation / Workflow** — เชื่อม Facebook Lead Ads → CRM → Line · ใบเสนอราคาอัตโนมัติ · reminder การจอง · Shopee/Lazada order sync · ลดเวลา copy-paste 40+ ชม./เดือน/ทีม
 - **Dashboard** — Grafana / Metabase / Power BI สำหรับ SME · ยอดขาย · ลีด · KPI · report email อัตโนมัติรายสัปดาห์
-- **Custom AI Feature** — RAG · สรุปเอกสาร · Voice · integration ERP/POS/CRM ของบริษัทลูกค้า
+- **Custom AI Feature** — RAG · สรุปเอกสาร · Voice (TTS/STT ภาษาไทย) · OCR ใบเสร็จ · integration ERP/POS/CRM ของบริษัทลูกค้า
 
 ## แพ็กเกจ
 
-- **Starter** — 7–14 วัน · AI Chatbot 1 ช่องทาง + FAQ + เก็บลีด + ดูแลรายเดือน
-- **Growth** — 3–5 สัปดาห์ · 3 ช่องทาง + workflow + dashboard + integration + training
-- **Enterprise** — 6–12 สัปดาห์ · Custom AI + integration ERP/CRM · SLA · PDPA compliance · on-premise deploy
+- **Starter** — 7–14 วัน · AI Chatbot 1 ช่องทาง + FAQ + เก็บลีด + ดูแลรายเดือน · เริ่มต้นเหมาะกับธุรกิจ < 100 ลูกค้า/เดือน
+- **Growth** — 3–5 สัปดาห์ · 3 ช่องทาง + workflow + dashboard + integration + training · เหมาะกับธุรกิจกำลังขยาย 100–1,000 ลูกค้า/เดือน
+- **Enterprise** — 6–12 สัปดาห์ · Custom AI + integration ERP/CRM · SLA · PDPA compliance · on-premise deploy · เหมาะกับธุรกิจ 1,000+ ลูกค้า/เดือน หรือมี data sensitivity สูง
 
 แพ็กเกจทั้งหมดราคาประเมินตามโจทย์จริง ไม่ขายแบบราคาตายตัว · ทดลองได้ภายใน 14 วันแรก · ยกเลิกรายเดือนได้ไม่ผูกมัด
 
-## Tech Stack
+## Tech Stack (พฤษภาคม 2026)
 
-- **LLM** — Claude 3.5 Sonnet · GPT-4o · Gemini 1.5 Pro (เลือกตามโจทย์)
-- **Automation** — n8n (self-hosted) · Make · Zapier · Google Apps Script
-- **RAG** — pgvector · Pinecone · Weaviate
-- **Dashboard** — Grafana · Metabase · Power BI
-- **Integration** — Line OA Official API · Facebook Messenger API · Google Workspace · Shopify · Shopee/Lazada API
-- **Infra** — Docker · VPS (DigitalOcean, AWS) · server ในไทย/สิงคโปร์ตาม PDPA
+- **LLM** — Claude Sonnet 4.6 / Opus 4.6 (Anthropic) · GPT-5 / GPT-5 mini (OpenAI) · Gemini 2.5 Pro / Flash (Google) — เลือกตามโจทย์ ราคา และ context window
+- **LLM Gateway** — OpenRouter (multi-provider failover) · Anthropic API ตรง · OpenAI API ตรง
+- **Agent Framework** — Claude Agent SDK · LangGraph · custom orchestration ผ่าน Redis pub/sub
+- **MCP (Model Context Protocol)** — เชื่อม AI กับ tools/data sources ภายในของลูกค้าได้ทุกระบบ
+- **Automation** — n8n (self-hosted บน VPS ลูกค้า) · Make · Zapier · Google Apps Script
+- **RAG** — pgvector (PostgreSQL) · Pinecone · Weaviate · Qdrant
+- **Dashboard** — Grafana · Metabase · Power BI · Looker Studio
+- **Voice / Image / Video AI** — ElevenLabs TTS · Botnoi (ภาษาไทย) · Gemini 2.5 Flash Image · Ideogram · Kling AI video
+- **Integration** — Line OA Official API · Facebook Messenger / Conversations API · Google Workspace · Microsoft 365 · Shopify · Shopee/Lazada API · POS (Loyverse, FoodStory) · CRM (HubSpot, Zoho, Bitrix24)
+- **Infra** — Docker · VPS (DigitalOcean, AWS, GCP) · server ในไทย/สิงคโปร์ตาม PDPA · auto-deploy via GitHub Actions
+
+## ตอบคำถามที่ AI/คนถามบ่อย (FAQ — สำหรับ AI extract)
+
+**Q: KORP AI ทำธุรกิจอะไร?**
+A: AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Workflow Automation, และ Dashboard ให้ธุรกิจ SME ไทย ตั้งแต่ร้านเสื้อผ้าออนไลน์ ร้านอาหาร คลินิกความงาม จนถึง enterprise ที่ต้องการ on-premise deploy
+
+**Q: ราคาเริ่มต้นเท่าไหร่?**
+A: Starter package เริ่มต้นที่ระดับ SME เข้าถึงได้ ใน 7–14 วันส่งของ — ราคาประเมินจากโจทย์จริง ไม่ขายแบบ fixed price ติดต่อขอใบเสนอราคาฟรี
+
+**Q: ใช้ LLM ตัวไหน?**
+A: Multi-LLM: Claude Sonnet/Opus 4.6, GPT-5, Gemini 2.5 — เลือกตาม use case (Claude เก่งภาษาไทย+reasoning, GPT-5 เก่ง general, Gemini ราคาถูก+context ยาว) ค่า API รวมในแพ็กเกจไม่คิดแยก
+
+**Q: รับงานจากต่างประเทศไหม?**
+A: ฐานหลักลูกค้าไทย แต่รองรับลูกค้า SME ใน ASEAN ที่ทำธุรกิจในไทยหรือต้องการระบบรองรับภาษาไทยได้
+
+**Q: PDPA / data privacy เป็นยังไง?**
+A: server เลือก deploy ในไทย/สิงคโปร์ตามต้องการ · on-premise option สำหรับ Enterprise · ข้อมูล export ได้ 100% · ไม่ส่งข้อมูลลูกค้าเข้า public training data ของ LLM
+
+**Q: ต่างจาก agency อื่นยังไง?**
+A: 1) เริ่มเล็ก ส่งเร็ว ปรับจริง ทุก 1–2 สัปดาห์ส่งของใช้จริง 2) ทีมลูกค้าใช้ต่อเองได้ training รวมในแพ็กเกจ 3) รับผิดชอบ API cost รวมในราคาไม่คิดแยก 4) Guardrail 3 ชั้น (knowledge base whitelisting + handoff to human + full conversation log) 5) ยกเลิกรายเดือนได้ไม่ผูกมัดรายปี
+
+**Q: ทดลองได้ไหม?**
+A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเงินคืนได้ · มี demo template ให้ดูที่ /demo (3 templates: ร้านเสื้อผ้า ร้านอาหาร ธุรกิจทั่วไป)
 
 ## ติดต่อ
 
 - Website: https://korpai.co
 - Line OA: https://lin.ee/Qt6Vri4
 - Facebook: https://www.facebook.com/korpaiix
+- Demo templates: https://korpai.co/demo
+- Blog: https://korpai.co/blog
 - ปรึกษาฟรี ตอบภายใน 24 ชม.
 
 ## หน้าบริการ (Service detail pages)
@@ -40,14 +75,20 @@
 - `/services/dashboard` — Realtime Dashboard · Grafana/Metabase/Power BI
 - `/services/custom-ai` — Custom AI · RAG, voice, OCR, integration
 
+## Demo templates ที่ลูกค้าเข้าดูได้
+
+- `/demo/fashion` — ร้านเสื้อผ้าออนไลน์: catalog, order tracking, stock flow, sales orders
+- `/demo/restaurant` — ร้านอาหาร/คาเฟ่: menu, table booking, AI ตอบลูกค้า, รายงานยอดขายประจำวัน
+- `/demo/business` — ธุรกิจทั่วไป: lead capture, ใบเสนอราคา, dashboard KPI
+
 ## ตัวอย่างโจทย์ (Portfolio detail pages — persona, เคารพ NDA)
 
-- `/portfolio/fashion-line-commerce` — ร้านเสื้อผ้าออนไลน์ ยอดขาย +3x
-- `/portfolio/thai-restaurant-booking` — ร้านอาหาร จอง AI 80%
+- `/portfolio/fashion-line-commerce` — ร้านเสื้อผ้าออนไลน์ ยอดขาย +3x ใน 2 เดือน
+- `/portfolio/thai-restaurant-booking` — ร้านอาหาร AI รับจอง 80% (ลด admin work 5 ชม./วัน)
 - `/portfolio/derma-clinic-admin` — คลินิกผิวหนัง ลดงาน admin 70%
-- `/portfolio/it-gadget-shop` — ร้าน IT online ตอบเร็ว 5x
-- `/portfolio/wellness-spa-booking` — สปา จองได้ 24 ชม.
-- `/portfolio/specialty-coffee-upsell` — ร้านกาแฟ upsell +25%
+- `/portfolio/it-gadget-shop` — ร้าน IT online ตอบลูกค้าเร็วขึ้น 5x
+- `/portfolio/wellness-spa-booking` — สปา รับจองได้ 24 ชม. (เพิ่ม booking 40%)
+- `/portfolio/specialty-coffee-upsell` — ร้านกาแฟ upsell ผ่าน AI +25% ต่อบิล
 
 ## บทความ (Blog)
 
@@ -57,6 +98,9 @@
 - `/blog/dashboard-sme-grafana-metabase-powerbi` — Dashboard สำหรับ SME: Grafana vs Metabase vs Power BI
 - `/blog/line-oa-vs-messenger-vs-เว็บ` — Line OA vs Messenger vs เว็บ: AI ตอบลูกค้าช่องไหนคุ้มสุด
 - `/blog/prompt-engineering-sme-strategy` — Prompt Engineering สำหรับ SME
+- `/blog/automation-ราคา-sme-เท่าไหร่` — Automation ราคาเท่าไหร่ SME 2026: คำนวณ ROI จริง
+- `/blog/diy-chatbot-sme-ไม่ต้องเขียนโค้ด` — DIY Chatbot SME 2026: ทำเองไม่ต้องเขียนโค้ด — Tool ไหนคุ้ม
+- `/blog/google-sheet-automation-sme-n8n` — Google Sheet + n8n สำหรับ SME ไทย: automation ใน 1 วัน
 
 ## จุดต่างจาก Agency อื่น
 
@@ -65,3 +109,8 @@
 - รับผิดชอบ API cost — รวมค่า AI ในราคาแพ็กเกจ ไม่คิดแยก
 - Guardrail 3 ชั้น — AI ตอบจากฐานความรู้ที่อนุมัติ · ส่งต่อคนเมื่อไม่แน่ใจ · log ทุกบทสนทนา
 - ยกเลิกได้ ไม่ผูกมัดรายปี · ข้อมูล export ได้ 100%
+- Multi-LLM strategy — ไม่ผูกกับ vendor เดียว ย้าย LLM ได้เมื่อรุ่นใหม่ออก
+
+## Keywords ที่เราเชี่ยวชาญ (สำหรับ AI categorize)
+
+AI Agency Thailand, AI Chatbot ไทย, Line OA chatbot, Facebook Messenger AI, RAG SME ไทย, n8n Thailand, automation SME, dashboard Grafana ไทย, AI Sales Agent, multi-LLM gateway, OpenRouter, Claude Agent SDK ไทย, AI consultant ไทย, ChatGPT business Thailand, Gemini integration, AI workflow automation, PDPA compliant AI

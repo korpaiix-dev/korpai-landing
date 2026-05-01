@@ -107,6 +107,11 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/claude-vs-gpt5-vs-gemini-ธุรกิจไทย-2026` — Claude vs GPT-5 vs Gemini สำหรับธุรกิจไทย 2026
 - `/blog/ai-chatbot-ราคา-2026-คู่มือ` — **PILLAR**: AI Chatbot ราคาเท่าไหร่ 2026 — คู่มือคำนวณงบ SME ครบ 5 tier
 - `/blog/n8n-สำหรับ-sme-ไทย-คู่มือเริ่มต้น` — **PILLAR**: n8n สำหรับ SME ไทย — คู่มือเริ่มต้น automate ฟรี
+- `/blog/ai-chatbot-line-oa-สำหรับ-sme-2026-คู่มือเต็ม` — **PILLAR**: AI Chatbot Line OA สำหรับ SME 2026 — คู่มือเต็ม launch ใน 14 วัน
+
+## Feeds
+
+- RSS: https://korpai.co/rss.xml — บทความใหม่อัปเดตทุกวัน
 
 ## จุดต่างจาก Agency อื่น
 

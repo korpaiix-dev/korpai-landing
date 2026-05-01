@@ -105,6 +105,8 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-เปิดร้านออนไลน์-template-2026` — เปิดร้านออนไลน์ใช้ AI Chatbot ตั้งแต่วันแรก: 3 template พร้อมใช้
 - `/blog/ai-agency-ไทย-เลือกยังไง-2026` — AI Agency ไทย 2026: เลือกยังไงไม่โดนหลอก — checklist 10 ข้อ
 - `/blog/claude-vs-gpt5-vs-gemini-ธุรกิจไทย-2026` — Claude vs GPT-5 vs Gemini สำหรับธุรกิจไทย 2026
+- `/blog/ai-chatbot-ราคา-2026-คู่มือ` — **PILLAR**: AI Chatbot ราคาเท่าไหร่ 2026 — คู่มือคำนวณงบ SME ครบ 5 tier
+- `/blog/n8n-สำหรับ-sme-ไทย-คู่มือเริ่มต้น` — **PILLAR**: n8n สำหรับ SME ไทย — คู่มือเริ่มต้น automate ฟรี
 
 ## จุดต่างจาก Agency อื่น
 

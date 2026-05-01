@@ -1,7 +1,14 @@
 # KORP AI Landing — korpai.co
 
-> Landing page ของ **KORP AI AUTOMATION** — AI Agency สำหรับ SME ไทย
-> โดเมน: [korpai.co](https://korpai.co)
+> Landing page ของ **[KORP AI Automation](https://korpai.co)** — [AI Agency for Thai SMEs](https://korpai.co/services) — Chatbot, Automation, Dashboard
+
+🌐 **Live site:** [https://korpai.co](https://korpai.co)
+📰 **Blog:** [korpai.co/blog](https://korpai.co/blog) — เนื้อหา AI / Automation สำหรับ SME ไทย (อัพเดททุกวัน)
+🎮 **Demo templates:** [korpai.co/demo](https://korpai.co/demo) — ลองสด 3 templates (fashion / restaurant / business)
+📦 **Services:** [AI Chatbot](https://korpai.co/services/ai-chatbot) · [Automation](https://korpai.co/services/automation) · [Dashboard](https://korpai.co/services/dashboard) · [Custom AI](https://korpai.co/services/custom-ai)
+📷 **Press kit:** [korpai.co/press](https://korpai.co/press) — boilerplate, brand assets, สำหรับสื่อ
+🤖 **AI assistants:** [llms.txt](https://korpai.co/llms.txt) · [ai.txt](https://korpai.co/ai.txt)
+💬 **Contact:** [Line OA](https://lin.ee/Qt6Vri4) · [Facebook](https://www.facebook.com/korpaiix)
 
 ---
 

@@ -45,3 +45,8 @@ fi
 
   echo "=== done $(git rev-parse HEAD) at $(date -Is) ==="
 } >> "$LOG" 2>&1
+
+# Post-deploy SEO pings — runs in background, won't block next cron tick
+if [ -x "$REPO/scripts/post-deploy-seo.sh" ]; then
+  ( bash "$REPO/scripts/post-deploy-seo.sh" >> "$LOG" 2>&1 ) &
+fi

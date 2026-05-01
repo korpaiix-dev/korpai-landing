@@ -101,6 +101,9 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/automation-ราคา-sme-เท่าไหร่` — Automation ราคาเท่าไหร่ SME 2026: คำนวณ ROI จริง
 - `/blog/diy-chatbot-sme-ไม่ต้องเขียนโค้ด` — DIY Chatbot SME 2026: ทำเองไม่ต้องเขียนโค้ด — Tool ไหนคุ้ม
 - `/blog/google-sheet-automation-sme-n8n` — Google Sheet + n8n สำหรับ SME ไทย: automation ใน 1 วัน
+- `/blog/ai-chatbot-เปิดร้านออนไลน์-template-2026` — เปิดร้านออนไลน์ใช้ AI Chatbot ตั้งแต่วันแรก: 3 template พร้อมใช้
+- `/blog/ai-agency-ไทย-เลือกยังไง-2026` — AI Agency ไทย 2026: เลือกยังไงไม่โดนหลอก — checklist 10 ข้อ
+- `/blog/claude-vs-gpt5-vs-gemini-ธุรกิจไทย-2026` — Claude vs GPT-5 vs Gemini สำหรับธุรกิจไทย 2026
 
 ## จุดต่างจาก Agency อื่น
 

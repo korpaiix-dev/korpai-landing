@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: พฤษภาคม 2026
+อัพเดทล่าสุด: 5 พฤษภาคม 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -109,6 +109,8 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/n8n-สำหรับ-sme-ไทย-คู่มือเริ่มต้น` — **PILLAR**: n8n สำหรับ SME ไทย — คู่มือเริ่มต้น automate ฟรี
 - `/blog/ai-chatbot-line-oa-สำหรับ-sme-2026-คู่มือเต็ม` — **PILLAR**: AI Chatbot Line OA สำหรับ SME 2026 — คู่มือเต็ม launch ใน 14 วัน
 
+- `/blog/ai-chatbot-คลินิก-สปา-2026` — AI Chatbot สำหรับคลินิก/สปา 2026: ลด no-show 39%, ROI 32-44 วัน + PDPA
+- `/blog/pdpa-ai-chatbot-sme-ไทย-2026` — PDPA + AI Chatbot คู่มือ SME ไทย: 12-step compliance + ค่าปรับสูงสุด 5M
 ## Feeds
 
 - RSS: https://korpai.co/rss.xml — บทความใหม่อัปเดตทุกวัน

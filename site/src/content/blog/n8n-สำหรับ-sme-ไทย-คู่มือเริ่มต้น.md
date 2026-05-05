@@ -2,6 +2,7 @@
 title: "n8n สำหรับ SME ไทย 2026: คู่มือเริ่มต้น automate ธุรกิจฟรี (ไม่ต้องเขียนโค้ด)"
 description: "n8n คือ automation tool ฟรี open-source ที่ SME ไทยใช้แทน Zapier ได้คุ้มกว่า 10 เท่า — คู่มือนี้สอนติดตั้ง, เชื่อม Line/Facebook/Google Sheet, 8 workflow ที่ทำได้เลยในวันแรก"
 pubDate: 2026-05-01
+updatedDate: 2026-05-05
 category: "Automation"
 tags:
   - n8n

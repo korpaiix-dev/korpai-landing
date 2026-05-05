@@ -2,6 +2,7 @@
 title: "AI Chatbot สำหรับร้านอาหาร/คาเฟ่: เริ่มยังไงให้ใช้ได้จริง"
 description: "คู่มือเริ่มใช้ AI chatbot กับร้านอาหาร/คาเฟ่ — ตอบคำถามลูกค้า รับจองโต๊ะ ส่งโปร โดยไม่ต้องเพิ่มคนเฝ้าแชท พร้อม checklist ที่ทำตามแล้วพร้อมใช้ใน 2 สัปดาห์"
 pubDate: 2026-04-21
+updatedDate: 2026-05-05
 category: "AI Chatbot"
 tags: ["Chatbot", "Line OA", "ร้านอาหาร", "คาเฟ่", "SME"]
 readingMinutes: 6

@@ -1,0 +1,66 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const pins = [
+  {
+    src: "/pins/01_n8n_vs_make_vs_zapier.png",
+    title: "n8n vs Make vs Zapier 2026 — SME Automation Comparison",
+    href: "/blog/n8n-vs-make-vs-zapier-sme-ไทย-2026",
+  },
+  {
+    src: "/pins/02_ai_chatbot_line_oa.png",
+    title: "AI Chatbot on LINE OA — Complete Guide for Thai SMEs",
+    href: "/blog/ai-chatbot-line-oa-สำหรับ-sme-2026-คู่มือเต็ม",
+  },
+  {
+    src: "/pins/03_ai_chatbot_pricing.png",
+    title: "AI Chatbot Pricing 2026 — Real Cost Calculator",
+    href: "/blog/ai-chatbot-ราคา-2026-คู่มือ",
+  },
+  {
+    src: "/pins/04_vector_db_for_sme.png",
+    title: "Vector DB for SME — Pinecone vs Qdrant vs pgvector",
+    href: "/blog/vector-database-เลือก-sme-ไทย-2026",
+  },
+  {
+    src: "/pins/05_n8n_for_sme_starter.png",
+    title: "n8n for Thai SMEs — 8 Workflows You Can Build Day One",
+    href: "/blog/n8n-สำหรับ-sme-ไทย-คู่มือเริ่มต้น",
+  },
+];
+---
+
+<Layout
+  title="Pinterest Boards — KORP AI"
+  description="Visual guides to AI chatbots, automation, and dashboards for Thai SMEs."
+>
+  <main style="max-width:1100px;margin:0 auto;padding:80px 24px;">
+    <h1 style="font-size:2.4rem;margin-bottom:8px;">Pinterest boards</h1>
+    <p style="color:var(--kp-muted);margin-bottom:48px;">
+      Visual guides to AI chatbots, automation, and dashboards for Thai SMEs — pin
+      these to save the deep-dives for later.
+    </p>
+    <div
+      style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;"
+    >
+      {
+        pins.map((p) => (
+          <a
+            href={p.href}
+            style="text-decoration:none;color:inherit;display:block;"
+          >
+            <img
+              src={p.src}
+              alt={p.title}
+              loading="lazy"
+              style="width:100%;height:auto;border-radius:14px;display:block;border:1px solid rgba(255,255,255,0.06);"
+            />
+            <p style="margin-top:12px;font-size:0.95rem;line-height:1.4;color:var(--kp-ink);">
+              {p.title}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

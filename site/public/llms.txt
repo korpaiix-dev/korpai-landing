@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 9 พฤษภาคม 2026
+อัพเดทล่าสุด: 10 พฤษภาคม 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -106,6 +106,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-agency-ไทย-เลือกยังไง-2026` — AI Agency ไทย 2026: เลือกยังไงไม่โดนหลอก — checklist 10 ข้อ
 - `/blog/claude-vs-gpt5-vs-gemini-ธุรกิจไทย-2026` — Claude vs GPT-5 vs Gemini สำหรับธุรกิจไทย 2026
 - `/blog/ai-chatbot-ราคา-2026-คู่มือ` — **PILLAR**: AI Chatbot ราคาเท่าไหร่ 2026 — คู่มือคำนวณงบ SME ครบ 5 tier
+- [AI Voice Agent ภาษาไทย 2026 — รับโทรศัพท์อัตโนมัติให้ SME (Vapi vs Retell vs Bland vs Synthflow)](https://korpai.co/blog/ai-voice-agent-%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2%E0%B9%84%E0%B8%97%E0%B8%A2-sme-2026)
 - `/blog/n8n-สำหรับ-sme-ไทย-คู่มือเริ่มต้น` — **PILLAR**: n8n สำหรับ SME ไทย — คู่มือเริ่มต้น automate ฟรี
 - `/blog/ai-chatbot-line-oa-สำหรับ-sme-2026-คู่มือเต็ม` — **PILLAR**: AI Chatbot Line OA สำหรับ SME 2026 — คู่มือเต็ม launch ใน 14 วัน
 

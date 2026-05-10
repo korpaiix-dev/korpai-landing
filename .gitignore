@@ -13,3 +13,4 @@ npm-debug.log*
 .netlify/
 coverage/
 *.local
+chat-backend/

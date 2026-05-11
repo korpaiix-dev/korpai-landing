@@ -2,7 +2,7 @@
 title: "AI Chatbot ราคาเท่าไหร่ 2026: คู่มือคำนวณงบ SME ไทย ตั้งแต่ DIY ถึง Enterprise"
 description: "ราคา AI chatbot สำหรับ SME ไทยปี 2026 — ตั้งแต่ทำเองฟรี, จ้าง freelance หลักหมื่น, agency หลักแสน, ถึง enterprise หลักล้าน พร้อม breakdown ค่าใช้จ่ายทุกส่วน + คำนวณ ROI ที่ใช้จริง"
 pubDate: 2026-05-01
-updatedDate: 2026-05-10
+updatedDate: 2026-05-11
 category: "AI Chatbot"
 tags:
   - AI Chatbot
@@ -194,6 +194,10 @@ A: ดู demo สด 3 templates ที่ [korpai.co/demo](https://korpai.co/d
 
 **Q: ถ้าเริ่มจาก Tier 1 (freelance) แล้วอยาก scale ขึ้น Tier 2 ตอนหลังได้ไหม?**
 A: ได้ แต่มักต้อง rewrite ระบบ 60-80% เพราะ freelance code ไม่มี documentation + ไม่ scalable. ถ้าคิดว่าจะ scale ใน 6-12 เดือน → เริ่ม Tier 2 ตั้งแต่แรกคุ้มกว่า
+
+
+**Q: ทำธุรกิจอสังหาริมทรัพย์ — chatbot ราคาเท่าไหร่?**
+A: นายหน้าเล็กเริ่ม 35–60K + 3–6K/เดือน, เอเจนซี่กลาง 80–180K + 8–18K/เดือน — ดูเพิ่ม [AI Chatbot สำหรับอสังหาริมทรัพย์ ไทย 2026](/blog/ai-chatbot-อสังหาริมทรัพย์-property-sme-2026)
 
 ## บทสรุป — เลือก tier ไหน?
 

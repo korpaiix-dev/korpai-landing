@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 11 พฤษภาคม 2026
+อัพเดทล่าสุด: 12 พฤษภาคม 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -117,6 +117,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/vector-database-เลือก-sme-ไทย-2026` — Vector Database สำหรับ SME ไทย 2026: Pinecone vs Qdrant vs Weaviate vs Chroma — เลือกตัวไหน + cost จริง + วิธี deploy บน VPS
 - `/blog/n8n-vs-make-vs-zapier-sme-ไทย-2026` — n8n vs Make vs Zapier สำหรับ SME ไทย 2026: เปรียบเทียบ 12 มิติ + 4 use case จริง + ROI หลัง 6 เดือน
 - `/blog/ai-chatbot-อสังหาริมทรัพย์-property-sme-2026` — AI Chatbot สำหรับอสังหาริมทรัพย์ ไทย 2026 — คัดลีดอัตโนมัติ, จองชมห้อง, ลด cost per lead 65%, multi-language ไทย/EN/中文, ROI calculator
+- `/blog/ai-chatbot-โรงแรม-ที่พัก-airbnb-sme-2026` — AI Chatbot สำหรับโรงแรม/ที่พัก/Airbnb/โฮสเทล ไทย 2026 — ตอบ 5 ภาษา 24/7, ลด no-show 47%, multi-channel sync OTA, PMS integration, ROI 28-52 วัน
 ## Feeds
 
 - RSS: https://korpai.co/rss.xml — บทความใหม่อัปเดตทุกวัน

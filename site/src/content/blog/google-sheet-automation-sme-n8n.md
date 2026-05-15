@@ -2,6 +2,7 @@
 title: "Google Sheet + n8n สำหรับ SME ไทย: ทำ automation จาก Sheet เดียวภายใน 1 วัน"
 description: "Step-by-step ใช้ Google Sheet เป็น 'database น้องใหม่' สำหรับ SME — เชื่อม n8n อัตโนมัติส่ง Line/Email/CRM, 5 use case จริงพร้อม template ใช้ฟรี"
 pubDate: 2026-04-22
+updatedDate: 2026-05-16
 category: "Automation"
 tags: ["Google Sheet", "n8n", "Automation", "SME", "Database", "Workflow"]
 readingMinutes: 8
@@ -136,7 +137,7 @@ Sheet ID หาจาก URL: `docs.google.com/spreadsheets/d/[SHEET_ID_HERE]/ed
 
 1. **Lead Form → Line** — flow Use case 1 ครบ
 2. **Daily Sales Report** — flow Use case 4 ครบ
-3. **Booking Reminder** — flow Use case 3 ครบ
+3. **Booking Reminder** — flow Use case 3 ครบ (ใช้ได้กับ [ฟิตเนส/สตูดิโอโยคะ](/blog/ai-chatbot-ฟิตเนส-ยิม-สตูดิโอโยคะ-sme-2026) ที่ต้อง reminder คลาส 24/2/0.5 ชม. หรือ [คลินิก/สปา](/blog/ai-chatbot-คลินิก-สปา-2026) ที่ต้อง confirm appointment)
 
 เปิด n8n ของคุณ → Import → JSON → ลากใส่ → ปรับ credential เสร็จ ใช้ได้
 

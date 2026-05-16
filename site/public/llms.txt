@@ -120,6 +120,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-โรงแรม-ที่พัก-airbnb-sme-2026` — AI Chatbot สำหรับโรงแรม/ที่พัก/Airbnb/โฮสเทล ไทย 2026 — ตอบ 5 ภาษา 24/7, ลด no-show 47%, multi-channel sync OTA, PMS integration, ROI 28-52 วัน
 - `/blog/ai-chatbot-สถาบันกวดวิชา-โรงเรียนสอนพิเศษ-sme-2026` — AI Chatbot สำหรับสถาบันกวดวิชา/โรงเรียนสอนพิเศษ ไทย 2026 — รับสมัครเรียน 24/7, ลด no-show ทดลองเรียน 42%, multi-grade routing P.1–M.6, re-enrollment auto 90 วันก่อนจบเทอม, PDPA สำหรับผู้เยาว์, ROI 35–55 วัน
 - `/blog/ai-chatbot-ฟิตเนส-ยิม-สตูดิโอโยคะ-sme-2026` — AI Chatbot สำหรับฟิตเนส/ยิม/สตูดิโอโยคะ/Pilates/มวยไทย SME ไทย 2026 — รับจองคลาส 24/7, waitlist อัตโนมัติ, ลด no-show 40–48%, เตือนแพ็กใกล้หมด, ต่ออายุสมาชิก auto, multi-trainer routing, ROI 30–50 วัน
+- `/blog/ai-chatbot-multi-language-หลายภาษา-sme-ไทย-2026` — AI Chatbot Multi-language ไทย/EN/中文/日本語/한국어 สำหรับ SME ไทย 2026 — Cost จริงต่อภาษา, LLM ตัวไหนเก่งภาษาไหน (Claude vs GPT-5 vs Gemini), 5-channel (Line+Messenger+WhatsApp+เว็บ+WeChat), ROI 28-48 วัน
 ## Feeds
 
 - RSS: https://korpai.co/rss.xml — บทความใหม่อัปเดตทุกวัน

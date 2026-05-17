@@ -2,6 +2,7 @@
 title: "Claude vs GPT-5 vs Gemini สำหรับธุรกิจไทย 2026: เลือกตัวไหนคุ้มสุด"
 description: "เปรียบเทียบ 3 LLM หลักจาก Anthropic, OpenAI, Google ในมิติที่ SME ไทยใช้จริง — ภาษาไทย, ราคา, ความเร็ว, context window, และ use case ที่เหมาะ"
 pubDate: 2026-05-01
+updatedDate: 2026-05-17
 category: "LLM / RAG"
 tags:
   - Claude
@@ -124,6 +125,9 @@ OpenRouter → เลือก model ตาม task:
 
 **ค่า API รวมในแพ็กเกจ** — ลูกค้าไม่ต้องตัดสินใจเรื่อง model ไม่ต้องเปิดบิลเอง
 
+> **ตัวอย่างเคสจริง (พ.ค. 2026):** ลูกค้ากลุ่มร้านเสริมสวย/Beauty Salon ของ KORP AI ใช้ Claude Haiku 4.5 จัดการ intent + small talk (booking, ทักทาย) และ Sonnet 4.6 จัดการเคสซับซ้อน (เปลี่ยนช่าง multi-service) — ดูเคสเต็มที่ [AI Chatbot สำหรับร้านเสริมสวย/ทำผม/ทำเล็บ 2026](/blog/ai-chatbot-ร้านเสริมสวย-ทำผม-ทำเล็บ-beauty-salon-sme-2026)
+
+
 ## Q: ถ้าผมเริ่มใช้ Claude แล้วอยากย้ายเป็น GPT-5 ตอนหลังต้อง rewrite ไหม?
 
 ถ้าเรียก Anthropic API ตรง → ใช่, ต้อง rewrite (~1-2 สัปดาห์งาน)
@@ -140,3 +144,4 @@ OpenRouter → เลือก model ตาม task:
 - [AI Agency ไทย 2026: เลือกยังไงไม่โดนหลอก](/blog/ai-agency-ไทย-เลือกยังไง-2026)
 - [DIY Chatbot SME 2026: ทำเองไม่ต้องเขียนโค้ด](/blog/diy-chatbot-sme-ไม่ต้องเขียนโค้ด)
 - [RAG คืออะไร และทำไม SME ไทยควรรู้จัก](/blog/rag-คืออะไร)
+- [AI Chatbot สำหรับร้านเสริมสวย/ทำผม/ทำเล็บ/Beauty Salon 2026 — เคส multi-LLM strategy ในงานจริง](/blog/ai-chatbot-ร้านเสริมสวย-ทำผม-ทำเล็บ-beauty-salon-sme-2026)

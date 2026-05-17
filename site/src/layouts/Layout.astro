@@ -147,6 +147,15 @@ const jsonLd = {
     </noscript>
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Google Analytics 4 (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7CN3N60TH"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K7CN3N60TH');
+    </script>
   </head>
   <body>
     <!-- Site-wide ambient backdrop: hero atmosphere on every section -->

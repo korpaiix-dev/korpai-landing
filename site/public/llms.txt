@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 18 พฤษภาคม 2026
+อัพเดทล่าสุด: 19 พฤษภาคม 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -123,6 +123,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-multi-language-หลายภาษา-sme-ไทย-2026` — AI Chatbot Multi-language ไทย/EN/中文/日本語/한국어 สำหรับ SME ไทย 2026 — Cost จริงต่อภาษา, LLM ตัวไหนเก่งภาษาไหน (Claude vs GPT-5 vs Gemini), 5-channel (Line+Messenger+WhatsApp+เว็บ+WeChat), ROI 28-48 วัน
 - `/blog/ai-chatbot-ร้านเสริมสวย-ทำผม-ทำเล็บ-beauty-salon-sme-2026` — AI Chatbot สำหรับร้านเสริมสวย/ทำผม/ทำเล็บ/Beauty Salon SME ไทย 2026 — รับจองคิว 24/7, ลด no-show 25%→14%, จับคู่ช่างที่ลูกค้าชอบ, อัปเซลแพ็กเกจอัตโนมัติ, repeat rate 1.4→4.2x/ปี, ROI 25–45 วัน
 - `/blog/ai-chatbot-ร้านขายยา-เภสัช-pharmacy-sme-2026` — AI Chatbot สำหรับร้านขายยา/เภสัช/Online Pharmacy SME ไทย 2026 — ตอบ OTC 73% โดยไม่เรียกเภสัชกร, refill rate 22%→74% (ยาเรื้อรัง 28-day cycle), drug interaction guardrail 3 ชั้น, อย./PDPA compliance checklist, ROI 35–60 วัน
+- `/blog/ai-chatbot-pet-shop-คลินิกสัตว์-grooming-sme-2026` — AI Chatbot สำหรับ Pet Shop / โรงพยาบาลสัตว์ / Grooming / Pet Hotel SME ไทย 2026 — จองอาบน้ำตัดขน 24/7 (online booking 18%→64%), ลด no-show 31%→19%, refill อาหาร/ยา +3.2x, emergency triage guardrail (escalate สัตวแพทย์ทันที), PDPA + พรบ.สัตวแพทย์ 2545, ROI 40–70 วัน
 ## Feeds
 
 - RSS: https://korpai.co/rss.xml — บทความใหม่อัปเดตทุกวัน

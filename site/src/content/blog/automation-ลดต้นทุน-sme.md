@@ -2,7 +2,7 @@
 title: "Automation ลดต้นทุน SME: 5 flow ที่ทำแล้วเห็นผลใน 2 สัปดาห์"
 description: "5 automation flow ที่ SME ไทยทำได้จริงภายใน 2 สัปดาห์ — ตั้งแต่ย้ายลีดจาก Facebook เข้า CRM อัตโนมัติ ไปจนถึงส่งใบเสนอราคาเอง พร้อมตัวอย่าง tool ใช้จริง"
 pubDate: 2026-04-21
-updatedDate: 2026-05-16
+updatedDate: 2026-05-19
 category: "Automation"
 tags: ["Automation", "n8n", "Make", "Zapier", "SME", "Workflow"]
 readingMinutes: 7
@@ -15,6 +15,8 @@ author: "ทีม KORP AI"
 พนักงาน 1 คนใช้เวลาวันละ 2 ชม. copy ข้อมูลจาก Facebook Form ไป Google Sheet แล้ว forward Line แจ้งทีมขาย 2 ชม. × 22 วัน = 44 ชม./เดือน คิดเป็นเงินค่างานแล้วไม่ต่ำกว่า 5,000 บาท/เดือน ทั้งที่ automation 1 flow ทำแทนได้ใน 60 วินาทีต่อเคส
 
 นี่คือ 5 flow ที่ทีม KORP ทำให้ลูกค้า SME แล้วเห็นผลจริงภายใน 2 สัปดาห์ (ทั้งหมดอยู่ภายใต้ [บริการ Automation Workflow](/services/automation) ของเรา)
+
+> 💡 ถ้าธุรกิจคุณเป็น vertical เฉพาะทาง ดูบทความตามอุตสาหกรรมเพิ่ม: [คลินิก/สปา](/blog/ai-chatbot-คลินิก-สปา-2026) · [ร้านขายยา](/blog/ai-chatbot-ร้านขายยา-เภสัช-pharmacy-sme-2026) · [Pet Shop / โรงพยาบาลสัตว์](/blog/ai-chatbot-pet-shop-คลินิกสัตว์-grooming-sme-2026) — ทุก vertical ใช้ flow คล้ายกัน แต่ guardrail ต่างกัน
 
 ## Flow 1: Facebook Lead → CRM → Line ทีมขาย
 

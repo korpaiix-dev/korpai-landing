@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Dental Clinic Pre-Op Questionnaire (KORP AI, 2026)",
+  "description": "Sent via Line OA flex message before first visit. PDPA-aware: every health field requires explicit consent + can be deleted via /api/dsr.",
+  "type": "object",
+  "required": ["consent_pdpa", "drug_allergies", "current_medications"],
+  "properties": {
+    "consent_pdpa": {
+      "type": "boolean",
+      "description": "PDPA s.26 explicit consent for health data processing"
+    },
+    "drug_allergies": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["lidocaine","penicillin","amoxicillin","NSAIDs","aspirin","sulfa","none","other"] }
+    },
+    "current_medications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "is_blood_thinner": { "type": "boolean" }
+        }
+      }
+    },
+    "chronic_conditions": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["diabetes","hypertension","heart_disease","pregnancy","none","other"] }
+    },
+    "panoramic_xray_uploaded": { "type": "boolean" },
+    "concern_text": { "type": "string", "maxLength": 500 },
+    "preferred_dentist_id": { "type": ["string","null"] },
+    "language": { "type": "string", "enum": ["th","en","zh","ja"] }
+  }
+}

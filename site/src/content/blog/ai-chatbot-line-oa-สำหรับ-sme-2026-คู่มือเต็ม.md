@@ -2,7 +2,7 @@
 title: "AI Chatbot Line OA สำหรับ SME 2026: คู่มือเต็ม — ตั้งแต่เลือก plan, เซ็ต API, ถึง launch ใน 14 วัน"
 description: "Line OA + AI Chatbot สำหรับธุรกิจไทย SME — คู่มือเต็มตั้งแต่เลือก Line OA plan, ขอ Channel Access Token, เชื่อม Claude/GPT API, ทำ knowledge base, ถึง launch รับลูกค้าจริงใน 14 วัน"
 pubDate: 2026-05-01
-updatedDate: 2026-05-18
+updatedDate: 2026-05-20
 category: "AI Chatbot"
 tags:
   - Line OA

@@ -2,7 +2,7 @@
 title: "AI Chatbot ราคาเท่าไหร่ 2026: คู่มือคำนวณงบ SME ไทย ตั้งแต่ DIY ถึง Enterprise"
 description: "ราคา AI chatbot สำหรับ SME ไทยปี 2026 — ตั้งแต่ทำเองฟรี, จ้าง freelance หลักหมื่น, agency หลักแสน, ถึง enterprise หลักล้าน พร้อม breakdown ค่าใช้จ่ายทุกส่วน + คำนวณ ROI ที่ใช้จริง"
 pubDate: 2026-05-01
-updatedDate: 2026-05-19
+updatedDate: 2026-05-20
 category: "AI Chatbot"
 tags:
   - AI Chatbot

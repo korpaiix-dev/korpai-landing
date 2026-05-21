@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KORP AI Snippets — Insurance Chatbot OIC/PDPA — 21 พ.ค. 2026</title>
+<meta name="description" content="6 production snippets for building OIC/PDPA-compliant AI chatbots for Thai insurance agents and brokers — guardrail system prompt, renewal calendar cron, PDPA consent gate, intent classifier, claim intake checklist, premium output filter">
+<link rel="canonical" href="https://korpai.co/snippets/2026-05-21/">
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#222;line-height:1.6}
+  h1{font-size:1.6em;border-bottom:2px solid #ee5253;padding-bottom:8px}
+  h2{font-size:1.15em;margin-top:24px}
+  ul{padding-left:20px}
+  li{margin:8px 0}
+  code{background:#f4f4f4;padding:1px 6px;border-radius:3px;font-size:.92em}
+  .meta{color:#777;font-size:.92em}
+  a{color:#ee5253;text-decoration:none}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<h1>KORP AI Snippets — 21 พ.ค. 2026</h1>
+<p class="meta">Topic: <strong>Insurance chatbot — OIC/PDPA compliance for Thai SME insurance agents and brokers</strong>. License: MIT. Attribution: <a href="https://korpai.co">korpai.co</a>.</p>
+
+<h2>6 working snippets</h2>
+<ul>
+  <li><a href="insurance-oic-guardrail-system-prompt.md">insurance-oic-guardrail-system-prompt.md</a> — Production system prompt that blocks AI from quoting/selling per OIC rules</li>
+  <li><a href="insurance-renewal-calendar-cron.js">insurance-renewal-calendar-cron.js</a> — n8n Function node, 5-step renewal (45/30/15/7/1 day) with Line Flex Messages</li>
+  <li><a href="pdpa-special-category-consent-gate.py">pdpa-special-category-consent-gate.py</a> — PDPA s.26 explicit consent gate for health/national-ID/minor data</li>
+  <li><a href="insurance-intent-classifier.json">insurance-intent-classifier.json</a> — 6-intent classifier config (motor_lead / health_lead / renewal / claim / faq / greeting)</li>
+  <li><a href="insurance-claim-intake-checklist.md">insurance-claim-intake-checklist.md</a> — Bot checklist by claim type (motor / health / property / life) — what to collect, what NEVER to say</li>
+  <li><a href="insurance-premium-output-filter.js">insurance-premium-output-filter.js</a> — Defense-in-depth regex filter that blocks premium/recommendation/guarantee language at output stage</li>
+</ul>
+
+<h2>Why this set</h2>
+<p>Thailand's OIC (สำนักงาน คปภ.) requires insurance sale/recommendation to come from a licensed agent — AI chatbots can collect leads and answer public-information FAQs only. PDPA s.26 requires explicit consent for sensitive personal data (health, biometric). This set is the minimum production package KORP AI ships when onboarding a new insurance agent/broker chatbot.</p>
+
+<p class="meta">For the full architecture writeup: <a href="https://korpai.co/blog/ai-chatbot-%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B9%81%E0%B8%97%E0%B8%99%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%99-%E0%B9%82%E0%B8%9A%E0%B8%A3%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%AD%E0%B8%A3%E0%B9%8C-insurance-sme-2026">AI Chatbot ตัวแทน/โบรกเกอร์ประกัน SME ไทย 2026</a></p>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "insurance-intent-classifier",
+  "description": "Classify incoming Thai-language insurance chat messages into 6 intents. Use with Claude Sonnet 4.6 or Gemini 2.5 Flash via temperature=0.",
+  "author": "KORP AI · 2026-05-21",
+  "system_prompt": "You are an intent classifier for a Thai insurance broker chatbot. Read the user message and return ONE of: motor_lead | health_lead | renewal | claim | faq | greeting. Return ONLY the label, no explanation. Examples:\n- 'อยากต่อพรบ.รถ' -> motor_lead\n- 'ประกันสุขภาพคุ้มไหม' -> health_lead\n- 'กรมธรรม์จะหมดต้นเดือนหน้า' -> renewal\n- 'รถชนเมื่อคืน ทำยังไง' -> claim\n- 'พรบ.กับชั้น1ต่างกันยังไง' -> faq\n- 'สวัสดีครับ' -> greeting",
+  "intents": {
+    "motor_lead": {
+      "next_flow": "lead_motor",
+      "guardrails": ["no_premium_quote", "no_policy_recommendation"],
+      "required_pii": ["plate", "year", "model", "phone"]
+    },
+    "health_lead": {
+      "next_flow": "lead_health",
+      "guardrails": ["pdpa_health_consent_first", "no_premium_quote", "no_medical_advice"],
+      "required_pii_after_consent": ["age", "gender", "pre_existing"]
+    },
+    "renewal": {
+      "next_flow": "renewal_intent",
+      "guardrails": ["match_existing_policy_only"],
+      "required_pii": ["plate_or_policy_no"]
+    },
+    "claim": {
+      "next_flow": "claim_intake",
+      "guardrails": ["no_payout_estimate", "no_coverage_promise"],
+      "required_pii": ["incident_type", "policy_no_or_plate", "photos"]
+    },
+    "faq": {
+      "next_flow": "rag_faq",
+      "guardrails": ["rag_grounded_only", "no_hallucinated_terms"]
+    },
+    "greeting": {
+      "next_flow": "menu",
+      "guardrails": []
+    }
+  },
+  "fallback": "If intent confidence is low or message is ambiguous, return 'greeting' and show the main menu — never guess premium-related intent.",
+  "eval_set_size": 200,
+  "target_accuracy": 0.95
+}

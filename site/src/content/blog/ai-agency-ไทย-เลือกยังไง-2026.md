@@ -2,6 +2,7 @@
 title: "AI Agency ไทย 2026: เลือกยังไงไม่โดนหลอก — checklist 10 ข้อก่อนเซ็นสัญญา"
 description: "ปี 2026 มี AI agency ผุดขึ้นมาเป็นดอกเห็ด ราคาตั้งแต่หมื่นถึงล้าน ขอบเขตงานคล้ายกันแต่คุณภาพต่างกันมาก คู่มือนี้ช่วย SME คัดกรองด้วย 10 checklist ที่ใช้ได้จริง"
 pubDate: 2026-05-01
+updatedDate: 2026-05-21
 category: "SME Strategy"
 tags:
   - AI Agency
@@ -117,3 +118,12 @@ red flag ที่สำคัญสุด:
 ถ้าอยากลองส่งให้ KORP AI ตอบ ทักได้ที่ [Line OA](https://lin.ee/Qt6Vri4) หรือ [Facebook](https://www.facebook.com/korpaiix) — เราตอบทุกข้อภายใน 24 ชม. พร้อม screenshot ระบบจริงให้ดู
 
 ดูบริการได้ที่ [korpai.co/services](https://korpai.co/services) · ลองสด demo template 3 ธุรกิจที่ [korpai.co/demo](https://korpai.co/demo)
+
+---
+
+## บทความล่าสุดที่เกี่ยวข้อง (อัพเดท 21 พ.ค. 2026)
+
+ถ้าคุณทำธุรกิจในกลุ่มต่อไปนี้ ดูคู่มือเฉพาะ vertical ของคุณก่อนตัดสินใจเลือก agency:
+- [AI Chatbot สำหรับตัวแทน/โบรกเกอร์ประกัน SME 2026 — guardrail OIC/PDPA](/blog/ai-chatbot-ตัวแทนประกัน-โบรกเกอร์-insurance-sme-2026)
+- [AI Chatbot สำหรับคลินิกทันตกรรม — recall 6 เดือน + dental tourism multi-lang](/blog/ai-chatbot-คลินิกทันตกรรม-dental-sme-2026)
+- [AI Chatbot สำหรับร้านขายยา/เภสัช — drug interaction guardrail](/blog/ai-chatbot-ร้านขายยา-เภสัช-pharmacy-sme-2026)

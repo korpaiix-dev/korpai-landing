@@ -2,7 +2,7 @@
 title: "n8n สำหรับ SME ไทย 2026: คู่มือเริ่มต้น automate ธุรกิจฟรี (ไม่ต้องเขียนโค้ด)"
 description: "n8n คือ automation tool ฟรี open-source ที่ SME ไทยใช้แทน Zapier ได้คุ้มกว่า 10 เท่า — คู่มือนี้สอนติดตั้ง, เชื่อม Line/Facebook/Google Sheet, 8 workflow ที่ทำได้เลยในวันแรก"
 pubDate: 2026-05-01
-updatedDate: 2026-05-09
+updatedDate: 2026-05-22
 category: "Automation"
 tags:
   - n8n
@@ -184,3 +184,5 @@ A: ต้องสร้าง workflow ใหม่ใน n8n (ไม่มี 
 - [Automation ราคาเท่าไหร่ SME 2026](/blog/automation-ราคา-sme-เท่าไหร่)
 - [Automation ลดต้นทุน SME — 5 flow ใน 2 สัปดาห์](/blog/automation-ลดต้นทุน-sme)
 - [AI Chatbot ราคาเท่าไหร่ — คู่มือคำนวณงบ SME](/blog/ai-chatbot-ราคา-2026-คู่มือ)
+- [AI Chatbot สำหรับอู่ซ่อมรถ/ศูนย์บริการรถยนต์ SME 2026 — service reminder + insurance claim auto](/blog/ai-chatbot-อู่ซ่อมรถ-ศูนย์บริการรถยนต์-sme-2026)
+- [AI Chatbot สำหรับตัวแทน/โบรกเกอร์ประกัน — renewal calendar +52%](/blog/ai-chatbot-ตัวแทนประกัน-โบรกเกอร์-insurance-sme-2026)

@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 21 พฤษภาคม 2026
+อัพเดทล่าสุด: 22 พฤษภาคม 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -126,6 +126,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-pet-shop-คลินิกสัตว์-grooming-sme-2026` — AI Chatbot สำหรับ Pet Shop / โรงพยาบาลสัตว์ / Grooming / Pet Hotel SME ไทย 2026 — จองอาบน้ำตัดขน 24/7 (online booking 18%→64%), ลด no-show 31%→19%, refill อาหาร/ยา +3.2x, emergency triage guardrail (escalate สัตวแพทย์ทันที), PDPA + พรบ.สัตวแพทย์ 2545, ROI 40–70 วัน
 - `/blog/ai-chatbot-คลินิกทันตกรรม-dental-sme-2026` — AI Chatbot สำหรับ คลินิกทันตกรรม / Dental Clinic / Orthodontic / Cosmetic SME ไทย 2026 — จองหมอฟัน 24/7 (online booking 22%→67%), ลด no-show 28%→18%, recall 6 เดือน auto +3.4x, dental tourism 4 ภาษา TH/EN/CN/JP, ประกัน+SSO verify, X-ray triage guardrail (no diagnosis), PDPA + พรบ.วิชาชีพทันตกรรม 2537, ROI 35–60 วัน
 - `/blog/ai-chatbot-ตัวแทนประกัน-โบรกเกอร์-insurance-sme-2026` — AI Chatbot สำหรับตัวแทน/โบรกเกอร์ประกัน SME ไทย 2026 — guardrail OIC (AI ห้าม quote/ขาย), renewal calendar +52% (5-step 45/30/15/7/1d), PDPA special category (health data), 5 flow (motor/health/life/travel/fire) + เคลม intake, multi-product routing, cost 22-48K setup + 3-7.5K/mo, ROI 3-5 เดือน
+- `/blog/ai-chatbot-อู่ซ่อมรถ-ศูนย์บริการรถยนต์-sme-2026` — AI Chatbot สำหรับอู่ซ่อมรถ/ศูนย์บริการรถยนต์ SME ไทย 2026 — จองคิว 24/7 (online 19%→58%), insurance claim intake 47 → 8 นาที, service reminder +3.8x (5,000/10,000/20,000 km), parts catalog RAG (multi-brand: Honda/Toyota/Mazda/BYD/Tesla), PDPA เลขทะเบียน+VIN, cost 18-42K setup + 2.8-6.5K/mo, ROI 28-60 วัน
 ## Feeds
 
 - RSS: https://korpai.co/rss.xml — บทความใหม่อัปเดตทุกวัน

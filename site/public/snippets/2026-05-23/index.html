@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>KORP AI snippets — 2026-05-23 — Travel agency chatbot pack</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:760px;margin:32px auto;padding:0 16px;line-height:1.55;color:#222}
+h1{font-size:1.6rem;margin-bottom:.5rem}
+a{color:#1f6feb}
+li{margin:.4rem 0}
+.note{background:#f1f5ff;padding:12px 16px;border-radius:6px;font-size:.92rem;margin:18px 0}
+</style>
+<h1>Snippets — 23 May 2026</h1>
+<p>Open-source helpers for building a 2026-modern AI chatbot for a Thai
+   outbound travel agency. All snippets MIT-licensed. Companion to the blog post
+   <a href="/blog/ai-chatbot-ตัวแทนท่องเที่ยว-travel-agency-sme-2026">AI Chatbot
+   ตัวแทนท่องเที่ยว/Travel Agency SME ไทย 2026</a>.</p>
+<ul>
+  <li><a href="visa-rule-guardrail.json">visa-rule-guardrail.json</a> — system-prompt addendum + refuse-patterns to keep the bot from guaranteeing visa approval</li>
+  <li><a href="multi-currency-quote-lock.ts">multi-currency-quote-lock.ts</a> — 24-hour locked quote with rate snapshot in THB / USD / EUR / JPY / CNY / KRW</li>
+  <li><a href="group-booking-pdpa-consent.py">group-booking-pdpa-consent.py</a> — per-passenger consent batch flow (PDPA s.19)</li>
+  <li><a href="tat-license-widget.html">tat-license-widget.html</a> — drop-in TAT license verification widget with link to ททท. registry</li>
+  <li><a href="itinerary-builder-prompt.md">itinerary-builder-prompt.md</a> — LLM system prompt for 3-tier itinerary draft + visa lookup</li>
+  <li><a href="mfa-travel-advisory-monitor.sh">mfa-travel-advisory-monitor.sh</a> — poll MFA / State Dept advisory feeds and webhook to n8n / Line OA</li>
+  <li><a href="refund-routing.ts">refund-routing.ts</a> — IATA / non-IATA / hotel-direct / OTA / agency-package refund decision tree</li>
+</ul>
+<div class="note">Use at your own risk. None of these are a substitute for a TAT-licensed travel agency, an embassy, or proper legal advice. Always verify visa rules with the destination embassy and PDPA compliance with a qualified DPO.</div>

@@ -1,0 +1,46 @@
+<!--
+  TAT license verification widget for Thai travel agencies.
+  Pure HTML+JS, no dependencies. Drop into your chatbot opening message or
+  agency profile page. Customers can click through to verify with the
+  official TAT registry (Tourism Authority of Thailand).
+  Source: KORP AI - https://korpai.co/snippets/2026-05-23/tat-license-widget.html
+  License: MIT
+-->
+<div class="tat-license" data-tat-id="11/12345" data-tat-valid-until="2027-12-31">
+  <style>
+    .tat-license{font-family:system-ui,sans-serif;border:1px solid #1f6feb;
+      border-radius:8px;padding:14px 18px;max-width:420px;background:#f7faff}
+    .tat-license h3{margin:0 0 6px;font-size:1rem;color:#1f6feb}
+    .tat-license ul{margin:8px 0 0;padding:0;list-style:none;font-size:.9rem;line-height:1.6}
+    .tat-license li::before{content:"\2713  ";color:#1f6feb;font-weight:bold}
+    .tat-license a{color:#1f6feb;text-decoration:underline}
+    .tat-license .verify-btn{display:inline-block;margin-top:10px;
+      padding:6px 14px;border-radius:6px;background:#1f6feb;color:#fff;
+      text-decoration:none;font-size:.85rem}
+  </style>
+  <h3>KORP AI Travel Agency</h3>
+  <ul>
+    <li>TAT License: <strong class="tat-id">11/12345</strong>
+        (valid until <span class="tat-valid">31 Dec 2027</span>)</li>
+    <li>Tourist liability insurance: Bangkok Insurance PCL</li>
+    <li>Member: TTAA, ATTA</li>
+  </ul>
+  <a class="verify-btn"
+     href="https://www.tourismthailand.org/registration/check"
+     target="_blank" rel="noopener noreferrer">
+     Verify with TAT registry
+  </a>
+</div>
+<script>
+  // Pull values from data attributes so a single widget script can be reused.
+  document.querySelectorAll('.tat-license').forEach(function(el){
+    var id = el.getAttribute('data-tat-id');
+    var validUntil = el.getAttribute('data-tat-valid-until');
+    if (id) el.querySelector('.tat-id').textContent = id;
+    if (validUntil) {
+      var d = new Date(validUntil);
+      el.querySelector('.tat-valid').textContent =
+        d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
+    }
+  });
+</script>

@@ -2,6 +2,7 @@
 title: "AI Chatbot สำหรับร้าน E-commerce ไทย 2026: ลด cart abandon 47% + เพิ่ม conversion 28% (เคสจริง Shopee + Lazada + TikTok Shop)"
 description: "คู่มือ AI Chatbot สำหรับร้าน e-commerce ไทยปี 2026 — รวม Shopee, Lazada, TikTok Shop, Line OA และเว็บตัวเอง · คำนวณต้นทุน ROI จริง · 7-step setup playbook · เคส cart abandon 47% → 25% ใน 60 วัน · PDPA + คืนสินค้า + cross-platform inventory"
 pubDate: 2026-05-06
+updatedDate: 2026-05-24
 category: "AI Chatbot"
 tags: ["AI Chatbot", "E-commerce", "Shopee", "Lazada", "TikTok Shop", "Line OA", "Cart Abandon", "Conversion", "SME"]
 readingMinutes: 12
@@ -151,7 +152,7 @@ author: "ทีม KORP AI"
 ## FAQ — คำถามที่เจ้าของร้านถามบ่อย
 
 **Q1: ต้องมี Shopify/เว็บก่อนถึงทำ AI Chatbot ได้ไหม?**
-ไม่จำเป็น — เริ่มจาก Line OA + 1 marketplace ที่ขายเยอะสุดได้ก่อน ขยายภายหลัง. ร้านขนาดเล็ก 4 ใน 8 เคสของเราเริ่มแค่ Line OA + Shopee แล้วค่อยเพิ่ม Lazada/TikTok ใน 60 วันต่อมา.
+ไม่จำเป็น — เริ่มจาก Line OA + 1 marketplace ที่ขายเยอะสุดได้ก่อน ขยายภายหลัง. ร้านขนาดเล็ก 4 ใน 8 เคสของเราเริ่มแค่ Line OA + Shopee แล้วค่อยเพิ่ม Lazada/TikTok ใน 60 วันต่อมา. ถ้าร้านเริ่มมี volume ส่งสินค้าสูง + อยากให้ลูกค้าเช็ค tracking ใน LINE เดียวกัน อ่านต่อ [AI Chatbot สำหรับขนส่ง/โลจิสติกส์ SME 2026](/blog/ai-chatbot-ขนส่ง-โลจิสติกส์-logistics-sme-2026) — รวม Flash/J&T/Kerry/SCG/ThaiPost tracking ใน bot เดียว.
 
 **Q2: AI ตอบภาษาไทยรู้เรื่องไหม รวมศัพท์วัยรุ่น/แสลง?**
 Claude Sonnet 4.6 และ Haiku 4.5 รองรับไทยระดับใกล้เคียง native (เทสกับ TyDiQA + คอร์ปัสไทย ม.ค. 2026). คำสแลง "อะ", "งะ", "ฮะ", "ค้าาา" เข้าใจ. แต่ persona ตอบควรกำหนดในระดับ "ผู้ใหญ่สุภาพ" หรือ "พี่สาวขี้เล่น" ตามแบรนด์ — เราตั้ง persona ให้เริ่ม.
@@ -178,5 +179,7 @@ Claude Sonnet 4.6 และ Haiku 4.5 รองรับไทยระดับ
 4. **ดูเอกสารราคา** — [AI Chatbot ราคาเท่าไหร่ 2026](/blog/ai-chatbot-ราคา-2026-คู่มือ)
 
 ---
+
+**ดูเพิ่ม:** [Logistics chatbot](/blog/ai-chatbot-ขนส่ง-โลจิสติกส์-logistics-sme-2026) · [Multi-language chatbot](/blog/ai-chatbot-multi-language-หลายภาษา-sme-ไทย-2026) · [n8n สำหรับ SME](/blog/n8n-สำหรับ-sme-ไทย-คู่มือเริ่มต้น)
 
 **เขียนโดยทีม KORP AI** — AI Agency ไทยที่ deploy AI Chatbot + Automation + Dashboard ให้ SME ไทยตั้งแต่ปี 2024 · 30+ โปรเจกต์ใน 8 อุตสาหกรรม · ทีมงานคนไทย 100% · base กรุงเทพ · บทความนี้ใช้ข้อมูลจริงจาก 8 deployment ม.ค.–เม.ย. 2026. เรียนรู้เพิ่มเกี่ยวกับ [ทีมงาน](/press) หรือดู [bonus playbook](https://korpai.co/blog) บทความอื่นทั้งหมด.

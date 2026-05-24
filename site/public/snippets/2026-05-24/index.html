@@ -1,0 +1,31 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>KORP AI snippets — 2026-05-24 — Logistics chatbot toolkit</title>
+<style>
+body{font-family:-apple-system,system-ui,sans-serif;max-width:780px;margin:2rem auto;padding:0 1rem;color:#222;line-height:1.55}
+h1{font-size:1.8rem;margin-bottom:.25rem}
+.sub{color:#666;margin-bottom:2rem}
+li{margin-bottom:.5rem}
+code{background:#f3f3f3;padding:.1rem .35rem;border-radius:3px}
+a{color:#1a73e8;text-decoration:none}
+a:hover{text-decoration:underline}
+.footer{margin-top:3rem;color:#888;font-size:.9rem;border-top:1px solid #eee;padding-top:1rem}
+</style>
+<h1>KORP AI — Logistics chatbot toolkit</h1>
+<div class=sub>2026-05-24 · Working snippets that pair with <a href="/blog/ai-chatbot-ขนส่ง-โลจิสติกส์-logistics-sme-2026">the logistics chatbot guide</a></div>
+
+<h2>Snippets</h2>
+<ul>
+  <li><a href="multi-carrier-tracker.js">multi-carrier-tracker.js</a> — query Flash / J&amp;T / Kerry / SCG / ThaiPost in parallel, return the matching carrier</li>
+  <li><a href="cod-guardrail.js">cod-guardrail.js</a> — middleware that blocks COD financial leaks until merchant passes OTP</li>
+  <li><a href="thai-address-validator.py">thai-address-validator.py</a> — LLM extract + postal-code gazetteer lookup; cut address error 12% → 1.4%</li>
+  <li><a href="sla-pre-alert.py">sla-pre-alert.py</a> — warn driver/dispatcher BEFORE the delivery promise breaches; auto-apologize to customer if it does</li>
+  <li><a href="driver-coord-pdpa-safe.js">driver-coord-pdpa-safe.js</a> — 1:1 LINE coordination + tokenized route map; never use LINE Group for customer PII</li>
+  <li><a href="order-export-pdpa-mask.py">order-export-pdpa-mask.py</a> — CSV export with phone/name/address auto-masked unless admin role + stated purpose</li>
+  <li><a href="sla-breach-report.sh">sla-breach-report.sh</a> — daily SLA breakdown by carrier from JSONL log</li>
+</ul>
+
+<div class=footer>
+All snippets are MIT-licensed. Pull requests welcome.<br>
+<a href="https://korpai.co">korpai.co</a> · AI Agency ไทย เน้น SME — chatbot, automation, dashboard.
+</div>

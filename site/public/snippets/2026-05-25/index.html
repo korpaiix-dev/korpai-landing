@@ -1,0 +1,17 @@
+<!doctype html><meta charset="utf-8">
+<title>KORP AI snippets — 2026-05-25 — Accounting firm chatbot toolkit</title>
+<style>body{font-family:system-ui;max-width:760px;margin:2em auto;line-height:1.6;color:#222}code{background:#f4f4f4;padding:.1em .35em;border-radius:3px}</style>
+<h1>Accounting Firm Chatbot Toolkit — 2026-05-25</h1>
+<p>Open-source utilities that pair with the article
+<a href="/blog/ai-chatbot-สำนักงานบัญชี-accounting-firm-sme-2026">AI Chatbot สำหรับสำนักงานบัญชี SME ไทย 2026</a>.
+MIT licensed — free for any Thai accounting firm to fork.</p>
+<ol>
+  <li><a href="etax-xml-validator.py">etax-xml-validator.py</a> — pre-validate Thai e-Tax XML before submitting to RD (catches 7 most common ETDA reject reasons)</li>
+  <li><a href="tax-deadline-swarm.py">tax-deadline-swarm.py</a> — generate D-14/D-7/D-3/D-1/D-0 Line reminders for every recurring filing per client</li>
+  <li><a href="ewht-calculator.py">ewht-calculator.py</a> — e-Withholding Tax calculator for payer/payee × nature_of_payment (PND.3 / PND.53 / PND.54)</li>
+  <li><a href="per-client-namespace-guard.py">per-client-namespace-guard.py</a> — PDPA cross-client leak guard for RAG (namespace + embedded TIN check)</li>
+  <li><a href="audit-log-schema.sql">audit-log-schema.sql</a> — immutable, append-only audit log satisfying PDPA s.30 + TFAC CPA audit</li>
+  <li><a href="etda-schema-sync.sh">etda-schema-sync.sh</a> — sync ETDA XML schema every 6h, block submit pipeline if version bumps</li>
+  <li><a href="line-onboard-doc-checklist.js">line-onboard-doc-checklist.js</a> — staged LINE OA onboarding doc checklist (4-8h → 30min)</li>
+</ol>
+<p><small>Made by <a href="https://korpai.co">KORP AI</a> · contact: <a href="https://lin.ee/korpai">Line OA @korpai</a></small></p>

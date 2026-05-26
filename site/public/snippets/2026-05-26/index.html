@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>KORP AI snippets — 2026-05-26 (Thai Law-Firm Stack)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.55;color:#222}
+h1{font-size:1.45em;margin-bottom:6px}
+.sub{color:#666;margin-bottom:24px}
+li{margin:8px 0}
+code{background:#f4f4f4;padding:2px 5px;border-radius:3px}
+.tag{display:inline-block;background:#e6f1ff;color:#0050b3;padding:1px 7px;border-radius:9px;font-size:0.78em;margin-left:6px}
+</style>
+<h1>Snippets — 2026-05-26</h1>
+<p class="sub">Open-source utilities for the Thai law-firm AI chatbot stack. MIT-licensed. From <a href="https://korpai.co">korpai.co</a>.</p>
+<ul>
+  <li><a href="deka-citation-validator.py">deka-citation-validator.py</a> — Thai Supreme Court (ฎีกา) citation extractor + verifier guardrail. Kills LLM hallucination of fake case numbers. <span class="tag">python</span></li>
+  <li><a href="per-matter-privilege-firewall.js">per-matter-privilege-firewall.js</a> — Per-matter Qdrant/Pinecone retriever wrapper. Prevents cross-matter chunk bleed (ม.16 ข้อบังคับสภาทนายความ). <span class="tag">node</span></li>
+  <li><a href="thai-statute-of-limitations.py">thai-statute-of-limitations.py</a> — อายุความ calculator + T-60/30/14/7/3/1 reminder generator across criminal, civil, labor, tax, admin. <span class="tag">python</span></li>
+  <li><a href="conflict-of-interest-checker.py">conflict-of-interest-checker.py</a> — 3-layer conflict check (exact ID, fuzzy Thai name, counterparty cross-check) at intake. <span class="tag">python</span></li>
+  <li><a href="privilege-tagged-audit-log.js">privilege-tagged-audit-log.js</a> — Append-only audit log with privileged / work-product / discoverable / public tags. <span class="tag">node</span></li>
+  <li><a href="lawyers-council-fee-quote.py">lawyers-council-fee-quote.py</a> — Base fee estimator aligned with Lawyers Council of Thailand guidance + complexity multiplier. <span class="tag">python</span></li>
+  <li><a href="court-date-reminder.js">court-date-reminder.js</a> — n8n-compatible LINE Messaging API push reminder generator for Thai e-Filing court dates. <span class="tag">node</span></li>
+</ul>
+<p>Read the full guide: <a href="https://korpai.co/blog/ai-chatbot-สำนักงานกฎหมาย-ทนายความ-law-firm-sme-2026">AI Chatbot สำหรับสำนักงานกฎหมาย/ทนายความ SME ไทย 2026</a>.</p>

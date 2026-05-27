@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 26 พฤษภาคม 2026
+อัพเดทล่าสุด: 27 พฤษภาคม 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -131,6 +131,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-สำนักงานบัญชี-accounting-firm-sme-2026` — AI Chatbot สำหรับสำนักงานบัญชี/audit SME ไทย 2026 — e-Tax Invoice XML pre-validator กัน RD reject (TIN mod-11, VAT 7% subtotal, NFC, signature chain), PDPA financial vault per-client (namespace + KMS + TIN-in-chunk guard) ห้าม cross-leak, deadline swarm 47 ภาษี (ภงด.1/3/53/54 + ภพ.30/36 + ภธ.40 + สปส. + กท.20ก) reminder 5-tier (D-14/7/3/1/0), e-Withholding calc ตาม nature_of_payment, audit trail ครบ ม.30 + ม.27 (immutable append-only Postgres+S3 object-lock), ETDA schema sync ทุก 6 ชม., onboarding LINE flow 4-8h→30min, rework -68%, missed deadline -54%, capacity per accountant +3.2x, cost 22-58K setup + 3.2-7.8K/mo
 - `/blog/ai-chatbot-ขนส่ง-โลจิสติกส์-logistics-sme-2026` — AI Chatbot สำหรับบริษัทขนส่ง/โลจิสติกส์ SME ไทย 2026 — multi-carrier tracking aggregator (Flash/J&T/Kerry/SCG Express/ThaiPost), Thai address validator (เขต/แขวง/ไปรษณีย์) ลด address error 12%→1.4%, COD reconciliation guardrail + OTP verify (ลด error 7.3→0.4 case/wk), SLA breach pre-alert (90 min ก่อนเกินกำหนด), driver 1:1 LINE coord (no LINE Group — PDPA safe), POD encrypted at rest, on-time +52% (71%→92%), CS workload -71%, cost 18-48K setup + 2.8-6.8K/mo
 - `/blog/ai-chatbot-สำนักงานกฎหมาย-ทนายความ-law-firm-sme-2026` — AI Chatbot สำหรับสำนักงานกฎหมาย/ทนายความ SME ไทย 2026 — ฎีกา citation validator (ลด hallucination 31%→<0.4%, retrieve-cite-verify), per-client privilege firewall (Qdrant collection per matter + KMS), อายุความ deadline swarm 38 เคส (อาญา ม.95 + แพ่ง 1/2/5/10 + แรงงาน 2 + ภาษี 10 + ปกครอง 90 วัน), conflict-of-interest 3-layer checker (exact + fuzzy + counterparty), Lawyers Council fee schema, privilege-tagged audit trail (privileged/work-product/discoverable), intake -72% (47→13 min), billable hour per associate +2.8x, missed limitation -58%, cost 26-72K setup + 3.8-9.4K/mo, ROI 4.2 เดือน
+- `/blog/ai-chatbot-เต็นท์รถมือสอง-ตัวแทนจำหน่ายรถ-car-dealer-sme-2026` — AI Chatbot สำหรับเต็นท์รถมือสอง/ตัวแทนจำหน่ายรถยนต์ SME ไทย 2026 — VIN/เลขถัง validator (DLT eService + กรมขนส่ง cross-check, จับรถสวมทะเบียน 4 คันใน 6 เดือน), loan pre-qualification 6 ธนาคาร parallel (KBank/SCB/Krungsri/BAY/TTB/TBank sandbox API), trade-in valuation engine (image damage detect YOLOv11 + market comp DCC/CarsDB/One2Car + odometer reasonableness), test drive scheduler ผูก Google Calendar per-sales, พรบ./ประกันชั้น 1 auto-quote จาก VIN, stock-aware Q&A real-time (DCC/CarsDB sync 15-min), PDPA credit data (AES-256 + auto-delete 90 วัน), lead waste -64% (71%→26%), test-drive-to-close +2.3x, admin -71%, loan-fail-after-attempt -76%, cost 22-68K setup + 3.2-8.9K/mo, ROI 3.1 เดือน
 ## Feeds
 
 - RSS: https://korpai.co/rss.xml — บทความใหม่อัปเดตทุกวัน

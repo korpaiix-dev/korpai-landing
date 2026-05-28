@@ -1,0 +1,18 @@
+{
+  "name": "Subcontractor Coordination Swarm — Thai contractor chatbot",
+  "description": "Broadcasts foreman weekly schedule to all subcontractor Line groups, collects ack, detects schedule conflicts, auto-reschedules dependent trades.",
+  "nodes": [
+    {"id":"weekly_schedule_published","type":"trigger","event":"schedule.published"},
+    {"id":"broadcast_to_groups","type":"line_group_push_many",
+     "groups": ["electrical","plumbing","masonry","painting","kitchen","aircon","structure"],
+     "message_th":"ตารางสัปดาห์ที่ {{$json.week_no}} — กรุณา reply ack ภายใน 4 ชม. ถ้ามีปัญหาวันที่กำหนดให้พิมพ์ 'ติด' + เหตุผล"},
+    {"id":"collect_ack_window","type":"wait","ms":14400000,"on_message":"capture_response"},
+    {"id":"detect_conflicts","type":"code",
+     "code":"// trades that depend on others (e.g. ฝ้ารอไฟ, สีรอผนัง)\nconst deps = {ceiling:['electrical'], paint:['plaster'], aircon:['electrical'], kitchen:['plumbing','electrical']};\nconst busy = $input.all().filter(x=>x.json.status==='ติด').map(x=>x.json.trade);\nconst impacted = Object.entries(deps).filter(([k,v])=>v.some(t=>busy.includes(t))).map(([k])=>k);\nreturn {busy, impacted};"},
+    {"id":"propose_reschedule","type":"llm_draft",
+     "system_prompt":"You are a polite Thai construction foreman. Re-arrange the weekly schedule to push impacted trades to the next valid slot. Reply in Thai.",
+     "user_input":"={{$json.original_schedule}} | conflicts={{$json.busy}} | impacted={{$json.impacted}}"},
+    {"id":"owner_approval","type":"approval","approver":"owner","timeout_h":2},
+    {"id":"publish_revised","type":"line_group_push_many","groups":"all","message_th":"ตารางใหม่: {{$json.revised_text}}"}
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "name": "Construction Permit Reminder — Thai contractor (อ.1 / อ.2 / อ.6 / อ.7)",
+  "description": "Reminds owner + customer about ใบอนุญาตก่อสร้าง before any site work begins. Prevents fines under พรบ. ควบคุมอาคาร 2522 (60,000 baht + stop-work + demolition).",
+  "trigger": {"type": "contract.signed"},
+  "nodes": [
+    {
+      "id": "classify_permit_needed",
+      "type": "code",
+      "code": "// Determine which form is required by project type\nconst projectType = $input.item.json.project_type; // 'new_build' | 'modify' | 'demolish' | 'use_change'\nreturn { permit_form: { new_build:'อ.1', modify:'อ.2', demolish:'อ.6', use_change:'อ.7' }[projectType], processing_days: { new_build:45, modify:30, demolish:25, use_change:30 }[projectType] };"
+    },
+    {
+      "id": "list_required_documents",
+      "type": "set",
+      "values": {
+        "documents_th": [
+          "โฉนดที่ดิน / นส.3 / น.ส.3ก ฉบับสำเนา",
+          "แบบสถาปัตยกรรม (Architectural drawing) เซ็น สก.",
+          "แบบโครงสร้าง + คำนวณ + เซ็นโดยวิศวกร ก.ว.โยธา",
+          "แบบไฟฟ้า เซ็นโดยวิศวกร ก.ว.ไฟฟ้า (ถ้าใช้ไฟ > 5kW)",
+          "แบบประปา/สุขาภิบาล",
+          "หนังสือยินยอมเจ้าของที่ดิน (ถ้าผู้ขอไม่ใช่เจ้าของ)",
+          "สำเนาบัตรประชาชน + ทะเบียนบ้าน",
+          "หนังสือรับรองนิติบุคคล (ถ้าขอในนามบริษัท) ออกไม่เกิน 30 วัน"
+        ]
+      }
+    },
+    {
+      "id": "send_initial_notice_line",
+      "type": "line_oa_push",
+      "to": "={{$input.item.json.customer_line_userid}}",
+      "message_th": "เรียนลูกค้า ก่อนเริ่มงานเราต้องยื่นใบ {{$json.permit_form}} ต่อเทศบาล/อบต. ใช้เวลาประมาณ {{$json.processing_days}} วันทำการ — ส่งเอกสาร 8 รายการตามรายการนี้ค่ะ"
+    },
+    {
+      "id": "schedule_weekly_check",
+      "type": "schedule",
+      "cron": "0 9 * * MON",
+      "until_field": "permit_received_at"
+    },
+    {
+      "id": "block_site_work_until_received",
+      "type": "guardrail",
+      "rule": "if permit_received_at IS NULL AND site_work_started_at IS NOT NULL → escalate to owner immediately"
+    }
+  ]
+}

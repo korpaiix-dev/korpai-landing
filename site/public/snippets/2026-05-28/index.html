@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>KORP AI — Contractor / Renovation Chatbot Snippets · 2026-05-28</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#222}
+h1{font-size:1.45rem;margin-bottom:.25rem}
+.lead{color:#555;margin-bottom:1.5rem}
+ul{padding-left:1.1rem}
+li{margin:.55rem 0}
+code{background:#f4f4f5;padding:.1rem .35rem;border-radius:3px;font-size:.9em}
+a{color:#0a58ca;text-decoration:none}a:hover{text-decoration:underline}
+footer{margin-top:2rem;color:#888;font-size:.85em}
+</style>
+<h1>KORP AI snippets — Contractor / Renovation chatbot · 2026-05-28</h1>
+<p class="lead">7 working snippets used by Thai contractor / renovation SME chatbots: BOQ pre-quote engine, ก.ว. license verify, material price drift detector, อ.1/อ.2 permit reminder, PDPA blueprint vault guard, subcontractor swarm, warranty follow-up. Drop-in code — ready to wire into Line OA / n8n.</p>
+<ul>
+  <li><a href="boq-prequote-calc.py">boq-prequote-calc.py</a> — preliminary BOQ engine, 14-category breakdown, ±15% confidence, 30-day TTL</li>
+  <li><a href="coe-license-verify.js">coe-license-verify.js</a> — สก./สภาวิศวกร ก.ว. license verify wrapper (โยธา/ไฟฟ้า/เครื่องกล/สิ่งแวดล้อม) — กัน พรบ. วิศวกร 2542 ม.45</li>
+  <li><a href="material-price-drift-detector.py">material-price-drift-detector.py</a> — weekly drift check, flags quotes &gt;7% movement, drafts customer revise notice</li>
+  <li><a href="permit-reminder-flow.json">permit-reminder-flow.json</a> — n8n flow: classify อ.1/อ.2/อ.6/อ.7 + 8-document checklist + weekly reminder + work-block guard</li>
+  <li><a href="pdpa-blueprint-vault-guard.py">pdpa-blueprint-vault-guard.py</a> — 4-layer access guard for blueprint, site address, ID card — RBAC + audit + off-hours anomaly</li>
+  <li><a href="subcontractor-swarm.json">subcontractor-swarm.json</a> — multi-group Line broadcast, conflict detect, auto-reschedule dependent trades</li>
+  <li><a href="warranty-followup-bot.py">warranty-followup-bot.py</a> — 6mo / 12mo / 24mo touchpoint bot, 8-item Thai home-check, 24mo upsell</li>
+</ul>
+<footer>Production-ready snippets · Apache 2.0-ish · Use freely · See <a href="/blog/ai-chatbot-รับเหมาก่อสร้าง-renovation-contractor-sme-2026">full blog post</a> for context · <a href="https://korpai.co">korpai.co</a></footer>

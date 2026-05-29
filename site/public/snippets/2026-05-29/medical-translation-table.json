@@ -1,0 +1,90 @@
+{
+  "_meta": {
+    "title": "KORP AI medical translation table — aesthetic procedures",
+    "license": "MIT",
+    "version": "2026-05-29",
+    "note": "Used as deterministic lookup BEFORE LLM. Prevents LLM mistranslating ingredients into non-existent variants. Pairs: en | th | zh-CN | ko-KR | ja-JP."
+  },
+  "terms": [
+    {
+      "key": "hyaluronic_acid_filler",
+      "en": "hyaluronic acid filler",
+      "th": "ฟิลเลอร์กรดไฮยาลูโรนิก",
+      "zh-CN": "玻尿酸填充剂",
+      "ko-KR": "히알루론산 필러",
+      "ja-JP": "ヒアルロン酸フィラー"
+    },
+    {
+      "key": "botulinum_toxin",
+      "en": "botulinum toxin",
+      "th": "โบทูลินัม ทอกซิน",
+      "zh-CN": "肉毒杆菌素",
+      "ko-KR": "보툴리눔 톡신",
+      "ja-JP": "ボツリヌストキシン"
+    },
+    {
+      "key": "hifu",
+      "en": "high-intensity focused ultrasound",
+      "th": "อัลตราซาวด์เข้มข้นสูง (HIFU)",
+      "zh-CN": "高强度聚焦超声 (HIFU)",
+      "ko-KR": "고강도 집속 초음파 (HIFU)",
+      "ja-JP": "高密度焦点式超音波 (HIFU)"
+    },
+    {
+      "key": "fractional_co2_laser",
+      "en": "fractional CO2 laser",
+      "th": "เลเซอร์ CO2 แบบ fractional",
+      "zh-CN": "点阵二氧化碳激光",
+      "ko-KR": "프락셀 CO2 레이저",
+      "ja-JP": "フラクショナルCO2レーザー"
+    },
+    {
+      "key": "thread_lift",
+      "en": "thread lift",
+      "th": "ร้อยไหม",
+      "zh-CN": "线雕",
+      "ko-KR": "실리프팅",
+      "ja-JP": "糸リフト"
+    },
+    {
+      "key": "rhinoplasty",
+      "en": "rhinoplasty",
+      "th": "ศัลยกรรมเสริมจมูก",
+      "zh-CN": "鼻整形",
+      "ko-KR": "코 성형",
+      "ja-JP": "鼻形成術"
+    },
+    {
+      "key": "double_eyelid",
+      "en": "double eyelid surgery",
+      "th": "ทำตาสองชั้น",
+      "zh-CN": "双眼皮手术",
+      "ko-KR": "쌍꺼풀 수술",
+      "ja-JP": "二重まぶた手術"
+    },
+    {
+      "key": "vascular_occlusion",
+      "en": "vascular occlusion",
+      "th": "หลอดเลือดอุดตัน",
+      "zh-CN": "血管栓塞",
+      "ko-KR": "혈관 폐색",
+      "ja-JP": "血管閉塞"
+    },
+    {
+      "key": "hyaluronidase",
+      "en": "hyaluronidase",
+      "th": "ไฮยาลูโรนิเดส",
+      "zh-CN": "透明质酸酶",
+      "ko-KR": "히알루로니다제",
+      "ja-JP": "ヒアルロニダーゼ"
+    },
+    {
+      "key": "downtime",
+      "en": "downtime",
+      "th": "ช่วงพักฟื้น",
+      "zh-CN": "恢复期",
+      "ko-KR": "회복 기간",
+      "ja-JP": "ダウンタイム"
+    }
+  ]
+}

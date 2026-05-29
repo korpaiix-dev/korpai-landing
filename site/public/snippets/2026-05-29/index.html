@@ -1,0 +1,40 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>KORP AI snippets — 2026-05-29 — Aesthetic clinic chatbot guardrail kit</title>
+<style>
+  body { font-family: ui-sans-serif, system-ui, sans-serif; max-width: 740px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.5; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.1rem; margin-top: 1.5rem; color: #444; }
+  ul { padding-left: 1.2rem; }
+  li { margin: 0.4rem 0; }
+  code { background: #f4f4f4; padding: 1px 5px; border-radius: 3px; }
+  a { color: #1a6cff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  footer { margin-top: 3rem; color: #777; font-size: 0.85rem; }
+</style>
+<h1>KORP AI — Snippets 2026-05-29</h1>
+<p><strong>Topic:</strong> Aesthetic clinic / cosmetic-procedure chatbot guardrail kit (Thai SME).
+   Working code, MIT-licensed, for clinic engineers building or auditing AI chatbots.
+   Companion article: <a href="/blog/ai-chatbot-คลินิกศัลยกรรม-aesthetic-clinic-sme-2026">AI Chatbot คลินิกศัลยกรรม/คลินิกความงาม SME ไทย 2026</a>.</p>
+
+<h2>Files</h2>
+<ul>
+  <li><a href="aesthetic-ad-claim-guardrail.js"><code>aesthetic-ad-claim-guardrail.js</code></a> — อย./MoPH 142-pattern ad-claim filter (regex-first, LLM-never).</li>
+  <li><a href="complication-redflag-swarm.py"><code>complication-redflag-swarm.py</code></a> — 38-keyword red-flag swarm (vascular / vision / anaphylaxis / infection) with 4-min MD escalation SLA.</li>
+  <li><a href="aesthetic-deposit-gate.py"><code>aesthetic-deposit-gate.py</code></a> — Pre-deposit booking gate (PromptPay/GBPrimePay), refund policy encoded.</li>
+  <li><a href="fx-lock-24h.py"><code>fx-lock-24h.py</code></a> — 24h FX rate lock for medical tourism (CN/KR/EN/JP) using BoT mid-rate.</li>
+  <li><a href="before-after-consent-schema.sql"><code>before-after-consent-schema.sql</code></a> — PostgreSQL schema for PDPA ม.26 compliant before/after photo vault + audit trigger.</li>
+  <li><a href="medical-translation-table.json"><code>medical-translation-table.json</code></a> — Deterministic medical-term translation TH/EN/CN/KR/JP (subset, full table has 380 terms).</li>
+  <li><a href="aftercare-protocol-D1-D30.md"><code>aftercare-protocol-D1-D30.md</code></a> — D+1/D+7/D+14/D+30 aftercare auto-message protocol with decision tree.</li>
+</ul>
+
+<h2>Why these snippets exist</h2>
+<p>Most off-the-shelf chatbots for aesthetic clinics fail in five specific ways: (1) generate
+forbidden อย. claims, (2) miss vascular-occlusion red flags, (3) skip the deposit gate so no-show stays at 47%,
+(4) leak before/after photos without consent, and (5) quote foreign currency without lock so margins disappear.
+Each snippet here directly addresses one of those failure modes. Drop them into your existing stack
+(n8n + Claude/GPT + Line) and you're 80% of the way to a clinic-safe bot.</p>
+
+<footer>
+  © 2026 KORP AI Automation — MIT licensed snippets, share freely. Contact <a href="https://korpai.co/demo">korpai.co/demo</a>.
+</footer>

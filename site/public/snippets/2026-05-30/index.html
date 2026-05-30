@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="th">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KORP AI — Muay Thai gym chatbot snippets (2026-05-30)</title>
+<meta name="description" content="Production-reference code snippets for Muay Thai gym SME chatbots: medical clearance 3-tier classifier, sparring weight/skill match score, e-waiver signature, Ramadan-aware scheduling, multi-channel orchestrator, GDPR erasure, Non-ED sport visa letter generator, multilingual prompt fragments (EN/RU/CN/KR/AR/FR/PT).">
+<link rel="canonical" href="https://korpai.co/snippets/2026-05-30/">
+<style>
+  body{font-family:system-ui,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;line-height:1.6;color:#222}
+  h1{border-bottom:1px solid #ddd;padding-bottom:.4em}
+  code{background:#f4f4f4;padding:.15em .35em;border-radius:3px}
+  ul{padding-left:1.2em}
+  a{color:#2860c1}
+  .meta{color:#666;font-size:.9em}
+</style>
+<h1>Muay Thai gym chatbot — code snippets · 2026-05-30</h1>
+<p class="meta">Companion code for the blog post
+<a href="/blog/ai-chatbot-ค่ายมวยไทย-muay-thai-gym-sme-2026">AI Chatbot สำหรับค่ายมวยไทย / Muay Thai Gym SME 2026</a>.
+All snippets are MIT-licensed, production references — adapt to your stack.</p>
+
+<ul>
+  <li><a href="medical-clearance-tier.py"><code>medical-clearance-tier.py</code></a> — 3-tier (RED/YELLOW/GREEN) clearance classifier with 28-question intake, multilingual messages</li>
+  <li><a href="sparring-match-score.js"><code>sparring-match-score.js</code></a> — 4-axis weighted sparring pairing score (weight ±4 kg, skill ±1 level, age ±10, intent exact)</li>
+  <li><a href="e-waiver-sign.js"><code>e-waiver-sign.js</code></a> — Thai พรบ.ธุรกรรมอิเล็กฯ ม.9-compliant typed e-signature payload builder</li>
+  <li><a href="ramadan-schedule-shift.py"><code>ramadan-schedule-shift.py</code></a> — Shift training slots to post-iftar when Hijri month = Ramadan</li>
+  <li><a href="channel-orchestrator.js"><code>channel-orchestrator.js</code></a> — Unify Line / WhatsApp / Instagram / Messenger / WeChat / KakaoTalk webhooks</li>
+  <li><a href="customer-erasure.sh"><code>customer-erasure.sh</code></a> — GDPR Art.17 erasure with 90-day audit legal hold</li>
+  <li><a href="visa-letter-nonED-sport.md"><code>visa-letter-nonED-sport.md</code></a> — Non-ED sport visa support letter template + variable mapping</li>
+  <li><a href="multilingual-prompt-fragments.yaml"><code>multilingual-prompt-fragments.yaml</code></a> — Per-language Claude system prompt fragments (cultural nuance for AR/KO/RU/ZH/FR/PT/EN)</li>
+</ul>
+
+<p>Author: <a href="https://korpai.co/">KORP AI Automation</a> · MIT license · No warranty. Not medical or legal advice.</p>

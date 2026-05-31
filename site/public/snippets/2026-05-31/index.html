@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="th">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KORP AI — B2B wholesale / distributor chatbot snippets (2026-05-31)</title>
+<meta name="description" content="Production-reference code for B2B wholesale / ยี่ปั๊ว / distributor SME chatbots: Thai 13-digit tax-ID validator, tier price + price-break resolver, credit-term guardrail, reorder-cadence predictor, e-Tax Invoice payload builder, sales-rep territory router, and an LLM prompt fragment that forbids the model from inventing prices.">
+<link rel="canonical" href="https://korpai.co/snippets/2026-05-31/">
+<style>
+  body{font-family:system-ui,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;line-height:1.6;color:#222}
+  h1{border-bottom:1px solid #ddd;padding-bottom:.4em}
+  code{background:#f4f4f4;padding:.15em .35em;border-radius:3px}
+  ul{padding-left:1.2em}
+  a{color:#2860c1}
+  .meta{color:#666;font-size:.9em}
+</style>
+<h1>B2B wholesale / distributor chatbot — code snippets · 2026-05-31</h1>
+<p class="meta">Companion code for the blog post
+<a href="/blog/ai-chatbot-ร้านค้าส่ง-ยี่ปั๊ว-b2b-distributor-sme-2026">AI Chatbot สำหรับร้านค้าส่ง / ยี่ปั๊ว / B2B Distributor SME ไทย 2026</a>.
+All snippets are MIT-licensed, production references — adapt to your stack.</p>
+
+<ul>
+  <li><a href="thai-tax-id-validator.py"><code>thai-tax-id-validator.py</code></a> — validate Thai 13-digit tax ID (mod-11 checksum) + normalize branch code, before issuing a full e-Tax Invoice</li>
+  <li><a href="tier-price-resolver.py"><code>tier-price-resolver.py</code></a> — resolve correct unit price by customer tier (RETAIL/WHOLESALE/DEALER/AGENT) + price-break ladder + proactive upsell hint</li>
+  <li><a href="credit-term-guardrail.js"><code>credit-term-guardrail.js</code></a> — check credit days, remaining limit, and overdue invoices before accepting a credit order (returns a polite action, not a hard reject)</li>
+  <li><a href="reorder-cadence.py"><code>reorder-cadence.py</code></a> — learn each customer's median reorder cycle per SKU and decide when to nudge / flag for sales follow-up</li>
+  <li><a href="etax-invoice-xml.py"><code>etax-invoice-xml.py</code></a> — build a minimal e-Tax Invoice (ใบกำกับภาษีเต็มรูป) payload with VAT 7% checks, before handoff to a certified ETDA provider</li>
+  <li><a href="sales-rep-router.js"><code>sales-rep-router.js</code></a> — route big/DEALER/AGENT accounts to their owning rep by territory; let the bot self-serve small repeat work</li>
+  <li><a href="wholesale-bot-prompt.yaml"><code>wholesale-bot-prompt.yaml</code></a> — LLM system-prompt fragment with the golden rule: the model never computes price/credit/VAT, only phrases tool results</li>
+</ul>
+
+<p class="meta">⚠️ The e-Tax snippet is a field/validation reference only — it is not a signed ETDA RDXML document. Submit signed XML via a certified e-Tax service provider by the 15th of the following tax month.</p>
+<p><a href="/blog">← back to blog</a> · <a href="/">korpai.co</a></p>

@@ -14,3 +14,4 @@ npm-debug.log*
 coverage/
 *.local
 chat-backend/
+__pycache__/

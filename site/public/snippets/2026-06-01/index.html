@@ -1,0 +1,18 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>KORP AI snippets — 2026-06-01 · anti-hallucination guardrail stack</title>
+<meta name="description" content="Working code: 7-layer anti-hallucination guardrails for a Thai SME chatbot — output guardrail, no-invent-price prompt, confidence handoff, citation enforcer, audit logger, eval harness.">
+<style>body{font:14px ui-monospace,Menlo,monospace;max-width:760px;margin:2em auto;padding:0 1em;color:#222}a{color:#0a6}h1{font-size:18px}li{margin:.5em 0}code{background:#f3f3f3;padding:1px 4px;border-radius:3px}</style>
+<h1>KORP AI — anti-hallucination guardrail snippets (2026-06-01)</h1>
+<p>Working code companions to the post
+<a href="/blog/ai-chatbot-หลอน-hallucination-ป้องกัน-sme-ไทย-2026">AI Chatbot หลอน (Hallucination): ป้องกัน 7 ชั้น</a>.
+MIT licensed — adapt freely.</p>
+<ul>
+  <li><a href="output-guardrail.js">output-guardrail.js</a> — Layer 5. Regex-first screen that BLOCKs forbidden promises (full refund / 100% guarantee / free-shipping-no-min) and vague price guesses before the reply reaches the customer. No LLM call.</li>
+  <li><a href="no-invent-price.md">no-invent-price.md</a> — Layer 2. System-prompt fragment + deterministic injection pattern so the LLM phrases verified numbers but never invents a price/stock/policy.</li>
+  <li><a href="confidence-handoff.py">confidence-handoff.py</a> — Layer 4. Make "I'm not sure" a valid answer: low retrieval similarity or out-of-scope → hand off to a human instead of guessing.</li>
+  <li><a href="citation-enforcer.py">citation-enforcer.py</a> — Layer 3. Every factual claim must carry a <code>[src:id#n]</code> tag; un-grounded claims are suppressed (Thai-aware, one-claim-per-line contract).</li>
+  <li><a href="audit-logger.py">audit-logger.py</a> — Layer 7. Append-only, hash-chained conversation log with PII redaction (phone/email/Thai ID) for PDPA ม.30 record-of-processing.</li>
+  <li><a href="hallucination-eval.py">hallucination-eval.py</a> — measure it before you ship: trap-question harness that scores hallucination / over-promise rate. Run weekly.</li>
+</ul>
+<p><a href="/snippets/">← all snippets</a> · <a href="/blog">blog</a> · <a href="/">korpai.co</a></p>

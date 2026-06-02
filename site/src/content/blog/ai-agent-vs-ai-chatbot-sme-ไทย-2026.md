@@ -2,7 +2,7 @@
 title: "AI Agent vs AI Chatbot ต่างกันยังไง สำหรับ SME ไทย 2026: เลือกแบบไหนคุ้ม + 8 use case จริง"
 description: "AI Agent กับ AI Chatbot ต่างกันยังไงปี 2026 — เปรียบเทียบ architecture, ราคา, ROI, use case จริงสำหรับ SME ไทย · Agent autonomous ทำงานเองหลายขั้น vs Chatbot ตอบคำถาม · ตารางตัดสินใจ + 8 ตัวอย่าง deploy + cost breakdown 2026"
 pubDate: 2026-05-07
-category: "AI Strategy"
+category: "SME Strategy"
 tags: ["AI Agent", "AI Chatbot", "SME", "Automation", "Claude Agent SDK", "LangGraph", "n8n", "ROI"]
 readingMinutes: 13
 heroImage: "/assets/img/ai-agent-vs-chatbot.jpg"

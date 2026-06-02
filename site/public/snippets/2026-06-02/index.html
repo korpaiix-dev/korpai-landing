@@ -1,0 +1,18 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>KORP AI snippets — 2026-06-02 · token cost & token-saving toolkit</title>
+<meta name="description" content="Working code: estimate and cut LLM token cost for a Thai SME chatbot — per-conversation/per-month THB calculator, Thai token estimator, sliding-window history trimmer, RAG top-k limiter, prompt-cache key builder, 0-token deterministic FAQ router.">
+<style>body{font:14px ui-monospace,Menlo,monospace;max-width:760px;margin:2em auto;padding:0 1em;color:#222}a{color:#0a6}h1{font-size:18px}li{margin:.5em 0}code{background:#f3f3f3;padding:1px 4px;border-radius:3px}</style>
+<h1>KORP AI — token cost & token-saving snippets (2026-06-02)</h1>
+<p>Working code companions to the post
+<a href="/blog/ai-chatbot-ต้นทุน-token-ต่อข้อความ-sme-2026">AI Chatbot ต้นทุนต่อข้อความเท่าไหร่? คำนวณค่า token จริงต่อเดือน</a>.
+MIT licensed — adapt freely.</p>
+<ul>
+  <li><a href="token-cost-calculator.js">token-cost-calculator.js</a> — per-turn / per-conversation / per-month cost in THB across budget/mid/premium tiers, with compounding history growth.</li>
+  <li><a href="thai-token-estimator.py">thai-token-estimator.py</a> — quick token estimate for mixed Thai/English text + a <code>thai_premium()</code> showing the 2–3× Thai token tax. (Use the vendor tokenizer for billing.)</li>
+  <li><a href="sliding-window-history.js">sliding-window-history.js</a> — cap conversation history to a token budget (keep last N, optional summary). History is the #1 silent cost driver.</li>
+  <li><a href="rag-topk-limiter.py">rag-topk-limiter.py</a> — greedy-pack only the highest-scoring RAG chunks that fit a token budget; drop low-similarity context instead of stuffing whole docs.</li>
+  <li><a href="prompt-cache-key.js">prompt-cache-key.js</a> — build a byte-stable cacheable prefix so prompt caching actually hits (50–90% input discount); keep volatile per-user data out of the prefix.</li>
+  <li><a href="deterministic-faq-router.js">deterministic-faq-router.js</a> — regex-first router that answers hours/address/phone/parking for <strong>0 tokens</strong>, falling through to the LLM only on a miss.</li>
+</ul>
+<p><a href="/snippets/">← all snippets</a> · <a href="/blog">blog</a> · <a href="/">korpai.co</a></p>

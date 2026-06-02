@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 1 มิถุนายน 2026
+อัพเดทล่าสุด: 2 มิถุนายน 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -137,6 +137,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-ค่ายมวยไทย-muay-thai-gym-sme-2026` — AI Chatbot สำหรับค่ายมวยไทย/Muay Thai Gym SME ไทย 2026 — medical clearance 3-tier risk routing (28 ข้อ: heart class III-IV, concussion <90 วัน, ลมชัก, ตั้งครรภ์, blood thinner → RED/YELLOW/GREEN), weight-class + skill matching 4-axis (±4 kg, ±1 level, ±10 yr, intent), PDPA + GDPR waiver dual-jurisdiction vault (S3 SG + Frankfurt, KMS, 7-yr retention, audit ledger), fight-night Lumpinee/Rajadamnern booking + Non-ED sport visa letter, gear rental + accommodation bundle (Tiger MT/Sinbi/FA Group benchmark), multilingual 7 ภาษา EN/RU/CN/KR/AR/FR/PT (Ramadan schedule + KR recovery + RU diet + CN UnionPay), trial no-show 52%→11%, walk-in→7-day 1:6→1:2.4, fight-card sellout 38%→84%, cost 28-78K setup + 3.8-11.8K/mo, ROI 9-23 วัน
 - `/blog/ai-chatbot-ร้านค้าส่ง-ยี่ปั๊ว-b2b-distributor-sme-2026` — AI Chatbot สำหรับร้านค้าส่ง/ยี่ปั๊ว/ซาปั๊ว/B2B Distributor SME ไทย 2026 — tier pricing หลายชั้น (ปลีก/ส่ง/ตัวแทน/ดีลเลอร์) bot quote ราคาถูก tier ไม่มั่ว, credit-term guardrail เช็คเครดิตเทอม 30/60/90 + วงเงินเหลือ + invoice ค้างเกินกำหนดก่อนรับออเดอร์, MOQ + ขั้นบันไดราคา (price break) upsell เชิงรุก, e-Tax Invoice เต็มรูป XML ส่งสรรพากรวันที่ 15 ของเดือนถัดไป (ETDA), reorder reminder ตามรอบซื้อของลูกค้าแต่ละราย (+2.9x), sales-rep routing ตามเขต/account, PDPA ผู้ติดต่อคู่ค้า + audit ม.30, CS workload -68%, ออเดอร์ผิดราคา/tier -91%, ออกใบกำกับ 22 นาที → 40 วินาที, cost 18-58K setup + 2.8-7.8K/mo
 
+- `/blog/ai-chatbot-ต้นทุน-token-ต่อข้อความ-sme-2026` — AI Chatbot ต้นทุนต่อข้อความเท่าไหร่ 2026 — คำนวณค่า token จริงต่อเดือน SME ไทย: ต่อบทสนทนา ~0.1–4 บาท (budget/mid/premium 3 tier), ตารางต่อเดือนตามปริมาณแชต 1,000–20,000 บทสนทนา, ทำไมภาษาไทยกิน token มากกว่าอังกฤษ 2–3 เท่า (tokenizer), อะไรกิน token เยอะสุด (RAG context + system prompt + history), 7 วิธีลดค่า token (model routing, prompt caching ลด 50–90 เปอร์เซ็นต์, sliding-window history, RAG top-k, regex/deterministic = 0 token, จำกัด max output, Thai-efficient tokenizer), ค่า token ไม่ใช่ค่า chatbot ทั้งหมด — มีโค้ด calculator ใช้ได้จริง
 - `/blog/ai-chatbot-หลอน-hallucination-ป้องกัน-sme-ไทย-2026` — AI Chatbot หลอน (Hallucination) คืออะไร + วิธีป้องกัน 7 ชั้นไม่ให้บอตตอบมั่ว/มั่วราคา/สัญญาผิด SME ไทย 2026 — (1) RAG ตอบจากฐานความรู้ร้านเท่านั้น (2) deterministic ราคา/สต็อก/นโยบายห้าม LLM คิดเอง (3) retrieve-cite-verify ไม่มี source = ไม่ตอบ (4) confidence threshold ไม่รู้บอกไม่รู้ + ส่งต่อคน (5) output guardrail regex-first กรองคำสัญญาต้องห้าม (6) human handoff เส้นแดง กฎหมาย/สุขภาพ/คืนเงิน (7) audit log ม.30 + รีวิวรายสัปดาห์ — เคส Air Canada (ศาลสั่งจ่ายเพราะบอตให้ข้อมูลผิด), ลด hallucination งานราคา/นโยบาย ~15-30% → <0.5%, setup guardrail 15-45K, มีโค้ดตัวอย่างใช้ได้จริง
 
 ## Feeds

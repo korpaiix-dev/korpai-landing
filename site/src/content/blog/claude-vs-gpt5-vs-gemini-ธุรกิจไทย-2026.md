@@ -2,7 +2,7 @@
 title: "Claude vs GPT-5 vs Gemini สำหรับธุรกิจไทย 2026: เลือกตัวไหนคุ้มสุด"
 description: "เปรียบเทียบ 3 LLM หลักจาก Anthropic, OpenAI, Google ในมิติที่ SME ไทยใช้จริง — ภาษาไทย, ราคา, ความเร็ว, context window, และ use case ที่เหมาะ"
 pubDate: 2026-05-01
-updatedDate: 2026-05-17
+updatedDate: 2026-06-02
 category: "LLM / RAG"
 tags:
   - Claude
@@ -53,6 +53,8 @@ readingMinutes: 8
 - Gemini 2.5 Flash ถูกสุดมาก เหมาะสำหรับ first-line chatbot ที่รับ volume เยอะ
 - Claude Sonnet 4.6 ราคา premium แต่ ROI สูงเพราะลูกค้าพอใจมากกว่า
 - Opus ใช้เฉพาะงานที่จำเป็น (เช่น proposal generator) ไม่เหมาะกับ chatbot ทั่วไป
+
+> 💡 ราคา $/1M token เป็นแค่ครึ่งเดียวของภาพ — ต้นทุนจริงต่อข้อความขึ้นกับขนาด context ที่แนบทุกรอบ และภาษาไทยกิน token มากกว่าอังกฤษ 2–3 เท่า. ดูวิธีคำนวณ **ต้นทุน token จริงต่อบทสนทนา/ต่อเดือน** + 7 วิธีลดค่า token ที่ [AI Chatbot ต้นทุนต่อข้อความ — คำนวณค่า token จริง SME 2026](/blog/ai-chatbot-ต้นทุน-token-ต่อข้อความ-sme-2026)
 
 ## 3. Context window (max input ครั้งเดียว)
 

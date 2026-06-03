@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 2 มิถุนายน 2026
+อัพเดทล่าสุด: 3 มิถุนายน 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -139,6 +139,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 
 - `/blog/ai-chatbot-ต้นทุน-token-ต่อข้อความ-sme-2026` — AI Chatbot ต้นทุนต่อข้อความเท่าไหร่ 2026 — คำนวณค่า token จริงต่อเดือน SME ไทย: ต่อบทสนทนา ~0.1–4 บาท (budget/mid/premium 3 tier), ตารางต่อเดือนตามปริมาณแชต 1,000–20,000 บทสนทนา, ทำไมภาษาไทยกิน token มากกว่าอังกฤษ 2–3 เท่า (tokenizer), อะไรกิน token เยอะสุด (RAG context + system prompt + history), 7 วิธีลดค่า token (model routing, prompt caching ลด 50–90 เปอร์เซ็นต์, sliding-window history, RAG top-k, regex/deterministic = 0 token, จำกัด max output, Thai-efficient tokenizer), ค่า token ไม่ใช่ค่า chatbot ทั้งหมด — มีโค้ด calculator ใช้ได้จริง
 - `/blog/ai-chatbot-หลอน-hallucination-ป้องกัน-sme-ไทย-2026` — AI Chatbot หลอน (Hallucination) คืออะไร + วิธีป้องกัน 7 ชั้นไม่ให้บอตตอบมั่ว/มั่วราคา/สัญญาผิด SME ไทย 2026 — (1) RAG ตอบจากฐานความรู้ร้านเท่านั้น (2) deterministic ราคา/สต็อก/นโยบายห้าม LLM คิดเอง (3) retrieve-cite-verify ไม่มี source = ไม่ตอบ (4) confidence threshold ไม่รู้บอกไม่รู้ + ส่งต่อคน (5) output guardrail regex-first กรองคำสัญญาต้องห้าม (6) human handoff เส้นแดง กฎหมาย/สุขภาพ/คืนเงิน (7) audit log ม.30 + รีวิวรายสัปดาห์ — เคส Air Canada (ศาลสั่งจ่ายเพราะบอตให้ข้อมูลผิด), ลด hallucination งานราคา/นโยบาย ~15-30% → <0.5%, setup guardrail 15-45K, มีโค้ดตัวอย่างใช้ได้จริง
+- `/blog/ai-chatbot-roi-kpi-วัดผล-sme-ไทย-2026` — AI Chatbot คุ้มไหม? วัด ROI ยังไง 2026 — 8 KPI ที่ SME ไทยต้องวัด (containment rate ตัวชี้ขาด ROI, deflection, cost per conversation, FCR, CSAT, escalation, lead capture, response time) + สูตร ROI + ตัวอย่างคำนวณจริง (ร้าน e-commerce containment 65% → ROI ~131%/เดือน, คืนทุน ~3 เดือน) + ตาราง benchmark เริ่มต้น/กลาง/ดี + 5 ข้อผิดพลาดตอนวัดผล + มีโค้ด ROI calculator ใช้ได้จริง
 
 ## Feeds
 

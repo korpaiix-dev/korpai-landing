@@ -1,0 +1,18 @@
+<!doctype html><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KORP AI — Chatbot back-office integration snippets (2026-06-04)</title>
+<meta name="description" content="โค้ดตัวอย่างใช้ได้จริงสำหรับเชื่อม AI chatbot เข้าระบบหลังบ้าน SME ไทย — LINE webhook signature verify, read-only stock tool call, order-status cache + rate guard, OAuth token auto-refresh, deterministic price guardrail, PDPA hash-chained access log, multi-carrier tracking normalizer. โดย KORP AI Automation.">
+<style>body{font-family:system-ui,'Noto Sans Thai',sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.7;color:#1a1a1a}code{background:#f3f3f3;padding:1px 5px;border-radius:4px}a{color:#1768e5}</style>
+<h1>KORP AI snippets — 2026-06-04</h1>
+<p>โค้ดตัวอย่างใช้ได้จริงสำหรับ <strong>เชื่อม AI chatbot เข้าระบบหลังบ้าน</strong> (POS / e-commerce / CRM / ขนส่ง) — SME ไทย. MIT-style ใช้ฟรี. ดูบทความเต็ม:
+<a href="/blog/ai-chatbot-เชื่อมระบบหลังบ้าน-pos-crm-สต็อก-sme-2026">AI Chatbot เชื่อมระบบหลังบ้าน POS/CRM/สต็อก/ขนส่ง SME 2026</a>.</p>
+<ul>
+  <li><a href="line-webhook-verify.js"><code>line-webhook-verify.js</code></a> — ตรวจ X-Line-Signature ก่อนเชื่อใจ webhook (HMAC + constant-time)</li>
+  <li><a href="tool-call-stock.js"><code>tool-call-stock.js</code></a> — tool ดึงสต็อก/ราคาสด read-only + TTL cache (LLM ห้ามเดา)</li>
+  <li><a href="order-status-cache.js"><code>order-status-cache.js</code></a> — สถานะออเดอร์ Shopee/Lazada/TikTok + token-bucket กัน rate limit</li>
+  <li><a href="token-refresh.py"><code>token-refresh.py</code></a> — ต่ออายุ OAuth token อัตโนมัติก่อนหมด (บอตไม่เงียบตอนตี 3)</li>
+  <li><a href="deterministic-price-guard.js"><code>deterministic-price-guard.js</code></a> — guardrail กันบอตมั่วราคา (price จากระบบเท่านั้น)</li>
+  <li><a href="pdpa-access-log.py"><code>pdpa-access-log.py</code></a> — audit log hash-chained ทุกครั้งที่อ่านข้อมูลลูกค้า (PDPA ม.30)</li>
+  <li><a href="tracking-aggregator.py"><code>tracking-aggregator.py</code></a> — รวมสถานะพัสดุหลายขนส่ง (Flash/J&amp;T/ไปรษณีย์) เป็นรูปแบบเดียว</li>
+</ul>
+<p>— <a href="https://korpai.co">KORP AI Automation</a> · Thai AI Agency · <a href="/demo">นัดคุยฟรี</a></p>

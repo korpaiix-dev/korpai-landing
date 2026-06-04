@@ -2,7 +2,7 @@
 title: "Google Sheet + n8n สำหรับ SME ไทย: ทำ automation จาก Sheet เดียวภายใน 1 วัน"
 description: "Step-by-step ใช้ Google Sheet เป็น 'database น้องใหม่' สำหรับ SME — เชื่อม n8n อัตโนมัติส่ง Line/Email/CRM, 5 use case จริงพร้อม template ใช้ฟรี"
 pubDate: 2026-04-22
-updatedDate: 2026-05-16
+updatedDate: 2026-06-04
 category: "Automation"
 tags: ["Google Sheet", "n8n", "Automation", "SME", "Database", "Workflow"]
 readingMinutes: 8
@@ -120,6 +120,9 @@ Sheet ID หาจาก URL: `docs.google.com/spreadsheets/d/[SHEET_ID_HERE]/ed
 5. **Sheet ถูกแก้ผิดโดยพนักงาน** — flow พังหมด · ควรล็อค header row + protect sheet
 
 ## เมื่อไหร่ Sheet+n8n เริ่มไม่พอ
+
+> เมื่อบอตต้องตอบจากข้อมูลสดในหลายระบบ (POS, CRM, ขนส่ง) ไม่ใช่แค่ Sheet เดียว ให้ดูแนวทางต่อระบบหลังบ้านแบบ tool call ที่ [AI Chatbot เชื่อมระบบหลังบ้าน POS/CRM/สต็อก SME 2026](/blog/ai-chatbot-เชื่อมระบบหลังบ้าน-pos-crm-สต็อก-sme-2026)
+
 
 อยู่ที่ stack ที่ดีจะแสดงสัญญาณก่อนพัง:
 

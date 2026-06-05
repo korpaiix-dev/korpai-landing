@@ -2,6 +2,7 @@
 title: "n8n vs Make vs Zapier 2026 — SME ไทยควรเลือกตัวไหน? (เปรียบเทียบราคา + ROI + Use Case จริง)"
 description: "n8n vs Make (Integromat) vs Zapier — เปรียบเทียบเต็ม สำหรับ SME ไทย 2026: ราคาจริงต่อเดือน, integration ที่จำเป็น (Line OA, Shopee, Lazada, PromptPay), self-host vs cloud, learning curve, ROI หลังใช้ 6 เดือน · ตารางตัดสินใจ + 4 use case ตัวอย่างจาก SME ไทย"
 pubDate: 2026-05-09
+updatedDate: 2026-06-05
 category: "Automation"
 tags:
   - n8n
@@ -242,3 +243,5 @@ A: เริ่ม cloud ($24/mo) ในเดือน 1–2 เพื่อท
 - [AI Chatbot Line OA — คู่มือเต็ม 2026](/blog/ai-chatbot-line-oa-สำหรับ-sme-2026-คู่มือเต็ม)
 
 *เขียนโดยทีม KORP AI — AI Agency ไทยที่ส่งระบบจริงให้ SME ใน 1–6 สัปดาห์ · อัพเดทล่าสุด 9 พฤษภาคม 2026*
+
+> 💡 ถ้าเลือก n8n แล้วและกำลังจะ self-host เอง อ่านต่อ: [n8n Self-Host บน VPS — เลือก spec, ต้นทุนจริง/เดือน และวิธี backup](/blog/n8n-self-host-vps-ต้นทุน-spec-backup-sme-ไทย-2026)

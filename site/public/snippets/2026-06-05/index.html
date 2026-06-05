@@ -1,0 +1,17 @@
+<!doctype html><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KORP AI — n8n Self-Host Snippets (2026-06-05)</title>
+<meta name="description" content="โค้ดใช้งานจริงสำหรับ self-host n8n บน VPS: docker-compose, Caddy auto-HTTPS, backup 3-2-1, healthcheck และเครื่องคิดจุดคุ้มทุน vs n8n Cloud — โดย KORP AI">
+<style>body{font:16px/1.6 system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;color:#1a1a1a}h1{font-size:1.5rem}code{background:#f4f4f5;padding:2px 6px;border-radius:4px}li{margin:.4rem 0}a{color:#2563eb}.muted{color:#666;font-size:.9rem}</style>
+<h1>n8n Self-Host Snippets — 2026-06-05</h1>
+<p>โค้ดใช้งานจริงประกอบบทความ <a href="/blog/n8n-self-host-vps-ต้นทุน-spec-backup-sme-ไทย-2026">n8n Self-Host บน VPS สำหรับ SME ไทย 2026</a> — คัดลอกไปใช้ได้เลย (ใช้ภายใต้ความรับผิดชอบของคุณเอง)</p>
+<ul>
+  <li><a href="docker-compose.yml">docker-compose.yml</a> — n8n + PostgreSQL + Caddy auto-HTTPS production stack</li>
+  <li><a href="Caddyfile">Caddyfile</a> — reverse proxy + Let's Encrypt SSL + security headers</li>
+  <li><a href=".env.n8n.example">.env.n8n.example</a> — ตัวอย่าง env พร้อม N8N_ENCRYPTION_KEY</li>
+  <li><a href="n8n-backup.sh">n8n-backup.sh</a> — backup 3-2-1 (pg_dump + key + offsite via rclone + retention)</li>
+  <li><a href="n8n-restore.sh">n8n-restore.sh</a> — กู้คืนจาก backup พร้อม verify checksum</li>
+  <li><a href="n8n-healthcheck.sh">n8n-healthcheck.sh</a> — เช็ค HTTP/disk/RAM + แจ้งเตือน webhook</li>
+  <li><a href="n8n-cost-calculator.py">n8n-cost-calculator.py</a> — คิดจุดคุ้มทุน self-host vs n8n Cloud</li>
+</ul>
+<p class="muted">© KORP AI Automation — <a href="https://korpai.co">korpai.co</a> · AI Agency ไทยสำหรับ SME</p>

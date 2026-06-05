@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 4 มิถุนายน 2026
+อัพเดทล่าสุด: 5 มิถุนายน 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -116,6 +116,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-agent-vs-ai-chatbot-sme-ไทย-2026` — AI Agent vs AI Chatbot สำหรับ SME ไทย 2026: เลือกแบบไหนคุ้ม + 8 use case จริง + cost breakdown
 - `/blog/vector-database-เลือก-sme-ไทย-2026` — Vector Database สำหรับ SME ไทย 2026: Pinecone vs Qdrant vs Weaviate vs Chroma — เลือกตัวไหน + cost จริง + วิธี deploy บน VPS
 - `/blog/n8n-vs-make-vs-zapier-sme-ไทย-2026` — n8n vs Make vs Zapier สำหรับ SME ไทย 2026: เปรียบเทียบ 12 มิติ + 4 use case จริง + ROI หลัง 6 เดือน
+- `/blog/n8n-self-host-vps-ต้นทุน-spec-backup-sme-ไทย-2026` — n8n Self-Host บน VPS สำหรับ SME ไทย 2026: เลือก spec (2vCPU/4GB), ต้นทุนจริงต่อเดือน (VPS ไทย ~400 บาท vs Hetzner vs DigitalOcean), จุดคุ้มทุน vs n8n Cloud (Starter €24/2,500 exec), RAM คือคอขวด, checklist ติดตั้ง+ความปลอดภัย 9 ข้อ, backup 3-2-1 (N8N_ENCRYPTION_KEY สำคัญสุด), FAQ
 - `/blog/ai-chatbot-อสังหาริมทรัพย์-property-sme-2026` — AI Chatbot สำหรับอสังหาริมทรัพย์ ไทย 2026 — คัดลีดอัตโนมัติ, จองชมห้อง, ลด cost per lead 65%, multi-language ไทย/EN/中文, ROI calculator
 - `/blog/ai-chatbot-โรงแรม-ที่พัก-airbnb-sme-2026` — AI Chatbot สำหรับโรงแรม/ที่พัก/Airbnb/โฮสเทล ไทย 2026 — ตอบ 5 ภาษา 24/7, ลด no-show 47%, multi-channel sync OTA, PMS integration, ROI 28-52 วัน
 - `/blog/ai-chatbot-สถาบันกวดวิชา-โรงเรียนสอนพิเศษ-sme-2026` — AI Chatbot สำหรับสถาบันกวดวิชา/โรงเรียนสอนพิเศษ ไทย 2026 — รับสมัครเรียน 24/7, ลด no-show ทดลองเรียน 42%, multi-grade routing P.1–M.6, re-enrollment auto 90 วันก่อนจบเทอม, PDPA สำหรับผู้เยาว์, ROI 35–55 วัน

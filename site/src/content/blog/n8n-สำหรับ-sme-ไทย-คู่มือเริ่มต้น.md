@@ -2,7 +2,7 @@
 title: "n8n สำหรับ SME ไทย 2026: คู่มือเริ่มต้น automate ธุรกิจฟรี (ไม่ต้องเขียนโค้ด)"
 description: "n8n คือ automation tool ฟรี open-source ที่ SME ไทยใช้แทน Zapier ได้คุ้มกว่า 10 เท่า — คู่มือนี้สอนติดตั้ง, เชื่อม Line/Facebook/Google Sheet, 8 workflow ที่ทำได้เลยในวันแรก"
 pubDate: 2026-05-01
-updatedDate: 2026-05-22
+updatedDate: 2026-06-05
 category: "Automation"
 tags:
   - n8n
@@ -57,6 +57,8 @@ docker run -it --rm \
 ```
 
 หรือใช้ docker-compose สำหรับ production setup (database persistent + reverse proxy + SSL)
+
+> 📌 อยากรู้ว่า self-host **ใช้ spec เท่าไหร่ ต้นทุนจริงกี่บาท/เดือน และคุ้มกว่า n8n Cloud ตรงไหน** อ่านเจาะลึกพร้อมตารางราคา VPS 2026 + วิธี backup ที่ [n8n Self-Host บน VPS สำหรับ SME ไทย 2026](/blog/n8n-self-host-vps-ต้นทุน-spec-backup-sme-ไทย-2026)
 
 ใช้ Caddy หรือ nginx เป็น reverse proxy + Let's Encrypt SSL → เปิด n8n.yourcompany.com ใช้งานได้
 

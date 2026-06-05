@@ -1,0 +1,14 @@
+# KORP AI — Caddy reverse proxy + auto Let's Encrypt SSL สำหรับ n8n
+# แทน n8n.yourcompany.com ด้วยโดเมนจริง (ต้องชี้ A record มาที่ IP ของ VPS ก่อน)
+n8n.yourcompany.com {
+    encode zstd gzip
+    reverse_proxy n8n:5678 {
+        flush_interval -1          # สำคัญ: ให้ SSE/long-poll ของ editor ทำงานลื่น
+    }
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        -Server
+    }
+}

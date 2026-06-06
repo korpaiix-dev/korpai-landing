@@ -2,7 +2,7 @@
 title: "Claude vs GPT-5 vs Gemini สำหรับธุรกิจไทย 2026: เลือกตัวไหนคุ้มสุด"
 description: "เปรียบเทียบ 3 LLM หลักจาก Anthropic, OpenAI, Google ในมิติที่ SME ไทยใช้จริง — ภาษาไทย, ราคา, ความเร็ว, context window, และ use case ที่เหมาะ"
 pubDate: 2026-05-01
-updatedDate: 2026-06-02
+updatedDate: 2026-06-06
 category: "LLM / RAG"
 tags:
   - Claude
@@ -147,3 +147,4 @@ OpenRouter → เลือก model ตาม task:
 - [DIY Chatbot SME 2026: ทำเองไม่ต้องเขียนโค้ด](/blog/diy-chatbot-sme-ไม่ต้องเขียนโค้ด)
 - [RAG คืออะไร และทำไม SME ไทยควรรู้จัก](/blog/rag-คืออะไร)
 - [AI Chatbot สำหรับร้านเสริมสวย/ทำผม/ทำเล็บ/Beauty Salon 2026 — เคส multi-LLM strategy ในงานจริง](/blog/ai-chatbot-ร้านเสริมสวย-ทำผม-ทำเล็บ-beauty-salon-sme-2026)
+- [LLM โอเพนซอร์ส Self-Host vs API: SME ไทยควรเลือกอะไร 2026 (Typhoon, Llama)](/blog/llm-โอเพนซอร์ส-self-host-vs-api-sme-ไทย-2026) — เมื่อไม่เรียก API แต่รันโมเดลเองคุ้มกว่า

@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KORP AI — LLM Self-Host vs API Snippets (2026-06-06)</title>
+<meta name="description" content="โค้ดใช้งานจริงสำหรับตัดสินใจ self-host LLM (Typhoon/Llama/Ollama/vLLM) vs เรียก API: TCO calculator, Thai token estimator, health probe, hybrid router, PDPA residency gate, vLLM sizing — โดย KORP AI">
+<style>body{font:16px/1.6 system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;color:#1a1a1a}h1{font-size:1.5rem}code{background:#f4f4f5;padding:2px 6px;border-radius:4px}li{margin:.4rem 0}a{color:#2563eb}.muted{color:#666;font-size:.9rem}</style>
+<h1>LLM Self-Host vs API Snippets — 2026-06-06</h1>
+<p>โค้ดใช้งานจริงประกอบบทความ <a href="/blog/llm-โอเพนซอร์ส-self-host-vs-api-sme-ไทย-2026">LLM โอเพนซอร์ส Self-Host vs API สำหรับ SME ไทย 2026</a> — คัดลอกไปใช้ได้เลย (MIT, ใช้ภายใต้ความรับผิดชอบของคุณเอง)</p>
+<ul>
+  <li><a href="llm-tco-calculator.py">llm-tco-calculator.py</a> — เทียบต้นทุนรวม API (จ่ายตามใช้) vs self-host (คงที่) + หาจุดคุ้มทุน</li>
+  <li><a href="thai-token-efficiency.py">thai-token-efficiency.py</a> — ประเมิน Thai token tax และความคุ้มของโมเดลที่ปรับให้ไทย (เช่น Typhoon)</li>
+  <li><a href="ollama-health-probe.sh">ollama-health-probe.sh</a> — health check endpoint Ollama/vLLM + alert (self-host = คุณดูแล uptime เอง)</li>
+  <li><a href="hybrid-llm-router.js">hybrid-llm-router.js</a> — router แบบ local-first → API fallback + pin งานอ่อนไหวไว้ local</li>
+  <li><a href="pdpa-residency-gate.py">pdpa-residency-gate.py</a> — สแกนข้อมูลส่วนบุคคล แล้วบังคับให้ข้อมูลอ่อนไหวไม่ออกไป cloud</li>
+  <li><a href="vllm-concurrency-sizing.py">vllm-concurrency-sizing.py</a> — คำนวณ concurrency + VRAM ที่ต้องใช้ตาม peak load</li>
+</ul>
+<p class="muted">© KORP AI Automation — <a href="https://korpai.co">korpai.co</a> · AI Agency ไทยสำหรับ SME</p>

@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 6 มิถุนายน 2026
+อัพเดทล่าสุด: 7 มิถุนายน 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -143,6 +143,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-หลอน-hallucination-ป้องกัน-sme-ไทย-2026` — AI Chatbot หลอน (Hallucination) คืออะไร + วิธีป้องกัน 7 ชั้นไม่ให้บอตตอบมั่ว/มั่วราคา/สัญญาผิด SME ไทย 2026 — (1) RAG ตอบจากฐานความรู้ร้านเท่านั้น (2) deterministic ราคา/สต็อก/นโยบายห้าม LLM คิดเอง (3) retrieve-cite-verify ไม่มี source = ไม่ตอบ (4) confidence threshold ไม่รู้บอกไม่รู้ + ส่งต่อคน (5) output guardrail regex-first กรองคำสัญญาต้องห้าม (6) human handoff เส้นแดง กฎหมาย/สุขภาพ/คืนเงิน (7) audit log ม.30 + รีวิวรายสัปดาห์ — เคส Air Canada (ศาลสั่งจ่ายเพราะบอตให้ข้อมูลผิด), ลด hallucination งานราคา/นโยบาย ~15-30% → <0.5%, setup guardrail 15-45K, มีโค้ดตัวอย่างใช้ได้จริง
 - `/blog/ai-chatbot-roi-kpi-วัดผล-sme-ไทย-2026` — AI Chatbot คุ้มไหม? วัด ROI ยังไง 2026 — 8 KPI ที่ SME ไทยต้องวัด (containment rate ตัวชี้ขาด ROI, deflection, cost per conversation, FCR, CSAT, escalation, lead capture, response time) + สูตร ROI + ตัวอย่างคำนวณจริง (ร้าน e-commerce containment 65% → ROI ~131%/เดือน, คืนทุน ~3 เดือน) + ตาราง benchmark เริ่มต้น/กลาง/ดี + 5 ข้อผิดพลาดตอนวัดผล + มีโค้ด ROI calculator ใช้ได้จริง
 - `/blog/ai-chatbot-เชื่อมระบบหลังบ้าน-pos-crm-สต็อก-sme-2026` — AI Chatbot เชื่อมระบบหลังบ้าน SME ไทย 2026: ต่อ POS/สต็อก, Shopee/Lazada/TikTok order status, CRM ประวัติลูกค้า, ขนส่ง tracking, ระบบจอง — 4 ระดับการเชื่อม (FAQ→read-only→capture→write), สถาปัตยกรรม webhook→orchestrator→tool call (ราคา/สต็อกห้าม LLM เดา ดึงสดเสมอ), 5 กับดัก (LLM เดาราคา, rate limit, สิทธิ์เกิน, PDPA ตอน CRM, token หมดอายุ), ต้นทุน 15-90K, FAQ
+- `/blog/ai-chatbot-human-handoff-ส่งต่อเจ้าหน้าที่-sme-ไทย-2026` — AI Chatbot ส่งต่อให้เจ้าหน้าที่ (Human Handoff) SME ไทย 2026: 6 สัญญาณ escalation (ลูกค้าขอคุยกับคน, ตอบพลาด 2 ครั้งติด, เรื่องเงิน/สุขภาพ/กฎหมาย/ร้องเรียน, จับอารมณ์โมโห, บอตไม่มั่นใจ, ลูกค้า VIP), context packet ส่งประวัติแชตเต็ม+ข้อมูลลูกค้าให้ agent ลูกค้าไม่ต้องเล่าซ้ำ, จัดการ handoff นอกเวลางาน (แจ้งเวลาตอบกลับ+เก็บคิว), 5 ข้อผิดที่ทำ CSAT ร่วง, FAQ — มีโค้ดตัวอย่างใช้ได้จริง
 
 ## Feeds
 

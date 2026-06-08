@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8">
+<title>KORP AI snippets — 2026-06-08 — AI chatbot security (prompt injection + ข้อมูลรั่ว)</title>
+<meta name="description" content="โค้ดตัวอย่างใช้ได้จริงด้านความปลอดภัย AI chatbot SME ไทย — prompt-injection detector, input sanitizer, PII output redactor, cross-user firewall (กัน IDOR), tool-call allowlist, rate-limit guard และ red-team test suite. อิง OWASP LLM Top 10 2025.">
+<h1>KORP AI snippets — 2026-06-08</h1>
+<p>โค้ดประกอบบทความ <a href="https://korpai.co/blog/ai-chatbot-prompt-injection-ความปลอดภัย-security-sme-ไทย-2026">AI Chatbot ความปลอดภัย (Prompt Injection + ข้อมูลรั่ว) สำหรับ SME ไทย 2026 — ป้องกัน 8 ชั้น</a> — แต่ละไฟล์คือ 1 ชั้นของ defense-in-depth, รันได้จริงด้วย Node.js / Python.</p>
+<ul>
+  <li><a href="prompt-injection-detector.js">prompt-injection-detector.js</a> — ชั้น 3: ตรวจจับ injection/jailbreak (ไทย+อังกฤษ) regex-first, 0 token</li>
+  <li><a href="input-sanitizer.js">input-sanitizer.js</a> — ชั้น 1+2: แยกข้อมูลผู้ใช้ออกจากคำสั่ง + ตัด zero-width/control char</li>
+  <li><a href="pii-output-redactor.js">pii-output-redactor.js</a> — ชั้น 4: redact เลขบัตร ปชช./เบอร์/บัตรเครดิต/อีเมล ก่อนส่งออก (Luhn + checksum)</li>
+  <li><a href="cross-user-firewall.py">cross-user-firewall.py</a> — ชั้น 5: กันข้อมูลข้ามลูกค้า (IDOR) — ผูก query กับ identity เสมอ</li>
+  <li><a href="tool-call-allowlist.js">tool-call-allowlist.js</a> — ชั้น 6: least-privilege ให้บอตเรียกได้เฉพาะ action ที่อนุญาต</li>
+  <li><a href="rate-limit-guard.js">rate-limit-guard.js</a> — ชั้น 7: token-bucket กันยิงรัว/ดูดข้อมูล/ค่า token บานปลาย</li>
+  <li><a href="injection-test-suite.md">injection-test-suite.md</a> — red-team checklist 6 หมวด รันก่อน launch + regression test</li>
+</ul>
+<p>อ้างอิง: OWASP Top 10 for LLM Applications 2025 (LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM06 Excessive Agency).</p>
+<p>© KORP AI Automation — <a href="https://korpai.co">korpai.co</a></p>

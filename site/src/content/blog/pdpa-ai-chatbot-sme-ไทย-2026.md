@@ -2,7 +2,7 @@
 title: "PDPA กับ AI Chatbot 2026: คู่มือ SME ไทยตั้งระบบให้ถูกกฎหมาย ไม่โดนปรับล้าน"
 description: "AI chatbot กับ PDPA — SME ไทยต้องทำอะไรบ้างปี 2026: 12-step compliance checklist, โทษปรับจริงที่ PDPC สั่ง, แบบฟอร์ม consent + DPA, และวิธี audit chatbot ของตัวเองใน 30 นาที"
 pubDate: 2026-05-04
-updatedDate: 2026-05-29
+updatedDate: 2026-06-08
 category: "AI Chatbot"
 tags:
   - PDPA
@@ -59,12 +59,12 @@ author: "ทีม KORP AI"
 
 7. **Data Subject Rights endpoint** — เปิดให้ user request: ขอดู (access), แก้ไข (rectification), ลบ (erasure), portability — ตอบภายใน 30 วัน
 8. **Audit log ทุก access** — ใครเข้าถึงข้อมูลใคร เมื่อไหร่ จุดประสงค์อะไร — เก็บอย่างน้อย 1 ปี
-9. **PII redaction ก่อนส่ง LLM** — เลขบัตร, เลขบัญชี, OTP ต้อง mask ก่อนส่ง prompt ไป cloud LLM
+9. **PII redaction ก่อนส่ง LLM** — เลขบัตร, เลขบัญชี, OTP ต้อง mask ก่อนส่ง prompt ไป cloud LLM (ทำเป็นชั้น output filter ด้วยเพื่อกันบอตเผลอเผยข้อมูลคนอื่น — ดู [คู่มือความปลอดภัย chatbot: prompt injection + ข้อมูลรั่ว 8 ชั้น](/blog/ai-chatbot-prompt-injection-ความปลอดภัย-security-sme-ไทย-2026))
 10. **Children data check** — ถ้าธุรกิจเกี่ยวกับเด็ก < 10 ปี ต้องขอ parental consent เพิ่ม
 
 ### เมื่อเกิดเหตุ (Incident)
 
-11. **Breach notification process** — ถ้าข้อมูลรั่ว ต้องแจ้ง PDPC ภายใน **72 ชั่วโมง** + แจ้ง data subject ถ้าความเสี่ยงสูง (ตาม PDPC Guideline No. 4/2565)
+11. **Breach notification process** — ถ้าข้อมูลรั่ว ต้องแจ้ง PDPC ภายใน **72 ชั่วโมง** + แจ้ง data subject ถ้าความเสี่ยงสูง (ตาม PDPC Guideline No. 4/2565) — ทางที่ดีกว่าคือ[ป้องกันไม่ให้รั่วตั้งแต่แรก](/blog/ai-chatbot-prompt-injection-ความปลอดภัย-security-sme-ไทย-2026) ด้วย cross-user firewall + injection guard
 12. **Annual review** — ทบทวน privacy notice + DPA + retention อย่างน้อย ปีละครั้ง
 
 ## เปรียบเทียบ LLM Provider ตามมุม PDPA 2026

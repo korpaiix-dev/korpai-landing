@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8">
+<title>KORP AI snippets — 2026-06-09 — chatbot testing / evaluation toolkit</title>
+<style>body{font:14px ui-monospace,Menlo,monospace;max-width:760px;margin:2em auto;padding:0 1em;color:#222}a{color:#0a6}</style>
+<h1>KORP AI snippets — 2026-06-09</h1>
+<p>Chatbot testing &amp; evaluation toolkit — companions to
+<a href="/blog/ai-chatbot-ทดสอบ-ประเมินผล-qa-ก่อนเปิดใช้-sme-ไทย-2026">ทดสอบ AI Chatbot ก่อนเปิดใช้จริง (Evaluation/QA/UAT) 2026</a>. MIT licensed.</p>
+<ul>
+  <li><a href="golden_set_runner.py">golden_set_runner.py</a> — run a CSV golden set, score coverage + must-not violations, save regression report</li>
+  <li><a href="llm_judge.py">llm_judge.py</a> — LLM-as-a-judge scorer (0..1) with strict Thai rubric, provider-agnostic</li>
+  <li><a href="judge_calibration.py">judge_calibration.py</a> — prove judge agrees with humans (agreement % + bias) before trusting it</li>
+  <li><a href="redteam_injection_suite.py">redteam_injection_suite.py</a> — TH+EN prompt-injection / data-leak attack battery (OWASP LLM Top 10)</li>
+  <li><a href="load_test.py">load_test.py</a> — concurrency stress harness, p50/p95 latency + response-shrink degradation flag</li>
+  <li><a href="gonogo_gate.py">gonogo_gate.py</a> — final Go/No-Go gate, CI-friendly (non-zero exit if any gate fails)</li>
+</ul>
+<p><a href="/snippets/">← all snippets</a> · <a href="/blog">blog</a> · <a href="/">korpai.co</a></p>

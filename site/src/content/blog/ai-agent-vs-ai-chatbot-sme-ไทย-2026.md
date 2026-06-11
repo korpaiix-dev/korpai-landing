@@ -2,6 +2,7 @@
 title: "AI Agent vs AI Chatbot ต่างกันยังไง สำหรับ SME ไทย 2026: เลือกแบบไหนคุ้ม + 8 use case จริง"
 description: "AI Agent กับ AI Chatbot ต่างกันยังไงปี 2026 — เปรียบเทียบ architecture, ราคา, ROI, use case จริงสำหรับ SME ไทย · Agent autonomous ทำงานเองหลายขั้น vs Chatbot ตอบคำถาม · ตารางตัดสินใจ + 8 ตัวอย่าง deploy + cost breakdown 2026"
 pubDate: 2026-05-07
+updatedDate: 2026-06-11
 category: "SME Strategy"
 tags: ["AI Agent", "AI Chatbot", "SME", "Automation", "Claude Agent SDK", "LangGraph", "n8n", "ROI"]
 readingMinutes: 13
@@ -196,6 +197,8 @@ author: "ทีม KORP AI"
 - เปรียบเทียบ LLM: [Claude vs GPT-5 vs Gemini สำหรับธุรกิจไทย 2026](/blog/claude-vs-gpt5-vs-gemini-ธุรกิจไทย-2026)
 - E-commerce specific: [AI Chatbot ร้าน E-commerce ไทย Shopee + Lazada + TikTok](/blog/ai-chatbot-ecommerce-shopee-lazada-tiktok-2026)
 - Compliance: [PDPA + AI Chatbot คู่มือ SME ไทย 2026](/blog/pdpa-ai-chatbot-sme-ไทย-2026)
+- คุมงบ: [ต้นทุน token ต่อข้อความจริง + 7 วิธีลด](/blog/ai-chatbot-ต้นทุน-token-ต่อข้อความ-sme-2026)
+- เริ่มแบบไม่จ่าย: [AI Chatbot ฟรี 2026 + ต้นทุนแฝง 4 ก้อนที่ต้องรู้](/blog/ai-chatbot-ฟรี-2026-ต้นทุนแฝง-sme)
 
 ## FAQ — คำถามที่ AI search engine จะ extract บ่อย
 

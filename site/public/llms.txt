@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 9 มิถุนายน 2026
+อัพเดทล่าสุด: 11 มิถุนายน 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -146,6 +146,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-human-handoff-ส่งต่อเจ้าหน้าที่-sme-ไทย-2026` — AI Chatbot ส่งต่อให้เจ้าหน้าที่ (Human Handoff) SME ไทย 2026: 6 สัญญาณ escalation (ลูกค้าขอคุยกับคน, ตอบพลาด 2 ครั้งติด, เรื่องเงิน/สุขภาพ/กฎหมาย/ร้องเรียน, จับอารมณ์โมโห, บอตไม่มั่นใจ, ลูกค้า VIP), context packet ส่งประวัติแชตเต็ม+ข้อมูลลูกค้าให้ agent ลูกค้าไม่ต้องเล่าซ้ำ, จัดการ handoff นอกเวลางาน (แจ้งเวลาตอบกลับ+เก็บคิว), 5 ข้อผิดที่ทำ CSAT ร่วง, FAQ — มีโค้ดตัวอย่างใช้ได้จริง
 - `/blog/ai-chatbot-prompt-injection-ความปลอดภัย-security-sme-ไทย-2026` — AI Chatbot ความปลอดภัย SME ไทย 2026: prompt injection (OWASP LLM01) + ข้อมูลรั่ว (LLM02) + excessive agency (LLM06) แปลเป็นภาษา SME, เคสจริงปี 2025 (EchoLeak/Gemini memory/IDOR+injection หลุดหลายพันราย), ป้องกัน defense-in-depth 8 ชั้น (instruction/data separation, input sanitize, injection regex detector, PII output redactor, cross-user firewall กัน IDOR, tool allowlist least-privilege, rate limit, audit log ม.30), ต้นทุน 15-60K, red-team test suite, FAQ — มีโค้ดตัวอย่างใช้ได้จริง
 - `/blog/ai-chatbot-ทดสอบ-ประเมินผล-qa-ก่อนเปิดใช้-sme-ไทย-2026` — ทดสอบ/ประเมิน AI Chatbot ก่อนเปิดใช้จริง (Evaluation/QA/UAT) SME ไทย 2026: ทำไม chatbot ทดสอบแบบเว็บปกติไม่ได้ (nondeterministic, เลิก vibe check), 6 ด้านที่ต้องทดสอบ (ความถูกต้อง/hallucination/red-team/load/UAT/soft launch), สร้าง golden set จากแชตจริง 100-200 ข้อ + คำถามดักหลุม, LLM-as-a-judge (ตรงกับคน 80-90%) ต้อง calibrate ก่อน, red-team prompt injection (OWASP LLM Top 10), load test เจอจุดบอตหลอนตอนพีค, เช็กลิสต์ Go/No-Go 10 ข้อ, FAQ — มีโค้ดตัวอย่างใช้ได้จริง
+- `/blog/ai-chatbot-ฟรี-2026-ต้นทุนแฝง-sme` — AI Chatbot ฟรี 2026 มีจริงไหม: เทียบ 7 ตัวเลือกฟรี + ต้นทุนแฝง 4 ก้อน
 
 ## Feeds
 

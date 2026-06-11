@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="th">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>เครื่องคิดต้นทุนจริง AI Chatbot (ฟรี vs DIY vs จ้างทำ) 2026 — KORP AI</title>
+<meta name="description" content="คำนวณต้นทุนจริงต่อเดือนของ AI chatbot สำหรับ SME ไทย — เทียบของฟรี (รวมต้นทุนแฝง), self-host DIY, แพลตฟอร์มเสียเงิน และจ้าง agency. ฟรี ไม่ต้องลงทะเบียน.">
+<link rel="canonical" href="https://korpai.co/utility/chatbot-true-cost-calculator/">
+<style>
+body{font:16px/1.7 -apple-system,'Segoe UI',Tahoma,sans-serif;max-width:720px;margin:2em auto;padding:0 1em;color:#1a1a1a;background:#fafaf8}
+h1{font-size:1.5em;line-height:1.4}
+label{display:block;margin:.9em 0 .2em;font-weight:600;font-size:.95em}
+input,select{width:100%;padding:.5em;font-size:1em;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+small{color:#666}
+table{width:100%;border-collapse:collapse;margin:1.2em 0;font-size:.95em}
+th,td{border:1px solid #ddd;padding:.55em .6em;text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{background:#f0efe9}
+.best{background:#e6f6ec;font-weight:700}
+.note{font-size:.85em;color:#555;background:#f4f3ee;padding:.8em 1em;border-radius:8px;margin-top:1.5em}
+a{color:#0a6}
+.btnrow{margin-top:1em}
+</style>
+<h1>เครื่องคิดต้นทุนจริง AI Chatbot 2026<br><small style="font-weight:400">ฟรี (รวมต้นทุนแฝง) vs Self-host vs แพลตฟอร์ม vs จ้างทำ</small></h1>
+<p>กรอก 5 ช่อง — ตารางคำนวณใหม่ทันที. สูตรเดียวกับที่ <a href="/">KORP AI</a> ใช้ประเมินให้ลูกค้า อธิบายไว้ในบทความ <a href="/blog/ai-chatbot-ฟรี-2026-ต้นทุนแฝง-sme">AI Chatbot ฟรี 2026 + ต้นทุนแฝง 4 ก้อน</a>.</p>
+
+<label>แชตลูกค้าต่อเดือน (เรื่อง)</label>
+<input id="chats" type="number" value="200" min="0">
+<label>ข้อความ AI ตอบเฉลี่ยต่อแชต</label>
+<input id="msgs" type="number" value="6" min="1">
+<label>ชั่วโมงที่คุณดูแลระบบเองต่อสัปดาห์ (กรณีทำเอง)</label>
+<input id="hours" type="number" value="3" min="0" step="0.5">
+<label>ค่าแรงของเวลาคุณ (บาท/ชั่วโมง)</label>
+<input id="wage" type="number" value="400" min="0">
+<label>ระดับโมเดล AI</label>
+<select id="model">
+<option value="0.10">ประหยัด (Haiku/Flash-class) ~0.10 บ./ข้อความไทย</option>
+<option value="0.35" selected>มาตรฐาน (Sonnet/GPT-class) ~0.35 บ./ข้อความไทย</option>
+<option value="0.90">เรือธง (Opus/Pro-class) ~0.90 บ./ข้อความไทย</option>
+</select>
+
+<table id="out"></table>
+
+<div class="note"><b>สมมติฐาน:</b> ค่า token ภาษาไทยคิดรวม "ภาษีไทย 2–3×" แล้ว · ของฟรี = ดูแลเองเต็มชั่วโมงที่กรอก + ความเสี่ยงไม่มี guardrail (ไม่ตีเป็นเงินในตาราง) · self-host = VPS 350 บ./เดือน + ดูแลเอง 70% ของชั่วโมง · แพลตฟอร์ม = ~1,500 บ./เดือน + ดูแลเอง 30% · จ้างทำ = ดูแลรายเดือนเฉลี่ย 3,500 บ. รวม API + เวลาคุณ ~0.5 ชม./สัปดาห์. ตัวเลขเป็นค่าประมาณ มิ.ย. 2026 ใช้เปรียบเทียบแนวโน้ม ไม่ใช่ใบเสนอราคา — ขอตัวเลขจริงของธุรกิจคุณได้ที่ <a href="/demo">korpai.co/demo</a>.</div>
+<p><small>MIT-style: ใช้/ดัดแปลง/ฝังในเว็บคุณได้อิสระ เครดิต korpai.co · <a href="/utility/">เครื่องมืออื่น</a> · <a href="/blog">บทความ</a></small></p>
+<script>
+function thb(n){return n.toLocaleString('th-TH',{maximumFractionDigits:0})+' บ.'}
+function calc(){
+var chats=+document.getElementById('chats').value||0;
+var msgs=+document.getElementById('msgs').value||1;
+var hours=+document.getElementById('hours').value||0;
+var wage=+document.getElementById('wage').value||0;
+var per=+document.getElementById('model').value;
+var tokens=chats*msgs*per;            // THB token cost / month
+var timeFull=hours*4.33*wage;         // full DIY time cost
+var rows=[
+ ['ของฟรี (free tier) + ทำเอง', tokens + timeFull, 'token '+thb(tokens)+' + เวลา '+thb(timeFull)],
+ ['Self-host (n8n/Dify บน VPS)', 350 + tokens + timeFull*0.7, 'VPS 350 บ. + token + เวลา 70%'],
+ ['แพลตฟอร์มเสียเงิน', 1500 + tokens*0.5 + timeFull*0.3, 'แพ็กเกจ ~1,500 บ. (มัก subsidize AI บางส่วน)'],
+ ['จ้างทำ + ดูแลให้ (agency)', 3500 + 0.5*4.33*wage, 'รายเดือนรวม API + เวลาคุณ ~0.5 ชม./สัปดาห์']
+];
+var min=Math.min.apply(null,rows.map(function(r){return r[1]}));
+var h='<tr><th>เส้นทาง</th><th>ต้นทุนจริง/เดือน</th><th>มาจากอะไร</th></tr>';
+rows.forEach(function(r){h+='<tr'+(r[1]===min?' class="best"':'')+'><td>'+r[0]+'</td><td>'+thb(r[1])+'</td><td style="text-align:left"><small>'+r[2]+'</small></td></tr>'});
+document.getElementById('out').innerHTML=h;
+}
+['chats','msgs','hours','wage','model'].forEach(function(id){document.getElementById(id).addEventListener('input',calc)});
+calc();
+</script>
+</html>

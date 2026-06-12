@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="th">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KB Readiness Checker — เช็กว่าข้อมูล FAQ พร้อมป้อน AI Chatbot หรือยัง | KORP AI</title>
+<meta name="description" content="วางตาราง FAQ ของคุณ (CSV/คัดลอกจาก Google Sheet) แล้วเช็กทันทีว่าพร้อมป้อน AI chatbot หรือยัง — กฎ 1-1-1, คำตอบอ้างอิงลอย, ราคาไม่มีตัวเลข, ข้อซ้ำ, โปรไม่มีวันหมดอายุ. ฟรี ทำงานในเบราว์เซอร์ ข้อมูลไม่ถูกส่งไปไหน">
+<style>
+  body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:860px;margin:1.5em auto;padding:0 1em;color:#1a1a1a;line-height:1.55}
+  h1{font-size:1.45em;margin-bottom:.2em} .sub{color:#555;margin-top:0}
+  textarea{width:100%;height:220px;font:13px ui-monospace,Menlo,monospace;padding:.7em;border:1px solid #bbb;border-radius:8px;box-sizing:border-box}
+  button{background:#0a6;color:#fff;border:0;padding:.65em 1.6em;border-radius:8px;font-size:1em;cursor:pointer;margin:.8em 0}
+  button:hover{background:#085}
+  .score{font-size:2.2em;font-weight:700} .good{color:#0a6}.mid{color:#d80}.bad{color:#c33}
+  .issue{padding:.45em .8em;border-left:4px solid #ccc;margin:.4em 0;background:#fafafa;border-radius:0 6px 6px 0;font-size:.93em}
+  .issue.err{border-color:#c33}.issue.warn{border-color:#d80}.issue.ok{border-color:#0a6}
+  .stats{display:flex;gap:1.2em;flex-wrap:wrap;margin:.6em 0}.stats div{background:#f4f4f4;padding:.5em .9em;border-radius:8px;font-size:.9em}
+  .note{font-size:.85em;color:#666} a{color:#0a6}
+  table{border-collapse:collapse;font-size:.85em;margin:.6em 0}td,th{border:1px solid #ddd;padding:.3em .6em}
+</style>
+<h1>KB Readiness Checker</h1>
+<p class="sub">เช็กว่าตาราง FAQ ของคุณพร้อมป้อน AI chatbot หรือยัง — ตามกฎใน <a href="/blog/knowledge-base-ai-chatbot-เตรียมข้อมูล-sme-ไทย-2026">คู่มือทำ Knowledge Base ฉบับ SME ไทย 2026</a></p>
+<p>วางข้อมูลจาก Google Sheet/CSV (คอลัมน์: <code>category, question, answer, updated_at, expires_at</code> — มีแค่ question + answer ก็เช็กได้) แล้วกดตรวจ. <strong>ทุกอย่างทำงานในเบราว์เซอร์คุณ ข้อมูลไม่ถูกส่งออกไปไหน.</strong></p>
+<textarea id="inp" placeholder="category,question,answer,updated_at,expires_at
+ข้อมูลร้าน,ร้านเปิดกี่โมง,เปิดทุกวัน 9:00–20:00 ยกเว้นวันสงกรานต์,2026-06-01,
+จัดส่ง,ค่าส่งเท่าไหร่,กรุงเทพฯ 40 บาท ต่างจังหวัด 60 บาท ฟรีเมื่อครบ 800 บาท,2026-06-01,"></textarea>
+<br><button onclick="run()">ตรวจความพร้อม</button>
+<div id="out"></div>
+<p class="note">เครื่องมือนี้เช็กเชิงโครงสร้าง (กฎ 1-1-1, ความสด, ความซ้ำ) — ความถูกต้องของเนื้อหายังต้องตรวจโดยคนที่รู้จักร้านดีที่สุด. เวอร์ชัน CLI สำหรับ dev: <a href="/snippets/2026-06-12/">snippets 2026-06-12</a>. โดย <a href="/">KORP AI</a> — MIT, ใช้ฟรี.</p>
+<script>
+function parseCSV(t){const rows=[];let row=[],cur="",q=false;t=t.replace(/^﻿/,"");
+for(let i=0;i<t.length;i++){const c=t[i];
+if(q){if(c==='"'&&t[i+1]==='"'){cur+='"';i++}else if(c==='"')q=false;else cur+=c}
+else if(c==='"')q=true;else if(c===","){row.push(cur);cur=""}
+else if(c==="\n"||c==="\r"){if(c==="\r"&&t[i+1]==="\n")i++;row.push(cur);cur="";if(row.some(f=>f!==""))rows.push(row);row=[]}
+else cur+=c}
+if(cur!==""||row.length){row.push(cur);if(row.some(f=>f!==""))rows.push(row)}return rows}
+const DANGLING=["ดูด้านบน","ตามตารางด้านบน","ดังกล่าวข้างต้น","ดูข้อ ","see above"];
+const PRICEY=["ราคา","กี่บาท","เท่าไหร่","เท่าไร","ค่าส่ง","ค่าบริการ","แพงไหม","price","cost"];
+const norm=s=>(s||"").normalize("NFC").toLowerCase().replace(/[^\wก-๙]+/g,"");
+function run(){
+const t=document.getElementById("inp").value.trim();const out=document.getElementById("out");
+if(!t){out.innerHTML='<div class="issue err">ยังไม่ได้วางข้อมูล</div>';return}
+let rows=parseCSV(t);if(!rows.length){out.innerHTML='<div class="issue err">อ่านข้อมูลไม่ได้</div>';return}
+let header=rows[0].map(h=>h.trim().toLowerCase());
+let qi=header.indexOf("question"),ai=header.indexOf("answer"),ui=header.indexOf("updated_at"),ei=header.indexOf("expires_at"),ci=header.indexOf("category");
+if(qi<0||ai<0){qi=rows[0].length>1?0:-1;ai=1;if(rows[0].length<2){out.innerHTML='<div class="issue err">ต้องมีอย่างน้อย 2 คอลัมน์: คำถาม, คำตอบ (หรือใส่ header แถวแรก: question,answer)</div>';return}}
+else rows=rows.slice(1);
+const issues=[];let errs=0,warns=0;const seen=new Map();let stale=0,expired=0,withDate=0;
+const today=new Date().toISOString().slice(0,10);
+const cutoff=new Date(Date.now()-60*864e5).toISOString().slice(0,10);
+rows.forEach((r,idx)=>{const line=idx+2,q=(r[qi]||"").trim(),a=(r[ai]||"").trim();
+const err=m=>{issues.push(['err','แถว '+line+': '+m]);errs++};const warn=m=>{issues.push(['warn','แถว '+line+': '+m]);warns++};
+if(!q||!a){err("คำถามหรือคำตอบว่าง");return}
+const key=norm(q);if(seen.has(key))err('คำถามซ้ำกับแถว '+seen.get(key)+' — "'+q.slice(0,36)+'"');else seen.set(key,line);
+DANGLING.forEach(d=>{if(a.includes(d))err('คำตอบอ้างอิงลอย "'+d+'" — ผิดกฎ 1-1-1 คำตอบต้องจบในตัวเอง')});
+if(PRICEY.some(p=>q.toLowerCase().includes(p))&&!/\d/.test(a))warn('คำถามเรื่องราคา/ค่าใช้จ่ายแต่คำตอบไม่มีตัวเลข — "'+q.slice(0,36)+'"');
+if(a.length>1200)warn('คำตอบยาว '+a.length+' ตัวอักษร — น่าจะหลายเรื่องในข้อเดียว แตกแถวดีกว่า');
+if(/[​‌﻿]/.test(q+a))warn('มีอักขระล่องหน (zero-width/BOM) — ลบก่อนป้อนระบบ');
+const cat=ci>=0?(r[ci]||""):"";
+if(/โปร|promotion|ส่วนลด/i.test(cat+q)&&ei>=0&&!(r[ei]||"").trim())warn('ข้อโปรโมชั่นไม่มีวันหมดอายุ (expires_at)');
+if(ui>=0&&(r[ui]||"").trim()){withDate++;if(r[ui].trim()<cutoff)stale++}
+if(ei>=0&&(r[ei]||"").trim()&&r[ei].trim()<today)expired++});
+const n=rows.length;
+let score=100;score-=Math.min(40,errs*8);score-=Math.min(25,warns*3);
+if(n<20)score-=15;else if(n<50)score-=5;
+if(ui<0||withDate===0)score-=10;else if(stale>n*0.2)score-=10;
+score-=Math.min(10,expired*5);score=Math.max(0,score);
+const cls=score>=80?"good":score>=55?"mid":"bad";
+const verdict=score>=80?"พร้อมป้อนเข้าระบบ — เก็บ warning ที่เหลือแล้วลุยได้":score>=55?"เกือบพร้อม — แก้รายการด้านล่างก่อน คุณภาพคำตอบจะต่างชัด":"ยังไม่พร้อม — ป้อนตอนนี้บอตจะตอบมั่ว แก้ error ทั้งหมดก่อน";
+let html='<div class="score '+cls+'">'+score+'/100</div><p><strong>'+verdict+'</strong></p>';
+html+='<div class="stats"><div>'+n+' ข้อ '+(n<20?"(น้อยไป — แนะนำ 50–150)":n<50?"(เริ่มได้ แต่ควรถึง 50+)":"")+'</div><div>'+errs+' error</div><div>'+warns+' warning</div>';
+if(ui>=0&&withDate)html+='<div>'+stale+' ข้อค้างเกิน 60 วัน</div>';
+if(expired)html+='<div>'+expired+' ข้อหมดอายุแล้ว — ลบทิ้ง</div>';
+html+='</div>';
+if(ui<0||withDate===0)html+='<div class="issue warn">ไม่มีคอลัมน์/ข้อมูล updated_at — เติมวันที่อัปเดตทุกข้อ จะตรวจความสดได้ (กฎ 60 วัน)</div>';
+issues.slice(0,40).forEach(([c,m])=>html+='<div class="issue '+c+'">'+m.replace(/&/g,"&amp;").replace(/</g,"&lt;")+'</div>');
+if(issues.length>40)html+='<div class="issue">…และอีก '+(issues.length-40)+' รายการ — ใช้เวอร์ชัน CLI ตรวจเต็มได้</div>';
+if(!issues.length)html+='<div class="issue ok">ไม่พบปัญหาเชิงโครงสร้างเลย — ดีมาก</div>';
+html+='<p>ขั้นถัดไป: <a href="/blog/knowledge-base-ai-chatbot-เตรียมข้อมูล-sme-ไทย-2026">checklist 12 ข้อก่อนป้อนข้อมูลเข้าบอต</a> · <a href="/blog/ai-chatbot-ทดสอบ-ประเมินผล-qa-ก่อนเปิดใช้-sme-ไทย-2026">วิธีสอบบอตด้วย golden set</a> · หรือ<a href="/demo">ส่งให้ทีม KORP AI ดูให้ฟรี</a></p>';
+out.innerHTML=html;out.scrollIntoView({behavior:"smooth"})}
+</script>
+</html>

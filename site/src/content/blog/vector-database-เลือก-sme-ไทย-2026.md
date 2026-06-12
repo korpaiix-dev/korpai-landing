@@ -2,6 +2,7 @@
 title: "Vector Database คืออะไร? เลือกตัวไหนดีสำหรับ SME ไทย 2026 (Pinecone vs Qdrant vs Weaviate vs Chroma)"
 description: "Vector Database คืออะไร — ฐานข้อมูลที่ทำให้ AI ค้นหาความหมาย ไม่ใช่แค่คำ · เปรียบเทียบ Pinecone vs Qdrant vs Weaviate vs Chroma ปี 2026: ราคา, scale, ฟีเจอร์, เลือกตัวไหนสำหรับ SME ไทย · ตารางตัดสินใจ + cost ต่อเดือนจริง + use case 5 แบบ + วิธี deploy บน VPS ไทย"
 pubDate: 2026-05-08
+updatedDate: 2026-06-12
 category: "LLM / RAG"
 tags: ["Vector Database", "RAG", "Pinecone", "Qdrant", "Weaviate", "Chroma", "SME", "AI Infrastructure"]
 readingMinutes: 12
@@ -116,7 +117,7 @@ Vector database แปลงทั้ง query และเอกสารเป
 
 **1. AI Chatbot ตอบจาก FAQ + เมนู (ร้านอาหาร, คาเฟ่)** — เก็บคำถาม-คำตอบที่เจอบ่อย + เมนูในตลาด, vector DB ขนาด 5,000–50,000 docs, [Chroma หรือ Qdrant ก็พอ](/blog/ai-chatbot-ร้านอาหาร-คาเฟ่)
 
-**2. Internal knowledge base พนักงาน (โรงงาน, agency)** — SOP, policy, training docs ภาษาไทย, 50K–500K docs, Qdrant self-host เหมาะสุด
+**2. Internal knowledge base พนักงาน (โรงงาน, agency)** — SOP, policy, training docs ภาษาไทย, 50K–500K docs, Qdrant self-host เหมาะสุด (เนื้อหาต้นทางควรจัดรูปก่อนป้อน — ดู [คู่มือเตรียมข้อมูล/Knowledge Base](/blog/knowledge-base-ai-chatbot-เตรียมข้อมูล-sme-ไทย-2026))
 
 **3. E-commerce search ความหมาย** — ลูกค้าค้นหา "เสื้อใส่ไปเที่ยวทะเล" → คืน "เสื้อยืด cotton ลายฮาวาย" → Weaviate hybrid search หรือ Qdrant + filter, 100K–10M sku
 
@@ -189,7 +190,7 @@ A: 80% ของเคส = **Qdrant self-host** บน Hetzner SG หรือ 
 
 1. **อย่าเริ่มจากตัวแพง** — Chroma หรือ pgvector ฟรี เทสต์ก่อน 2 สัปดาห์
 2. **production แรก = Qdrant self-host VPS SG** — ราคาคงที่ ~฿500–1,500/เดือน
-3. **ลงทุน reranker + chunking ดี ๆ** — สำคัญกว่าเลือก vector DB ตัวไหน
+3. **ลงทุน reranker + chunking ดี ๆ** — สำคัญกว่าเลือก vector DB ตัวไหน — และ chunking ที่ดีเริ่มจากข้อมูลต้นทางที่จัดเป็นข้อๆ ตามกฎ 1-1-1 (ดู [วิธีเตรียมข้อมูลให้บอตตอบแม่น](/blog/knowledge-base-ai-chatbot-เตรียมข้อมูล-sme-ไทย-2026))
 4. **อย่าลืม embedding ภาษาไทย** — Cohere multilingual-v3 หรือ BGE-M3 ชนะ OpenAI
 5. **ขยายตอนต้องขยาย** — ไม่ต้องวางแผนรองรับ 100M docs ตั้งแต่วันแรก ส่วนใหญ่ SME อยู่ที่ 100K–5M
 

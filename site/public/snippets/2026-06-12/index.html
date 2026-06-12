@@ -1,0 +1,16 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>KORP AI snippets — 2026-06-12 — knowledge-base prep toolkit</title>
+<style>body{font:14px ui-monospace,Menlo,monospace;max-width:760px;margin:2em auto;padding:0 1em;color:#222} a{color:#0a6}</style>
+<h1>2026-06-12 — knowledge-base prep toolkit</h1>
+<p>Working companions to <a href="/blog/knowledge-base-ai-chatbot-เตรียมข้อมูล-sme-ไทย-2026">เตรียมข้อมูลให้ AI Chatbot: คู่มือทำ Knowledge Base ฉบับ SME ไทย 2026</a>. MIT licensed.</p>
+<ul>
+  <li><a href="faq_sheet_to_jsonl.py">faq_sheet_to_jsonl.py</a> — FAQ CSV → clean JSONL chunks (validates 1-1-1 rule, drops expired promos, dedupes)</li>
+  <li><a href="thai_chunker.py">thai_chunker.py</a> — Thai-aware chunker: structure-first, sentence-safe splits, overlap (no deps)</li>
+  <li><a href="kb_freshness_audit.py">kb_freshness_audit.py</a> — flag KB entries untouched > 60 days + expired promos (cron-ready exit codes)</li>
+  <li><a href="kb_coverage_gap.py">kb_coverage_gap.py</a> — mine real chat logs for questions your KB doesn't cover yet (difflib, no embeddings)</li>
+  <li><a href="kb_lint.js">kb_lint.js</a> — CI linter for the 1-1-1 rule: dangling refs, priceless price answers, dupes, promo without expiry</li>
+  <li><a href="qdrant_upsert_kb.py">qdrant_upsert_kb.py</a> — idempotent kb.jsonl → Qdrant upsert via any OpenAI-compatible embeddings endpoint</li>
+</ul>
+<p>Interactive: <a href="/utility/kb-readiness-checker/">KB readiness checker</a> — paste your FAQ sheet, get a score + fix list</p>
+<p><a href="/snippets/">← all snippets</a> · <a href="/blog">blog</a> · <a href="/">korpai.co</a></p>

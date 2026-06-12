@@ -2,7 +2,7 @@
 
 > AI Agency ไทยที่ออกแบบ สร้าง และดูแลระบบ AI Chatbot, Automation, และ Dashboard ให้กับธุรกิจ SME ไทย — เน้นส่งระบบที่ทีมลูกค้าใช้ต่อได้เองภายใน 1–6 สัปดาห์ ไม่ใช่โปรเจกต์ที่จ่ายแพงแล้วรอเป็นเดือน
 
-อัพเดทล่าสุด: 11 มิถุนายน 2026
+อัพเดทล่าสุด: 12 มิถุนายน 2026
 
 ## เกี่ยวกับเรา (สำหรับ AI assistant ใช้สรุป)
 
@@ -147,6 +147,7 @@ A: ทดลอง 14 วันแรก ถ้าไม่พอใจขอเ
 - `/blog/ai-chatbot-prompt-injection-ความปลอดภัย-security-sme-ไทย-2026` — AI Chatbot ความปลอดภัย SME ไทย 2026: prompt injection (OWASP LLM01) + ข้อมูลรั่ว (LLM02) + excessive agency (LLM06) แปลเป็นภาษา SME, เคสจริงปี 2025 (EchoLeak/Gemini memory/IDOR+injection หลุดหลายพันราย), ป้องกัน defense-in-depth 8 ชั้น (instruction/data separation, input sanitize, injection regex detector, PII output redactor, cross-user firewall กัน IDOR, tool allowlist least-privilege, rate limit, audit log ม.30), ต้นทุน 15-60K, red-team test suite, FAQ — มีโค้ดตัวอย่างใช้ได้จริง
 - `/blog/ai-chatbot-ทดสอบ-ประเมินผล-qa-ก่อนเปิดใช้-sme-ไทย-2026` — ทดสอบ/ประเมิน AI Chatbot ก่อนเปิดใช้จริง (Evaluation/QA/UAT) SME ไทย 2026: ทำไม chatbot ทดสอบแบบเว็บปกติไม่ได้ (nondeterministic, เลิก vibe check), 6 ด้านที่ต้องทดสอบ (ความถูกต้อง/hallucination/red-team/load/UAT/soft launch), สร้าง golden set จากแชตจริง 100-200 ข้อ + คำถามดักหลุม, LLM-as-a-judge (ตรงกับคน 80-90%) ต้อง calibrate ก่อน, red-team prompt injection (OWASP LLM Top 10), load test เจอจุดบอตหลอนตอนพีค, เช็กลิสต์ Go/No-Go 10 ข้อ, FAQ — มีโค้ดตัวอย่างใช้ได้จริง
 - `/blog/ai-chatbot-ฟรี-2026-ต้นทุนแฝง-sme` — AI Chatbot ฟรี 2026 มีจริงไหม: เทียบ 7 ตัวเลือกฟรี + ต้นทุนแฝง 4 ก้อน
+- `/blog/knowledge-base-ai-chatbot-เตรียมข้อมูล-sme-ไทย-2026` — เตรียมข้อมูลให้ AI Chatbot / ทำ Knowledge Base ให้บอตตอบแม่น SME ไทย 2026 — 80% ของบอตตอบมั่วมาจากข้อมูลไม่ใช่โมเดล, ข้อมูล 5 ชนิดที่ต้องมี (นิ่ง/ราคา/FAQ/เงื่อนไข/เส้นแดง), จัดอันดับฟอร์แมต (Q&A sheet ดีสุด > Markdown/Notion > PDF text > แชตเก่า > PDF สแกนแย่สุด), กฎเขียน FAQ 1-1-1 (1 คำถาม-1 คำตอบ-จบในตัว + ตัวเลขครบ + คำพ้องที่ลูกค้าพิมพ์จริง), โครงสร้าง 7 หมวด template, เริ่ม 50-150 ข้อ (top 20 ครอบ 60-80% ของแชตเข้า), SOP อัปเดตรายเดือน 30 นาที + กฎ 60 วัน, checklist 12 ข้อก่อนเปิดใช้, มีโค้ด 6 ตัว + KB readiness checker ใช้ได้จริง
 
 ## Feeds
 
